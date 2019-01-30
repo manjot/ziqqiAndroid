@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?attr/colorControlNormal">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <corners
+                android:bottomLeftRadius="@dimen/dp_30"
+                android:topLeftRadius="@dimen/dp_30" />
+            <solid android:color="@color/fb_color" />
+        </shape>
+    </item>
+</ripple>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mob_and_tabs"
+            android:icon="@drawable/mobile_phone_outline"
+            android:title="@string/mob_and_tabs" />
+        <item
+            android:id="@+id/computers"
+            android:icon="@drawable/laptop"
+            android:title="@string/computers" />
+        <item
+            android:id="@+id/tv_and_audio"
+            android:icon="@drawable/monitor"
+            android:title="@string/tv_and_audio" />
+        <item
+            android:id="@+id/cameras"
+            android:icon="@drawable/photo_camera"
+            android:title="@string/cameras" />
+        <item
+            android:id="@+id/appliances"
+            android:icon="@drawable/mixer"
+            android:title="@string/appliances" />
+        <item
+            android:id="@+id/gaming"
+            android:icon="@drawable/joystick"
+            android:title="@string/gaming" />
+        <item
+            android:id="@+id/perfumes_and_beauty"
+            android:icon="@drawable/perfume"
+            android:title="@string/perfumes_and_beauty" />
+        <item
+            android:id="@+id/pharmacy_and_health"
+            android:icon="@drawable/medication"
+            android:title="@string/pharmacy_and_health" />
+        <item
+            android:id="@+id/supermarket"
+            android:icon="@drawable/shopping_bag"
+            android:title="@string/supermarket" />
+    </group>
+    <group android:id="@+id/group_divider" android:checkableBehavior="single">
+        <item
+            android:id="@+id/my_account"
+            android:icon="@drawable/avatar"
+            android:title="@string/my_acc" />
+        <item
+            android:id="@+id/wishlist"
+            android:icon="@drawable/like"
+            android:title="@string/wishlist" />
+        <item
+            android:id="@+id/track_order"
+            android:icon="@drawable/tracking"
+            android:title="@string/track_order" />
+    </group>
+</menu>

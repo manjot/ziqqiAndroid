@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Ziqqi</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="email">Email OR Mobile</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forget_pass">Forget Password</string>
+    <string name="or">Or</string>
+    <string name="dhana">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <string name="enter_email_mn">Enter Email/Mobile Number</string>
+    <string name="enter_your_email">Enter your email address or mobile number here. We will send you OTP for resetting your password.</string>
+    <string name="by_email">By Email</string>
+    <string name="by_sms">By SMS</string>
+    <string name="submit">Submit</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_">Email Address</string>
+    <string name="show_pass">Show Password</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="register">Register</string>
+    <string name="by_clicking">By clicking the Sign Up button, you confirm that you accept our\u0020</string>
+    <string name="terms">terms of use\u0020</string>
+    <string name="pp">\u0020Privacy Policy.</string>
+    <string name="mob_and_tabs">MOBILES AND TABLETS</string>
+    <string name="computers">COMPUTERS</string>
+    <string name="tv_and_audio">TELEVISIONS AND AUDIO</string>
+    <string name="cameras">CAMERAS</string>
+    <string name="appliances">APPLIANCES</string>
+    <string name="gaming">GAMING</string>
+    <string name="perfumes_and_beauty">PERFUMES AND BEAUTY</string>
+    <string name="pharmacy_and_health">PHARMACY AND HEALTH</string>
+    <string name="supermarket">SUPERMARKET</string>
+    <string name="my_acc">MY ACCOUNT</string>
+    <string name="wishlist">WISHLIST</string>
+    <string name="track_order">TRACK ORDER</string>
+    <string name="welcome">Welcome</string>
+    <string name="login_signup">Login/Signup</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_cat">Top Categories</string>
+    <string name="mobiles">Mobiles</string>
+    <string name="bs_mobile">Best Sellers |\u0020</string>
+    <string name="view_all">View All</string>
+    <string name="appple">Apple</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="search_fragment">Search Fragment</string>
+    <string name="deals">Deals</string>
+    <string name="title_activity_select_your_language">SelectYourLanguageActivity</string>
+    <string name="syc">Select your country</string>
+    <string name="syl">Select your language</string>
+    <string name="apply">Apply</string>
+
+
+    <string name="facebook_app_id">361327514698589</string>
+    <string name="fb_login_protocol_scheme">fb361327514698589</string>
+    <string name="hide_pass">Hide Password</string>
+    <string name="all_right_reserved">Copyright 2018 ziqqi.com. All right reserved.</string>
+    <string name="log_out">Log out</string>
+    <string name="search_hint">I\'m shopping for</string>
+
+    <string name="regular">fonts/regular.otf</string>
+    <string name="light">fonts/light.otf</string>
+    <string name="extraLight">fonts/extralight.otf</string>
+    <string name="boldItalic">fonts/bolditalic.otf</string>
+    <string name="medium">fonts/medium.otf</string>
+    <string name="bold">fonts/bold.otf</string>
+
+
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5fff85</color>
+    <color name="colorPrimaryDark">#00cb56</color>
+    <color name="colorAccent">#d2d6cf</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorStrokeGrey">#e2e2e2</color>
+    <color name="fb_color">#3b5997</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="gmail_color">#d24837</color>
+    <color name="colorZiqqiBanner">#ffedcc</color>
+    <color name="colorSelected">#cccccc</color>
+    <color name="colorBgNavigation">#796559</color>
+    <color name="colorHeader">#ffedcc</color>
+</resources>
