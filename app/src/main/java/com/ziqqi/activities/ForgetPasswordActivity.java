@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         init();
 
@@ -50,9 +52,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (Utils.isValidEmail(etEmail.getText().toString())) {
-                    getPassword();
                     progressBar.setVisibility(View.VISIBLE);
                     rlMain.setVisibility(View.GONE);
+                    getPassword();
                 } else {
                     Toast.makeText(ForgetPasswordActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                 }
@@ -67,6 +69,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 try {
+                    Log.e("JSON", response.body());
                     JSONObject object = new JSONObject(response.body());
                     if (object.getInt("Status") == 1) {
                         progressBar.setVisibility(View.GONE);
@@ -92,7 +95,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     }
 
     private void init() {
-        etEmail = findViewById(R.id.et_email);
+        etEmail = findViewById(R.id.et_enter);
         rbSms = findViewById(R.id.rb_sms);
         rbEmail = findViewById(R.id.rb_email);
         btnSubmit = findViewById(R.id.btn_submit);

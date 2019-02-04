@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -14,8 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.R;
-import com.ziqqi.model.subcategoriesmodel.BestsellerProduct;
+import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.utils.FontCache;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
     Context context;
     List<BestsellerProduct> bestsellerProductList;
     int position;
+    CircularProgressDrawable drawable;
     Typeface regular, medium, light, bold;
 
     public BestSellerAdapter(Context context, int position, List<BestsellerProduct> bestsellerProductList) {
@@ -32,6 +35,8 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
         this.bestsellerProductList = bestsellerProductList;
         this.position = position;
         Resources resources = context.getResources();
+        drawable = new CircularProgressDrawable(context);
+        drawable.start();
         regular = FontCache.get(resources.getString(R.string.regular), context);
         medium = FontCache.get(resources.getString(R.string.medium), context);
         light = FontCache.get(resources.getString(R.string.light), context);
@@ -49,10 +54,10 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
     public void onBindViewHolder(@NonNull BestSellerMobileViewHolder holder, int i) {
         holder.tvBrandName.setText(bestsellerProductList.get(i).getBrandName());
         holder.tvName.setText(bestsellerProductList.get(i).getName());
-        holder.tvDesc.setText(Html.fromHtml(bestsellerProductList.get(i).getSmallDesc()));
+        holder.tvDesc.setText(Html.fromHtml(bestsellerProductList.get(i).getSku()));
         holder.tvMarketPrice.setText("$ " + bestsellerProductList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + bestsellerProductList.get(i).getSalePrice());
-        Glide.with(context).load(bestsellerProductList.get(i).getImage()).into(holder.ivImage);
+        Glide.with(context).load(bestsellerProductList.get(i).getImage()).apply(RequestOptions.placeholderOf(drawable)).into(holder.ivImage);
     }
 
     @Override

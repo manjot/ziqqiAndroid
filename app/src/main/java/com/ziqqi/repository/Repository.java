@@ -64,18 +64,18 @@ public class Repository {
         return homeCategoriesResponse;
     }
 
-    public MutableLiveData<SubCategories> getSubCategories(String categoryId) {
-        final MutableLiveData<SubCategories> subCategoriesMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<HomeCategoriesResponse> getSubCategories(String categoryId) {
+        final MutableLiveData<HomeCategoriesResponse> subCategoriesMutableLiveData = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<SubCategories> call = apiInterface.getSubCategories(categoryId);
-        call.enqueue(new Callback<SubCategories>() {
+        Call<HomeCategoriesResponse> call = apiInterface.getSubCategories(categoryId);
+        call.enqueue(new Callback<HomeCategoriesResponse>() {
             @Override
-            public void onResponse(Call<SubCategories> call, Response<SubCategories> response) {
+            public void onResponse(Call<HomeCategoriesResponse> call, Response<HomeCategoriesResponse> response) {
                 subCategoriesMutableLiveData.postValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<SubCategories> call, Throwable t) {
+            public void onFailure(Call<HomeCategoriesResponse> call, Throwable t) {
 
             }
         });

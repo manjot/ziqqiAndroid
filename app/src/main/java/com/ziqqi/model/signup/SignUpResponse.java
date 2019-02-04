@@ -9,6 +9,9 @@ public class SignUpResponse {
     @SerializedName("Error")
     @Expose
     private Boolean error;
+    @SerializedName("Code")
+    @Expose
+    private Integer code;
     @SerializedName("Status")
     @Expose
     private Integer status;
@@ -18,9 +21,9 @@ public class SignUpResponse {
     @SerializedName("Payload")
     @Expose
     private Payload payload;
-    @SerializedName("Code")
+    @SerializedName("otpdetails")
     @Expose
-    private Integer code;
+    private Otpdetails otpdetails;
 
     public Boolean getError() {
         return error;
@@ -28,6 +31,14 @@ public class SignUpResponse {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public Integer getStatus() {
@@ -54,12 +65,12 @@ public class SignUpResponse {
         this.payload = payload;
     }
 
-    public Integer getCode() {
-        return code;
+    public Otpdetails getOtpdetails() {
+        return otpdetails;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setOtpdetails(Otpdetails otpdetails) {
+        this.otpdetails = otpdetails;
     }
 
 }

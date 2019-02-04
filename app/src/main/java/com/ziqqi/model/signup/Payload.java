@@ -35,7 +35,7 @@ public class Payload {
     private String regDate;
     @SerializedName("zoho_contact_id")
     @Expose
-    private String zohoContactId;
+    private Object zohoContactId;
     @SerializedName("is_active")
     @Expose
     private String isActive;
@@ -59,10 +59,10 @@ public class Payload {
     private String mobileTokenId;
     @SerializedName("password_token_id")
     @Expose
-    private String passwordTokenId;
+    private Object passwordTokenId;
     @SerializedName("password_reset_date")
     @Expose
-    private String passwordResetDate;
+    private Object passwordResetDate;
     @SerializedName("is_email_verify")
     @Expose
     private String isEmailVerify;
@@ -142,11 +142,11 @@ public class Payload {
         this.regDate = regDate;
     }
 
-    public String getZohoContactId() {
+    public Object getZohoContactId() {
         return zohoContactId;
     }
 
-    public void setZohoContactId(String zohoContactId) {
+    public void setZohoContactId(Object zohoContactId) {
         this.zohoContactId = zohoContactId;
     }
 
@@ -206,19 +206,19 @@ public class Payload {
         this.mobileTokenId = mobileTokenId;
     }
 
-    public String getPasswordTokenId() {
+    public Object getPasswordTokenId() {
         return passwordTokenId;
     }
 
-    public void setPasswordTokenId(String passwordTokenId) {
+    public void setPasswordTokenId(Object passwordTokenId) {
         this.passwordTokenId = passwordTokenId;
     }
 
-    public String getPasswordResetDate() {
+    public Object getPasswordResetDate() {
         return passwordResetDate;
     }
 
-    public void setPasswordResetDate(String passwordResetDate) {
+    public void setPasswordResetDate(Object passwordResetDate) {
         this.passwordResetDate = passwordResetDate;
     }
 

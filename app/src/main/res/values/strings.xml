@@ -27,14 +27,14 @@
     <string name="by_clicking">By clicking the Sign Up button, you confirm that you accept our\u0020</string>
     <string name="terms">terms of use\u0020</string>
     <string name="pp">\u0020Privacy Policy.</string>
-    <string name="mob_and_tabs">MOBILES AND TABLETS</string>
+    <string name="mob_and_tabs">MOBILES &amp; TABLETS</string>
     <string name="computers">COMPUTERS</string>
-    <string name="tv_and_audio">TELEVISIONS AND AUDIO</string>
+    <string name="tv_and_audio">TELEVISIONS &amp; AUDIO</string>
     <string name="cameras">CAMERAS</string>
     <string name="appliances">APPLIANCES</string>
     <string name="gaming">GAMING</string>
-    <string name="perfumes_and_beauty">PERFUMES AND BEAUTY</string>
-    <string name="pharmacy_and_health">PHARMACY AND HEALTH</string>
+    <string name="perfumes_and_beauty">PERFUMES &amp; BEAUTY</string>
+    <string name="pharmacy_and_health">PHARMACY &amp; HEALTH</string>
     <string name="supermarket">SUPERMARKET</string>
     <string name="my_acc">MY ACCOUNT</string>
     <string name="wishlist">WISHLIST</string>
@@ -62,7 +62,7 @@
     <string name="hide_pass">Hide Password</string>
     <string name="all_right_reserved">Copyright 2018 ziqqi.com. All right reserved.</string>
     <string name="log_out">Log out</string>
-    <string name="search_hint">I\'m shopping for</string>
+    <string name="search_hint">I\'m shopping for...</string>
 
     <string name="regular">fonts/regular.otf</string>
     <string name="light">fonts/light.otf</string>
@@ -70,6 +70,7 @@
     <string name="boldItalic">fonts/bolditalic.otf</string>
     <string name="medium">fonts/medium.otf</string>
     <string name="bold">fonts/bold.otf</string>
+    <string name="try_again">Try Again</string>
 
 
 </resources>

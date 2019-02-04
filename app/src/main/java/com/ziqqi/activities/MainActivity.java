@@ -24,7 +24,6 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +46,7 @@ import com.ziqqi.R;
 import com.ziqqi.fragments.DealsFragment;
 import com.ziqqi.fragments.HomeFragment;
 import com.ziqqi.fragments.SearchFragment;
+import com.ziqqi.fragments.SubCategoryFragment;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.CustomTypefaceSpan;
 import com.ziqqi.utils.FontCache;
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SearchFragment searchFragment;
     DealsFragment dealsFragment;
     CallbackManager callbackManager;
+    SubCategoryFragment mobileFragment, computerFragment, tvFragment, cameraFragment, gaminFragment, perfumesFragment, pharmacyFragment, superMarketFragment, appliancesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeButtonEnabled(true);
         callbackManager = CallbackManager.Factory.create();
 
-
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         bottomNavigationView = findViewById(R.id.navigation);
@@ -105,59 +105,78 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         homeFragment = new HomeFragment();
         searchFragment = new SearchFragment();
         dealsFragment = new DealsFragment();
+        mobileFragment = new SubCategoryFragment();
+        cameraFragment = new SubCategoryFragment();
+        computerFragment = new SubCategoryFragment();
+        tvFragment = new SubCategoryFragment();
+        pharmacyFragment = new SubCategoryFragment();
+        gaminFragment = new SubCategoryFragment();
+        perfumesFragment = new SubCategoryFragment();
+        appliancesFragment = new SubCategoryFragment();
+        superMarketFragment = new SubCategoryFragment();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if (!CheckingPermissionIsEnabledOrNot()) {
+       /* if (!CheckingPermissionIsEnabledOrNot()) {
             RequestMultiplePermission();
-        }
+        }*/
 
 
         ivProfilePic = navigationView.getHeaderView(0).findViewById(R.id.iv_profile_pic);
         tvLogin = navigationView.getHeaderView(0).findViewById(R.id.tv_login);
+        TextView tvWelcome = navigationView.getHeaderView(0).findViewById(R.id.tv_welcome);
+        tvLogin.setTypeface(FontCache.get(getResources().getString(R.string.regular), this));
+        tvWelcome.setTypeface(FontCache.get(getResources().getString(R.string.bold), this));
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             tvLogin.setText(R.string.log_out);
-            tvLogin.setTypeface(FontCache.get(getResources().getString(R.string.regular), this));
         } else tvLogin.setText(R.string.login_signup);
 
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDrawerLayout.closeDrawers();
+                    }
+                }, 300);
                 if (tvLogin.getText().toString().equals(getResources().getString(R.string.login_signup))) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    mDrawerLayout.closeDrawers();
                 } else {
                     if (PreferenceManager.getStringValue(Constants.FACEBOOK_OR_GMAIL).equals("f")) {
                         LoginManager.getInstance().logOut();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        mDrawerLayout.closeDrawers();
                         PreferenceManager.setBoolValue(Constants.LOGGED_IN, false);
+                        PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "");
+                        Log.e("FaltuLog ", " arghhhhh");
                         finishAffinity();
                     } else if (PreferenceManager.getStringValue(Constants.FACEBOOK_OR_GMAIL).equals("g")) {
                         googleSignOut();
+                        Log.e("FaltuLog ", " arghhhhh");
+                        PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "");
                         finishAffinity();
                     } else {
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         mDrawerLayout.closeDrawers();
                         PreferenceManager.setBoolValue(Constants.LOGGED_IN, false);
+                        Log.e("FaltuLog ", " arghhhhh");
                         finishAffinity();
                     }
                 }
             }
         });
 
-
         if (savedInstanceState == null) {
-            replaceFragment(homeFragment);
+            replaceFragment(homeFragment, null);
         }
         if (PreferenceManager.getStringValue(Constants.FACEBOOK_OR_GMAIL).equals("f")) {
             accessToken = AccessToken.getCurrentAccessToken();
             if (accessToken == null || accessToken.isExpired()) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                Log.e("FaltuLog ", " arghhhhh");
                 finishAffinity();
             } else {
                 gettingFacebookData(accessToken);
@@ -179,19 +198,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         Menu m = navigationView.getMenu();
-        for (int i=0;i<m.size();i++) {
+        for (int i = 0; i < m.size(); i++) {
             MenuItem mi = m.getItem(i);
-
-            //for aapplying a font to subMenu ...
-          /*  SubMenu subMenu = mi.getSubMenu();
-            if (subMenu!=null && subMenu.size() >0 ) {
-                for (int j=0; j <subMenu.size();j++) {
-                    MenuItem subMenuItem = subMenu.getItem(j);
-                    applyFontToMenuItem(subMenuItem);
-                }
-            }*/
-
-            //the method we have create in activity
             applyFontToMenuItem(mi);
         }
 
@@ -273,16 +281,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id) {
             case R.id.bottom_nav_home:
                 if (!homeFragment.isVisible())
-                    replaceFragment(homeFragment);
+                    replaceFragment(homeFragment, null);
                 break;
             case R.id.bottom_nav_search:
                 if (!searchFragment.isVisible())
-                    replaceFragment(searchFragment);
+                    replaceFragment(searchFragment, null);
                 break;
 
             case R.id.bottom_nav_coupan:
                 if (!dealsFragment.isVisible())
-                    replaceFragment(dealsFragment);
+                    replaceFragment(dealsFragment, null);
+                break;
+            case R.id.mob_and_tabs:
+                if (!mobileFragment.isVisible())
+                    replaceFragment(mobileFragment, "1");
+                break;
+            case R.id.computers:
+                if (!computerFragment.isVisible())
+                    replaceFragment(computerFragment, "4");
+                break;
+            case R.id.tv_and_audio:
+                if (!tvFragment.isVisible())
+                    replaceFragment(tvFragment, "13");
+                break;
+            case R.id.cameras:
+                if (!cameraFragment.isVisible())
+                    replaceFragment(cameraFragment, "236");
+                break;
+            case R.id.appliances:
+                if (!appliancesFragment.isVisible())
+                    replaceFragment(appliancesFragment, "18");
+                break;
+            case R.id.gaming:
+                if (!gaminFragment.isVisible())
+                    replaceFragment(gaminFragment, "8");
+                break;
+            case R.id.perfumes_and_beauty:
+                if (!perfumesFragment.isVisible())
+                    replaceFragment(perfumesFragment, "275");
+                break;
+            case R.id.pharmacy_and_health:
+                if (!pharmacyFragment.isVisible())
+                    replaceFragment(pharmacyFragment, "376");
+                break;
+            case R.id.supermarket:
+                if (!superMarketFragment.isVisible())
+                    replaceFragment(superMarketFragment, "297");
                 break;
         }
     }
@@ -305,14 +349,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment, String categoryId) {
+        Bundle bundle = null;
         String backStateName = fragment.getClass().getName();
+
+        if (fragment instanceof SubCategoryFragment) {
+            bundle = new Bundle();
+            bundle.putString("categoryId", categoryId);
+            fragment.setArguments(bundle);
+        }
 
         FragmentManager manager = getSupportFragmentManager();
         boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
+        FragmentTransaction ft = manager.beginTransaction();
+        //  ft.setCustomAnimations(0, 0,android.R.anim.fade_in,android.R.anim.fade_out);
 
         if (!fragmentPopped) {
-            FragmentTransaction ft = manager.beginTransaction();
             ft.replace(R.id.container, fragment, backStateName);
             ft.addToBackStack(backStateName);
             ft.commit();
@@ -348,13 +400,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getFacebookProfilePicture() {
-        personPhoto = Uri.parse("https://graph.facebook.com/" + PreferenceManager.getStringValue(Constants.USER_ID) + "/picture?type=large");
-        Log.e("ProfilePic", "https://graph.facebook.com/" + PreferenceManager.getStringValue(Constants.USER_ID) + "/picture?type=large");
-        if (personPhoto != null) {
-            Glide.with(this).load(personPhoto).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivProfilePic);
-        } else {
-            Glide.with(this).load(R.drawable.ic_person).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivProfilePic);
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                personPhoto = Uri.parse("https://graph.facebook.com/" + PreferenceManager.getStringValue(Constants.USER_ID) + "/picture?type=large");
+                Log.e("ProfilePic", "https://graph.facebook.com/" + PreferenceManager.getStringValue(Constants.USER_ID) + "/picture?type=large");
+                if (personPhoto != null) {
+                    Glide.with(MainActivity.this).load(personPhoto).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivProfilePic);
+                } else {
+                    Glide.with(MainActivity.this).load(R.drawable.ic_person).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivProfilePic);
+                }
+            }
+        }, 1000);
     }
 
     private void googleSignOut() {
@@ -369,7 +426,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        mDrawerLayout.closeDrawers();
                         PreferenceManager.setBoolValue(Constants.LOGGED_IN, false);
                     }
                 });
@@ -379,7 +435,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/regular.otf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
 }

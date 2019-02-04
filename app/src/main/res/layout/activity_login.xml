@@ -45,48 +45,86 @@
             </android.support.v7.widget.Toolbar>
 
             <RelativeLayout
+                android:id="@+id/rl_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true">
 
-                <EditText
-                    android:id="@+id/et_email"
-                    fontPath="fonts/bolditalic.otf"
+                <RelativeLayout
+                    android:id="@+id/rl_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp"
-                    android:background="@drawable/et_bg"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:padding="@dimen/_12sdp"
-                    android:text="@={viewModel.email}"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:textSize="@dimen/_12sdp" />
+                    android:layout_margin="@dimen/_16sdp">
 
-                <EditText
-                    android:id="@+id/et_password"
+                    <EditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_bg"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:padding="@dimen/_12sdp"
+                        android:text="@={viewModel.email}"
+                        android:textColor="@color/colorWhite"
+                        android:textColorHint="@color/colorWhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/iv_email"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_marginRight="@dimen/_3sdp"
+                        android:background="@drawable/tickmark"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/tick"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/et_email"
-                    android:layout_centerInParent="true"
+                    android:layout_below="@id/rl_email"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:background="@drawable/et_bg"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:padding="@dimen/_12sdp"
-                    android:text="@={viewModel.password}"
-                    android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:textSize="@dimen/_12sdp" />
+                    android:layout_marginBottom="@dimen/_16sdp">
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/et_bg"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:padding="@dimen/_12sdp"
+                        android:text="@={viewModel.password}"
+                        android:textColor="@color/colorWhite"
+                        android:textColorHint="@color/colorWhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/iv_password"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_marginRight="@dimen/_3sdp"
+                        android:background="@drawable/tickmark"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/tick"
+                        android:visibility="gone" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_forget_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/et_password"
+                    android:layout_below="@id/rl_password"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
@@ -101,15 +139,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_forget_password"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_16"
-                    android:layout_marginEnd="@dimen/dp_16"
-                    android:layout_marginBottom="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
                     android:alpha="0.7"
                     android:background="@drawable/button_bg"
+                    android:elevation="@dimen/_4sdp"
                     android:onClick="onClickSignIn"
                     android:text="@string/sign_in"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -141,6 +180,7 @@
                         android:layout_marginStart="@dimen/_6sdp"
                         android:layout_marginEnd="@dimen/_6sdp"
                         android:background="@drawable/fb_button"
+                        android:elevation="@dimen/_4sdp"
                         android:gravity="center"
                         android:text="f"
                         android:textColor="@color/colorWhite"
@@ -155,6 +195,7 @@
                         android:layout_marginEnd="@dimen/_6sdp"
                         android:layout_toRightOf="@id/btn_fb"
                         android:background="@drawable/gmail_button"
+                        android:elevation="@dimen/_4sdp"
                         android:gravity="center"
                         android:text="G+"
                         android:textColor="@color/colorWhite"
@@ -196,6 +237,14 @@
                         android:textStyle="bold" />
                 </RelativeLayout>
             </RelativeLayout>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/progress_bar"
+                android:layout_centerInParent="true"
+                android:theme="@style/RadioButtonTheme" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

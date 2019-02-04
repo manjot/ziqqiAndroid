@@ -17,8 +17,8 @@ import com.ziqqi.R;
 import com.ziqqi.adapters.BestSellerMainAdapter;
 import com.ziqqi.adapters.SubCategoryAdapter;
 import com.ziqqi.databinding.ActivityHomeCategoryBinding;
-import com.ziqqi.model.subcategoriesmodel.Payload;
-import com.ziqqi.model.subcategoriesmodel.SubCategories;
+import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.model.homecategorymodel.Payload;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.SubCategoryViewModel;
@@ -51,6 +51,7 @@ public class SubCategoryActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         setUpAdapter();
 
@@ -68,10 +69,12 @@ public class SubCategoryActivity extends AppCompatActivity {
             @Override
             public int getSpanSize(int i) {
                 if (adapter.getItemViewType(i) == 1) {
-                    return 3;
+                    return 1;
                 } else if (adapter.getItemViewType(i) == 2) {
                     return 2;
-                } else return 1;
+                } else {
+                    return 3;
+                }
             }
         });
         binding.rvMainRecyclerView.setLayoutManager(manager);
@@ -92,9 +95,9 @@ public class SubCategoryActivity extends AppCompatActivity {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.mainLayout.setVisibility(View.GONE);
         viewModel.fetchData(categoryId);
-        viewModel.getSubCategoriesResponse().observe(this, new Observer<SubCategories>() {
+        viewModel.getSubCategoriesResponse().observe(this, new Observer<HomeCategoriesResponse>() {
             @Override
-            public void onChanged(@Nullable SubCategories subCategories) {
+            public void onChanged(@Nullable HomeCategoriesResponse subCategories) {
                 binding.progressBar.setVisibility(View.GONE);
                 binding.mainLayout.setVisibility(View.VISIBLE);
                 if (!subCategories.getError()) {

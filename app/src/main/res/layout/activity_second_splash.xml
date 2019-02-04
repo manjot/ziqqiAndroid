@@ -9,14 +9,15 @@
         android:id="@+id/iv_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:src="@drawable/splash" />
 
-    <!--<ImageView
-        android:layout_width="wrap_content"
-        android:src="@drawable/q"
-
-        android:translationY="@dimen/_40sdp"
-        android:translationX="@dimen/_40sdp"
+    <ImageView
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_400sdp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"/>-->
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:scaleType="fitXY"
+        android:src="@drawable/q" />
 </RelativeLayout>

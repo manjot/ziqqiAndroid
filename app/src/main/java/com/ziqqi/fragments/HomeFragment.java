@@ -17,11 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.SearchActivity;
 import com.ziqqi.activities.SubCategoryActivity;
+import com.ziqqi.adapters.BestSellerMainAdapter;
 import com.ziqqi.adapters.ImageSliderAdapter;
 import com.ziqqi.adapters.TopCategoriesAdapter;
 import com.ziqqi.databinding.FragmentHomeBinding;
@@ -43,8 +45,8 @@ import java.util.TimerTask;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-    RecyclerView rvTopCategoriesGridOne, rvTopCategoriesGridTwo, rvBestSellerMobiles;
-    LinearLayoutManager topCategoriesGridOneManager, topCategoriesGridTwoManager, bestSellerManager;
+    RecyclerView rvTopCategoriesGridOne, rvTopCategoriesGridTwo, rvBestSellers;
+    LinearLayoutManager topCategoriesGridOneManager, topCategoriesGridTwoManager, managerBestSeller;
     TopCategoriesAdapter topCategoriesGridAdapterOne, topCategoriesGridAdapterTwo;
     int currentPage = 0;
     List<Payload> bannerImageList = new ArrayList<>();
@@ -52,13 +54,17 @@ public class HomeFragment extends Fragment {
     List<com.ziqqi.model.homecategorymodel.Payload> homeCategoryListGrid1 = new ArrayList<>();
     List<com.ziqqi.model.homecategorymodel.Payload> homeCategoryListGrid2 = new ArrayList<>();
     List<com.ziqqi.model.homecategorymodel.Payload> payLoadData = new ArrayList<>();
+    List<com.ziqqi.model.homecategorymodel.Payload> bestSellerPayloadList = new ArrayList<>();
+
 
     HomeViewModel viewModel;
     SpringDotsIndicator indicator;
     FragmentHomeBinding binding;
     ViewPager viewPager;
     ImageSliderAdapter imageSliderAdapter;
+    BestSellerMainAdapter bestSellerMainAdapter;
     OnItemClickListener listener;
+    boolean a = false;
 
     Handler handler;
     Runnable update;
@@ -75,16 +81,18 @@ public class HomeFragment extends Fragment {
                 inflater, R.layout.fragment_home, container, false);
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
+        binding.setViewModel(viewModel);
         View view = binding.getRoot();
 
         rvTopCategoriesGridOne = binding.rvTopCategoriesGrid1;
         rvTopCategoriesGridTwo = binding.rvTopCategoriesGrid2;
-        rvBestSellerMobiles = binding.rvBestSellersMobile;
+        rvBestSellers = binding.rvBestSellers;
 
         viewPager = binding.viewPager;
         indicator = binding.circleIndicator;
 
         binding.tvSearch.setTypeface(FontCache.get(getResources().getString(R.string.light), getContext()));
+        binding.tvTopCategories.setTypeface(FontCache.get(getResources().getString(R.string.light), getContext()));
 
         imageSliderAdapter = new ImageSliderAdapter(getContext(), bannerImageList);
         viewPager.setAdapter(imageSliderAdapter);
@@ -117,7 +125,7 @@ public class HomeFragment extends Fragment {
         rvTopCategoriesGridTwo.setLayoutManager(topCategoriesGridTwoManager);
         rvTopCategoriesGridTwo.setAdapter(topCategoriesGridAdapterTwo);
 
-        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(getActivity(), R.dimen.dp_4, HomeFragment.this);
+        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(getActivity(), R.dimen.dp_8, HomeFragment.this);
         rvTopCategoriesGridOne.addItemDecoration(itemDecoration);
         rvTopCategoriesGridTwo.addItemDecoration(itemDecoration);
 
@@ -141,7 +149,8 @@ public class HomeFragment extends Fragment {
         binding.cvLastGrid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getContext(), SubCategoryActivity.class)
+                        .putExtra("categoryId", payLoadData.get(8).getId()));
             }
         });
         binding.mainLayout.setVisibility(View.GONE);
@@ -163,6 +172,13 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+
+        managerBestSeller = new LinearLayoutManager(getContext());
+        managerBestSeller.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.rvBestSellers.setLayoutManager(managerBestSeller);
+        bestSellerMainAdapter = new BestSellerMainAdapter(getActivity(), bestSellerPayloadList, listener);
+        binding.rvBestSellers.setAdapter(bestSellerMainAdapter);
 
         return view;
     }
@@ -197,7 +213,9 @@ public class HomeFragment extends Fragment {
                 binding.mainLayout.setVisibility(View.VISIBLE);
                 if (!homeCategoriesResponse.getError()) {
                     if (payLoadData != null) {
-                        payLoadData.clear();
+                        homeCategoryListGrid1.clear();
+                        homeCategoryListGrid2.clear();
+                        bestSellerPayloadList.clear();
                         payLoadData = homeCategoriesResponse.getPayload();
                     }
                     for (int i = 0; i < payLoadData.size(); i++) {
@@ -206,10 +224,19 @@ public class HomeFragment extends Fragment {
                         }
                         if (i >= 4 && i < 8) {
                             homeCategoryListGrid2.add(payLoadData.get(i));
+                        } else {
+                            binding.tvTitle.setText(payLoadData.get(i).getName());
+                            Glide.with(getContext()).load(payLoadData.get(i).getCategoryImage()).into(binding.ivImage);
+                            binding.tvTitle.setTypeface(FontCache.get(getResources().getString(R.string.medium), getContext()));
+                        }
+                        if (!payLoadData.get(i).getBestsellerProduct().isEmpty()) {
+                            bestSellerPayloadList.add(payLoadData.get(i));
                         }
                     }
+
                     topCategoriesGridAdapterOne.notifyDataSetChanged();
                     topCategoriesGridAdapterTwo.notifyDataSetChanged();
+                    bestSellerMainAdapter.notifyDataSetChanged();
                 } else {
                     Utils.ShowToast(getContext(), homeCategoriesResponse.getMessage());
                 }

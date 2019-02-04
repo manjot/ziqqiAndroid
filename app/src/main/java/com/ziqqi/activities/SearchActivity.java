@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,6 @@ import com.ziqqi.model.searchmodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
-import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
@@ -37,6 +37,11 @@ public class SearchActivity extends AppCompatActivity {
     List<Payload> payloadList = new ArrayList<>();
     OnItemClickListener listener;
     SearchAdapter adapter;
+    long delay = 1000; // 1 seconds after user stops typing
+    long last_text_edit = 0;
+    Handler handler;
+    boolean noData = false;
+    CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +51,11 @@ public class SearchActivity extends AppCompatActivity {
 
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
+        handler = new Handler();
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getSupportActionBar().setElevation(0.0f);
 
         binding.tvSearch.setTypeface(FontCache.get(getResources().getString(R.string.light), this));
@@ -63,17 +70,41 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(final CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().length() == 0) {
+               /* if (charSequence.toString().length() == 0) {
                     payloadList.clear();
                     adapter.notifyDataSetChanged();
                 } else {
-                    new Handler().postDelayed(new Runnable() {
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             searchQuery(charSequence.toString());
                         }
                     }, 1000);
+                }*/
+
+                if (timer != null) {
+                    timer.cancel();
                 }
+
+                timer = new CountDownTimer(1000, 500) {
+
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    public void onFinish() {
+                        if (charSequence.toString().length() > 0) {
+                            searchQuery(charSequence.toString());
+                        } else {
+                            binding.ivNdf.setVisibility(View.GONE);
+                            binding.progressBar.setVisibility(View.GONE);
+                            binding.recyclerView.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                }.start();
+
             }
 
             @Override
@@ -93,6 +124,7 @@ public class SearchActivity extends AppCompatActivity {
     private void searchQuery(String query) {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.GONE);
+        binding.ivNdf.setVisibility(View.GONE);
         viewModel.fetchData(query);
         viewModel.getSearchResponse().observe(this, new Observer<SearchResponse>() {
             @Override
@@ -100,13 +132,17 @@ public class SearchActivity extends AppCompatActivity {
                 if (!searchResponse.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.recyclerView.setVisibility(View.VISIBLE);
+                    binding.ivNdf.setVisibility(View.GONE);
                     if (payloadList != null) {
                         payloadList.clear();
                         payloadList.addAll(searchResponse.getPayload());
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    Utils.ShowToast(SearchActivity.this, searchResponse.getMessage());
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.recyclerView.setVisibility(View.GONE);
+                    binding.ivNdf.setVisibility(View.VISIBLE);
+
                 }
             }
         });

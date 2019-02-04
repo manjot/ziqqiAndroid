@@ -30,7 +30,7 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public void initHomeCategories() {
-        if (this.homeCategoryResponse != null) {
+        if (homeCategoryResponse != null) {
           /*  progressVisibility.set(View.GONE);
             mainLayoutVisibility.set(View.VISIBLE);*/
         } else {
@@ -45,6 +45,6 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<HomeCategoriesResponse> getHomeCategoryResponse() {
-        return this.homeCategoryResponse;
+        return homeCategoryResponse;
     }
 }

@@ -5,12 +5,10 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
-import com.ziqqi.R;
-import com.ziqqi.ShowAndHidePasswordListener;
+import com.ziqqi.model.VerifyOtpResponse;
 import com.ziqqi.model.signup.SignUpResponse;
 import com.ziqqi.repository.SignUpRepository;
 import com.ziqqi.utils.Utils;
@@ -31,6 +29,7 @@ public class SignUpViewModel extends AndroidViewModel {
 
     SignUpRepository repository;
     MutableLiveData<SignUpResponse> signUpResponse;
+    MutableLiveData<VerifyOtpResponse> verifyOtpResponse;
 
     public SignUpViewModel(@NonNull Application application) {
         super(application);
@@ -45,10 +44,18 @@ public class SignUpViewModel extends AndroidViewModel {
             Log.e("EMAIL ", email.get());
             Utils.ShowToast(getApplication().getApplicationContext(), "Wrong Email Address");
             return false;
+        } else if (Utils.isValidName(firstName.get()) || Utils.isValidName(lastName.get())) {
+            Log.e("EMAIL ", email.get());
+            if (Utils.isValidName(firstName.get())) {
+                Utils.ShowToast(getApplication().getApplicationContext(), "Wrong First Name");
+            } else {
+                Utils.ShowToast(getApplication().getApplicationContext(), "Wrong Last Name");
+            }
+            return false;
         } else if (password.get().length() < 6) {
             Utils.ShowToast(getApplication().getApplicationContext(), "Password must contain minimum 6 letters");
             return false;
-        } else if (mobileNumber.get().length() != 10) {
+        } else if (mobileNumber.get().length() != 10 || !Utils.isValidPhone(mobileNumber.get())) {
             Utils.ShowToast(getApplication().getApplicationContext(), "Wrong Mobile Number");
             return false;
         } else return true;
@@ -75,8 +82,20 @@ public class SignUpViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<SignUpResponse> getSignUpResponse() {
-        if (signUpResponse != null) {
             return signUpResponse;
+    }
+
+    public MutableLiveData<VerifyOtpResponse> getVerifyOtp() {
+        if (verifyOtpResponse != null) {
+            return verifyOtpResponse;
         } else return null;
+    }
+
+    public void verifyOtp(int customerId, int otp) {
+        if (verifyOtpResponse != null) {
+
+        } else {
+            verifyOtpResponse = repository.verifyOtpResponse(customerId, otp);
+        }
     }
 }

@@ -48,7 +48,7 @@ public class Payload {
     private String categoryImage;
     @SerializedName("bestsellerProduct")
     @Expose
-    private List<Object> bestsellerProduct = null;
+    private List<BestsellerProduct> bestsellerProduct = null;
 
     public String getId() {
         return id;
@@ -154,11 +154,11 @@ public class Payload {
         this.categoryImage = categoryImage;
     }
 
-    public List<Object> getBestsellerProduct() {
+    public List<BestsellerProduct> getBestsellerProduct() {
         return bestsellerProduct;
     }
 
-    public void setBestsellerProduct(List<Object> bestsellerProduct) {
+    public void setBestsellerProduct(List<BestsellerProduct> bestsellerProduct) {
         this.bestsellerProduct = bestsellerProduct;
     }
 

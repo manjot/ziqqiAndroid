@@ -2,14 +2,21 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,6 +36,7 @@ import com.google.android.gms.tasks.Task;
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityLoginBinding;
 import com.ziqqi.model.loginResponse.LoginResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.PreferenceManager;
@@ -53,6 +61,12 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding loginBinding;
     String deviceId;
 
+    Animation popEnter, popExit;
+    boolean hasEmailAnimation = false;
+    boolean hasPasswordAnimation = false;
+
+    AlertDialog.Builder builder;
+
     public static final int RC_SIGN_IN = 1234;
 
     @Override
@@ -71,17 +85,104 @@ public class LoginActivity extends AppCompatActivity {
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("user_photos", "email", "user_birthday", "public_profile"));
-                startFacebookLogin(callbackManager);
+                if (ConnectivityHelper.isConnectedToNetwork(LoginActivity.this)) {
+                    LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email", "public_profile"));
+                    startFacebookLogin(callbackManager);
+                } else {
+                    //showAlert("f");
+                    Utils.ShowToast(LoginActivity.this, "No Internet Connection");
+                }
             }
         });
 
         btnGmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signInWithGoogle();
+                if (ConnectivityHelper.isConnectedToNetwork(LoginActivity.this)) {
+                    signInWithGoogle();
+                } else {
+                    // showAlert("g");
+                    Utils.ShowToast(LoginActivity.this, "No Internet Connection");
+                }
             }
         });
+
+        loginBinding.etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (Utils.isValidEmail(loginBinding.etEmail.getText().toString())) {
+                    if (!hasEmailAnimation) {
+                        loginBinding.ivEmail.startAnimation(popEnter);
+                        loginBinding.ivEmail.setVisibility(View.VISIBLE);
+                        hasEmailAnimation = true;
+                    }
+                } else {
+                    if (loginBinding.ivEmail.getVisibility() == View.VISIBLE) {
+                        loginBinding.ivEmail.startAnimation(popExit);
+                        loginBinding.ivEmail.setVisibility(View.GONE);
+                        hasEmailAnimation = false;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        loginBinding.etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().length() >= 6) {
+                    if (!hasPasswordAnimation) {
+                        loginBinding.ivPassword.startAnimation(popEnter);
+                        loginBinding.ivPassword.setVisibility(View.VISIBLE);
+                        hasPasswordAnimation = true;
+                    }
+                } else {
+                    if (loginBinding.ivPassword.getVisibility() == View.VISIBLE) {
+                        loginBinding.ivPassword.startAnimation(popExit);
+                        loginBinding.ivPassword.setVisibility(View.GONE);
+                        hasPasswordAnimation = false;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void showAlert(final String type) {
+        builder.setTitle("")
+                .setMessage("No Internet Connection")
+                .setPositiveButton(R.string.try_again, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (type.equals("g")) {
+                            signInWithGoogle();
+                        } else if (type.equals("f")) {
+                            startFacebookLogin(callbackManager);
+                        } else {
+                            signIn();
+                        }
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
     }
 
     private void setUpFonts() {
@@ -100,6 +201,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signInWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        loginBinding.progressBar.setVisibility(View.VISIBLE);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -110,7 +212,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         try {
-                            sendReqToServer(object.getString("first_name"), object.getString("last_name"), object.getString("email"), "f", accessToken.getUserId());
+                            if (object.has("email")) {
+                                sendReqToServer(object.getString("first_name"), object.getString("last_name"), object.getString("email"), "f", accessToken.getUserId());
+                            }
+                            else {
+                                sendReqToServer(object.getString("first_name"), object.getString("last_name"), "", "f", accessToken.getUserId());
+
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -129,7 +237,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "f");
                 gettingFacebookData(loginResult.getAccessToken());
-
             }
 
             @Override
@@ -158,6 +265,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "g");
+        loginBinding.progressBar.setVisibility(View.GONE);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             Log.e("GoogleSIgnIn", acct.getGivenName());
@@ -184,6 +292,16 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+
+        popEnter = AnimationUtils.loadAnimation(this, R.anim.pop_enter_animation);
+        popExit = AnimationUtils.loadAnimation(this, R.anim.pop_exit_animation);
+
     }
 
     public void onClickForgetPassword(View view) {
@@ -195,6 +313,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickSignIn(View view) {
+        if (ConnectivityHelper.isConnectedToNetwork(this))
+            signIn();
+        else
+            //showAlert("");
+            Utils.ShowToast(LoginActivity.this, "No Internet Connection");
+    }
+
+    private void signIn() {
         final HashMap<String, Object> loginRequest = new HashMap<>();
         loginRequest.put("username", loginBinding.etEmail.getText().toString());
         loginRequest.put("password", loginBinding.etPassword.getText().toString());
@@ -202,23 +328,27 @@ public class LoginActivity extends AppCompatActivity {
         loginRequest.put("device_type", 1);
 
         loginViewModel.init(loginRequest);
+        loginBinding.progressBar.setVisibility(View.VISIBLE);
         loginViewModel.getLoginResponse().observe(LoginActivity.this, new Observer<LoginResponse>() {
             @Override
             public void onChanged(@Nullable LoginResponse loginResponse) {
                 if (loginResponse.getError()) {
                     Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
+                    loginBinding.progressBar.setVisibility(View.GONE);
                 } else {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
                     PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
                     finishAffinity();
+                    loginBinding.progressBar.setVisibility(View.GONE);
+
                 }
             }
         });
     }
 
     public void sendReqToServer(String firstName, String lastName, String email, String type, String userId) {
-
+        loginBinding.progressBar.setVisibility(View.VISIBLE);
         HashMap<String, Object> socialLoginRequest = new HashMap<>();
         socialLoginRequest.put("email", email);
         socialLoginRequest.put("fname", firstName);
@@ -232,10 +362,13 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginResponse().observe(LoginActivity.this, new Observer<LoginResponse>() {
             @Override
             public void onChanged(@Nullable LoginResponse loginResponse) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
-                PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
-                finishAffinity();
+                loginBinding.progressBar.setVisibility(View.GONE);
+                if (!loginResponse.getError()) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
+                    PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                    finishAffinity();
+                }
             }
         });
     }

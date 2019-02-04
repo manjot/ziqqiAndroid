@@ -7,12 +7,12 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
-        app:cardCornerRadius="@dimen/_16sdp">
+        android:layout_marginBottom="@dimen/_2sdp"
+        app:cardCornerRadius="@dimen/_10sdp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
-            android:background="@color/colorPrimary">
+            android:layout_height="@dimen/_100sdp">
 
             <ImageView
                 android:id="@+id/iv_sub_category_image"
@@ -20,6 +20,7 @@
                 android:layout_height="@dimen/_80sdp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/apple" />
 
             <TextView
@@ -28,21 +29,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_2sdp"
-                android:alpha=".8"
-                android:background="@drawable/black_rounded"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
                 android:layout_marginLeft="@dimen/_3sdp"
                 android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:background="@drawable/black_rounded"
+                android:gravity="center"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingRight="@dimen/_16sdp"
                 android:paddingBottom="@dimen/_2sdp"
                 android:text="@string/mobiles"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_8sdp" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

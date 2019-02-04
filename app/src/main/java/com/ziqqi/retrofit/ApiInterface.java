@@ -1,5 +1,6 @@
 package com.ziqqi.retrofit;
 
+import com.ziqqi.model.VerifyOtpResponse;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.languagemodel.LanguageModel;
@@ -42,14 +43,18 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("home_categories")
-    Call<SubCategories> getSubCategories(@Field("category_id") String categoryId);
+    Call<HomeCategoriesResponse> getSubCategories(@Field("category_id") String categoryId);
 
     @FormUrlEncoded
     @POST("homesearch")
     Call<SearchResponse> getSearch(@Field("productname") String productName);
 
     @FormUrlEncoded
-    @POST("forget_password")
+    @POST("forgot_password")
     Call<String> getPassword(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("verifyotp")
+    Call<VerifyOtpResponse> verifyOtp(@Field("customer_id") int id, @Field("otp") int otp);
 
 }

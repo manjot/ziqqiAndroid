@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.model.searchmodel.Payload;
@@ -24,6 +26,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     List<Payload> payloadList;
     OnItemClickListener listener;
     Typeface regular, medium, light, bold;
+    CircularProgressDrawable drawable;
 
 
     public SearchAdapter(Context context, List<Payload> payloadList, OnItemClickListener listener) {
@@ -35,6 +38,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         medium = FontCache.get(resources.getString(R.string.medium), context);
         light = FontCache.get(resources.getString(R.string.light), context);
         bold = FontCache.get(resources.getString(R.string.bold), context);
+
+        drawable = new CircularProgressDrawable(context);
     }
 
     @NonNull
@@ -51,7 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         // holder.tvDesc.setText(Html.fromHtml(payloadList.get(i).getSmallDesc()));
         holder.tvMarketPrice.setText("$ " + payloadList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
-        Glide.with(context).load(payloadList.get(i).getImage().get(0)).into(holder.ivImage);
+        Glide.with(context).load(payloadList.get(i).getImage().get(0)).apply(RequestOptions.placeholderOf(drawable)).into(holder.ivImage);
     }
 
     @Override

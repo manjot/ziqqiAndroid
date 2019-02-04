@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
-import com.ziqqi.model.subcategoriesmodel.Payload;
+import com.ziqqi.model.homecategorymodel.Payload;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
 

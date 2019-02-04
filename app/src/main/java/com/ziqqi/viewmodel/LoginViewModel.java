@@ -22,10 +22,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void init(HashMap<String, Object> socialLoginRequest) {
-        if (loginResponse != null) {
-        } else {
-            loginResponse = repository.getLoginData(socialLoginRequest);
-        }
+        loginResponse = repository.getLoginData(socialLoginRequest);
     }
 
     public MutableLiveData<LoginResponse> getLoginResponse() {
