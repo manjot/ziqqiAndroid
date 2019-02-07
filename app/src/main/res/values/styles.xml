@@ -38,5 +38,9 @@
         <item name="android:windowExitAnimation">@anim/pop_exit_animation</item>
     </style>
 
+    <style name="navigationTheme" parent="AppTheme">
+        <item name="android:listDivider">@color/colorWhite</item>
+    </style>
+
 
 </resources>

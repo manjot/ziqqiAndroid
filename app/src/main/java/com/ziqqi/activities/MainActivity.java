@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Handler handler;
     ImageView ivProfilePic;
     TextView tvLogin;
+/*
+    ListView listView;
+*/
 
     GoogleSignInAccount acct;
     GoogleSignInOptions gso;
@@ -83,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DealsFragment dealsFragment;
     CallbackManager callbackManager;
     SubCategoryFragment mobileFragment, computerFragment, tvFragment, cameraFragment, gaminFragment, perfumesFragment, pharmacyFragment, superMarketFragment, appliancesFragment;
+    int[] navItems = {R.string.mob_and_tabs, R.string.computers, R.string.tv_and_audio, R.string.cameras, R.string.appliances, R.string.gaming, R.string.perfumes_and_beauty, R.string.pharmacy_and_health, R.string.supermarket, R.string.my_acc, R.string.wishlist, R.string.track_order};
+    int[] navIcons = {R.drawable.mobile, R.drawable.laptop, R.drawable.monitor, R.drawable.photo_camera, R.drawable.mixer, R.drawable.joystick, R.drawable.perfume, R.drawable.pharmacy, R.drawable.supermarket, R.drawable.avatar, R.drawable.like, R.drawable.tracking};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         bottomNavigationView = findViewById(R.id.navigation);
+/*
+        listView = findViewById(R.id.list_view);
+*/
 
         navigationView.setNavigationItemSelectedListener(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -114,6 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         perfumesFragment = new SubCategoryFragment();
         appliancesFragment = new SubCategoryFragment();
         superMarketFragment = new SubCategoryFragment();
+
+    /*    NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(this, navIcons, navItems);
+        listView.setAdapter(adapter);*/
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(toggle);
@@ -294,39 +305,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.mob_and_tabs:
                 if (!mobileFragment.isVisible())
-                    replaceFragment(mobileFragment, "1");
+                    replaceFragment(mobileFragment, Constants.MOBILE_AND_TABS);
                 break;
             case R.id.computers:
                 if (!computerFragment.isVisible())
-                    replaceFragment(computerFragment, "4");
+                    replaceFragment(computerFragment, Constants.COMPUTERS);
                 break;
             case R.id.tv_and_audio:
                 if (!tvFragment.isVisible())
-                    replaceFragment(tvFragment, "13");
+                    replaceFragment(tvFragment, Constants.TV_AND_AUDIO);
                 break;
             case R.id.cameras:
                 if (!cameraFragment.isVisible())
-                    replaceFragment(cameraFragment, "236");
+                    replaceFragment(cameraFragment, Constants.CAMERA);
                 break;
             case R.id.appliances:
                 if (!appliancesFragment.isVisible())
-                    replaceFragment(appliancesFragment, "18");
+                    replaceFragment(appliancesFragment, Constants.APPLAINCES);
                 break;
             case R.id.gaming:
                 if (!gaminFragment.isVisible())
-                    replaceFragment(gaminFragment, "8");
+                    replaceFragment(gaminFragment, Constants.GAMING);
                 break;
             case R.id.perfumes_and_beauty:
                 if (!perfumesFragment.isVisible())
-                    replaceFragment(perfumesFragment, "275");
+                    replaceFragment(perfumesFragment, Constants.PERFUMES_AND_BEAUTY);
                 break;
             case R.id.pharmacy_and_health:
                 if (!pharmacyFragment.isVisible())
-                    replaceFragment(pharmacyFragment, "376");
+                    replaceFragment(pharmacyFragment, Constants.PHARMACY_AND_HEALTH);
                 break;
             case R.id.supermarket:
                 if (!superMarketFragment.isVisible())
-                    replaceFragment(superMarketFragment, "297");
+                    replaceFragment(superMarketFragment, Constants.SUPERMARKET);
                 break;
         }
     }

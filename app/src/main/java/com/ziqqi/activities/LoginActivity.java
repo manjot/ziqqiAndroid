@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -50,6 +52,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static com.ziqqi.utils.Utils.setWindowFlag;
+
 public class LoginActivity extends AppCompatActivity {
     EditText etPassword;
     CallbackManager callbackManager;
@@ -72,6 +76,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+        //make fully Android Transparent Status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
@@ -214,8 +229,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             if (object.has("email")) {
                                 sendReqToServer(object.getString("first_name"), object.getString("last_name"), object.getString("email"), "f", accessToken.getUserId());
-                            }
-                            else {
+                            } else {
                                 sendReqToServer(object.getString("first_name"), object.getString("last_name"), "", "f", accessToken.getUserId());
 
                             }

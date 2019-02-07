@@ -12,4 +12,16 @@ public class Constants {
     public static final String LOGGED_IN = "logged in";
     public static final String LANG = "language";
     public static final String LANG_SELECTED = "lang selected";
+
+    /*Categories Id*/
+
+    public static final String MOBILE_AND_TABS = "1";
+    public static final String COMPUTERS = "4";
+    public static final String TV_AND_AUDIO = "6";
+    public static final String CAMERA = "7";
+    public static final String APPLAINCES = "18";
+    public static final String GAMING = "19";
+    public static final String PERFUMES_AND_BEAUTY = "275";
+    public static final String PHARMACY_AND_HEALTH = "276";
+    public static final String SUPERMARKET = "297";
 }

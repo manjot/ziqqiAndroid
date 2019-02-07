@@ -5,9 +5,9 @@ import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.languagemodel.LanguageModel;
 import com.ziqqi.model.loginResponse.LoginResponse;
+import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.signup.SignUpResponse;
-import com.ziqqi.model.subcategoriesmodel.SubCategories;
 
 import java.util.HashMap;
 
@@ -56,5 +56,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("verifyotp")
     Call<VerifyOtpResponse> verifyOtp(@Field("customer_id") int id, @Field("otp") int otp);
+
+    @FormUrlEncoded
+    @POST("getcategoryProduct")
+    Call<ProductCategory> getCategoryProduct(@Field("category_id") String id, @Field("page") String page);
 
 }

@@ -66,6 +66,11 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
             public void onItemClick(String id) {
                 setLocale("hi");
             }
+
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
         };
 
         rvSelectLanguage = findViewById(R.id.rv_select_language);

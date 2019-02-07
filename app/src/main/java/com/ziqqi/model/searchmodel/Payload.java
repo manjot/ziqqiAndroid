@@ -10,6 +10,19 @@ public class Payload {
     @SerializedName("id")
     @Expose
     private String id;
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    @SerializedName("sku")
+    @Expose
+
+    private String sku;
     @SerializedName("product_type")
     @Expose
     private String productType;

@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class BestSellerMainAdapter extends RecyclerView.Adapter<BestSellerMainAd
     public void onBindViewHolder(@NonNull BestSellerViewMainHolder holder, int i) {
         if (!payloadList.get(i).getBestsellerProduct().isEmpty()) {
             holder.tvBestSellerTitle.setText(payloadList.get(i).getName());
+            Log.e("IDDDDDD", payloadList.get(i).getId());
             bestSellerAdapter = new BestSellerAdapter(context, i, payloadList.get(i).getBestsellerProduct());
             holder.recyclerView.setAdapter(bestSellerAdapter);
         }
@@ -76,6 +78,12 @@ public class BestSellerMainAdapter extends RecyclerView.Adapter<BestSellerMainAd
             tvBestSellerTitle.setTypeface(medium);
             tvBestSellers.setTypeface(regular);
             tvViewAll.setTypeface(regular);
+            tvViewAll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(payloadList.get(getAdapterPosition()).getId(), "viewAll");
+                }
+            });
         }
     }
 }

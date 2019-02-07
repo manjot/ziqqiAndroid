@@ -16,26 +16,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48aefa66-8f6b-4895-bcd6-e1c32098a281" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/CountryCodeAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SubCategoryFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/Payload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/VerifyOtpResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/homecategorymodel/BestsellerProduct.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/Otpdetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/fade_in.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/anim/fade_out.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_categories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_country_code.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ViewAllProductsActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/NavigationDrawerAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/ViewAllProductAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productcategorymodel/Payload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productcategorymodel/ProductCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/Feature.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/Payload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/ProductDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/Review.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/ViewAllViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/test_mobile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/asset_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/led.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mobile.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/pharmacy.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/place_holder.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/supermarket.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/test_mobile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tv_screen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ziqqi_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_view_all_products.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_navigation_drawer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/last_grid_sub_category.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/OnItemClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/OnItemClickListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/Ziqqi.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/Ziqqi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ForgetPasswordActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ForgetPasswordActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SearchActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SearchActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SecondSplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SecondSplashActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SignUpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SignUpActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SelectYourLanguageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SelectYourLanguageActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SubCategoryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SubCategoryActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerMainAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerMainAdapter.java" afterDir="false" />
@@ -45,38 +67,37 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/TopCategoriesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/TopCategoriesAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/HomeFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SearchFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SearchFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/homecategorymodel/Payload.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/homecategorymodel/Payload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/Payload.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/Payload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/SignUpResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/SignUpResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/searchmodel/Payload.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/searchmodel/Payload.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/SignUpRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/SignUpRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/utils/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/utils/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/LoginViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/LoginViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SignUpViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SignUpViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SubCategoryViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SubCategoryViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/anim/pop_exit_animation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/anim/pop_exit_animation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/et_bg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/et_bg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/login_signup_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/login_signup_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/q.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/q.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/splash_drawable.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/splash_drawable.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tickmark.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tickmark.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/joystick.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/joystick.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/laptop.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/laptop.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/login_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/login_bg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/mixer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mixer.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/monitor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/monitor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/perfume.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/perfume.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/photo_camera.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/photo_camera.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/share.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/share.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/shopping_bag.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/shopping_bag.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/shopping_cart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/shopping_cart.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_forget_password.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_forget_password.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home_category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home_category.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_product_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_product_detail.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_second_splash.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_second_splash.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_your_language.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_your_language.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/best_seller_recycler_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/best_seller_recycler_view.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_best_seller.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_best_seller.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_grid_sub_categories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_grid_sub_categories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_select_language.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_select_language.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_mobiles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_mobiles.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_top_categories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_top_categories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/nav_header.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/nav_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/nav_menu.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ziqqiAndroid.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ziqqiAndroid.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -98,139 +119,7 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HomeFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/HomeFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TopCategoriesAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/TopCategoriesAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1272#1321#0" expanded="true" />
-                <element signature="e#2589#2818#0" expanded="true" />
-                <element signature="e#2817#2818#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageSliderAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/ImageSliderAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_home.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="74" column="20" lean-forward="true" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="20" />
-              <folding>
-                <element signature="e#943#957#0" expanded="true" />
-                <element signature="e#1239#1253#0" expanded="true" />
-                <element signature="e#1301#1315#0" expanded="true" />
-                <element signature="e#1361#1375#0" expanded="true" />
-                <element signature="e#1560#1574#0" expanded="true" />
-                <element signature="e#1662#1683#0" expanded="true" />
-                <element signature="e#1758#1773#0" expanded="true" />
-                <element signature="e#1811#1826#0" expanded="true" />
-                <element signature="e#2482#2498#0" expanded="true" />
-                <element signature="e#2985#2999#0" expanded="true" />
-                <element signature="e#3108#3122#0" expanded="true" />
-                <element signature="e#3160#3174#0" expanded="true" />
-                <element signature="e#3215#3229#0" expanded="true" />
-                <element signature="e#3343#3357#0" expanded="true" />
-                <element signature="e#3753#3768#0" expanded="true" />
-                <element signature="e#3818#3833#0" expanded="true" />
-                <element signature="e#3813#3827#0" expanded="true" />
-                <element signature="e#3871#3885#0" expanded="true" />
-                <element signature="e#3931#3945#0" expanded="true" />
-                <element signature="e#3992#4006#0" expanded="true" />
-                <element signature="e#4044#4061#0" expanded="true" />
-                <element signature="e#4216#4231#0" expanded="true" />
-                <element signature="e#4648#4663#0" expanded="true" />
-                <element signature="e#4715#4730#0" expanded="true" />
-                <element signature="e#5598#5613#0" expanded="true" />
-                <element signature="e#5663#5677#0" expanded="true" />
-                <element signature="e#5729#5744#0" expanded="true" />
-                <element signature="e#6459#6475#0" expanded="true" />
-                <element signature="e#6602#6617#0" expanded="true" />
-                <element signature="e#6667#6681#0" expanded="true" />
-                <element signature="e#6733#6748#0" expanded="true" />
-                <element signature="e#6801#6816#0" expanded="true" />
-                <element signature="e#7105#7121#0" expanded="true" />
-                <element signature="e#7344#7360#0" expanded="true" />
-                <element signature="e#7789#7803#0" expanded="true" />
-                <element signature="e#7909#7923#0" expanded="true" />
-                <element signature="e#7969#7986#0" expanded="true" />
-                <element signature="e#8165#8180#0" expanded="true" />
-                <element signature="e#8538#8554#0" expanded="true" />
-                <element signature="e#9112#9126#0" expanded="true" />
-                <element signature="e#9179#9193#0" expanded="true" />
-                <element signature="e#9520#9534#0" expanded="true" />
-                <element signature="e#9583#9597#0" expanded="true" />
-                <element signature="e#9645#9658#0" expanded="true" />
-                <element signature="e#9709#9722#0" expanded="true" />
-                <element signature="e#9764#9783#0" expanded="true" />
-                <element signature="e#9895#9909#0" expanded="true" />
-                <element signature="e#10256#10269#0" expanded="true" />
-                <element signature="e#10319#10333#0" expanded="true" />
-                <element signature="e#10384#10397#0" expanded="true" />
-                <element signature="e#10439#10456#0" expanded="true" />
-                <element signature="e#10502#10516#0" expanded="true" />
-                <element signature="e#10934#10948#0" expanded="true" />
-                <element signature="e#11004#11018#0" expanded="true" />
-                <element signature="e#11189#11203#0" expanded="true" />
-                <element signature="e#11251#11264#0" expanded="true" />
-                <element signature="e#11314#11328#0" expanded="true" />
-                <element signature="e#11379#11392#0" expanded="true" />
-                <element signature="e#11434#11452#0" expanded="true" />
-                <element signature="e#11564#11578#0" expanded="true" />
-                <element signature="e#11970#11985#0" expanded="true" />
-                <element signature="e#12035#12049#0" expanded="true" />
-                <element signature="e#12102#12116#0" expanded="true" />
-                <element signature="e#12801#12816#0" expanded="true" />
-                <element signature="e#12858#12876#0" expanded="true" />
-                <element signature="e#13043#13058#0" expanded="true" />
-                <element signature="e#13416#13431#0" expanded="true" />
-                <element signature="e#13473#13501#0" expanded="true" />
-                <element signature="e#13613#13628#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="item_top_categories.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_top_categories.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#510#526#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -257,6 +146,11 @@
       <find>asL</find>
       <find>finis</find>
       <find>replace</find>
+      <find>tvTop</find>
+      <find>R.lay</find>
+      <find>cv_las</find>
+      <find>tvTitle</find>
+      <find>NavigationView_itemHorizontalPadding</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2617,57 +2511,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/Ziqqi.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SecondSplashActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/LoginViewModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_second_splash.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/splash_drawable.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/tick.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/tickmark.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/anim/pop_animation.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/anim/pop_exit_animation.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ForgetPasswordActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/OnItemClickListener.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/Payload.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/SignUpRepository.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SignUpViewModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/HomeViewModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/utils/Utils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home_category.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_grid_sub_categories.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SearchActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/nav_header.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/CategoriesFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerMainAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SubCategoryViewModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SubCategoryActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_best_seller.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/SubCategoryAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/SearchAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/anim/fade_in.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/anim/fade_out.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SubCategoryFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/CountryCodeAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_country_code.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SignUpActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SearchFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/HomeFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/TopCategoriesAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home_category.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_navigation_drawer.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/NavigationDrawerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/mobile.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/ImageSliderAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_top_categories.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/SearchAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/SubCategoryAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/Feature.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_product_detail.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ViewAllProducts.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productcategorymodel/Payload.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/OnItemClickListener.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SearchFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SelectYourLanguageActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SearchActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/ViewAllProductAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/asset_1.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/laptop.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/monitor.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/photo_camera.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/mixer.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/joystick.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/perfume.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/supermarket.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/pharmacy.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_view_all_products.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/ViewAllViewModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ViewAllProductsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_mobiles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_best_seller.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/best_seller_recycler_view.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerMainAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SubCategoryActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/HomeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_top_categories.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/TopCategoriesAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_forget_password.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/nav_menu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       </list>
     </option>
   </component>
@@ -2682,6 +2576,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -2706,6 +2603,14 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="ziqqi" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="ziqqi" type="462c0819:PsiDirectoryNode" />
+              <item name="activities" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
@@ -2738,7 +2643,31 @@
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="ziqqi" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="subcategoriesmodel" type="462c0819:PsiDirectoryNode" />
+              <item name="productcategorymodel" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="ziqqi" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="ziqqi" type="462c0819:PsiDirectoryNode" />
+              <item name="retrofit" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="ziqqi" type="462c0819:PsiDirectoryNode" />
+              <item name="viewmodel" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
@@ -2749,7 +2678,7 @@
               <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="anim" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
@@ -2763,13 +2692,14 @@
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
               <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
+            <path>
+              <item name="ziqqiAndroid" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2777,6 +2707,7 @@
     <property name="DEBUGGABLE_PROCESS" value="com.ziqqi" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="NavigationView&#9;PSI&#9;JAVA://com.ziqqi.R.styleable#NavigationView" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="device.picker.selection" value="1b20372" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
@@ -2784,11 +2715,15 @@
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
   </component>
   <component name="RecentsManager">
+    <key name="android.template.packageName">
+      <recent name="com.ziqqi.activities" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/homecategorymodel" />
-      <recent name="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model" />
-      <recent name="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productcategorymodel" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/homecategorymodel" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -2946,42 +2881,76 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1303" height="780" extended-state="6" />
+    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Build Variants" order="2" sideWeight="0.50179857" side_tool="true" weight="0.24940239" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info active="true" anchor="right" id="Preview" order="3" visible="true" weight="0.25816733" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info id="Build Variants" order="3" sideWeight="0.50179857" side_tool="true" weight="0.24940239" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="right" id="Material Palette" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Logcat" order="7" weight="0.10552764" />
-      <window_info id="Captures" order="2" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49820143" visible="true" weight="0.24940239" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.0" />
-      <window_info anchor="right" id="Gradle" order="3" />
+      <window_info anchor="bottom" id="Logcat" order="9" visible="true" weight="0.08207705" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info anchor="bottom" id="Build" order="12" weight="0.81407034" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.67839193" />
-      <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" id="Device File Explorer" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" x="0" y="0" width="275" height="580" id="Documentation" order="10" sideWeight="0.50547445" side_tool="true" weight="0.28605577" />
+      <window_info anchor="right" id="Preview" order="7" sideWeight="0.49452555" weight="0.28605577" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info id="Captures" order="4" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49820143" visible="true" weight="0.24940239" />
+      <window_info anchor="right" id="Gradle" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" x="0" y="0" width="275" height="572" id="Documentation" order="3" side_tool="true" weight="0.32988048" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="bottom" id="Build" order="12" weight="0.0" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Build Variants" order="3" sideWeight="0.50179857" side_tool="true" weight="0.24940239" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Android Profiler" order="7" />
+      <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info id="Captures" order="4" weight="0.25" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="right" id="Preview" order="4" visible="true" weight="0.28605577" />
+      <window_info anchor="right" x="0" y="0" width="275" height="572" id="Documentation" order="5" side_tool="true" weight="0.32988048" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Device File Explorer" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Logcat" order="9" visible="true" weight="0.072026804" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="right" id="Gradle" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49820143" visible="true" weight="0.24940239" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Material Palette" order="8" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.67839193" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -2995,8 +2964,14 @@
           <properties />
           <option name="timeStamp" value="7" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/utils/Constants.java</url>
+          <line>13</line>
+          <properties field="LANG_SELECTED" class="com.ziqqi.utils.Constants" />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="17" />
+      <option name="time" value="18" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -3024,97 +2999,286 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/Payload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1026">
-          <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/SignUpResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="19" column="14" lean-forward="true" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/signup/Otpdetails.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/Payload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/VerifyOtpResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-18">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/SignUpRepository.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_product_detail.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="666">
-          <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
+          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+          <folding>
+            <element signature="e#883#899#0" expanded="true" />
+            <element signature="e#1265#1279#0" expanded="true" />
+            <element signature="e#1372#1386#0" expanded="true" />
+            <element signature="e#1416#1430#0" expanded="true" />
+            <element signature="e#1463#1477#0" expanded="true" />
+            <element signature="e#1575#1589#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productcategorymodel/Payload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="105" column="59" lean-forward="true" selection-start-line="105" selection-start-column="59" selection-end-line="105" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SignUpViewModel.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/LoginViewModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="65" column="16" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="16" />
+        <state relative-caret-position="72">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SearchViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="31" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/SearchAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="43" column="6" lean-forward="true" selection-start-line="43" selection-start-column="6" selection-end-line="44" selection-end-column="46" />
           <folding>
-            <element signature="e#3789#3790#0" expanded="true" />
-            <element signature="e#3830#3831#0" expanded="true" />
+            <element signature="e#2351#2352#0" expanded="true" />
+            <element signature="e#2392#2393#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/utils/Utils.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/OnItemClickListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="50" column="46" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
+        <state relative-caret-position="108">
+          <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/LoginActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SelectYourLanguageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
-          <caret line="214" column="32" selection-start-line="214" selection-start-column="32" selection-end-line="214" selection-end-column="32" />
+        <state relative-caret-position="179">
+          <caret line="71" selection-start-line="71" selection-end-line="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SearchFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="119" selection-start-line="119" selection-end-line="119" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="60" column="15" selection-start-line="60" selection-start-column="15" selection-end-line="60" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-189">
+          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
+          <folding>
+            <element signature="e#1059#1077#0" expanded="true" />
+            <element signature="e#1177#1195#0" expanded="true" />
+            <element signature="e#1352#1382#0" expanded="true" />
+            <element signature="e#1592#1632#0" expanded="true" />
+            <element signature="e#1790#1822#0" expanded="true" />
+            <element signature="e#1992#2037#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/asset_1.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+            <element signature="e#159#174#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/laptop.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/monitor.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/photo_camera.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/mixer.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/joystick.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/perfume.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+            <element signature="e#159#174#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/supermarket.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/pharmacy.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="32" lean-forward="true" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+          <folding>
+            <element signature="e#124#139#0" expanded="true" />
+            <element signature="e#159#174#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_view_all_products.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="51" column="50" selection-start-line="51" selection-start-column="50" selection-end-line="51" selection-end-column="50" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SearchActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="141" column="46" selection-start-line="141" selection-start-column="46" selection-end-line="141" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/ViewAllViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="20" column="67" selection-start-line="20" selection-start-column="67" selection-end-line="20" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home_category.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-108">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+          <folding>
+            <element signature="e#780#794#0" expanded="true" />
+            <element signature="e#1287#1302#0" expanded="true" />
+            <element signature="e#2259#2275#0" expanded="true" />
+            <element signature="e#2863#2877#0" expanded="true" />
+            <element signature="e#2927#2942#0" expanded="true" />
+            <element signature="e#2992#3006#0" expanded="true" />
+            <element signature="e#3373#3387#0" expanded="true" />
+            <element signature="e#3437#3452#0" expanded="true" />
+            <element signature="e#3502#3516#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ViewAllProductsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/ViewAllProductAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2838#3396#0" expanded="true" />
-            <element signature="e#3395#3396#0" expanded="true" />
-            <element signature="e#3436#3843#0" expanded="true" />
-            <element signature="e#3842#3843#0" expanded="true" />
-            <element signature="e#6278#6296#0" expanded="true" />
-            <element signature="e#6298#6767#0" expanded="true" />
-            <element signature="e#6766#6767#0" expanded="true" />
-            <element signature="e#6936#6978#0" expanded="true" />
-            <element signature="e#7027#7068#0" expanded="true" />
-            <element signature="e#7116#7156#0" expanded="true" />
-            <element signature="e#7949#8775#0" expanded="true" />
-            <element signature="e#8774#8775#0" expanded="true" />
-            <element signature="e#11693#11694#0" expanded="true" />
-            <element signature="e#11762#11763#0" expanded="true" />
-            <element signature="e#12675#13435#0" expanded="true" />
-            <element signature="e#13434#13435#0" expanded="true" />
-            <element signature="e#14176#14751#0" expanded="true" />
-            <element signature="e#14750#14751#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_mobiles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        <state relative-caret-position="224">
+          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
           <folding>
-            <element signature="e#1380#1395#0" expanded="true" />
+            <element signature="e#540#554#0" expanded="true" />
+            <element signature="e#1078#1092#0" expanded="true" />
+            <element signature="e#1207#1222#0" expanded="true" />
+            <element signature="e#1701#1716#0" expanded="true" />
+            <element signature="e#2166#2180#0" expanded="true" />
+            <element signature="e#2622#2636#0" expanded="true" />
+            <element signature="e#2902#2916#0" expanded="true" />
+            <element signature="e#2950#2964#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_best_seller.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
@@ -3123,20 +3287,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/best_seller_recycler_view.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_grid_sub_categories.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+        <state relative-caret-position="90">
+          <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
           <folding>
-            <element signature="e#367#383#0" expanded="true" />
-            <element signature="e#420#434#0" expanded="true" />
-            <element signature="e#413#428#0" expanded="true" />
+            <element signature="e#394#408#0" expanded="true" />
+            <element signature="e#393#408#0" expanded="true" />
+            <element signature="e#444#458#0" expanded="true" />
+            <element signature="e#445#460#0" expanded="true" />
+            <element signature="e#754#768#0" expanded="true" />
+            <element signature="e#803#817#0" expanded="true" />
+            <element signature="e#843#862#0" expanded="true" />
+            <element signature="e#1266#1281#0" expanded="true" />
+            <element signature="e#1316#1330#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3144,341 +3306,35 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2052">
-          <caret line="114" column="36" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_categories.xml">
-      <provider editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/nav_menu.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ccp-2.2.3.aar/b03e77e3b92f8808f2e2efb4fd9763f6/res/values/values.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="73" column="18" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-hi/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home_category.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="85" column="66" selection-start-line="78" selection-start-column="19" selection-end-line="85" selection-end-column="66" />
-          <folding>
-            <element signature="e#624#638#0" expanded="true" />
-            <element signature="e#1286#1301#0" expanded="true" />
-            <element signature="e#1391#1409#0" expanded="true" />
-            <element signature="e#1552#1566#0" expanded="true" />
-            <element signature="e#2457#2473#0" expanded="true" />
-            <element signature="e#3061#3075#0" expanded="true" />
-            <element signature="e#3125#3140#0" expanded="true" />
-            <element signature="e#3190#3204#0" expanded="true" />
-            <element signature="e#3571#3585#0" expanded="true" />
-            <element signature="e#3635#3650#0" expanded="true" />
-            <element signature="e#3700#3714#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/subcategoriesmodel/Payload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/subcategoriesmodel/BestsellerProduct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/homecategorymodel/BestsellerProduct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="9" column="11" lean-forward="true" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/HomeViewModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="38" column="53" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="997">
-          <caret line="69" column="67" selection-start-line="69" selection-start-column="67" selection-end-line="69" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/SubCategoryViewModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="27" column="49" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/homecategorymodel/HomeCategoriesResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-          <folding>
-            <element signature="e#1031#1032#0" expanded="true" />
-            <element signature="e#1061#1062#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="45" column="31" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
+        <state relative-caret-position="126">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SubCategoryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="39" column="34" selection-start-line="39" selection-end-line="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="36">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerMainAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="49" column="46" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="46" />
+        <state relative-caret-position="486">
+          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3318#3553#0" expanded="true" />
+            <element signature="e#3552#3553#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_best_seller.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="36" column="53" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
-          <folding>
-            <element signature="e#1630#1635#0" expanded="true" />
-            <element signature="e#1745#1750#0" expanded="true" />
-            <element signature="e#1950#1955#0" expanded="true" />
-            <element signature="e#2020#2025#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BestSellerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/SearchAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="56" column="78" selection-start-line="56" selection-start-column="78" selection-end-line="56" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/SubCategoryAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="48" column="121" selection-start-line="48" selection-start-column="121" selection-end-line="48" selection-end-column="121" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1024#1073#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/fade_out.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/7fc2545e23d02daada8c1114476951c7/jars/classes.jar!/android/support/v4/app/FragmentTransaction.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="67" column="49" selection-start-line="67" selection-start-column="49" selection-end-line="67" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/fade_in.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SubCategoryFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="122" column="42" selection-start-line="122" selection-start-column="42" selection-end-line="122" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4031#4958#0" expanded="true" />
-            <element signature="e#4957#4958#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/3222d96cf90d551c5a91cb20114bde02/jars/classes.jar!/android/support/constraint/ConstraintLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/CountryCodeAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="46" column="50" selection-start-line="46" selection-start-column="50" selection-end-line="46" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#785#834#0" expanded="true" />
-            <element signature="e#216#217#0" expanded="true" />
-            <element signature="e#240#241#0" expanded="true" />
-            <element signature="e#290#291#0" expanded="true" />
-            <element signature="e#317#318#0" expanded="true" />
-            <element signature="e#367#368#0" expanded="true" />
-            <element signature="e#391#392#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_country_code.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1574">
-          <caret line="6" column="10" lean-forward="true" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
-          <folding>
-            <element signature="e#1058#1073#0" expanded="true" />
-            <element signature="e#1144#1162#0" expanded="true" />
-            <element signature="e#1293#1308#0" expanded="true" />
-            <element signature="e#1889#1904#0" expanded="true" />
-            <element signature="e#2517#2537#0" expanded="true" />
-            <element signature="e#2818#2833#0" expanded="true" />
-            <element signature="e#2887#2901#0" expanded="true" />
-            <element signature="e#2955#2969#0" expanded="true" />
-            <element signature="e#3314#3329#0" expanded="true" />
-            <element signature="e#3380#3395#0" expanded="true" />
-            <element signature="e#3514#3529#0" expanded="true" />
-            <element signature="e#3926#3945#0" expanded="true" />
-            <element signature="e#4225#4239#0" expanded="true" />
-            <element signature="e#4293#4307#0" expanded="true" />
-            <element signature="e#4361#4376#0" expanded="true" />
-            <element signature="e#4542#4557#0" expanded="true" />
-            <element signature="e#4608#4623#0" expanded="true" />
-            <element signature="e#4741#4756#0" expanded="true" />
-            <element signature="e#5174#5190#0" expanded="true" />
-            <element signature="e#5446#5461#0" expanded="true" />
-            <element signature="e#5511#5526#0" expanded="true" />
-            <element signature="e#5631#5646#0" expanded="true" />
-            <element signature="e#5693#5708#0" expanded="true" />
-            <element signature="e#5815#5830#0" expanded="true" />
-            <element signature="e#6160#6178#0" expanded="true" />
-            <element signature="e#6670#6685#0" expanded="true" />
-            <element signature="e#6735#6750#0" expanded="true" />
-            <element signature="e#6851#6866#0" expanded="true" />
-            <element signature="e#6913#6928#0" expanded="true" />
-            <element signature="e#7038#7053#0" expanded="true" />
-            <element signature="e#7481#7496#0" expanded="true" />
-            <element signature="e#7542#7557#0" expanded="true" />
-            <element signature="e#7606#7620#0" expanded="true" />
-            <element signature="e#7793#7807#0" expanded="true" />
-            <element signature="e#7847#7861#0" expanded="true" />
-            <element signature="e#7895#7914#0" expanded="true" />
-            <element signature="e#7952#7967#0" expanded="true" />
-            <element signature="e#8325#8339#0" expanded="true" />
-            <element signature="e#8385#8399#0" expanded="true" />
-            <element signature="e#8448#8462#0" expanded="true" />
-            <element signature="e#8838#8853#0" expanded="true" />
-            <element signature="e#8895#8909#0" expanded="true" />
-            <element signature="e#9250#9273#0" expanded="true" />
-            <element signature="e#9558#9573#0" expanded="true" />
-            <element signature="e#9675#9690#0" expanded="true" />
-            <element signature="e#9741#9756#0" expanded="true" />
-            <element signature="e#9878#9893#0" expanded="true" />
-            <element signature="e#10360#10375#0" expanded="true" />
-            <element signature="e#10421#10436#0" expanded="true" />
-            <element signature="e#10485#10500#0" expanded="true" />
-            <element signature="e#10865#10879#0" expanded="true" />
-            <element signature="e#10984#10998#0" expanded="true" />
-            <element signature="e#11324#11338#0" expanded="true" />
-            <element signature="e#11445#11461#0" expanded="true" />
-            <element signature="e#11852#11867#0" expanded="true" />
-            <element signature="e#11913#11927#0" expanded="true" />
-            <element signature="e#11973#11988#0" expanded="true" />
-            <element signature="e#12037#12051#0" expanded="true" />
-            <element signature="e#12200#12218#0" expanded="true" />
-            <element signature="e#12256#12271#0" expanded="true" />
-            <element signature="e#12614#12628#0" expanded="true" />
-            <element signature="e#12674#12688#0" expanded="true" />
-            <element signature="e#12726#12741#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="4536">
+          <caret line="252" column="58" selection-start-line="252" selection-start-column="58" selection-end-line="252" selection-end-column="58" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
@@ -3487,176 +3343,173 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SignUpActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="813">
-          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2305#2347#0" expanded="true" />
-            <element signature="e#2396#2437#0" expanded="true" />
-            <element signature="e#2939#2985#0" expanded="true" />
-            <element signature="e#3010#3050#0" expanded="true" />
-            <element signature="e#3072#3109#0" expanded="true" />
-            <element signature="e#3131#3168#0" expanded="true" />
-            <element signature="e#3686#3730#0" expanded="true" />
-            <element signature="e#3840#3884#0" expanded="true" />
-            <element signature="e#4039#4083#0" expanded="true" />
-            <element signature="e#4360#5050#0" expanded="true" />
-            <element signature="e#5049#5050#0" expanded="true" />
-            <element signature="e#5298#6147#0" expanded="true" />
-            <element signature="e#6146#6147#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/SearchActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="158" column="5" lean-forward="true" selection-start-line="123" selection-start-column="3" selection-end-line="158" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="276" column="21" selection-start-line="276" selection-start-column="21" selection-end-line="276" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#11382#11524#0" expanded="true" />
-            <element signature="e#11523#11524#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/SearchFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="30" column="22" lean-forward="true" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-          <folding>
-            <element signature="e#2093#2133#0" expanded="true" />
-            <element signature="e#5559#5571#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="252">
+          <caret line="42" column="66" selection-start-line="42" selection-start-column="66" selection-end-line="42" selection-end-column="66" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/HomeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
+        <state relative-caret-position="846">
+          <caret line="85" column="40" selection-start-line="85" selection-start-column="40" selection-end-line="85" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_top_categories.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_forget_password.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="89" column="7" selection-start-line="89" selection-start-column="7" selection-end-line="93" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/not_namespaced_r_class_sources/debug/processDebugResources/r/com/ziqqi/R.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="19899" column="30" selection-start-line="19899" selection-start-column="30" selection-end-line="19899" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/TopCategoriesAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+        <state relative-caret-position="648">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1272#1321#0" expanded="true" />
-            <element signature="e#2589#2818#0" expanded="true" />
-            <element signature="e#2817#2818#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/ImageSliderAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/nav_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_top_categories.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#510#526#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="55">
+          <caret line="41" column="39" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="39" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="74" column="20" lean-forward="true" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="20" />
-          <folding>
-            <element signature="e#943#957#0" expanded="true" />
-            <element signature="e#1239#1253#0" expanded="true" />
-            <element signature="e#1301#1315#0" expanded="true" />
-            <element signature="e#1361#1375#0" expanded="true" />
-            <element signature="e#1560#1574#0" expanded="true" />
-            <element signature="e#1662#1683#0" expanded="true" />
-            <element signature="e#1758#1773#0" expanded="true" />
-            <element signature="e#1811#1826#0" expanded="true" />
-            <element signature="e#2482#2498#0" expanded="true" />
-            <element signature="e#2985#2999#0" expanded="true" />
-            <element signature="e#3108#3122#0" expanded="true" />
-            <element signature="e#3160#3174#0" expanded="true" />
-            <element signature="e#3215#3229#0" expanded="true" />
-            <element signature="e#3343#3357#0" expanded="true" />
-            <element signature="e#3753#3768#0" expanded="true" />
-            <element signature="e#3818#3833#0" expanded="true" />
-            <element signature="e#3813#3827#0" expanded="true" />
-            <element signature="e#3871#3885#0" expanded="true" />
-            <element signature="e#3931#3945#0" expanded="true" />
-            <element signature="e#3992#4006#0" expanded="true" />
-            <element signature="e#4044#4061#0" expanded="true" />
-            <element signature="e#4216#4231#0" expanded="true" />
-            <element signature="e#4648#4663#0" expanded="true" />
-            <element signature="e#4715#4730#0" expanded="true" />
-            <element signature="e#5598#5613#0" expanded="true" />
-            <element signature="e#5663#5677#0" expanded="true" />
-            <element signature="e#5729#5744#0" expanded="true" />
-            <element signature="e#6459#6475#0" expanded="true" />
-            <element signature="e#6602#6617#0" expanded="true" />
-            <element signature="e#6667#6681#0" expanded="true" />
-            <element signature="e#6733#6748#0" expanded="true" />
-            <element signature="e#6801#6816#0" expanded="true" />
-            <element signature="e#7105#7121#0" expanded="true" />
-            <element signature="e#7344#7360#0" expanded="true" />
-            <element signature="e#7789#7803#0" expanded="true" />
-            <element signature="e#7909#7923#0" expanded="true" />
-            <element signature="e#7969#7986#0" expanded="true" />
-            <element signature="e#8165#8180#0" expanded="true" />
-            <element signature="e#8538#8554#0" expanded="true" />
-            <element signature="e#9112#9126#0" expanded="true" />
-            <element signature="e#9179#9193#0" expanded="true" />
-            <element signature="e#9520#9534#0" expanded="true" />
-            <element signature="e#9583#9597#0" expanded="true" />
-            <element signature="e#9645#9658#0" expanded="true" />
-            <element signature="e#9709#9722#0" expanded="true" />
-            <element signature="e#9764#9783#0" expanded="true" />
-            <element signature="e#9895#9909#0" expanded="true" />
-            <element signature="e#10256#10269#0" expanded="true" />
-            <element signature="e#10319#10333#0" expanded="true" />
-            <element signature="e#10384#10397#0" expanded="true" />
-            <element signature="e#10439#10456#0" expanded="true" />
-            <element signature="e#10502#10516#0" expanded="true" />
-            <element signature="e#10934#10948#0" expanded="true" />
-            <element signature="e#11004#11018#0" expanded="true" />
-            <element signature="e#11189#11203#0" expanded="true" />
-            <element signature="e#11251#11264#0" expanded="true" />
-            <element signature="e#11314#11328#0" expanded="true" />
-            <element signature="e#11379#11392#0" expanded="true" />
-            <element signature="e#11434#11452#0" expanded="true" />
-            <element signature="e#11564#11578#0" expanded="true" />
-            <element signature="e#11970#11985#0" expanded="true" />
-            <element signature="e#12035#12049#0" expanded="true" />
-            <element signature="e#12102#12116#0" expanded="true" />
-            <element signature="e#12801#12816#0" expanded="true" />
-            <element signature="e#12858#12876#0" expanded="true" />
-            <element signature="e#13043#13058#0" expanded="true" />
-            <element signature="e#13416#13431#0" expanded="true" />
-            <element signature="e#13473#13501#0" expanded="true" />
-            <element signature="e#13613#13628#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="239">
+          <caret line="63" column="40" selection-start-line="63" selection-start-column="40" selection-end-line="63" selection-end-column="40" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="65" column="11" lean-forward="true" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#12158#12300#0" expanded="true" />
+            <element signature="e#12299#12300#0" expanded="true" />
+            <element signature="e#16257#17169#0" expanded="true" />
+            <element signature="e#17168#17169#0" expanded="true" />
+            <element signature="e#18628#18976#0" expanded="true" />
+            <element signature="e#18975#18976#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/fd4e4048ab09181da988c2444f8d5606/jars/classes.jar!/android/support/design/internal/NavigationSubMenu.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/fd4e4048ab09181da988c2444f8d5606/jars/classes.jar!/android/support/design/internal/NavigationMenu.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#587#588#0" expanded="true" />
+            <element signature="e#617#618#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/7f6faf680f7ddf433d3a9b57676fadf9/jars/classes.jar!/android/support/v7/widget/TintTypedArray.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="48" column="20" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/not_namespaced_r_class_sources/debug/processDebugResources/r/android/support/design/R.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="1800" lean-forward="true" selection-start-line="1800" selection-end-line="1800" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/fd4e4048ab09181da988c2444f8d5606/jars/classes.jar!/android/support/design/widget/NavigationView.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="50" column="47" selection-start-line="50" selection-start-column="47" selection-end-line="50" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#9595#9596#0" expanded="true" />
+            <element signature="e#9659#9660#0" expanded="true" />
+            <element signature="e#11043#11044#0" expanded="true" />
+            <element signature="e#11097#11098#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/fd4e4048ab09181da988c2444f8d5606/jars/classes.jar!/android/support/design/internal/ScrimInsetsFrameLayout.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

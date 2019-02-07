@@ -6,4 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProductDetailActivity">
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_search"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp" />
+
+            <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                android:id="@+id/circle_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_pager"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/_4sdp"
+                app:dotsColor="@color/colorStrokeGrey"
+                app:dotsCornerRadius="@dimen/_8sdp"
+                app:dotsSize="@dimen/_6sdp"
+                app:dotsSpacing="@dimen/_2sdp"
+                app:dotsStrokeColor="@color/colorStrokeGrey"
+                app:dotsStrokeWidth="@dimen/_1sdp" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

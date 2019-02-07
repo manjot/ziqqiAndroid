@@ -1,6 +1,5 @@
 package com.ziqqi.fragments;
 
-
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.SearchActivity;
 import com.ziqqi.activities.SubCategoryActivity;
+import com.ziqqi.activities.ViewAllProductsActivity;
 import com.ziqqi.adapters.BestSellerMainAdapter;
 import com.ziqqi.adapters.ImageSliderAdapter;
 import com.ziqqi.adapters.TopCategoriesAdapter;
@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment {
     List<com.ziqqi.model.homecategorymodel.Payload> homeCategoryListGrid2 = new ArrayList<>();
     List<com.ziqqi.model.homecategorymodel.Payload> payLoadData = new ArrayList<>();
     List<com.ziqqi.model.homecategorymodel.Payload> bestSellerPayloadList = new ArrayList<>();
-
 
     HomeViewModel viewModel;
     SpringDotsIndicator indicator;
@@ -92,7 +91,8 @@ public class HomeFragment extends Fragment {
         indicator = binding.circleIndicator;
 
         binding.tvSearch.setTypeface(FontCache.get(getResources().getString(R.string.light), getContext()));
-        binding.tvTopCategories.setTypeface(FontCache.get(getResources().getString(R.string.light), getContext()));
+        binding.tvTopCategories.setTypeface(FontCache.get(getResources().getString(R.string.bold), getContext()));
+        binding.tvCopyRight.setTypeface(FontCache.get(getResources().getString(R.string.regular), getContext()));
 
         imageSliderAdapter = new ImageSliderAdapter(getContext(), bannerImageList);
         viewPager.setAdapter(imageSliderAdapter);
@@ -109,6 +109,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(String id) {
                 startActivity(new Intent(getContext(), SubCategoryActivity.class).putExtra("categoryId", id));
+            }
+
+            @Override
+            public void onItemClick(String id, String type) {
+                startActivity(new Intent(getContext(), ViewAllProductsActivity.class).putExtra("categoryId", id));
             }
         };
 

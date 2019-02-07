@@ -16,13 +16,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:scaleType="centerInside"
-            android:src="@drawable/apple" />
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/tv_brand_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
             android:ellipsize="end"
             android:lines="1"
             android:paddingLeft="@dimen/_4sdp"
@@ -51,7 +51,7 @@
             android:paddingLeft="@dimen/_4sdp"
             android:paddingRight="@dimen/_4sdp"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_6sdp" />
 
         <TextView
             android:id="@+id/tv_market_price"

@@ -3,7 +3,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/mob_and_tabs"
-            android:icon="@drawable/mobile_phone_outline"
+            android:icon="@drawable/asset_1"
             android:title="@string/mob_and_tabs" />
         <item
             android:id="@+id/computers"
@@ -31,14 +31,16 @@
             android:title="@string/perfumes_and_beauty" />
         <item
             android:id="@+id/pharmacy_and_health"
-            android:icon="@drawable/medication"
+            android:icon="@drawable/pharmacy"
             android:title="@string/pharmacy_and_health" />
         <item
             android:id="@+id/supermarket"
-            android:icon="@drawable/shopping_bag"
+            android:icon="@drawable/supermarket"
             android:title="@string/supermarket" />
     </group>
-    <group android:id="@+id/group_divider" android:checkableBehavior="single">
+    <group
+        android:id="@+id/group_divider"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/my_account"
             android:icon="@drawable/avatar"

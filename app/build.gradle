@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:4.39.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.hbb20:ccp:2.2.3'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:2.1.2'

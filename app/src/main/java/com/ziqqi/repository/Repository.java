@@ -5,8 +5,8 @@ import android.util.Log;
 
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
-import com.ziqqi.model.subcategoriesmodel.SubCategories;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
 
@@ -82,7 +82,6 @@ public class Repository {
         return subCategoriesMutableLiveData;
     }
 
-
     public MutableLiveData<SearchResponse> getSearch(String productName) {
         final MutableLiveData<SearchResponse> searchResponse = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -100,4 +99,23 @@ public class Repository {
         });
         return searchResponse;
     }
+
+    public MutableLiveData<ProductCategory> getCategoryProducts(String id, String page) {
+        final MutableLiveData<ProductCategory> searchResponse = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ProductCategory> call = apiInterface.getCategoryProduct(id, page);
+        call.enqueue(new Callback<ProductCategory>() {
+            @Override
+            public void onResponse(Call<ProductCategory> call, Response<ProductCategory> response) {
+                searchResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ProductCategory> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return searchResponse;
+    }
+
 }

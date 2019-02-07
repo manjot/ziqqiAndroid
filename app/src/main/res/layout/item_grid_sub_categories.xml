@@ -18,10 +18,9 @@
                 android:id="@+id/iv_sub_category_image"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_80sdp"
-                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/apple" />
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/tv_sub_category_title"
@@ -38,7 +37,6 @@
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingRight="@dimen/_16sdp"
                 android:paddingBottom="@dimen/_2sdp"
-                android:text="@string/mobiles"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_8sdp" />
         </RelativeLayout>

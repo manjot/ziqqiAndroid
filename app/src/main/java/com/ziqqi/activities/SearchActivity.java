@@ -35,6 +35,7 @@ public class SearchActivity extends AppCompatActivity {
     LinearLayoutManager manager;
     SpacesItemDecoration spacesItemDecoration;
     List<Payload> payloadList = new ArrayList<>();
+    List<Payload> searchDataList = new ArrayList<>();
     OnItemClickListener listener;
     SearchAdapter adapter;
     long delay = 1000; // 1 seconds after user stops typing
@@ -118,6 +119,11 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(String id) {
 
             }
+
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
         };
     }
 
@@ -134,9 +140,10 @@ public class SearchActivity extends AppCompatActivity {
                     binding.recyclerView.setVisibility(View.VISIBLE);
                     binding.ivNdf.setVisibility(View.GONE);
                     if (payloadList != null) {
-                        payloadList.clear();
-                        payloadList.addAll(searchResponse.getPayload());
-                        adapter.notifyDataSetChanged();
+                        searchDataList.clear();
+                        payloadList = searchResponse.getPayload();
+                        searchDataList.addAll(payloadList);
+                       // adapter.notifyDataSetChanged();
                     }
                 } else {
                     binding.progressBar.setVisibility(View.GONE);
@@ -152,7 +159,7 @@ public class SearchActivity extends AppCompatActivity {
         manager = new GridLayoutManager(this, 3);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.recyclerView.setLayoutManager(manager);
-        adapter = new SearchAdapter(this, payloadList, listener);
+        adapter = new SearchAdapter(this, searchDataList, listener);
         binding.recyclerView.setAdapter(adapter);
         spacesItemDecoration = new SpacesItemDecoration(this, R.dimen.dp_4);
         binding.recyclerView.addItemDecoration(spacesItemDecoration);

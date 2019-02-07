@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -52,6 +53,18 @@ public class SubCategoryActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
+
+        listener = new OnItemClickListener() {
+            @Override
+            public void onItemClick(String id) {
+
+            }
+
+            @Override
+            public void onItemClick(String id, String type) {
+                startActivity(new Intent(SubCategoryActivity.this, ViewAllProductsActivity.class).putExtra("categoryId", id));
+            }
+        };
 
         setUpAdapter();
 
