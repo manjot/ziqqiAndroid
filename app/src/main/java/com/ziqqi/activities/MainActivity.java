@@ -43,6 +43,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ziqqi.R;
+import com.ziqqi.fragments.CartFragment;
 import com.ziqqi.fragments.DealsFragment;
 import com.ziqqi.fragments.HomeFragment;
 import com.ziqqi.fragments.ProfileFragment;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     HomeFragment homeFragment;
     SearchFragment searchFragment;
+    CartFragment cartFragment;
     DealsFragment dealsFragment;
     ProfileFragment profileFragment;
     CallbackManager callbackManager;
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         handler = new Handler();
         homeFragment = new HomeFragment();
         searchFragment = new SearchFragment();
+        cartFragment = new CartFragment();
         dealsFragment = new DealsFragment();
         profileFragment = new ProfileFragment();
         mobileFragment = new SubCategoryFragment();
@@ -301,7 +304,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (!searchFragment.isVisible())
                     replaceFragment(searchFragment, null);
                 break;
-
+            case R.id.bottom_nav_cart:
+                if (!cartFragment.isVisible())
+                    replaceFragment(cartFragment, null);
+                break;
             case R.id.bottom_nav_coupan:
                 if (!dealsFragment.isVisible())
                     replaceFragment(dealsFragment, null);
