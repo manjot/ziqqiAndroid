@@ -1,7 +1,11 @@
 package com.ziqqi.fragments;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.BestSellerAdapter;
+import com.ziqqi.adapters.SearchAdapter;
+import com.ziqqi.databinding.FragmentDealsBinding;
+import com.ziqqi.model.searchmodel.Payload;
+import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.utils.SpacesItemDecoration;
+import com.ziqqi.viewmodel.DealsViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +33,13 @@ import com.ziqqi.utils.SpacesItemDecoration;
 public class DealsFragment extends Fragment {
     RecyclerView rvDeals;
     LinearLayoutManager manager;
-    BestSellerAdapter adapter;
+    FragmentDealsBinding binding;
+    DealsViewModel viewModel;
+    List<Payload> payloadList = new ArrayList<>();
+    List<Payload> searchDataList = new ArrayList<>();
+    OnItemClickListener listener;
+    SearchAdapter adapter;
+    SpacesItemDecoration spacesItemDecoration;
 
     public DealsFragment() {
         // Required empty public constructor
@@ -31,19 +50,55 @@ public class DealsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_deals, container, false);
-
-        rvDeals = view.findViewById(R.id.rv_deals);
-/*        manager = new GridLayoutManager(getActivity(), 3);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvDeals.setLayoutManager(manager);
-        adapter = new BestSellerAdapter(getActivity());
-        rvDeals.setAdapter(adapter);
-
-        SpacesItemDecoration itemDecoration = new SpacesItemDecoration(getActivity(), R.dimen.dp_4, DealsFragment.this);
-        rvDeals.addItemDecoration(itemDecoration);*/
-
+        binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_deals, container, false);
+        viewModel = ViewModelProviders.of(this).get(DealsViewModel.class);
+        binding.executePendingBindings();
+        binding.setViewModel(viewModel);
+        binding.setViewModel(viewModel);
+        View view = binding.getRoot();
+        rvDeals = binding.rvDeals;
+        setUpAdapter();
+        searchQuery();
         return view;
+    }
+
+    private void searchQuery() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.rvDeals.setVisibility(View.GONE);
+        binding.ivNdf.setVisibility(View.GONE);
+        viewModel.fetchData("flip");
+        viewModel.getSearchResponse().observe(this, new Observer<SearchResponse>() {
+            @Override
+            public void onChanged(@Nullable SearchResponse searchResponse) {
+                if (!searchResponse.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.ivNdf.setVisibility(View.GONE);
+                    if (payloadList != null) {
+                        searchDataList.clear();
+                        payloadList = searchResponse.getPayload();
+                        searchDataList.addAll(payloadList);
+                        binding.rvDeals.setVisibility(View.VISIBLE);
+                        binding.progressBar.setVisibility(View.GONE);
+                        // adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.ivNdf.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+    }
+
+    private void setUpAdapter() {
+        manager = new GridLayoutManager(getContext(), 3);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.rvDeals.setLayoutManager(manager);
+        adapter = new SearchAdapter(getContext(), searchDataList, listener);
+        binding.rvDeals.setAdapter(adapter);
+        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
+        binding.rvDeals.addItemDecoration(spacesItemDecoration);
     }
 
 }

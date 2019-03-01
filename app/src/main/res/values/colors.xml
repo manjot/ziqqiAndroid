@@ -12,4 +12,5 @@
     <color name="colorSelected">#cccccc</color>
     <color name="colorBgNavigation">#796559</color>
     <color name="colorHeader">#ffedcc</color>
+    <color name="colorProfileList">#E8D8B9</color>
 </resources>

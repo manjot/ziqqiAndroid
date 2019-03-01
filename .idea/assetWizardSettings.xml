@@ -70,7 +70,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/neuron/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_shopping_cart_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_edit_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -80,9 +80,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="shopping_cart" />
+                            <entry key="outputName" value="ic_edit" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$USER_HOME$" />
+                            <entry key="sourceFile" value="C:\Users\shivi" />
                           </map>
                         </option>
                       </PersistentState>

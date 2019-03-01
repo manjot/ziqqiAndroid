@@ -71,6 +71,18 @@
     <string name="medium">fonts/medium.otf</string>
     <string name="bold">fonts/bold.otf</string>
     <string name="try_again">Try Again</string>
+    <string name="my_account">My Account</string>
+    <string name="my_order">My Order</string>
+    <string name="my_address_book">My Address Book</string>
+    <string name="country_and_language">Country And Language</string>
+    <string name="communication_preferences">Communication preferences</string>
+    <string name="help_center">Help Center</string>
+    <string name="share_with_friends">Share With Friends</string>
+    <string name="leave_feedback">Leave Feedback</string>
+    <string name="rate_us_on_playstore">Rate Us On Playstore</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_and_condition">Terms And Condition</string>
+    <string name="nimesh_ziqqi_com">nimesh@ziqqi.com</string>
 
 
 </resources>
