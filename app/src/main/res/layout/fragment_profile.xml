@@ -12,75 +12,116 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorHeader">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:fontFamily="@font/bold"
-                android:gravity="center"
-                android:text="@string/my_account"
-                android:textAllCaps="true"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_14sdp" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:src="@drawable/ic_person"
-                app:civ_border_color="@color/colorBlack"
-                app:civ_border_width="@dimen/_2sdp" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/medium"
-                    android:text="NIMESH MADUSHANKA"
-                    android:textAllCaps="true"
-                    android:layout_centerInParent="true"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_12sdp" />
+                android:background="@color/colorHeader">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_toRightOf="@+id/tvName"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/nav_back_pic_top"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:src="@drawable/ic_edit" />
+                    android:layout_alignParentEnd="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/nav_back_pic"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center"
+                        android:text="@string/my_account"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cv_profile_pic"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="@dimen/_35sdp">
+
+                        <ImageView
+                            android:id="@+id/iv_profile_pic"
+                            android:layout_gravity="center"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:src="@drawable/ic_person" />
+                    </android.support.v7.widget.CardView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="NIMESH MADUSHANKA"
+                            android:textAllCaps="true"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_toRightOf="@+id/tvName"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:src="@drawable/ic_edit" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="nimesh@ziqqi.com"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_12sdp" />
+
+                </LinearLayout>
+
+
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="nimesh@ziqqi.com"
-                android:layout_gravity="center"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_12sdp" />
+
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/colorProfileList"
                 android:padding="@dimen/_10sdp"
                 android:orientation="vertical">
@@ -91,6 +132,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/ll_my_order"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -100,7 +142,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_my_order" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -112,12 +154,13 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_my_address_book"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -127,7 +170,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_my_address_book" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -139,12 +182,13 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_country_lang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -154,7 +198,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_country" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -166,12 +210,13 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_communication"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -181,7 +226,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_communication" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -193,12 +238,13 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_help_center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -208,7 +254,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_help" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -220,12 +266,13 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_share"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -235,7 +282,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_share_png" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -247,12 +294,13 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_feedback"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -262,7 +310,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_feedback" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -274,12 +322,13 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_rate_playstore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -289,7 +338,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/shopping_cart" />
+                            android:src="@drawable/ic_rate" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -301,7 +350,7 @@
                             android:layout_gravity="center"
                             android:textAllCaps="true"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_12sdp" />
 
 
                     </LinearLayout>
@@ -311,67 +360,75 @@
 
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_20sdp">
+                android:background="@color/colorHeader"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/tv_toolbar_title"
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_20sdp">
+
+                    <ImageView
+                        android:id="@+id/tv_toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ziqqi_logo" />
+                </RelativeLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ziqqi_logo" />
-            </RelativeLayout>
+                    android:layout_gravity="center"
+                    android:background="@color/colorHeader"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/privacy_policy"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_gravity="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/terms_and_condition"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_gravity="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_8sdp" />
+
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
-                    android:text="@string/privacy_policy"
-                    android:padding="@dimen/_5sdp"
+                    android:text="Copyright @ 2018 ziqqi.com. All rights reserved."
                     android:layout_gravity="center"
-                    android:textAllCaps="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_8sdp" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorBlack"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:text="@string/terms_and_condition"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_gravity="center"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_8sdp" />
-
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:text="Copyright @ 2018 ziqqi.com. All rights reserved."
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_8sdp" />
-
-
-
 
 
         </LinearLayout>
