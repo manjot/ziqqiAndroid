@@ -13,4 +13,6 @@
     <color name="colorBgNavigation">#796559</color>
     <color name="colorHeader">#FFEDCC</color>
     <color name="colorProfileList">#E8D8B9</color>
+    <color name="colorLightText">#8E8E8E</color>
+    <color name="colorCard">#FCF89A</color>
 </resources>

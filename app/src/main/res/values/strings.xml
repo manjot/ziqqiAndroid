@@ -83,6 +83,23 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_and_condition">Terms And Condition</string>
     <string name="nimesh_ziqqi_com">nimesh@ziqqi.com</string>
+    <string name="your_cart_is_empty">Your cart is empty</string>
+    <string name="whoooops">Whoooops</string>
+    <string name="your_order">YOUR ORDER</string>
+    <string name="edit">Edit</string>
+    <string name="user_name">User Name</string>
+    <string name="choose_the_notifications_you_want_to_receive">Choose the notifications you want to receive.</string>
+    <string name="cp_note">Note : You will still receive notifications about your order transactions, shipments and account alerts</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="cp_note2">Note : You will still receive notifications about your order You are special ! Get personalized offers, promotions and coupons on your favorite brand and items.</string>
+    <string name="promotional">Promotional</string>
+    <string name="cp_note3">Stay updated on new launches, fresh deals, flash sales and lot more. Don’t miss an offer ever again.</string>
+    <string name="newsletters">Newsletters</string>
+    <string name="cp_note4">Stay informed about our latest campaigns, features and services.</string>
+    <string name="alerts">Alerts</string>
+    <string name="email_setting">Email</string>
+    <string name="push_notifications">Push Notifications</string>
+    <string name="sms">SMS</string>
 
 
 </resources>

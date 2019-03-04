@@ -1,9 +1,8 @@
 package com.ziqqi.fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ziqqi.R;
+import com.ziqqi.activities.CommunicationPrefActivity;
+import com.ziqqi.activities.MyAddressBookActivity;
+import com.ziqqi.activities.MyOrdersActivity;
+import com.ziqqi.activities.SelectYourLanguageActivity;
 import com.ziqqi.databinding.FragmentProfileBinding;
-import com.ziqqi.viewmodel.HomeViewModel;
 import com.ziqqi.viewmodel.ProfileViewModel;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment{
 
     FragmentProfileBinding binding;
     ProfileViewModel viewModel;
@@ -30,8 +32,31 @@ public class ProfileFragment extends Fragment {
                 inflater, R.layout.fragment_profile, container, false);
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
-        binding.setViewModel(viewModel);
         View view = binding.getRoot();
+        binding.llMyOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), MyOrdersActivity.class));
+            }
+        });
+        binding.llMyAddressBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), MyAddressBookActivity.class));
+            }
+        });
+        binding.llCountryLang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), SelectYourLanguageActivity.class));
+            }
+        });
+        binding.llCommunication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), CommunicationPrefActivity.class));
+            }
+        });
         return view;
     }
 
@@ -39,4 +64,5 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
 }
