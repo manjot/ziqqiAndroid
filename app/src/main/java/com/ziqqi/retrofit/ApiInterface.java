@@ -6,6 +6,7 @@ import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.languagemodel.LanguageModel;
 import com.ziqqi.model.loginResponse.LoginResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
+import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.signup.SignUpResponse;
 
@@ -60,5 +61,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("getcategoryProduct")
     Call<ProductCategory> getCategoryProduct(@Field("category_id") String id, @Field("page") String page);
+
+    @FormUrlEncoded
+    @POST("productDetails")
+    Call<ProductDetails> productDetails(@Field("product_id") int id);
 
 }

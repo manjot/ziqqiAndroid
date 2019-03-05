@@ -15,4 +15,7 @@
     <color name="colorProfileList">#E8D8B9</color>
     <color name="colorLightText">#8E8E8E</color>
     <color name="colorCard">#FCF89A</color>
+    <color name="colorSeacrhBox">#FEEBCB</color>
+    <color name="colorCardBox">#DAF4D0</color>
+    <color name="buttonColor">#ADD6AF</color>
 </resources>

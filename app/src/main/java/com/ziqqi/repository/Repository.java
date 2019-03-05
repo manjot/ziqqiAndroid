@@ -6,6 +6,7 @@ import android.util.Log;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
+import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
@@ -116,6 +117,24 @@ public class Repository {
             }
         });
         return searchResponse;
+    }
+
+    public MutableLiveData<ProductDetails> getProductDetails(int id) {
+        final MutableLiveData<ProductDetails> productDetailsResponse = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ProductDetails> call = apiInterface.productDetails(id);
+        call.enqueue(new Callback<ProductDetails>() {
+            @Override
+            public void onResponse(Call<ProductDetails> call, Response<ProductDetails> response) {
+                productDetailsResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetails> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return productDetailsResponse;
     }
 
 }

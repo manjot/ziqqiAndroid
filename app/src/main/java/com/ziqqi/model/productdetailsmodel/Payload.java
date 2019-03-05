@@ -37,9 +37,12 @@ public class Payload {
     @SerializedName("linkhref")
     @Expose
     private String linkhref;
-    @SerializedName("small_desc")
+    @SerializedName("overview")
     @Expose
-    private String smallDesc;
+    private String overview;
+    @SerializedName("specifications")
+    @Expose
+    private String specifications;
     @SerializedName("is_active")
     @Expose
     private String isActive;
@@ -52,9 +55,9 @@ public class Payload {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
-    @SerializedName("ratting")
+    @SerializedName("rating")
     @Expose
-    private Integer ratting;
+    private Integer rating;
     @SerializedName("total_review")
     @Expose
     private Integer totalReview;
@@ -142,12 +145,20 @@ public class Payload {
         this.linkhref = linkhref;
     }
 
-    public String getSmallDesc() {
-        return smallDesc;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setSmallDesc(String smallDesc) {
-        this.smallDesc = smallDesc;
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(String specifications) {
+        this.specifications = specifications;
     }
 
     public String getIsActive() {
@@ -182,12 +193,12 @@ public class Payload {
         this.brandName = brandName;
     }
 
-    public Integer getRatting() {
-        return ratting;
+    public Integer getRating() {
+        return rating;
     }
 
-    public void setRatting(Integer ratting) {
-        this.ratting = ratting;
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
     public Integer getTotalReview() {

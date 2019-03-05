@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.ziqqi.R;
 import com.ziqqi.activities.CommunicationPrefActivity;
+import com.ziqqi.activities.HelpCenterActivity;
 import com.ziqqi.activities.MyAddressBookActivity;
 import com.ziqqi.activities.MyOrdersActivity;
 import com.ziqqi.activities.SelectYourLanguageActivity;
@@ -55,6 +56,12 @@ public class ProfileFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CommunicationPrefActivity.class));
+            }
+        });
+        binding.llHelpCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), HelpCenterActivity.class));
             }
         });
         return view;
