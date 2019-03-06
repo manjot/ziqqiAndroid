@@ -1,6 +1,7 @@
 package com.ziqqi.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -11,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.R;
+import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.utils.FontCache;
 
@@ -47,13 +50,22 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BestSellerMobileViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull BestSellerMobileViewHolder holder, final int i) {
         holder.tvBrandName.setText(bestsellerProductList.get(i).getBrandName());
         holder.tvName.setText(bestsellerProductList.get(i).getName());
         holder.tvDesc.setText(Html.fromHtml(bestsellerProductList.get(i).getSku()));
         holder.tvMarketPrice.setText("$ " + bestsellerProductList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + bestsellerProductList.get(i).getSalePrice());
         Glide.with(context).load(bestsellerProductList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
+
+        holder.ll_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailActivity.class );
+                intent.putExtra("product_id", bestsellerProductList.get(i).getProductId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -65,6 +77,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
     public class BestSellerMobileViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvBrandName, tvDesc, tvMarketPrice, tvDiscountPrice;
         ImageView ivImage;
+        LinearLayout ll_card;
 
         public BestSellerMobileViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +88,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvMarketPrice = itemView.findViewById(R.id.tv_market_price);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
+            ll_card = itemView.findViewById(R.id.ll_card);
 
             tvBrandName.setTypeface(regular);
             tvName.setTypeface(medium);

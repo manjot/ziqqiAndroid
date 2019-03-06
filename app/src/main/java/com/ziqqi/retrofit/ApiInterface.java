@@ -9,6 +9,7 @@ import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.signup.SignUpResponse;
+import com.ziqqi.model.similarproductsmodel.SimilarProduct;
 
 import java.util.HashMap;
 
@@ -65,5 +66,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("productDetails")
     Call<ProductDetails> productDetails(@Field("product_id") int id);
+
+
+    @FormUrlEncoded
+    @POST("similar_products")
+    Call<SimilarProduct> similarProducts(@Field("product_id") int id);
 
 }

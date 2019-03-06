@@ -1,6 +1,7 @@
 package com.ziqqi.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -10,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.model.searchmodel.Payload;
 import com.ziqqi.utils.FontCache;
 
@@ -46,7 +49,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull SearchViewHolder holder, final int i) {
         holder.tvBrandName.setText(payloadList.get(i).getBrandName());
         holder.tvName.setText(payloadList.get(i).getName());
         holder.tvDesc.setText(payloadList.get(i).getSku());
@@ -54,6 +57,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
         if (payloadList.get(i).getImage().size() > 0)
             Glide.with(context).load(payloadList.get(i).getImage().get(0)).into(holder.ivImage);
+
     }
 
     @Override
@@ -74,7 +78,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvMarketPrice = itemView.findViewById(R.id.tv_market_price);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
-
             tvBrandName.setTypeface(regular);
             tvName.setTypeface(medium);
             tvDesc.setTypeface(light);

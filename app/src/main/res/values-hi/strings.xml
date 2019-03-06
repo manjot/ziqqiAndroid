@@ -59,4 +59,10 @@
     <string name="iphone_xs_charcoal_black_4gb">Iphone Xs Charcoal black 4GB</string>
     <string name="customer_service">Customer Service</string>
     <string name="we_go_above_and_beyond">We go above and beyond</string>
+    <string name="customers_also_viewed">Customers Also Viewed</string>
+    <string name="add_cart">ADD TO CART</string>
+    <string name="buy_now">BUY NOW</string>
+    <string name="overview">Overview</string>
+    <string name="specification">Specification</string>
+    <string name="reviews">Reviews</string>
 </resources>

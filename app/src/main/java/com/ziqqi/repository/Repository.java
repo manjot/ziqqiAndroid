@@ -8,6 +8,7 @@ import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.searchmodel.SearchResponse;
+import com.ziqqi.model.similarproductsmodel.SimilarProduct;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
 
@@ -135,6 +136,24 @@ public class Repository {
             }
         });
         return productDetailsResponse;
+    }
+
+    public MutableLiveData<SimilarProduct> getSimilarProduct(int id) {
+        final MutableLiveData<SimilarProduct> similarProductsResponse = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<SimilarProduct> call = apiInterface.similarProducts(id);
+        call.enqueue(new Callback<SimilarProduct>() {
+            @Override
+            public void onResponse(Call<SimilarProduct> call, Response<SimilarProduct> response) {
+                similarProductsResponse.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<SimilarProduct> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return similarProductsResponse;
     }
 
 }
