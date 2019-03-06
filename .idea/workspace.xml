@@ -16,57 +16,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48aefa66-8f6b-4895-bcd6-e1c32098a281" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/FeedbackActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/HelpCenterActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/BookAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/adapters/OverViewAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/viewmodel/ProductDetailsViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/default_dot.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/feedback_button_bg.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/h_five.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/h_four.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/h_one.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/h_six.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/h_three.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/h_two.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_fb.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_golu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_golu2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_google.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_insta.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_linkedin.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_share_i.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_twitter.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_v.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_wish.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/selected_dot.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tab_selector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/acceslayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_help_center.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/overviewlayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/tab_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ProductDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ProductDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/fragments/ProfileFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/Payload.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/Payload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_comm_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_comm_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_product_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_product_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-hi/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-hi/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -90,12 +46,14 @@
     <session id="205551450">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.38" value="1" />
+          <entry key="project.open.time.45" value="1" />
+          <entry key="project.open.time.49" value="1" />
           <entry key="project.open.time.52" value="1" />
           <entry key="project.open.time.60" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -141,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="406">
-              <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
+              <caret line="66" column="69" selection-start-line="66" selection-start-column="69" selection-end-line="66" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -149,8 +107,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2">
-              <caret line="99" column="11" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="11" />
+            <state relative-caret-position="40">
+              <caret line="128" selection-start-line="128" selection-end-line="128" />
             </state>
           </provider>
         </entry>
@@ -158,24 +116,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ProductDetailActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
+            <state relative-caret-position="40">
+              <caret line="62" selection-start-line="62" selection-end-line="62" />
               <folding>
-                <element signature="e#2048#2582#0" expanded="true" />
-                <element signature="e#2581#2582#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="118" column="40" selection-start-line="112" selection-start-column="8" selection-end-line="118" selection-end-column="40" />
-              <folding>
-                <element signature="e#851#2507#0" />
+                <element signature="e#2074#2756#0" expanded="true" />
+                <element signature="e#2755#2756#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2653,7 +2598,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
@@ -2728,6 +2672,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
     </panes>
   </component>
@@ -2889,9 +2834,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49820143" visible="true" weight="0.22390318" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49820143" visible="true" weight="0.22390318" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Build Variants" order="3" sideWeight="0.50179857" side_tool="true" weight="0.24940239" />
@@ -2908,7 +2854,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Android Profiler" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Logcat" order="9" weight="0.41967213" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="9" visible="true" weight="0.7163935" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3295082" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.3295082" />
       <window_info anchor="bottom" id="Build" order="12" weight="0.3967213" />
@@ -3079,9 +3025,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
           <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="19" selection-end-column="77" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3090,66 +3033,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
           <caret line="44" column="46" lean-forward="true" selection-start-line="44" selection-start-column="46" selection-end-line="44" selection-end-column="46" />
-          <folding>
-            <element signature="e#991#1012#0" expanded="true" />
-            <element signature="e#1274#1289#0" expanded="true" />
-            <element signature="e#1916#1930#0" expanded="true" />
-            <element signature="e#2010#2025#0" expanded="true" />
-            <element signature="e#2218#2232#0" expanded="true" />
-            <element signature="e#2272#2286#0" expanded="true" />
-            <element signature="e#2324#2338#0" expanded="true" />
-            <element signature="e#2499#2513#0" expanded="true" />
-            <element signature="e#2585#2610#0" expanded="true" />
-            <element signature="e#2669#2683#0" expanded="true" />
-            <element signature="e#2713#2728#0" expanded="true" />
-            <element signature="e#2909#2923#0" expanded="true" />
-            <element signature="e#3383#3397#0" expanded="true" />
-            <element signature="e#3436#3450#0" expanded="true" />
-            <element signature="e#4400#4414#0" expanded="true" />
-            <element signature="e#4452#4472#0" expanded="true" />
-            <element signature="e#4676#4690#0" expanded="true" />
-            <element signature="e#5005#5019#0" expanded="true" />
-            <element signature="e#5058#5072#0" expanded="true" />
-            <element signature="e#6023#6037#0" expanded="true" />
-            <element signature="e#6075#6093#0" expanded="true" />
-            <element signature="e#6246#6260#0" expanded="true" />
-            <element signature="e#6792#6806#0" expanded="true" />
-            <element signature="e#6845#6859#0" expanded="true" />
-            <element signature="e#7809#7823#0" expanded="true" />
-            <element signature="e#7910#7944#0" expanded="true" />
-            <element signature="e#8048#8062#0" expanded="true" />
-            <element signature="e#8377#8391#0" expanded="true" />
-            <element signature="e#8430#8444#0" expanded="true" />
-            <element signature="e#9395#9409#0" expanded="true" />
-            <element signature="e#9447#9464#0" expanded="true" />
-            <element signature="e#9617#9631#0" expanded="true" />
-            <element signature="e#10164#10178#0" expanded="true" />
-            <element signature="e#10217#10231#0" expanded="true" />
-            <element signature="e#11183#11197#0" expanded="true" />
-            <element signature="e#11235#11261#0" expanded="true" />
-            <element signature="e#11414#11428#0" expanded="true" />
-            <element signature="e#11743#11757#0" expanded="true" />
-            <element signature="e#11796#11810#0" expanded="true" />
-            <element signature="e#12760#12774#0" expanded="true" />
-            <element signature="e#12812#12839#0" expanded="true" />
-            <element signature="e#12992#13006#0" expanded="true" />
-            <element signature="e#13440#13455#0" expanded="true" />
-            <element signature="e#13848#13863#0" expanded="true" />
-            <element signature="e#13995#14009#0" expanded="true" />
-            <element signature="e#14039#14058#0" expanded="true" />
-            <element signature="e#14187#14202#0" expanded="true" />
-            <element signature="e#14624#14638#0" expanded="true" />
-            <element signature="e#15192#15206#0" expanded="true" />
-            <element signature="e#15763#15777#0" expanded="true" />
-            <element signature="e#16335#16349#0" expanded="true" />
-            <element signature="e#16909#16923#0" expanded="true" />
-            <element signature="e#17482#17496#0" expanded="true" />
-            <element signature="e#18124#18138#0" expanded="true" />
-            <element signature="e#18331#18346#0" expanded="true" />
-            <element signature="e#18624#18639#0" expanded="true" />
-            <element signature="e#18772#18791#0" expanded="true" />
-            <element signature="e#18878#18892#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3157,11 +3040,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
           <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
-          <folding>
-            <element signature="e#2123#2329#0" expanded="true" />
-            <element signature="e#2328#2329#0" expanded="true" />
-            <element signature="e#2383#2589#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3169,9 +3047,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="52" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
-          <folding>
-            <element signature="e#299#313#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3194,51 +3069,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
           <caret line="164" column="57" lean-forward="true" selection-start-line="164" selection-start-column="57" selection-end-line="164" selection-end-column="57" />
-          <folding>
-            <element signature="e#989#1007#0" expanded="true" />
-            <element signature="e#1269#1284#0" expanded="true" />
-            <element signature="e#1978#2023#0" expanded="true" />
-            <element signature="e#2118#2132#0" expanded="true" />
-            <element signature="e#2179#2194#0" expanded="true" />
-            <element signature="e#2277#2292#0" expanded="true" />
-            <element signature="e#2488#2503#0" expanded="true" />
-            <element signature="e#2725#2746#0" expanded="true" />
-            <element signature="e#2897#2912#0" expanded="true" />
-            <element signature="e#3088#3109#0" expanded="true" />
-            <element signature="e#3155#3169#0" expanded="true" />
-            <element signature="e#3324#3338#0" expanded="true" />
-            <element signature="e#3527#3541#0" expanded="true" />
-            <element signature="e#3783#3803#0" expanded="true" />
-            <element signature="e#3917#3932#0" expanded="true" />
-            <element signature="e#4015#4030#0" expanded="true" />
-            <element signature="e#4206#4227#0" expanded="true" />
-            <element signature="e#4273#4287#0" expanded="true" />
-            <element signature="e#4442#4456#0" expanded="true" />
-            <element signature="e#4645#4659#0" expanded="true" />
-            <element signature="e#4900#4921#0" expanded="true" />
-            <element signature="e#4978#4993#0" expanded="true" />
-            <element signature="e#5133#5148#0" expanded="true" />
-            <element signature="e#5324#5345#0" expanded="true" />
-            <element signature="e#5391#5405#0" expanded="true" />
-            <element signature="e#5560#5574#0" expanded="true" />
-            <element signature="e#5763#5777#0" expanded="true" />
-            <element signature="e#6018#6039#0" expanded="true" />
-            <element signature="e#6210#6225#0" expanded="true" />
-            <element signature="e#6251#6266#0" expanded="true" />
-            <element signature="e#6442#6463#0" expanded="true" />
-            <element signature="e#6509#6523#0" expanded="true" />
-            <element signature="e#6678#6692#0" expanded="true" />
-            <element signature="e#6881#6895#0" expanded="true" />
-            <element signature="e#7136#7157#0" expanded="true" />
-            <element signature="e#7329#7344#0" expanded="true" />
-            <element signature="e#7369#7384#0" expanded="true" />
-            <element signature="e#7560#7581#0" expanded="true" />
-            <element signature="e#7627#7641#0" expanded="true" />
-            <element signature="e#7796#7810#0" expanded="true" />
-            <element signature="e#7999#8013#0" expanded="true" />
-            <element signature="e#8348#8364#0" expanded="true" />
-            <element signature="e#8403#8418#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3273,12 +3103,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="e#213#228#0" expanded="true" />
-            <element signature="e#433#448#0" expanded="true" />
-            <element signature="e#502#516#0" expanded="true" />
-            <element signature="e#710#725#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3330,12 +3154,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="404">
           <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/productdetailsmodel/Feature.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -3355,10 +3179,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#551#552#0" expanded="true" />
-            <element signature="e#579#580#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3391,20 +3211,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="99" column="11" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/model/searchmodel/Payload.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -3416,17 +3222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
           <caret line="417" column="16" selection-start-line="417" selection-start-column="16" selection-end-line="417" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="118" column="40" selection-start-line="112" selection-start-column="8" selection-end-line="118" selection-end-column="40" />
-          <folding>
-            <element signature="e#851#2507#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3442,85 +3237,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1646#1647#0" expanded="true" />
-            <element signature="e#1671#1672#0" expanded="true" />
-            <element signature="e#1707#1708#0" expanded="true" />
-            <element signature="e#1735#1736#0" expanded="true" />
-            <element signature="e#1773#1774#0" expanded="true" />
-            <element signature="e#1807#1808#0" expanded="true" />
-            <element signature="e#1861#1862#0" expanded="true" />
-            <element signature="e#1907#1908#0" expanded="true" />
-            <element signature="e#1938#1939#0" expanded="true" />
-            <element signature="e#1965#1966#0" expanded="true" />
-            <element signature="e#2005#2006#0" expanded="true" />
-            <element signature="e#2037#2038#0" expanded="true" />
-            <element signature="e#2069#2070#0" expanded="true" />
-            <element signature="e#2097#2098#0" expanded="true" />
-            <element signature="e#2139#2140#0" expanded="true" />
-            <element signature="e#2173#2174#0" expanded="true" />
-            <element signature="e#2208#2209#0" expanded="true" />
-            <element signature="e#2239#2240#0" expanded="true" />
-            <element signature="e#2287#2288#0" expanded="true" />
-            <element signature="e#2327#2328#0" expanded="true" />
-            <element signature="e#2363#2364#0" expanded="true" />
-            <element signature="e#2395#2396#0" expanded="true" />
-            <element signature="e#2445#2446#0" expanded="true" />
-            <element signature="e#2487#2488#0" expanded="true" />
-            <element signature="e#2522#2523#0" expanded="true" />
-            <element signature="e#2553#2554#0" expanded="true" />
-            <element signature="e#2601#2602#0" expanded="true" />
-            <element signature="e#2641#2642#0" expanded="true" />
-            <element signature="e#2675#2676#0" expanded="true" />
-            <element signature="e#2705#2706#0" expanded="true" />
-            <element signature="e#2751#2752#0" expanded="true" />
-            <element signature="e#2789#2790#0" expanded="true" />
-            <element signature="e#2826#2827#0" expanded="true" />
-            <element signature="e#2859#2860#0" expanded="true" />
-            <element signature="e#2911#2912#0" expanded="true" />
-            <element signature="e#2955#2956#0" expanded="true" />
-            <element signature="e#2990#2991#0" expanded="true" />
-            <element signature="e#3021#3022#0" expanded="true" />
-            <element signature="e#3069#3070#0" expanded="true" />
-            <element signature="e#3109#3110#0" expanded="true" />
-            <element signature="e#3144#3145#0" expanded="true" />
-            <element signature="e#3175#3176#0" expanded="true" />
-            <element signature="e#3223#3224#0" expanded="true" />
-            <element signature="e#3263#3264#0" expanded="true" />
-            <element signature="e#3304#3305#0" expanded="true" />
-            <element signature="e#3341#3342#0" expanded="true" />
-            <element signature="e#3401#3402#0" expanded="true" />
-            <element signature="e#3453#3454#0" expanded="true" />
-            <element signature="e#3488#3489#0" expanded="true" />
-            <element signature="e#3519#3520#0" expanded="true" />
-            <element signature="e#3567#3568#0" expanded="true" />
-            <element signature="e#3607#3608#0" expanded="true" />
-            <element signature="e#3649#3650#0" expanded="true" />
-            <element signature="e#3680#3681#0" expanded="true" />
-            <element signature="e#3735#3736#0" expanded="true" />
-            <element signature="e#3775#3776#0" expanded="true" />
-            <element signature="e#3813#3814#0" expanded="true" />
-            <element signature="e#3841#3842#0" expanded="true" />
-            <element signature="e#3889#3890#0" expanded="true" />
-            <element signature="e#3923#3924#0" expanded="true" />
-            <element signature="e#3959#3960#0" expanded="true" />
-            <element signature="e#3991#3992#0" expanded="true" />
-            <element signature="e#4041#4042#0" expanded="true" />
-            <element signature="e#4083#4084#0" expanded="true" />
-            <element signature="e#4117#4118#0" expanded="true" />
-            <element signature="e#4146#4147#0" expanded="true" />
-            <element signature="e#4191#4192#0" expanded="true" />
-            <element signature="e#4227#4228#0" expanded="true" />
-            <element signature="e#4266#4267#0" expanded="true" />
-            <element signature="e#4300#4301#0" expanded="true" />
-            <element signature="e#4355#4356#0" expanded="true" />
-            <element signature="e#4401#4402#0" expanded="true" />
-            <element signature="e#4441#4442#0" expanded="true" />
-            <element signature="e#4471#4472#0" expanded="true" />
-            <element signature="e#4523#4524#0" expanded="true" />
-            <element signature="e#4561#4562#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3538,13 +3254,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="118" column="40" selection-start-line="112" selection-start-column="8" selection-end-line="118" selection-end-column="40" />
+          <folding>
+            <element signature="e#851#2507#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/retrofit/ApiInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="66" column="69" selection-start-line="66" selection-start-column="69" selection-end-line="66" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/repository/Repository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="128" selection-start-line="128" selection-end-line="128" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ziqqi/activities/ProductDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
+        <state relative-caret-position="40">
+          <caret line="62" selection-start-line="62" selection-end-line="62" />
           <folding>
-            <element signature="e#2048#2582#0" expanded="true" />
-            <element signature="e#2581#2582#0" expanded="true" />
+            <element signature="e#2074#2756#0" expanded="true" />
+            <element signature="e#2755#2756#0" expanded="true" />
           </folding>
         </state>
       </provider>
