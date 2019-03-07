@@ -1,15 +1,18 @@
 package com.ziqqi.retrofit;
 
 import com.ziqqi.model.VerifyOtpResponse;
+import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.languagemodel.LanguageModel;
 import com.ziqqi.model.loginResponse.LoginResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
+import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.signup.SignUpResponse;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
+import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 
 import java.util.HashMap;
 
@@ -49,7 +52,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("homesearch")
-    Call<SearchResponse> getSearch(@Field("productname") String productName);
+    Call<SearchResponse> getSearch(@Field("category_id") String categoryId, @Field("page") String page );
 
     @FormUrlEncoded
     @POST("forgot_password")
@@ -71,5 +74,17 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("similar_products")
     Call<SimilarProduct> similarProducts(@Field("product_id") int id);
+
+    @FormUrlEncoded
+    @POST("addTowishlist")
+    Call<AddToModel> addToWishlist(@Field("auth_token") String auth_token, @Field("product_id") int product_id);
+
+    @FormUrlEncoded
+    @POST("veiwWishlistProduct")
+    Call<ViewWishlist> viewWishlist(@Field("auth_token") String auth_token);
+
+    @FormUrlEncoded
+    @POST("categorysearch")
+    Call<SearchCategory> getSearchCategory(@Field("searchname") String searchname);
 
 }

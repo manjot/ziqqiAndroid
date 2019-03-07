@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/ll_card"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -17,10 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:ellipsize="end"
+            android:fontFamily="@font/regular"
             android:lines="1"
             android:paddingLeft="@dimen/_4sdp"
             android:paddingRight="@dimen/_4sdp"
-            android:text="@string/appple"
             android:textSize="@dimen/_10sdp" />
 
         <TextView
@@ -31,7 +32,7 @@
             android:lines="2"
             android:paddingLeft="@dimen/_4sdp"
             android:paddingRight="@dimen/_4sdp"
-            android:text="Apple Iphone X (Space grey 3Gb RAM), 64GB storage,..."
+            android:fontFamily="@font/regular"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_10sdp" />
 
@@ -41,11 +42,10 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
+            android:fontFamily="@font/bold"
             android:paddingLeft="@dimen/_4sdp"
             android:paddingRight="@dimen/_4sdp"
-            android:text="$88.00"
             android:textColor="@color/colorBlack"
-            android:textStyle="bold"
             android:textSize="@dimen/_14sdp"/>
 
     </LinearLayout>
@@ -55,10 +55,12 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/iv_product_image"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:padding="@dimen/_15sdp"
-            android:src="@drawable/iphone"/>
+            android:layout_gravity="center"
+            android:src="@drawable/iphone" />
 
     </LinearLayout>
 

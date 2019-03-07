@@ -5,12 +5,14 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.repository.Repository;
 
 public class SearchViewModel extends AndroidViewModel {
     Repository repository;
-    MutableLiveData<SearchResponse> searchResponse;
+//    MutableLiveData<SearchResponse> searchResponse;
+    MutableLiveData<SearchCategory> searchCategoryResponse;
 
     public SearchViewModel(@NonNull Application application) {
         super(application);
@@ -21,13 +23,20 @@ public class SearchViewModel extends AndroidViewModel {
      /*   if (searchResponse != null) {
 
         } else {*/
-            searchResponse = repository.getSearch(productName);
+//         searchResponse = repository.getSearch(productName);
+         searchCategoryResponse = repository.getSearchCategory(productName);
        // }
     }
 
-    public MutableLiveData<SearchResponse> getSearchResponse() {
-        if (searchResponse != null)
-            return searchResponse;
+//    public MutableLiveData<SearchResponse> getSearchResponse() {
+//        if (searchResponse != null)
+//            return searchResponse;
+//        else return null;
+//    }
+
+    public MutableLiveData<SearchCategory> getSearchCategoryResponse() {
+        if (searchCategoryResponse != null)
+            return searchCategoryResponse;
         else return null;
     }
 }

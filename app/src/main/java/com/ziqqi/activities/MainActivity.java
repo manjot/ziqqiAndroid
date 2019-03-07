@@ -49,6 +49,7 @@ import com.ziqqi.fragments.HomeFragment;
 import com.ziqqi.fragments.ProfileFragment;
 import com.ziqqi.fragments.SearchFragment;
 import com.ziqqi.fragments.SubCategoryFragment;
+import com.ziqqi.fragments.WishlistFragment;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.CustomTypefaceSpan;
 import com.ziqqi.utils.FontCache;
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CartFragment cartFragment;
     DealsFragment dealsFragment;
     ProfileFragment profileFragment;
+    WishlistFragment wishlistFragment;
     CallbackManager callbackManager;
     SubCategoryFragment mobileFragment, computerFragment, tvFragment, cameraFragment, gaminFragment, perfumesFragment, pharmacyFragment, superMarketFragment, appliancesFragment;
     int[] navItems = {R.string.mob_and_tabs, R.string.computers, R.string.tv_and_audio, R.string.cameras, R.string.appliances, R.string.gaming, R.string.perfumes_and_beauty, R.string.pharmacy_and_health, R.string.supermarket, R.string.my_acc, R.string.wishlist, R.string.track_order};
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         cartFragment = new CartFragment();
         dealsFragment = new DealsFragment();
         profileFragment = new ProfileFragment();
+        wishlistFragment = new WishlistFragment();
         mobileFragment = new SubCategoryFragment();
         cameraFragment = new SubCategoryFragment();
         computerFragment = new SubCategoryFragment();
@@ -351,6 +354,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.supermarket:
                 if (!superMarketFragment.isVisible())
                     replaceFragment(superMarketFragment, Constants.SUPERMARKET);
+                break;
+            case R.id.wishlist:
+                if (!wishlistFragment.isVisible())
+                    replaceFragment(wishlistFragment, null);
+                break;
+            case R.id.my_account:
+                if (!profileFragment.isVisible())
+                    replaceFragment(profileFragment, null);
                 break;
         }
     }

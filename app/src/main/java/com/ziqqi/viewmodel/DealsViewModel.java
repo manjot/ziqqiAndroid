@@ -17,17 +17,17 @@ public class DealsViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchData(String productName) {
-      /*  if (searchResponse != null) {
-
-        } else {*/
-        searchResponse = repository.getSearch(productName);
-       //  }
-    }
-
-    public MutableLiveData<SearchResponse> getSearchResponse() {
-        if (searchResponse != null)
-            return searchResponse;
-        else return null;
-    }
+//    public void fetchData(String productName) {
+//      /*  if (searchResponse != null) {
+//
+//        } else {*/
+////        searchResponse = repository.getSearch(productName);
+//       //  }
+//    }
+//
+//    public MutableLiveData<SearchResponse> getSearchResponse() {
+//        if (searchResponse != null)
+//            return searchResponse;
+//        else return null;
+//    }
 }

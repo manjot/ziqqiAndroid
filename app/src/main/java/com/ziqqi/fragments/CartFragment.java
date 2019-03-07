@@ -7,9 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ziqqi.R;
 import com.ziqqi.databinding.FragmentCartBinding;
@@ -20,6 +23,9 @@ public class CartFragment extends Fragment {
 
     FragmentCartBinding binding;
     CartViewModel viewModel;
+    Toolbar toolbar;
+    TextView tvTitle;
+    ImageView ivTitle;
 
     public CartFragment() {
         // Required empty public constructor
@@ -32,6 +38,14 @@ public class CartFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(CartViewModel.class);
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_cart, container, false);
+
+        toolbar=  getActivity().findViewById(R.id.toolbar);
+        tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
+        ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);
+        ivTitle.setVisibility(View.GONE);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvTitle.setText("CART");
+
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
         binding.setViewModel(viewModel);

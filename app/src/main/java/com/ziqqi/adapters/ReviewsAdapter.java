@@ -18,6 +18,7 @@ import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.model.productdetailsmodel.Payload;
+import com.ziqqi.model.productdetailsmodel.Review;
 import com.ziqqi.utils.FontCache;
 
 import java.util.List;
@@ -25,11 +26,11 @@ import java.util.List;
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
 
     Context context;
-    List<Payload> payloadList;
+    List<Review> payloadList;
     OnItemClickListener listener;
     Typeface regular, medium, light, bold;
 
-    public ReviewsAdapter(Context context, List<Payload> payloadList, OnItemClickListener listener) {
+    public ReviewsAdapter(Context context, List<Review> payloadList, OnItemClickListener listener) {
         this.context = context;
         this.payloadList = payloadList;
         this.listener = listener;
@@ -49,9 +50,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     @Override
     public void onBindViewHolder(@NonNull ReviewsAdapter.ReviewViewHolder holder,final int i) {
-        holder.tvName.setText(payloadList.get(i).getReviews().get(i).getName());
-        holder.tvTitle.setText(payloadList.get(i).getReviews().get(i).getRateReview());
-        holder.tvDate.setText(payloadList.get(i).getReviews().get(i).getRateDatetime());
+        holder.tvName.setText(payloadList.get(i).getName());
+        holder.tvTitle.setText(payloadList.get(i).getRateReview());
+        holder.tvDate.setText(payloadList.get(i).getRateDatetime());
 
     }
 

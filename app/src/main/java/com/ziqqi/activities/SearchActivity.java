@@ -19,8 +19,10 @@ import android.view.View;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.SearchAdapter;
+import com.ziqqi.adapters.SearchCategoryAdapter;
 import com.ziqqi.databinding.ActivitySearchBinding;
-import com.ziqqi.model.searchmodel.Payload;
+import com.ziqqi.model.searchcategorymodel.SearchCategory;
+import com.ziqqi.model.searchcategorymodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
@@ -37,7 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     List<Payload> payloadList = new ArrayList<>();
     List<Payload> searchDataList = new ArrayList<>();
     OnItemClickListener listener;
-    SearchAdapter adapter;
+    SearchCategoryAdapter adapter;
     long delay = 1000; // 1 seconds after user stops typing
     long last_text_edit = 0;
     Handler handler;
@@ -97,7 +99,7 @@ public class SearchActivity extends AppCompatActivity {
                         if (charSequence.toString().length() > 0) {
                             searchQuery(charSequence.toString());
                         } else {
-                            binding.ivNdf.setVisibility(View.GONE);
+                            binding.llNoData.setVisibility(View.GONE);
                             binding.progressBar.setVisibility(View.GONE);
                             binding.recyclerView.setVisibility(View.GONE);
                         }
@@ -127,28 +129,27 @@ public class SearchActivity extends AppCompatActivity {
         };
     }
 
-    private void searchQuery(String query) {
+    private void searchQuery(String searchname) {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.GONE);
-        binding.ivNdf.setVisibility(View.GONE);
-        viewModel.fetchData(query);
-        viewModel.getSearchResponse().observe(this, new Observer<SearchResponse>() {
+        binding.llNoData.setVisibility(View.GONE);
+        viewModel.fetchData(searchname);
+        viewModel.getSearchCategoryResponse().observe(this, new Observer<SearchCategory>() {
             @Override
-            public void onChanged(@Nullable SearchResponse searchResponse) {
-                if (!searchResponse.getError()) {
+            public void onChanged(@Nullable SearchCategory searchCategory) {
+                if (!searchCategory.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.recyclerView.setVisibility(View.VISIBLE);
-                    binding.ivNdf.setVisibility(View.GONE);
+                    binding.llNoData.setVisibility(View.GONE);
                     if (payloadList != null) {
                         searchDataList.clear();
-                        payloadList = searchResponse.getPayload();
+                        payloadList = searchCategory.getPayload();
                         searchDataList.addAll(payloadList);
-                       // adapter.notifyDataSetChanged();
                     }
                 } else {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.recyclerView.setVisibility(View.GONE);
-                    binding.ivNdf.setVisibility(View.VISIBLE);
+                    binding.llNoData.setVisibility(View.VISIBLE);
 
                 }
             }
@@ -156,12 +157,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void setUpAdapter() {
-        manager = new GridLayoutManager(this, 3);
+        manager = new LinearLayoutManager(SearchActivity.this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.recyclerView.setLayoutManager(manager);
-        adapter = new SearchAdapter(this, searchDataList, listener);
+        adapter = new SearchCategoryAdapter(SearchActivity.this, searchDataList, listener);
         binding.recyclerView.setAdapter(adapter);
-        spacesItemDecoration = new SpacesItemDecoration(this, R.dimen.dp_4);
+        spacesItemDecoration = new SpacesItemDecoration(SearchActivity.this, R.dimen.dp_4);
         binding.recyclerView.addItemDecoration(spacesItemDecoration);
     }
 

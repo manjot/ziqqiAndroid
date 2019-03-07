@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
@@ -15,6 +16,7 @@ public class ProductDetailsViewModel extends AndroidViewModel {
     Repository repository;
     MutableLiveData<ProductDetails> productDetailsResponse;
     MutableLiveData<SimilarProduct> similarProductResponse;
+    MutableLiveData<AddToModel> addToModelResponse;
 
     public ProductDetailsViewModel(@NonNull Application application) {
         super(application);
@@ -33,6 +35,10 @@ public class ProductDetailsViewModel extends AndroidViewModel {
         similarProductResponse = repository.getSimilarProduct(productId);
     }
 
+    public void addProductWishlist(String authToken, int productId){
+        addToModelResponse = repository.addToWishlist(authToken, productId);
+    }
+
     public MutableLiveData<ProductDetails> getProductDetailsResponse() {
         if (productDetailsResponse != null)
             return productDetailsResponse;
@@ -41,5 +47,9 @@ public class ProductDetailsViewModel extends AndroidViewModel {
 
     public MutableLiveData<SimilarProduct> getSimilarProductsResponse() {
         return similarProductResponse;
+    }
+
+    public MutableLiveData<AddToModel> addWishlistResponse() {
+        return addToModelResponse;
     }
 }

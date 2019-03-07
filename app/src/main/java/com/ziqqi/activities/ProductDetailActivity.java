@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
@@ -28,6 +30,7 @@ import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SearchAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
+import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
@@ -35,6 +38,7 @@ import com.ziqqi.model.searchmodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
 import com.ziqqi.utils.FontCache;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.ProductDetailsViewModel;
@@ -58,12 +62,13 @@ public class ProductDetailActivity extends AppCompatActivity {
     SpringDotsIndicator indicator;
     List<com.ziqqi.model.similarproductsmodel.Payload> payloadsList = new ArrayList<>();
     List<com.ziqqi.model.similarproductsmodel.Payload> similarDataList = new ArrayList<>();
-    List<com.ziqqi.model.productdetailsmodel.Payload> reviewDataList = new ArrayList<>();
+    List<Review> reviewDataList = new ArrayList<>();
     SimilarProductAdapter adapter;
     ReviewsAdapter reviewsAdapter;
     OnItemClickListener listener;
     SpacesItemDecoration spacesItemDecoration;
     String product_id;
+    String strSharingUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +84,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.sliderViewpager.setAdapter(productSliderAdapter);
         indicator.setViewPager(binding.sliderViewpager);
         binding.tvOverview.setVisibility(View.VISIBLE);
+
+        binding.rvReviews.setHasFixedSize(true);
+        binding.rvReviews.setNestedScrollingEnabled(false);
 
         if (getIntent().getExtras() != null){
             product_id = getIntent().getStringExtra("product_id");
@@ -150,6 +158,24 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+        binding.ivWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToWishlist("5c2f405346f56", Integer.parseInt(product_id));
+            }
+        });
+
+        binding.ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, strSharingUrl);
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+            }
+        });
     }
 
 
@@ -168,11 +194,17 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                         String resultOverview = Html.fromHtml(productDetails.getPayload().getOverview()).toString();
                         String resultSpecification = Html.fromHtml(productDetails.getPayload().getSpecifications()).toString();
+                        strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
 
                         binding.tvOverview.setText(resultOverview);
                         binding.tvSpecs.setText(resultSpecification);
                         bannerPayLoad.addAll(productDetails.getPayload().getImage());
                         feedbackPayLoad.addAll(productDetails.getPayload().getReviews());
+                        if(productDetails.getPayload().getReviews().size() == 0){
+                            binding.rvReviews.setVisibility(View.GONE);
+                            binding.tvNoReviews.setVisibility(View.VISIBLE);
+
+                        }
                         productSliderAdapter.notifyDataSetChanged();
                     }
                 } else {
@@ -205,6 +237,22 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void addToWishlist(String authToken, int id){
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductWishlist(authToken, id);
+        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+            @Override
+            public void onChanged(@Nullable AddToModel addToModel) {
+                if (!addToModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     private void setUpAdapter() {
         manager = new LinearLayoutManager(ProductDetailActivity.this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -220,7 +268,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvSimilar.addItemDecoration(spacesItemDecoration);
 
-        reviewsAdapter = new ReviewsAdapter(ProductDetailActivity.this, reviewDataList, listener);
+        reviewsAdapter = new ReviewsAdapter(ProductDetailActivity.this, feedbackPayLoad, listener);
         binding.rvReviews.setAdapter(reviewsAdapter);
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);
