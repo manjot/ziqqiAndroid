@@ -12,9 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
@@ -67,6 +70,10 @@ public class HomeFragment extends Fragment {
 
     Handler handler;
     Runnable update;
+    Toolbar toolbar;
+    TextView tvTitle;
+    ImageView ivTitle;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -76,8 +83,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+
+        toolbar=  getActivity().findViewById(R.id.toolbar);
+        tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
+        ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);
+        ivTitle.setVisibility(View.VISIBLE);
+        tvTitle.setVisibility(View.GONE);
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
         binding.setViewModel(viewModel);

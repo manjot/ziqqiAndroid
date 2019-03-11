@@ -9,6 +9,7 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/rectangular_stroke_grey"
         android:orientation="vertical"
+        android:id="@+id/ll_card"
         android:padding="@dimen/_8sdp">
 
         <ImageView

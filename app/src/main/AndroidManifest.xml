@@ -16,16 +16,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+<<<<<<< HEAD
         <activity android:name=".activities.MyAccountActivity"
             android:theme="@style/AppTheme.NoActionBar">
+=======
+        <activity android:name=".PaymentGatewayActivity">
+>>>>>>> 5843645898e08b459df5726711ee7f1ff5cf3e5f
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".activities.BillingInformationActivity" />
         <activity android:name=".activities.FeedbackActivity" />
+=======
+        <activity android:name=".activities.ShippingInfoActivity" />
+        <activity android:name=".activities.BillingInfoActivity" />
+        <activity android:name=".activities.SearchResultActivity" />
+        <activity
+            android:name=".activities.FeedbackActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+>>>>>>> 5843645898e08b459df5726711ee7f1ff5cf3e5f
         <activity
             android:name=".activities.HelpCenterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -92,6 +105,11 @@
         <activity
             android:name=".activities.ViewAllProductsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <meta-data
+            android:name="com.hover.ApiKey"
+            android:value="7295e4d4075b4d375a4923f2ea044ec3"/>
     </application>
 
 </manifest>

@@ -16,8 +16,6 @@
     <string name="by_sms">By SMS</string>
     <string name="submit">Submit</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
     <string name="email_">Email Address</string>
     <string name="show_pass">Show Password</string>
     <string name="mobile_number">Mobile Number</string>
@@ -129,6 +127,7 @@
     <string name="iphone_xs_charcoal_black_4gb">Iphone Xs Charcoal black 4GB</string>
     <string name="customer_service">Customer Service</string>
     <string name="we_go_above_and_beyond">We go above and beyond</string>
+<<<<<<< HEAD
     <string name="billing_info">Billing Information</string>
     <string name="address_details">Address Details</string>
     <string name="select_your_country">Select Country</string>
@@ -138,6 +137,35 @@
     <string name="guideliness_for">Guidelines for get messages, products, reviews and question and answer</string>
     <string name="website_purchase">Website Purchase</string>
     <string name="dummy_data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+=======
+    <string name="customers_also_viewed">Customers Also Viewed</string>
+    <string name="add_cart">ADD TO CART</string>
+    <string name="buy_now">BUY NOW</string>
+    <string name="overview">Overview</string>
+    <string name="specification">Specification</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews_yet">No reviews yet</string>
+    <string name="share_using">Share Using</string>
+    <string name="your_whislist_is_empty">Your whislist is empty</string>
+    <string name="no_data">No data found</string>
+    <string name="select_country">Select Country</string>
+    <string name="address_details">Address Details</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+
+    <string name="next">Next</string>
+    <string name="billing_information">Billing Information</string>
+    <string name="shipping_information">Shipping Information</string>
+    <string name="name">Name</string>
+    <string name="same_as_billing_address">Same as billing address</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="location">Location</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="login">Login</string>
+>>>>>>> 5843645898e08b459df5726711ee7f1ff5cf3e5f
 
 
 </resources>

@@ -9,10 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
@@ -46,6 +49,10 @@ public class SubCategoryFragment extends Fragment {
     List<Payload> bestSellerPayloadList = new ArrayList<>();
     OnItemClickListener listener;
 
+    Toolbar toolbar;
+    TextView tvTitle;
+    ImageView ivTitle;
+
 
     public SubCategoryFragment() {
         // Required empty public constructor
@@ -59,6 +66,12 @@ public class SubCategoryFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.activity_home_category, container, false);
         viewModel = ViewModelProviders.of(this).get(SubCategoryViewModel.class);
+
+        toolbar=  getActivity().findViewById(R.id.toolbar);
+        tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
+        ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);
+        ivTitle.setVisibility(View.VISIBLE);
+        tvTitle.setVisibility(View.GONE);
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
         View view = binding.getRoot();

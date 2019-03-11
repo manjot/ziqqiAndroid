@@ -18,6 +18,10 @@
     <color name="colorSeacrhBox">#FEEBCB</color>
     <color name="colorCardBox">#DAF4D0</color>
     <color name="buttonColor">#ADD6AF</color>
+<<<<<<< HEAD
     <color name="colorPrimaryLight">#daf4d0</color>
     <color name="light_grey">#f0f0f0</color>
+=======
+    <color name="colorBottom">#FAFAFA</color>
+>>>>>>> 5843645898e08b459df5726711ee7f1ff5cf3e5f
 </resources>
