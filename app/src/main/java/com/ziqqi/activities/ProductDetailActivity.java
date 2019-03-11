@@ -60,8 +60,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (!productDetails.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     if (payloadList != null) {
-                        binding.tvBrandName.setText(payloadList.get(0).getBrandName());
-                        binding.tvProductName.setText(payloadList.get(0).getName());
+                        binding.tvBrandName.setText(productDetails.getPayload().getBrandName());
+                        binding.tvProductName.setText(productDetails.getPayload().getName());
                         // adapter.notifyDataSetChanged();
                     }
                 } else {

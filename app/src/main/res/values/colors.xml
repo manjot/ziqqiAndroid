@@ -18,4 +18,6 @@
     <color name="colorSeacrhBox">#FEEBCB</color>
     <color name="colorCardBox">#DAF4D0</color>
     <color name="buttonColor">#ADD6AF</color>
+    <color name="colorPrimaryLight">#daf4d0</color>
+    <color name="light_grey">#f0f0f0</color>
 </resources>

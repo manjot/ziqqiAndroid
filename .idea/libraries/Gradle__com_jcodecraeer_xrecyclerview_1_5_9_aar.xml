@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.jcodecraeer:xrecyclerview:1.5.9@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xrecyclerview-1.5.9.aar/591928006c9d246fc058a6bd4a019253/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xrecyclerview-1.5.9.aar/4285ca2bcc6a939d4bd3d87fa33792bb/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xrecyclerview-1.5.9.aar/591928006c9d246fc058a6bd4a019253/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xrecyclerview-1.5.9.aar/591928006c9d246fc058a6bd4a019253/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xrecyclerview-1.5.9.aar/4285ca2bcc6a939d4bd3d87fa33792bb/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/xrecyclerview-1.5.9.aar/4285ca2bcc6a939d4bd3d87fa33792bb/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

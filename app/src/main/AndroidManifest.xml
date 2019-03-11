@@ -16,7 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.FeedbackActivity"></activity>
+        <activity android:name=".activities.MyAccountActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.BillingInformationActivity" />
+        <activity android:name=".activities.FeedbackActivity" />
         <activity
             android:name=".activities.HelpCenterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -79,14 +88,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ProductDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ViewAllProductsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
