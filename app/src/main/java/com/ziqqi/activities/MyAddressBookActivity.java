@@ -18,6 +18,8 @@ import com.ziqqi.databinding.ActivityMyAddressBookBinding;
 import com.ziqqi.model.myaddressmodel.Payload;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.viewmodel.MyAddressViewModel;
 import com.ziqqi.viewmodel.MyOrderViewModel;
@@ -47,7 +49,7 @@ public class MyAddressBookActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         setUpAdapter();
-        getAddress("");
+        getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
     }
 
     private void getAddress(String authToken) {

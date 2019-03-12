@@ -77,7 +77,7 @@ public class SelectLanguageAdapter extends RecyclerView.Adapter<SelectLanguageAd
             notifyItemChanged(selectedPosition);
             selectedPosition = getAdapterPosition();
             notifyItemChanged(selectedPosition);
-            listener.onItemClick(tvLanguage.getText().toString());
+            listener.onItemClick(tvLanguage.getText().toString(),null);
         }
     }
 }

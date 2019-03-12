@@ -79,18 +79,6 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             }
         });
         binding.recyclerView.setPullRefreshEnabled(false);
-
-        listener = new OnItemClickListener() {
-            @Override
-            public void onItemClick(String id) {
-
-            }
-
-            @Override
-            public void onItemClick(String id, String type) {
-
-            }
-        };
     }
 
     private void setUpAdapter() {

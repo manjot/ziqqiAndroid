@@ -33,7 +33,7 @@ public class LanguageRepository {
 
             @Override
             public void onFailure(Call<LanguageModel> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
 

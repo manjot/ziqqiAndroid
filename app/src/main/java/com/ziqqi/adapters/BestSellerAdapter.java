@@ -17,9 +17,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.model.homecategorymodel.BestsellerProduct;
+import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
 
 import java.util.List;
@@ -29,12 +31,14 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
     Context context;
     List<BestsellerProduct> bestsellerProductList;
     int position;
+    OnItemClickListener listener;
     Typeface regular, medium, light, bold;
 
-    public BestSellerAdapter(Context context, int position, List<BestsellerProduct> bestsellerProductList) {
+    public BestSellerAdapter(Context context, int position, List<BestsellerProduct> bestsellerProductList, OnItemClickListener listener) {
         this.context = context;
         this.bestsellerProductList = bestsellerProductList;
         this.position = position;
+        this.listener = listener;
         Resources resources = context.getResources();
         regular = FontCache.get(resources.getString(R.string.regular), context);
         medium = FontCache.get(resources.getString(R.string.medium), context);
@@ -57,15 +61,6 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
         holder.tvMarketPrice.setText("$ " + bestsellerProductList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + bestsellerProductList.get(i).getSalePrice());
         Glide.with(context).load(bestsellerProductList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
-
-        holder.ll_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailActivity.class );
-                intent.putExtra("product_id", bestsellerProductList.get(i).getProductId());
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -74,9 +69,9 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
         return bestsellerProductList.size();
     }
 
-    public class BestSellerMobileViewHolder extends RecyclerView.ViewHolder {
+    public class BestSellerMobileViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvName, tvBrandName, tvDesc, tvMarketPrice, tvDiscountPrice;
-        ImageView ivImage;
+        ImageView ivImage, ivCart, ivShare, ivWishList;
         LinearLayout ll_card;
 
         public BestSellerMobileViewHolder(@NonNull View itemView) {
@@ -88,13 +83,42 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvMarketPrice = itemView.findViewById(R.id.tv_market_price);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
+            ivCart = itemView.findViewById(R.id.iv_cart);
             ll_card = itemView.findViewById(R.id.ll_card);
+            ivShare = itemView.findViewById(R.id.iv_share);
+            ivWishList = itemView.findViewById(R.id.iv_wishlist);
 
             tvBrandName.setTypeface(regular);
             tvName.setTypeface(medium);
             tvDesc.setTypeface(light);
             tvMarketPrice.setTypeface(regular);
             tvDiscountPrice.setTypeface(bold);
+
+            ivWishList.setOnClickListener(this);
+            ivShare.setOnClickListener(this);
+            ivCart.setOnClickListener(this);
+            ll_card.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.ll_card:
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("product_id", bestsellerProductList.get(getAdapterPosition()).getProductId());
+                    context.startActivity(intent);
+                    break;
+                case R.id.iv_share:
+                    listener.onItemClick(bestsellerProductList.get(getAdapterPosition()), Constants.SHARE);
+                    break;
+                case R.id.iv_cart:
+                    listener.onItemClick(bestsellerProductList.get(getAdapterPosition()), Constants.CART);
+                    break;
+                case R.id.iv_wishlist:
+                    listener.onItemClick(bestsellerProductList.get(getAdapterPosition()), Constants.WISH_LIST);
+                    break;
+            }
+
         }
     }
 }

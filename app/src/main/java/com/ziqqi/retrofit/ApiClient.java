@@ -18,6 +18,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
 
+  //  private static final String BASE_URL = "https://www.idukaan.ae/api/";
     private static final String BASE_URL = "https://www.ajath.com/staging/ziqqi/api/";
     private static Retrofit retrofit = null;
 

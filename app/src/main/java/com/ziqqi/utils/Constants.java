@@ -13,6 +13,11 @@ public class Constants {
     public static final String LOGGED_IN = "logged in";
     public static final String LANG = "language";
     public static final String LANG_SELECTED = "lang selected";
+    public static final String SHARE = "share";
+    public static final String CART = "cart";
+    public static final String WISH_LIST = "wish list";
+    public static final String VIEW_ALL = "view all";
+    public static final String AUTH_TOKEN = "5c2f405346f56";
 
     /*Categories Id*/
 

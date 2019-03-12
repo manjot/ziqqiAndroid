@@ -43,11 +43,8 @@ public class TopCategoriesAdapter extends RecyclerView.Adapter<TopCategoriesAdap
     @Override
     public void onBindViewHolder(@NonNull TopCategoriesViewHolder holder, int i) {
         holder.tvTitle.setText(homeCategoryList.get(i).getName());
-        if (i == 2) {
-            Glide.with(context).load(R.drawable.tv_screen).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
-        } else {
-            Glide.with(context).load(homeCategoryList.get(i).getCategoryImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
-        }
+        Glide.with(context).load(homeCategoryList.get(i).getCategoryImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
+
     }
 
     @Override
@@ -70,7 +67,7 @@ public class TopCategoriesAdapter extends RecyclerView.Adapter<TopCategoriesAdap
             rlCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(homeCategoryList.get(getAdapterPosition()).getId());
+                    listener.onItemClick(homeCategoryList.get(getAdapterPosition()).getId(),"");
                 }
             });
         }

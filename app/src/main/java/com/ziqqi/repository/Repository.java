@@ -3,6 +3,7 @@ package com.ziqqi.repository;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
@@ -162,7 +163,7 @@ public class Repository {
         return similarProductsResponse;
     }
 
-    public MutableLiveData<AddToModel> addToWishlist(String authToken, int id) {
+    public MutableLiveData<AddToModel> addToWishlist(String authToken, String id) {
         final MutableLiveData<AddToModel> addwishlist = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<AddToModel> call = apiInterface.addToWishlist(authToken, id);
@@ -268,5 +269,23 @@ public class Repository {
             }
         });
         return getShipAddress;
+    }
+
+    public MutableLiveData<AddToCart> addToCart(String productId, String customerId, String productVariantId, String quantity) {
+        final MutableLiveData<AddToCart> addToCart = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<AddToCart> call = apiInterface.addToCart(productId, customerId, productVariantId, quantity);
+        call.enqueue(new Callback<AddToCart>() {
+            @Override
+            public void onResponse(Call<AddToCart> call, Response<AddToCart> response) {
+                addToCart.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AddToCart> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return addToCart;
     }
 }

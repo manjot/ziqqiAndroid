@@ -23,13 +23,14 @@
         android:textColor="@color/colorLightText"
         android:fontFamily="@font/regular"
         android:textSize="@dimen/_8sdp"/>
-
     <RatingBar
         android:id="@+id/rb_star"
-        android:isIndicator="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:isIndicator="false"
         android:layout_marginTop="@dimen/_5sdp"
-        style="?android:attr/ratingBarStyle"/>
+        style="?android:attr/ratingBarStyle"
+        android:max="5"
+        android:stepSize="1" />
 
 </LinearLayout>

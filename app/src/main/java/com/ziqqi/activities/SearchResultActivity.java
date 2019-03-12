@@ -78,17 +78,6 @@ public class SearchResultActivity extends AppCompatActivity {
         });
         binding.recyclerView.setPullRefreshEnabled(false);
 
-        listener = new OnItemClickListener() {
-            @Override
-            public void onItemClick(String id) {
-
-            }
-
-            @Override
-            public void onItemClick(String id, String type) {
-
-            }
-        };
     }
     private void searchQuery(String categoryId, String page) {
         binding.progressBar.setVisibility(View.VISIBLE);

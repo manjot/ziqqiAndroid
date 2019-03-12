@@ -16,9 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activities.MyAccountActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PaymentGatewayActivity">
 
         </activity>
+        <activity android:name=".activities.BillingInformationActivity" />
         <activity android:name=".activities.ShippingInfoActivity" />
         <activity android:name=".activities.BillingInfoActivity" />
         <activity android:name=".activities.SearchResultActivity"
@@ -96,11 +100,9 @@
         <activity
             android:name=".activities.ViewAllProductsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <meta-data
             android:name="com.hover.ApiKey"
-            android:value="7295e4d4075b4d375a4923f2ea044ec3"/>
+            android:value="7295e4d4075b4d375a4923f2ea044ec3" />
     </application>
 
 </manifest>

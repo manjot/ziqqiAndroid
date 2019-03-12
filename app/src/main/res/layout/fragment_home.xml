@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="com.ziqqi.viewmodel.HomeViewModel" />
+        <variable
+            name="wishListModel"
+            type="com.ziqqi.viewmodel.ProductDetailsViewModel" />
     </data>
 
     <RelativeLayout

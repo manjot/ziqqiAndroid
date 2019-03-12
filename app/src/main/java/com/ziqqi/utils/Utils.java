@@ -3,6 +3,7 @@ package com.ziqqi.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
@@ -14,6 +15,8 @@ import android.util.Patterns;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.ziqqi.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,5 +93,14 @@ public class Utils {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    public static void share(Context context, String strSharingUrl) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, strSharingUrl);
+        context.startActivity(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_using)));
     }
 }

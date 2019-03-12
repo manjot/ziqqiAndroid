@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_card"
     android:layout_width="@dimen/_95sdp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_8sdp"
     android:background="@drawable/rectangular_stroke_grey"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
-    android:id="@+id/ll_card"
     android:padding="@dimen/_8sdp">
 
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="@dimen/_95sdp"
+        android:layout_height="@dimen/_95sdp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/_16sdp" />
 
     <TextView
         android:id="@+id/tv_brand_name"
@@ -81,24 +84,30 @@
         android:paddingBottom="@dimen/_4sdp">
 
         <ImageView
+            android:id="@+id/iv_share"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_4sdp"
             android:layout_marginRight="@dimen/_4sdp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/share" />
 
         <ImageView
+            android:id="@+id/iv_cart"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:layout_marginRight="@dimen/_4sdp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/shopping_cart" />
 
         <ImageView
+            android:id="@+id/iv_wishlist"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/_4sdp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/like" />
     </LinearLayout>
 </LinearLayout>
