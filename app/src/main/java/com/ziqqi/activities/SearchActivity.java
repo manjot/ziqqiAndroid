@@ -116,17 +116,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        listener = new OnItemClickListener() {
-            @Override
-            public void onItemClick(String id) {
-
-            }
-
-            @Override
-            public void onItemClick(String id, String type) {
-
-            }
-        };
     }
 
     private void searchQuery(String searchname) {

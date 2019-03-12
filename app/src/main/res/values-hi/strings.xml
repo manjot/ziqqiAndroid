@@ -1,7 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="apply">लागू करें</string>
-    <string name="mob_and_tabs">मोबाइल और टैबलेट</string>
+    <string name="app_name">Ziqqi</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="email">Email OR Mobile</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forget_pass">Forget Password</string>
+    <string name="or">Or</string>
+    <string name="dhana">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <string name="enter_email_mn">Enter Email/Mobile Number</string>
+    <string name="enter_your_email">Enter your email address or mobile number here. We will send you OTP for resetting your password.</string>
+    <string name="by_email">By Email</string>
+    <string name="by_sms">By SMS</string>
+    <string name="submit">Submit</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="email_">Email Address</string>
+    <string name="show_pass">Show Password</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="register">Register</string>
+    <string name="by_clicking">By clicking the Sign Up button, you confirm that you accept our\u0020</string>
+    <string name="terms">terms of use\u0020</string>
+    <string name="pp">\u0020Privacy Policy.</string>
+    <string name="mob_and_tabs">MOBILES &amp; TABLETS</string>
+    <string name="computers">COMPUTERS</string>
+    <string name="tv_and_audio">TELEVISIONS &amp; AUDIO</string>
+    <string name="cameras">CAMERAS</string>
+    <string name="appliances">APPLIANCES</string>
+    <string name="gaming">GAMING</string>
+    <string name="perfumes_and_beauty">PERFUMES &amp; BEAUTY</string>
+    <string name="pharmacy_and_health">PHARMACY &amp; HEALTH</string>
+    <string name="supermarket">SUPERMARKET</string>
+    <string name="my_acc">MY ACCOUNT</string>
+    <string name="wishlist">WISHLIST</string>
+    <string name="track_order">TRACK ORDER</string>
+    <string name="welcome">Welcome</string>
+    <string name="login_signup">Login/Signup</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_cat">Top Categories</string>
+    <string name="mobiles">Mobiles</string>
+    <string name="bs_mobile">Best Sellers |\u0020</string>
+    <string name="view_all">View All</string>
+    <string name="appple">Apple</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="search_fragment">Search Fragment</string>
+    <string name="deals">Deals</string>
+    <string name="title_activity_select_your_language">SelectYourLanguageActivity</string>
+    <string name="syc">Select your country</string>
+    <string name="syl">Select your language</string>
+    <string name="apply">Apply</string>
+
+
+    <string name="facebook_app_id">361327514698589</string>
+    <string name="fb_login_protocol_scheme">fb361327514698589</string>
+    <string name="hide_pass">Hide Password</string>
+    <string name="all_right_reserved">Copyright 2018 ziqqi.com. All right reserved.</string>
+    <string name="log_out">Log out</string>
+    <string name="search_hint">I\'m shopping for...</string>
+
+    <string name="regular">fonts/regular.otf</string>
+    <string name="light">fonts/light.otf</string>
+    <string name="extraLight">fonts/extralight.otf</string>
+    <string name="boldItalic">fonts/bolditalic.otf</string>
+    <string name="medium">fonts/medium.otf</string>
+    <string name="bold">fonts/bold.otf</string>
+    <string name="try_again">Try Again</string>
     <string name="my_account">My Account</string>
     <string name="my_order">My Order</string>
     <string name="my_address_book">My Address Book</string>
@@ -45,6 +112,7 @@
     <string name="rate_5_star">Rate 5 star for excellent and 1 star for very bad</string>
     <string name="feeback_q2">02. How easy was it finding products ?</string>
     <string name="feedback_q3">03. How easy was it making purchases ?</string>
+    <string name="feedback_q4">04. Was enough info (including images) provided for the product?</string>
     <string name="feedback_q5">05. And finally, how would you rate the look and feel of the app ?</string>
     <string name="demo">Demo</string>
     <string name="memory_ram">Memory RAM</string>
@@ -59,6 +127,14 @@
     <string name="iphone_xs_charcoal_black_4gb">Iphone Xs Charcoal black 4GB</string>
     <string name="customer_service">Customer Service</string>
     <string name="we_go_above_and_beyond">We go above and beyond</string>
+    <string name="billing_info">Billing Information</string>
+    <string name="select_your_country">Select Country</string>
+    <string name="next">Next</string>
+    <string name="aotnc">About our Terms and Conditions</string>
+    <string name="order_of_rights">Orders of Rights</string>
+    <string name="guideliness_for">Guidelines for get messages, products, reviews and question and answer</string>
+    <string name="website_purchase">Website Purchase</string>
+    <string name="dummy_data">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="customers_also_viewed">Customers Also Viewed</string>
     <string name="add_cart">ADD TO CART</string>
     <string name="buy_now">BUY NOW</string>
@@ -66,12 +142,14 @@
     <string name="specification">Specification</string>
     <string name="reviews">Reviews</string>
     <string name="no_reviews_yet">No reviews yet</string>
+    <string name="share_using">Share Using</string>
     <string name="your_whislist_is_empty">Your whislist is empty</string>
     <string name="no_data">No data found</string>
     <string name="select_country">Select Country</string>
     <string name="address_details">Address Details</string>
-    <string name="mobile_number">Mobile Number</string>
-    <string name="next">Next</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+
     <string name="billing_information">Billing Information</string>
     <string name="shipping_information">Shipping Information</string>
     <string name="name">Name</string>
@@ -83,4 +161,6 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="login">Login</string>
+
+
 </resources>

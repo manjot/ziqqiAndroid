@@ -1,6 +1,7 @@
 package com.ziqqi.retrofit;
 
 import com.ziqqi.model.VerifyOtpResponse;
+import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
@@ -52,7 +53,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("homesearch")
-    Call<SearchResponse> getSearch(@Field("category_id") String categoryId, @Field("page") String page );
+    Call<SearchResponse> getSearch(@Field("category_id") String categoryId, @Field("page") String page);
 
     @FormUrlEncoded
     @POST("forgot_password")
@@ -77,7 +78,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("addTowishlist")
-    Call<AddToModel> addToWishlist(@Field("auth_token") String auth_token, @Field("product_id") int product_id);
+    Call<AddToModel> addToWishlist(@Field("auth_token") String auth_token, @Field("product_id") String product_id);
 
     @FormUrlEncoded
     @POST("veiwWishlistProduct")
@@ -87,4 +88,7 @@ public interface ApiInterface {
     @POST("categorysearch")
     Call<SearchCategory> getSearchCategory(@Field("searchname") String searchname);
 
+    @FormUrlEncoded
+    @POST("addTocart")
+    Call<AddToCart> addToCart(@Field("product_id") String productId, @Field("customer_id") String customerId, @Field("product_variant_id") String productVariantId, @Field("quantity") String quantity);
 }

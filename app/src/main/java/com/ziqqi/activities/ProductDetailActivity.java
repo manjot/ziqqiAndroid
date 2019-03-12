@@ -2,43 +2,30 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
-import com.ziqqi.adapters.ImageSliderAdapter;
-import com.ziqqi.adapters.OverViewAdapter;
 import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
-import com.ziqqi.adapters.SearchAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
-import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
-import com.ziqqi.model.searchmodel.Payload;
-import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
-import com.ziqqi.utils.FontCache;
-import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.ProductDetailsViewModel;
@@ -88,7 +75,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.rvReviews.setHasFixedSize(true);
         binding.rvReviews.setNestedScrollingEnabled(false);
 
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             product_id = getIntent().getStringExtra("product_id");
         }
 
@@ -140,7 +127,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     binding.tvSpecs.setVisibility(View.VISIBLE);
                     binding.tvOverview.setVisibility(View.GONE);
                     binding.rvReviews.setVisibility(View.GONE);
-                } else if (tab.getPosition() ==2){
+                } else if (tab.getPosition() == 2) {
                     binding.rvReviews.setVisibility(View.VISIBLE);
                     binding.tvOverview.setVisibility(View.GONE);
                     binding.tvSpecs.setVisibility(View.GONE);
@@ -168,16 +155,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, strSharingUrl);
-                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+                Utils.share(ProductDetailActivity.this, strSharingUrl);
             }
         });
     }
-
 
 
     private void getDetails(int id) {
@@ -188,12 +169,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onChanged(@Nullable ProductDetails productDetails) {
                 if (!productDetails.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
-<<<<<<< HEAD
-                    if (payloadList != null) {
-                        binding.tvBrandName.setText(productDetails.getPayload().getBrandName());
-                        binding.tvProductName.setText(productDetails.getPayload().getName());
-                        // adapter.notifyDataSetChanged();
-=======
                     if (productDetails.getPayload() != null) {
                         binding.tvBrandName.setText(productDetails.getPayload().getBrandName());
                         binding.tvProductName.setText(productDetails.getPayload().getName());
@@ -206,13 +181,12 @@ public class ProductDetailActivity extends AppCompatActivity {
                         binding.tvSpecs.setText(resultSpecification);
                         bannerPayLoad.addAll(productDetails.getPayload().getImage());
                         feedbackPayLoad.addAll(productDetails.getPayload().getReviews());
-                        if(productDetails.getPayload().getReviews().size() == 0){
+                        if (productDetails.getPayload().getReviews().size() == 0) {
                             binding.rvReviews.setVisibility(View.GONE);
                             binding.tvNoReviews.setVisibility(View.VISIBLE);
 
                         }
                         productSliderAdapter.notifyDataSetChanged();
->>>>>>> 5843645898e08b459df5726711ee7f1ff5cf3e5f
                     }
                 } else {
                     binding.progressBar.setVisibility(View.GONE);
@@ -244,7 +218,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void addToWishlist(String authToken, int id){
+    private void addToWishlist(String authToken, int id) {
         binding.progressBar.setVisibility(View.VISIBLE);
         viewModel.addProductWishlist(authToken, id);
         viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
@@ -280,10 +254,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);
     }
+
     @Override
     public void onStop() {
         super.onStop();
         handler.removeCallbacks(update);
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

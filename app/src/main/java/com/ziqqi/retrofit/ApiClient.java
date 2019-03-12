@@ -18,7 +18,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "https://www.idukaan.ae/api/";
+  //  private static final String BASE_URL = "https://www.idukaan.ae/api/";
+    private static final String BASE_URL = "https://www.ajath.com/staging/ziqqi/api/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
@@ -36,7 +37,7 @@ public class ApiClient {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
                     HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
-                    return hv.verify("www.idukaan.ae", session);
+                    return hv.verify("www.ajath.com", session);
                 }
             }).build();
             retrofit = new Retrofit.Builder()

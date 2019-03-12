@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.model.homecategorymodel.Payload;
+import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
 
@@ -49,7 +50,7 @@ public class BestSellerMainAdapter extends RecyclerView.Adapter<BestSellerMainAd
         if (!payloadList.get(i).getBestsellerProduct().isEmpty()) {
             holder.tvBestSellerTitle.setText(payloadList.get(i).getName());
             Log.e("IDDDDDD", payloadList.get(i).getId());
-            bestSellerAdapter = new BestSellerAdapter(context, i, payloadList.get(i).getBestsellerProduct());
+            bestSellerAdapter = new BestSellerAdapter(context, i, payloadList.get(i).getBestsellerProduct(), listener);
             holder.recyclerView.setAdapter(bestSellerAdapter);
         }
     }
@@ -81,7 +82,7 @@ public class BestSellerMainAdapter extends RecyclerView.Adapter<BestSellerMainAd
             tvViewAll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(payloadList.get(getAdapterPosition()).getId(), "viewAll");
+                    listener.onItemClick(payloadList.get(getAdapterPosition()).getId(), Constants.VIEW_ALL);
                 }
             });
         }

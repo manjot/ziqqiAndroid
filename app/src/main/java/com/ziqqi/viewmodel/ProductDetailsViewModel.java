@@ -36,7 +36,7 @@ public class ProductDetailsViewModel extends AndroidViewModel {
     }
 
     public void addProductWishlist(String authToken, int productId){
-        addToModelResponse = repository.addToWishlist(authToken, productId);
+        addToModelResponse = repository.addToWishlist(authToken, String.valueOf(productId));
     }
 
     public MutableLiveData<ProductDetails> getProductDetailsResponse() {

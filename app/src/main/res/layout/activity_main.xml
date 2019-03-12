@@ -38,13 +38,13 @@
                     android:id="@+id/tv_toolbar_title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_45sdp"
+                    android:fontFamily="@font/bold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_16sdp"
-                    android:fontFamily="@font/bold" />
+                    android:visibility="gone" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
@@ -61,9 +61,107 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_alignParentBottom="true"
             android:background="?android:attr/colorPrimary"
+            android:visibility="gone"
             app:itemIconTint="@color/colorBlack"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav_menu" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_bottom_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/home__1_" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_bottom_deals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/tag" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_bottom_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/magnifying_glass" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_bottom_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/shopping_cart" />
+
+                <TextView
+                    android:id="@+id/tv_cart"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:background="@drawable/red_circle"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/colorWhite"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_bottom_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/avatar" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
@@ -72,19 +170,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorBgNavigation"
-        android:visibility="visible"
         android:theme="@style/navigationTheme"
+        android:visibility="visible"
         app:headerLayout="@layout/nav_header"
         app:itemBackground="@android:color/transparent"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
         app:menu="@menu/nav_menu" />
-
-    <!--  <ListView
-          android:id="@+id/list_view"
-          android:layout_width="@dimen/_240sdp"
-          android:layout_height="match_parent"
-          android:background="@color/colorBgNavigation"
-          android:layout_gravity="start"
-          android:visibility="visible" />-->
 </android.support.v4.widget.DrawerLayout>

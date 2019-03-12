@@ -7,13 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,6 +40,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ziqqi.R;
+import com.ziqqi.addToCartListener;
 import com.ziqqi.fragments.CartFragment;
 import com.ziqqi.fragments.DealsFragment;
 import com.ziqqi.fragments.HomeFragment;
@@ -58,23 +56,13 @@ import com.ziqqi.utils.PreferenceManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.SEND_SMS;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static android.Manifest.permission_group.CAMERA;
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, addToCartListener {
     int permissionCode = 1234;
     DrawerLayout mDrawerLayout;
     NavigationView navigationView;
-    BottomNavigationView bottomNavigationView;
     Handler handler;
-    ImageView ivProfilePic;
+    ImageView ivProfilePic, ivBottomHome, ivBottomDeals, ivBottomSearch, ivBottomCart, ivBottomProfile;
     TextView tvLogin;
-/*
-    ListView listView;
-*/
-
     GoogleSignInAccount acct;
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
@@ -83,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     String personName, personEmail;
     Uri personPhoto;
+    TextView tvCart;
+
+    int cartCount = 0;
 
     HomeFragment homeFragment;
     SearchFragment searchFragment;
@@ -108,13 +99,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        bottomNavigationView = findViewById(R.id.navigation);
-/*
-        listView = findViewById(R.id.list_view);
-*/
+        ivBottomCart = findViewById(R.id.iv_bottom_cart);
+        ivBottomDeals = findViewById(R.id.iv_bottom_deals);
+        ivBottomHome = findViewById(R.id.iv_bottom_home);
+        ivBottomProfile = findViewById(R.id.iv_bottom_profile);
+        ivBottomSearch = findViewById(R.id.iv_bottom_search);
+        tvCart = findViewById(R.id.tv_cart);
 
         navigationView.setNavigationItemSelectedListener(this);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        ivBottomSearch.setOnClickListener(this);
+        ivBottomProfile.setOnClickListener(this);
+        ivBottomHome.setOnClickListener(this);
+        ivBottomDeals.setOnClickListener(this);
+        ivBottomCart.setOnClickListener(this);
+
         handler = new Handler();
         homeFragment = new HomeFragment();
         searchFragment = new SearchFragment();
@@ -132,17 +131,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         appliancesFragment = new SubCategoryFragment();
         superMarketFragment = new SubCategoryFragment();
 
-    /*    NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(this, navIcons, navItems);
-        listView.setAdapter(adapter);*/
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-       /* if (!CheckingPermissionIsEnabledOrNot()) {
-            RequestMultiplePermission();
-        }*/
-
 
         ivProfilePic = navigationView.getHeaderView(0).findViewById(R.id.iv_profile_pic);
         tvLogin = navigationView.getHeaderView(0).findViewById(R.id.tv_login);
@@ -171,11 +162,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         PreferenceManager.setBoolValue(Constants.LOGGED_IN, false);
                         PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "");
-                        Log.e("FaltuLog ", " arghhhhh");
                         finishAffinity();
                     } else if (PreferenceManager.getStringValue(Constants.FACEBOOK_OR_GMAIL).equals("g")) {
                         googleSignOut();
-                        Log.e("FaltuLog ", " arghhhhh");
                         PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "");
                         finishAffinity();
                     } else {
@@ -222,32 +211,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             MenuItem mi = m.getItem(i);
             applyFontToMenuItem(mi);
         }
-
-    }
-
-    public boolean CheckingPermissionIsEnabledOrNot() {
-
-        int first = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
-        int second = ContextCompat.checkSelfPermission(getApplicationContext(), SEND_SMS);
-        int third = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
-        int fourth = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
-
-        return first == PackageManager.PERMISSION_GRANTED &&
-                second == PackageManager.PERMISSION_GRANTED &&
-                third == PackageManager.PERMISSION_GRANTED
-                && fourth == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void RequestMultiplePermission() {
-
-        // Creating String Array with Permissions.
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]
-                {
-                        CAMERA,
-                        SEND_SMS
-                        , READ_EXTERNAL_STORAGE,
-                        WRITE_EXTERNAL_STORAGE
-                }, permissionCode);
 
     }
 
@@ -299,26 +262,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void navigate(int id) {
         switch (id) {
-            case R.id.bottom_nav_home:
-                if (!homeFragment.isVisible())
-                    replaceFragment(homeFragment, null);
-                break;
-            case R.id.bottom_nav_search:
-                if (!searchFragment.isVisible())
-                    replaceFragment(searchFragment, null);
-                break;
-            case R.id.bottom_nav_cart:
-                if (!cartFragment.isVisible())
-                    replaceFragment(cartFragment, null);
-                break;
-            case R.id.bottom_nav_coupan:
-                if (!dealsFragment.isVisible())
-                    replaceFragment(dealsFragment, null);
-                break;
-            case R.id.bottom_nav_person:
-                if (!profileFragment.isVisible())
-                    replaceFragment(profileFragment, null);
-                break;
             case R.id.mob_and_tabs:
                 if (!mobileFragment.isVisible())
                     replaceFragment(mobileFragment, Constants.MOBILE_AND_TABS);
@@ -397,7 +340,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager manager = getSupportFragmentManager();
         boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
         FragmentTransaction ft = manager.beginTransaction();
-        //  ft.setCustomAnimations(0, 0,android.R.anim.fade_in,android.R.anim.fade_out);
 
         if (!fragmentPopped) {
             ft.replace(R.id.container, fragment, backStateName);
@@ -472,5 +414,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_bottom_home:
+                if (!homeFragment.isVisible())
+                    replaceFragment(homeFragment, null);
+                break;
+            case R.id.iv_bottom_search:
+                if (!searchFragment.isVisible())
+                    replaceFragment(searchFragment, null);
+                break;
+            case R.id.iv_bottom_cart:
+                if (!cartFragment.isVisible())
+                    replaceFragment(cartFragment, null);
+                break;
+            case R.id.iv_bottom_deals:
+                if (!dealsFragment.isVisible())
+                    replaceFragment(dealsFragment, null);
+                break;
+            case R.id.iv_bottom_profile:
+                if (!profileFragment.isVisible())
+                    replaceFragment(profileFragment, null);
+                break;
+        }
+    }
+
+    @Override
+    public void addToCart() {
+
     }
 }

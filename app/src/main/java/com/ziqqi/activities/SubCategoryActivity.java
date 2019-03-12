@@ -18,6 +18,7 @@ import com.ziqqi.R;
 import com.ziqqi.adapters.BestSellerMainAdapter;
 import com.ziqqi.adapters.SubCategoryAdapter;
 import com.ziqqi.databinding.ActivityHomeCategoryBinding;
+import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.homecategorymodel.Payload;
 import com.ziqqi.utils.SpacesItemDecoration;
@@ -56,13 +57,13 @@ public class SubCategoryActivity extends AppCompatActivity {
 
         listener = new OnItemClickListener() {
             @Override
-            public void onItemClick(String id) {
-
+            public void onItemClick(String id, String type) {
+                startActivity(new Intent(SubCategoryActivity.this, ViewAllProductsActivity.class).putExtra("categoryId", id));
             }
 
             @Override
-            public void onItemClick(String id, String type) {
-                startActivity(new Intent(SubCategoryActivity.this, ViewAllProductsActivity.class).putExtra("categoryId", id));
+            public void onItemClick(BestsellerProduct bestsellerProduct, String type) {
+
             }
         };
 

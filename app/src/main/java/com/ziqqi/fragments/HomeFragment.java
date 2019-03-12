@@ -2,6 +2,7 @@ package com.ziqqi.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,8 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
@@ -29,11 +32,17 @@ import com.ziqqi.activities.ViewAllProductsActivity;
 import com.ziqqi.adapters.BestSellerMainAdapter;
 import com.ziqqi.adapters.ImageSliderAdapter;
 import com.ziqqi.adapters.TopCategoriesAdapter;
+import com.ziqqi.addToCartListener;
 import com.ziqqi.databinding.FragmentHomeBinding;
+import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.bannerimagemodel.Payload;
+import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.HomeViewModel;
@@ -42,6 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 /**
@@ -74,6 +85,7 @@ public class HomeFragment extends Fragment {
     TextView tvTitle;
     ImageView ivTitle;
 
+    addToCartListener addToCartListener;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -85,9 +97,9 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
-        toolbar=  getActivity().findViewById(R.id.toolbar);
-        tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
-        ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        tvTitle = toolbar.findViewById(R.id.tv_toolbar_title_text);
+        ivTitle = toolbar.findViewById(R.id.tv_toolbar_title);
         ivTitle.setVisibility(View.VISIBLE);
         tvTitle.setVisibility(View.GONE);
         binding.executePendingBindings();
@@ -119,13 +131,33 @@ public class HomeFragment extends Fragment {
 
         listener = new OnItemClickListener() {
             @Override
-            public void onItemClick(String id) {
-                startActivity(new Intent(getContext(), SubCategoryActivity.class).putExtra("categoryId", id));
+            public void onItemClick(String id, String type) {
+                if (type.equals(Constants.VIEW_ALL)) {
+                    startActivity(new Intent(getContext(), ViewAllProductsActivity.class).putExtra("categoryId", id));
+                } else {
+                    startActivity(new Intent(getContext(), SubCategoryActivity.class).putExtra("categoryId", id));
+                }
             }
 
             @Override
-            public void onItemClick(String id, String type) {
-                startActivity(new Intent(getContext(), ViewAllProductsActivity.class).putExtra("categoryId", id));
+            public void onItemClick(BestsellerProduct bestsellerProduct, String type) {
+                switch (type) {
+                    case Constants.SHARE:
+                        Utils.share(getActivity(), bestsellerProduct.getId());
+                        break;
+                    case Constants.WISH_LIST:
+                        addToWishList(Constants.AUTH_TOKEN, bestsellerProduct.getId());
+                        break;
+                    case Constants.CART:
+                        viewModel.addToCart(bestsellerProduct.getId(), PreferenceManager.getStringValue(Constants.USER_ID), "", "1");
+                        viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
+                            @Override
+                            public void onChanged(@Nullable AddToCart addToCart) {
+                                addToCartListener.addToCart();
+                            }
+                        });
+                        break;
+                }
             }
         };
 
@@ -190,7 +222,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         managerBestSeller = new LinearLayoutManager(getContext());
         managerBestSeller.setOrientation(LinearLayoutManager.VERTICAL);
         binding.rvBestSellers.setLayoutManager(managerBestSeller);
@@ -243,7 +274,7 @@ public class HomeFragment extends Fragment {
                             homeCategoryListGrid2.add(payLoadData.get(i));
                         } else {
                             binding.tvTitle.setText(payLoadData.get(i).getName());
-                            Glide.with(getContext()).load(payLoadData.get(i).getCategoryImage()).into(binding.ivImage);
+                            Glide.with(getActivity()).load(payLoadData.get(i).getCategoryImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivImage);
                             binding.tvTitle.setTypeface(FontCache.get(getResources().getString(R.string.medium), getContext()));
                         }
                         if (!payLoadData.get(i).getBestsellerProduct().isEmpty()) {
@@ -257,15 +288,35 @@ public class HomeFragment extends Fragment {
                 } else {
                     Utils.ShowToast(getContext(), homeCategoriesResponse.getMessage());
                 }
-
             }
         });
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
         handler.removeCallbacks(update);
+    }
+
+    private void addToWishList(String authToken, String id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductWishlist(authToken, id);
+        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+            @Override
+            public void onChanged(@Nullable AddToModel addToModel) {
+                if (!addToModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        addToCartListener = (com.ziqqi.addToCartListener) context;
     }
 }

@@ -124,17 +124,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        listener = new OnItemClickListener() {
-            @Override
-            public void onItemClick(String id) {
 
-            }
-
-            @Override
-            public void onItemClick(String id, String type) {
-
-            }
-        };
         return view;
     }
 
