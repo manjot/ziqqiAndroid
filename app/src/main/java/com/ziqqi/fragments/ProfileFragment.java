@@ -23,13 +23,14 @@ import com.ziqqi.activities.MyAddressBookActivity;
 import com.ziqqi.activities.MyOrdersActivity;
 import com.ziqqi.activities.SelectYourLanguageActivity;
 import com.ziqqi.databinding.FragmentProfileBinding;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.ProfileViewModel;
 
 public class ProfileFragment extends Fragment{
 
     FragmentProfileBinding binding;
     ProfileViewModel viewModel;
-
     Toolbar toolbar;
     TextView tvTitle;
     ImageView ivTitle;
@@ -53,6 +54,12 @@ public class ProfileFragment extends Fragment{
         binding.setViewModel(viewModel);
         View view = binding.getRoot();
         strSharingUrl = "Hey check out my app at: https://play.google.com/store/apps/details?id=" + getContext().getPackageName();
+
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            binding.tvName.setText(PreferenceManager.getStringValue(Constants.FIRST_NAME));
+            binding.tvEmail.setText(PreferenceManager.getStringValue(Constants.EMAIL));
+        }
+
 
         binding.llMyOrder.setOnClickListener(new View.OnClickListener() {
             @Override

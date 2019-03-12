@@ -4,6 +4,7 @@ public class Constants {
     //TODO public static final variables
     public static final String FIRST_NAME = "first name";
     public static final String LAST_NAME = "last name";
+    public static final String EMAIL = "email";
     public static final String PROFILE_PIC = "profile pic";
     public static final String GENDER = "gender";
     public static final String USER_ID = "user id";

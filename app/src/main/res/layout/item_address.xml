@@ -12,14 +12,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_discount_price"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
             android:paddingLeft="@dimen/_4sdp"
             android:paddingRight="@dimen/_4sdp"
-            android:text="@string/user_name"
             android:fontFamily="@font/bold"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14sdp"/>
@@ -33,23 +32,21 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:paddingLeft="@dimen/_4sdp"
             android:paddingRight="@dimen/_4sdp"
-            android:fontFamily="@font/regular"
-            android:text="Address : \nNew Ashok Nagar \nNew Delhi \nNear pillar no 166 \n110096"
+            android:fontFamily="@font/light"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/tv_mobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/regular"
+            android:fontFamily="@font/light"
             android:layout_marginTop="@dimen/_5sdp"
             android:paddingLeft="@dimen/_4sdp"
             android:paddingRight="@dimen/_4sdp"
-            android:text="Mobile : \n9876543210"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_10sdp" />
     </LinearLayout>
 
     <RelativeLayout
@@ -57,6 +54,7 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/bt_edit"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_alignParentBottom="true"

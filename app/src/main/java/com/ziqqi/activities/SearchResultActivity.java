@@ -37,7 +37,7 @@ public class SearchResultActivity extends AppCompatActivity {
     List<Payload> searchDataList = new ArrayList<>();
     OnItemClickListener listener;
     SearchAdapter adapter;
-    String catId;
+    String catId, title;
     int pageCount = 1;
 
     @Override
@@ -50,7 +50,14 @@ public class SearchResultActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null){
             catId = getIntent().getStringExtra("category_id");
+            title = getIntent().getStringExtra("title");
         }
+
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
+        getSupportActionBar().setElevation(0.0f);
+        binding.tvToolbarTitle.setText(title);
 
         setUpAdapter();
         searchQuery(catId, String.valueOf(pageCount));
@@ -83,7 +90,6 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         };
     }
-
     private void searchQuery(String categoryId, String page) {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.GONE);

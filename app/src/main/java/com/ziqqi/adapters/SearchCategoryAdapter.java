@@ -24,7 +24,6 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
     Context context;
     List<com.ziqqi.model.searchcategorymodel.Payload> payloadList;
     OnItemClickListener listener;
-    Typeface regular, medium, light, bold;
 
 
     public SearchCategoryAdapter(Context context, List<com.ziqqi.model.searchcategorymodel.Payload> payloadList, OnItemClickListener listener) {
@@ -48,6 +47,7 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
             public void onClick(View v) {
                 Intent intent = new Intent(context, SearchResultActivity.class);
                 intent.putExtra("category_id" , payloadList.get(i).getCategoryId());
+                intent.putExtra("title" , payloadList.get(i).getCategoryName());
                 context.startActivity(intent);
 
             }

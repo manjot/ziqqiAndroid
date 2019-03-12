@@ -5,7 +5,10 @@ import android.util.Log;
 
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
@@ -211,5 +214,59 @@ public class Repository {
             }
         });
         return getCategories;
+    }
+
+    public MutableLiveData<HelpCenterModel> getHelpCenter() {
+        final MutableLiveData<HelpCenterModel> getHelps = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<HelpCenterModel> call = apiInterface.getHelps();
+        call.enqueue(new Callback<HelpCenterModel>() {
+            @Override
+            public void onResponse(Call<HelpCenterModel> call, Response<HelpCenterModel> response) {
+                getHelps.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<HelpCenterModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return getHelps;
+    }
+
+    public MutableLiveData<FeedbackMaster> getFeedbackMaster() {
+        final MutableLiveData<FeedbackMaster> getFeedbacks = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<FeedbackMaster> call = apiInterface.getFeedbackMaster();
+        call.enqueue(new Callback<FeedbackMaster>() {
+            @Override
+            public void onResponse(Call<FeedbackMaster> call, Response<FeedbackMaster> response) {
+                getFeedbacks.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<FeedbackMaster> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return getFeedbacks;
+    }
+
+    public MutableLiveData<ShippingAddressModel> getShippingAddress(String authToken) {
+        final MutableLiveData<ShippingAddressModel> getShipAddress = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ShippingAddressModel> call = apiInterface.shippingAddress(authToken);
+        call.enqueue(new Callback<ShippingAddressModel>() {
+            @Override
+            public void onResponse(Call<ShippingAddressModel> call, Response<ShippingAddressModel> response) {
+                getShipAddress.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ShippingAddressModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return getShipAddress;
     }
 }

@@ -102,6 +102,8 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onChanged(@Nullable SignUpResponse signUpResponse) {
                         if (!signUpResponse.getError()) {
                             VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
+                            PreferenceManager.setStringValue(Constants.FIRST_NAME, signUpResponse.getPayload().getFirstName());
+                            PreferenceManager.setStringValue(Constants.EMAIL, signUpResponse.getPayload().getEmail());
                         } else {
                             signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
                             signUpViewModel.progressVisibility.set(View.GONE);
@@ -124,6 +126,8 @@ public class SignUpActivity extends AppCompatActivity {
                     signUpViewModel.progressVisibility.set(View.GONE);
                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                     PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                    PreferenceManager.setStringValue(Constants.FIRST_NAME, verifyOtpResponse.getPayload().get(0).getFirstName());
+                    PreferenceManager.setStringValue(Constants.EMAIL, verifyOtpResponse.getPayload().get(0).getEmail());
                     finishAffinity();
                 } else {
                     signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);

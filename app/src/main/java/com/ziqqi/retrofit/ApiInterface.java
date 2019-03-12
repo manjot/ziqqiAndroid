@@ -3,9 +3,12 @@ package com.ziqqi.retrofit;
 import com.ziqqi.model.VerifyOtpResponse;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.languagemodel.LanguageModel;
 import com.ziqqi.model.loginResponse.LoginResponse;
+import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
@@ -29,6 +32,12 @@ public interface ApiInterface {
 
     @GET("home_banners")
     Call<BannerImageModel> getHomeBanners();
+
+    @GET("getHelpCenters")
+    Call<HelpCenterModel> getHelps();
+
+    @GET("feedback_master")
+    Call<FeedbackMaster> getFeedbackMaster();
 
     @FormUrlEncoded
     @POST("socialSignup")
@@ -86,5 +95,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("categorysearch")
     Call<SearchCategory> getSearchCategory(@Field("searchname") String searchname);
+
+    @FormUrlEncoded
+    @POST("getShippingAddress")
+    Call<ShippingAddressModel> shippingAddress(@Field("auth_token") String auth_token);
 
 }
