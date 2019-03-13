@@ -58,6 +58,9 @@ public class Payload {
     @SerializedName("rating")
     @Expose
     private Integer rating;
+    @SerializedName("is_wishlist")
+    @Expose
+    private Integer is_wishlist;
     @SerializedName("total_review")
     @Expose
     private Integer totalReview;
@@ -217,4 +220,11 @@ public class Payload {
         this.reviews = reviews;
     }
 
+    public Integer getIs_wishlist() {
+        return is_wishlist;
+    }
+
+    public void setIs_wishlist(Integer is_wishlist) {
+        this.is_wishlist = is_wishlist;
+    }
 }

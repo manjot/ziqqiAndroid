@@ -28,13 +28,14 @@
 
                 <TextView
                     android:id="@+id/tv_toolbar_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/communication_preferences"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="?android:attr/actionBarSize"
-                    android:textColor="@color/colorBlack"
                     android:fontFamily="@font/bold"
+                    android:gravity="center_horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_45sdp"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"/>
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>

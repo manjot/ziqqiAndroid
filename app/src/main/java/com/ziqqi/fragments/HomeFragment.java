@@ -26,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.activities.MainActivity;
 import com.ziqqi.activities.SearchActivity;
 import com.ziqqi.activities.SubCategoryActivity;
 import com.ziqqi.activities.ViewAllProductsActivity;
@@ -42,6 +43,7 @@ import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
+import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
@@ -86,6 +88,7 @@ public class HomeFragment extends Fragment {
     ImageView ivTitle;
 
     addToCartListener addToCartListener;
+    LoginDialog loginDialog;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -106,6 +109,7 @@ public class HomeFragment extends Fragment {
         binding.setViewModel(viewModel);
         binding.setViewModel(viewModel);
         View view = binding.getRoot();
+        loginDialog = new LoginDialog();
 
         rvTopCategoriesGridOne = binding.rvTopCategoriesGrid1;
         rvTopCategoriesGridTwo = binding.rvTopCategoriesGrid2;
@@ -146,16 +150,26 @@ public class HomeFragment extends Fragment {
                         Utils.share(getActivity(), bestsellerProduct.getId());
                         break;
                     case Constants.WISH_LIST:
-                        addToWishList(Constants.AUTH_TOKEN, bestsellerProduct.getId());
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            addToWishList(Constants.AUTH_TOKEN, bestsellerProduct.getId());
+                        }else{
+                            loginDialog.showDialog(getActivity());
+                        }
                         break;
                     case Constants.CART:
-                        viewModel.addToCart(bestsellerProduct.getId(), PreferenceManager.getStringValue(Constants.USER_ID), "", "1");
-                        viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
-                            @Override
-                            public void onChanged(@Nullable AddToCart addToCart) {
-                                addToCartListener.addToCart();
-                            }
-                        });
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            viewModel.addToCart(bestsellerProduct.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
+                                @Override
+                                public void onChanged(@Nullable AddToCart addToCart) {
+                                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                                    addToCartListener.addToCart();
+                                }
+                            });
+                        }else{
+                            loginDialog.showDialog(getActivity());
+                        }
+
                         break;
                 }
             }

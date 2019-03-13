@@ -1,5 +1,7 @@
 package com.ziqqi.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +22,8 @@ import com.ziqqi.utils.PreferenceManager;
 import static com.ziqqi.utils.Utils.setWindowFlag;
 
 public class SecondSplashActivity extends Activity {
-    ImageView ivSplash;
+    ImageView ivSplash, ivCircle;
+    Animation animSlide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +41,18 @@ public class SecondSplashActivity extends Activity {
         }
         setContentView(R.layout.activity_second_splash);
         ivSplash = findViewById(R.id.iv_splash);
+        ivCircle = findViewById(R.id.iv_circle);
+
+        animSlide = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.left_to_rigth);
+
+        ivCircle.setAnimation(animSlide);
 
 /*
         Bitmap resultBmp = BlurBuilder.blur(this, BitmapFactory.decodeResource(getResources(), R.drawable.splash));
 */
+
+
 
         Glide.with(this).load(R.drawable.splash).into(ivSplash);
 

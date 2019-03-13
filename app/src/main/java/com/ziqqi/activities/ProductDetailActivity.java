@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,9 +24,11 @@ import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
 import com.ziqqi.fragments.ProfileFragment;
+import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
+import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
@@ -61,6 +64,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     String product_id;
     String strSharingUrl;
     LoginDialog loginDialog;
+    int isWishlist = -1;
+    String authToken = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +123,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             }
         });
-        getDetails(Integer.parseInt(product_id));
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
+        }
+
+        getDetails(Integer.parseInt(product_id), authToken);
         setUpAdapter();
         getSimilar(Integer.parseInt(product_id));
 
@@ -127,11 +136,13 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     binding.tvOverview.setVisibility(View.VISIBLE);
+                    binding.tvNoReviews.setVisibility(View.VISIBLE);
                     binding.tvSpecs.setVisibility(View.GONE);
                     binding.rvReviews.setVisibility(View.GONE);
                 } else if (tab.getPosition() == 1) {
                     binding.tvSpecs.setVisibility(View.VISIBLE);
                     binding.tvOverview.setVisibility(View.GONE);
+                    binding.tvNoReviews.setVisibility(View.VISIBLE);
                     binding.rvReviews.setVisibility(View.GONE);
                 } else if (tab.getPosition() == 2) {
                     binding.rvReviews.setVisibility(View.VISIBLE);
@@ -155,7 +166,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                    addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                    if (isWishlist == 0){
+                        addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                    }else if (isWishlist == 1){
+                        removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                    }
                 }else{
                     loginDialog.showDialog(ProductDetailActivity.this);
                 }
@@ -173,7 +188,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                    addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
                 }else{
                     loginDialog.showDialog(ProductDetailActivity.this);
                 }
@@ -193,9 +208,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
 
-    private void getDetails(int id) {
+    private void getDetails(int id, String authToken) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.fetchData(id);
+        viewModel.fetchData(id, authToken);
         viewModel.getProductDetailsResponse().observe(this, new Observer<ProductDetails>() {
             @Override
             public void onChanged(@Nullable ProductDetails productDetails) {
@@ -208,6 +223,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                         String resultOverview = Html.fromHtml(productDetails.getPayload().getOverview()).toString();
                         String resultSpecification = Html.fromHtml(productDetails.getPayload().getSpecifications()).toString();
                         strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
+                        isWishlist = productDetails.getPayload().getIs_wishlist();
+
+                        if (isWishlist == 1){
+                            binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
+                        }else if (isWishlist == 0){
+                            binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                        }
 
                         binding.tvOverview.setText(resultOverview);
                         binding.tvSpecs.setText(resultSpecification);
@@ -216,7 +238,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                         if (productDetails.getPayload().getReviews().size() == 0) {
                             binding.rvReviews.setVisibility(View.GONE);
                             binding.tvNoReviews.setVisibility(View.VISIBLE);
-
                         }
                         productSliderAdapter.notifyDataSetChanged();
                     }
@@ -250,6 +271,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    /*Wihslist*/
     private void addToWishlist(String authToken, int id) {
         binding.progressBar.setVisibility(View.VISIBLE);
         viewModel.addProductWishlist(authToken, id);
@@ -258,9 +280,45 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onChanged(@Nullable AddToModel addToModel) {
                 if (!addToModel.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
+                    binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
                     Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void removeWishlist(String authToken, int id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.removeWishlist(authToken, id);
+        viewModel.deleteWishlistResponse().observe(this, new Observer<DeleteWishlistModel>() {
+            @Override
+            public void onChanged(@Nullable DeleteWishlistModel deleteWishlistModel) {
+                if (!deleteWishlistModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                    Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /*Cart*/
+    private void addToCart(String id, String authToken, String quantity) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
+            @Override
+            public void onChanged(@Nullable AddToCart addToCart) {
+                if (!addToCart.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ProductDetailActivity.this, MainActivity.class).putExtra("type", "cart"));
+                } else {
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -5,29 +5,30 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.repository.Repository;
 
 public class DealsViewModel extends AndroidViewModel {
     Repository repository;
-    MutableLiveData<SearchResponse> searchResponse;
+    MutableLiveData<DealsResponse> dealsResponse;
 
     public DealsViewModel(@NonNull Application application ) {
         super(application);
         repository = new Repository();
     }
 
-//    public void fetchData(String productName) {
-//      /*  if (searchResponse != null) {
-//
-//        } else {*/
-////        searchResponse = repository.getSearch(productName);
-//       //  }
-//    }
-//
-//    public MutableLiveData<SearchResponse> getSearchResponse() {
-//        if (searchResponse != null)
-//            return searchResponse;
-//        else return null;
-//    }
+    public void fetchData(int page) {
+      /*  if (searchResponse != null) {
+
+        } else {*/
+        dealsResponse = repository.getDeals(page);
+       //  }
+    }
+
+    public MutableLiveData<DealsResponse> getDealsResponse() {
+        if (dealsResponse != null)
+            return dealsResponse;
+        else return null;
+    }
 }

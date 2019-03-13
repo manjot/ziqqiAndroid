@@ -4,6 +4,7 @@ import com.ziqqi.model.VerifyOtpResponse;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
@@ -12,10 +13,12 @@ import com.ziqqi.model.loginResponse.LoginResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
+import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.signup.SignUpResponse;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 
 import java.util.HashMap;
@@ -78,7 +81,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("productDetails")
-    Call<ProductDetails> productDetails(@Field("product_id") int id);
+    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("authToken")  String authToken);
 
 
     @FormUrlEncoded
@@ -88,6 +91,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("addTowishlist")
     Call<AddToModel> addToWishlist(@Field("auth_token") String auth_token, @Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("deleteWishlistProduct")
+    Call<DeleteWishlistModel> removeWishlist(@Field("auth_token") String auth_token, @Field("product_id") String product_id);
 
     @FormUrlEncoded
     @POST("veiwWishlistProduct")
@@ -101,6 +108,17 @@ public interface ApiInterface {
     @POST("getShippingAddress")
     Call<ShippingAddressModel> shippingAddress(@Field("auth_token") String auth_token);
 
+    @FormUrlEncoded
+    @POST("viewCartProduct")
+    Call<ViewCartResponse> fetchCart(@Field("auth_token") String auth_token);
+
+    @FormUrlEncoded
     @POST("addTocart")
-    Call<AddToCart> addToCart(@Field("product_id") String productId, @Field("customer_id") String customerId, @Field("product_variant_id") String productVariantId, @Field("quantity") String quantity);
+    Call<AddToCart> addToCart(@Field("product_id") String productId, @Field("auth_token") String auth_token, @Field("quantity") String quantity);
+
+    @FormUrlEncoded
+    @POST("deals")
+    Call<DealsResponse> getDeals(@Field("page") int page);
+
+
 }

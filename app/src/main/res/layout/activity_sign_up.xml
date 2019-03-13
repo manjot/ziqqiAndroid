@@ -33,6 +33,16 @@
                 android:src="@drawable/ziqqi_logo" />
         </android.support.v7.widget.Toolbar>
 
+        <ImageView
+            android:id="@+id/iv_circle"
+            android:layout_width="@dimen/_300sdp"
+            android:layout_height="@dimen/_500sdp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_register" />
+
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
@@ -245,7 +255,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="@drawable/button_bg"
+                    android:background="@drawable/feedback_button_bg"
                     android:onClick="onClickRegister"
                     android:text="@string/register"
                     android:textSize="@dimen/_14sdp"

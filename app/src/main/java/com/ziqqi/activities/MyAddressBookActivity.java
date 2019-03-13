@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.ziqqi.OnItemClickListener;
@@ -48,8 +50,8 @@ public class MyAddressBookActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
-        setUpAdapter();
-        getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+//        setUpAdapter();
+//        getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
     }
 
     private void getAddress(String authToken) {
@@ -88,4 +90,19 @@ public class MyAddressBookActivity extends AppCompatActivity {
         spacesItemDecoration = new SpacesItemDecoration(MyAddressBookActivity.this, R.dimen.dp_4);
         binding.rvAddress.addItemDecoration(spacesItemDecoration);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

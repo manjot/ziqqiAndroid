@@ -1,5 +1,7 @@
 package com.ziqqi.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -7,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,11 +51,13 @@ import com.ziqqi.fragments.ProfileFragment;
 import com.ziqqi.fragments.SearchFragment;
 import com.ziqqi.fragments.SubCategoryFragment;
 import com.ziqqi.fragments.WishlistFragment;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.CustomTypefaceSpan;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
+import com.ziqqi.viewmodel.CartViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Handler handler;
     ImageView ivProfilePic, ivBottomHome, ivBottomDeals, ivBottomSearch, ivBottomCart, ivBottomProfile;
-    TextView tvLogin;
+    TextView tvLogin,tv_cart;
     GoogleSignInAccount acct;
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
@@ -87,11 +92,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int[] navItems = {R.string.mob_and_tabs, R.string.computers, R.string.tv_and_audio, R.string.cameras, R.string.appliances, R.string.gaming, R.string.perfumes_and_beauty, R.string.pharmacy_and_health, R.string.supermarket, R.string.my_acc, R.string.wishlist, R.string.track_order};
     int[] navIcons = {R.drawable.mobile, R.drawable.laptop, R.drawable.monitor, R.drawable.photo_camera, R.drawable.mixer, R.drawable.joystick, R.drawable.perfume, R.drawable.pharmacy, R.drawable.supermarket, R.drawable.avatar, R.drawable.like, R.drawable.tracking};
     LoginDialog loginDialog;
+    String intentType = "main";
+    CartViewModel cartViewModel;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -133,6 +141,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         appliancesFragment = new SubCategoryFragment();
         superMarketFragment = new SubCategoryFragment();
 
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -147,6 +159,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tvLogin.setText(R.string.log_out);
         } else tvLogin.setText(R.string.login_signup);
 
+//        if (getIntent().getExtras() != null){
+//            intentType = getIntent().getStringExtra("type");
+//            if (intentType.equalsIgnoreCase("cart")){
+//                replaceFragment(wishlistFragment, null);
+//            }
+//        }
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -423,6 +441,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mi.setTitle(mNewTitle);
     }
 
+    private void fetchCart(String authToken) {
+        cartViewModel.fetchData(authToken);
+        cartViewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
+            @Override
+            public void onChanged(@Nullable ViewCartResponse viewCart) {
+                if (!viewCart.getError()) {
+                    int cartSize = viewCart.getPayload().size();
+                    tvCart.setVisibility(View.VISIBLE);
+                    tvCart.setText(String.valueOf(cartSize));
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -451,6 +483,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void addToCart() {
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
 
     }
 }

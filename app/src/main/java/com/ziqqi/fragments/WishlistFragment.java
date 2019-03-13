@@ -100,7 +100,7 @@ public class WishlistFragment extends Fragment {
         binding.rvWishlist.setLayoutManager(manager);
         adapter = new WishlistApdater(getContext(), wishlistDataList, listener);
         binding.rvWishlist.setAdapter(adapter);
-        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
-        binding.rvWishlist.addItemDecoration(spacesItemDecoration);
+//        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
+//        binding.rvWishlist.addItemDecoration(spacesItemDecoration);
     }
 }

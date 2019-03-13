@@ -143,7 +143,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_my_order" />
+                            android:src="@drawable/ic_new_my_order" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -171,7 +171,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_my_address_book" />
+                            android:src="@drawable/ic_new_address_book" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -199,7 +199,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_country" />
+                            android:src="@drawable/ic_new_country" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -227,7 +227,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_communication" />
+                            android:src="@drawable/ic_new_communication" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -255,7 +255,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_help" />
+                            android:src="@drawable/ic_new_help_center" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -283,7 +283,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_share_png" />
+                            android:src="@drawable/ic_new_share_app" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -311,7 +311,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_feedback" />
+                            android:src="@drawable/ic_new_feedback" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -339,7 +339,7 @@
                         <ImageView
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_rate" />
+                            android:src="@drawable/ic_new_rate" />
 
                         <TextView
                             android:layout_width="wrap_content"

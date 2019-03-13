@@ -280,12 +280,19 @@
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="@dimen/_24sdp"
-                                    android:layout_height="@dimen/_24sdp"
+                                <RelativeLayout
+                                    android:layout_width="@dimen/_28sdp"
+                                    android:layout_height="@dimen/_28sdp"
                                     android:layout_gravity="center"
                                     android:layout_margin="@dimen/_5sdp"
-                                    android:background="@drawable/ic_golu2" />
+                                    android:background="@drawable/ic_new_golu">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_new_fast" />
+                                </RelativeLayout>
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -318,12 +325,19 @@
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="@dimen/_24sdp"
-                                    android:layout_height="@dimen/_24sdp"
+                                <RelativeLayout
+                                    android:layout_width="@dimen/_28sdp"
+                                    android:layout_height="@dimen/_28sdp"
                                     android:layout_gravity="center"
                                     android:layout_margin="@dimen/_5sdp"
-                                    android:background="@drawable/ic_golu2" />
+                                    android:background="@drawable/ic_new_golu">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_new_secure" />
+                                </RelativeLayout>
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -365,12 +379,19 @@
                                 android:layout_weight="0.95"
                                 android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="@dimen/_24sdp"
-                                    android:layout_height="@dimen/_24sdp"
+                                <RelativeLayout
+                                    android:layout_width="@dimen/_28sdp"
+                                    android:layout_height="@dimen/_28sdp"
                                     android:layout_gravity="center"
                                     android:layout_margin="@dimen/_5sdp"
-                                    android:background="@drawable/ic_golu2" />
+                                    android:background="@drawable/ic_new_golu">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_new_genuine" />
+                                </RelativeLayout>
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -403,12 +424,19 @@
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="@dimen/_24sdp"
-                                    android:layout_height="@dimen/_24sdp"
+                                <RelativeLayout
+                                    android:layout_width="@dimen/_28sdp"
+                                    android:layout_height="@dimen/_28sdp"
                                     android:layout_gravity="center"
                                     android:layout_margin="@dimen/_5sdp"
-                                    android:background="@drawable/ic_golu2" />
+                                    android:background="@drawable/ic_new_golu">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_new_customer_support" />
+                                </RelativeLayout>
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -443,6 +471,7 @@
                 <android.support.design.widget.TabLayout
                     android:layout_width="match_parent"
                     android:id="@+id/tablayout"
+                    android:focusableInTouchMode="true"
                     app:tabIndicatorColor="@color/colorPrimary"
                     app:tabSelectedTextColor="@color/colorBlack"
                     android:layout_marginLeft="@dimen/_16sdp"
@@ -468,6 +497,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_16sdp"
+                    android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
                     <TextView

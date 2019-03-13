@@ -6,15 +6,18 @@ import android.util.Log;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
+import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
@@ -127,10 +130,10 @@ public class Repository {
         return searchResponse;
     }
 
-    public MutableLiveData<ProductDetails> getProductDetails(int id) {
+    public MutableLiveData<ProductDetails> getProductDetails(int id, String authToken) {
         final MutableLiveData<ProductDetails> productDetailsResponse = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProductDetails> call = apiInterface.productDetails(id);
+        Call<ProductDetails> call = apiInterface.productDetails(id, authToken);
         call.enqueue(new Callback<ProductDetails>() {
             @Override
             public void onResponse(Call<ProductDetails> call, Response<ProductDetails> response) {
@@ -175,6 +178,24 @@ public class Repository {
 
             @Override
             public void onFailure(Call<AddToModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return addwishlist;
+    }
+
+    public MutableLiveData<DeleteWishlistModel> removeWishlist(String authToken, String id) {
+        final MutableLiveData<DeleteWishlistModel> addwishlist = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<DeleteWishlistModel> call = apiInterface.removeWishlist(authToken, id);
+        call.enqueue(new Callback<DeleteWishlistModel>() {
+            @Override
+            public void onResponse(Call<DeleteWishlistModel> call, Response<DeleteWishlistModel> response) {
+                addwishlist.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DeleteWishlistModel> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -271,10 +292,10 @@ public class Repository {
         return getShipAddress;
     }
 
-    public MutableLiveData<AddToCart> addToCart(String productId, String customerId, String productVariantId, String quantity) {
+    public MutableLiveData<AddToCart> addToCart(String productId, String authToken, String quantity) {
         final MutableLiveData<AddToCart> addToCart = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<AddToCart> call = apiInterface.addToCart(productId, customerId, productVariantId, quantity);
+        Call<AddToCart> call = apiInterface.addToCart(productId, authToken, quantity);
         call.enqueue(new Callback<AddToCart>() {
             @Override
             public void onResponse(Call<AddToCart> call, Response<AddToCart> response) {
@@ -287,5 +308,41 @@ public class Repository {
             }
         });
         return addToCart;
+    }
+
+    public MutableLiveData<ViewCartResponse> viewCart(String authToken) {
+        final MutableLiveData<ViewCartResponse> getCart = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ViewCartResponse> call = apiInterface.fetchCart(authToken);
+        call.enqueue(new Callback<ViewCartResponse>() {
+            @Override
+            public void onResponse(Call<ViewCartResponse> call, Response<ViewCartResponse> response) {
+                getCart.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ViewCartResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return getCart;
+    }
+
+    public MutableLiveData<DealsResponse> getDeals(int page) {
+        final MutableLiveData<DealsResponse> fetchDeals = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<DealsResponse> call = apiInterface.getDeals(page);
+        call.enqueue(new Callback<DealsResponse>() {
+            @Override
+            public void onResponse(Call<DealsResponse> call, Response<DealsResponse> response) {
+                fetchDeals.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DealsResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return fetchDeals;
     }
 }

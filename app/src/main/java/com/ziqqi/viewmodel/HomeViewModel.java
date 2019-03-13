@@ -40,8 +40,8 @@ public class HomeViewModel extends AndroidViewModel {
         }
     }
 
-    public void addToCart(String productId, String customerId, String productVariantId, String quantity) {
-        addToCartResponse = repository.addToCart(productId, customerId, productVariantId, quantity);
+    public void addToCart(String productId, String authToken,  String quantity) {
+        addToCartResponse = repository.addToCart(productId, authToken, quantity);
     }
 
     public void addProductWishlist(String authToken, String productId) {
