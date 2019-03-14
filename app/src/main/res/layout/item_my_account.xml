@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rl_about_tnc"
@@ -11,7 +11,7 @@
         android:background="@drawable/white_stroke_grey_rounded">
 
         <TextView
-            android:id="@+id/tv_about_tnc"
+            android:id="@+id/tv_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -36,26 +36,19 @@
     <LinearLayout
         android:id="@+id/ll_about_tnc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/rl_about_tnc"
+        android:layout_marginBottom="@dimen/_16sdp"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_24sdp"
             android:gravity="center"
             android:text="@string/dummy_data" />
-
-        <ExpandableListView
-            android:id="@+id/elv_about_tnc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:childDivider="@null"
-            android:divider="@null"
-            android:groupIndicator="@null" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,11 +1,14 @@
 package com.ziqqi.retrofit;
 
 import com.ziqqi.model.VerifyOtpResponse;
+import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
+import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.languagemodel.LanguageModel;
@@ -120,5 +123,27 @@ public interface ApiInterface {
     @POST("deals")
     Call<DealsResponse> getDeals(@Field("page") int page);
 
+    @FormUrlEncoded
+    @POST("getHelpCenterById")
+    Call<HelpCenterByIdResponse> getHelpById(@Field("help_id") int help_id);
+
+    @FormUrlEncoded
+    @POST("addBillingAddress")
+    Call<AddBillingAddressModel> addBillingAddress(@Field("auth_token") String auth_token,
+                                                   @Field("first_name") String first_name,
+                                                   @Field("last_name") String last_name,
+                                                   @Field("mobile") String mobile,
+                                                   @Field("address_details") String address_details,
+                                                   @Field("country") String country);
+
+    @FormUrlEncoded
+    @POST("addBillingAddress")
+    Call<AddShippingAddressModel> addShippingAddress(@Field("auth_token") String auth_token,
+                                                     @Field("name") String name,
+                                                     @Field("mobile") String mobile,
+                                                     @Field("country") String country,
+                                                     @Field("city") String city,
+                                                     @Field("location") String location,
+                                                     @Field("address") String address);
 
 }

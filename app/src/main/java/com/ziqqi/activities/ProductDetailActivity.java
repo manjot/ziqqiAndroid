@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.ziqqi.OnItemClickListener;
+import com.ziqqi.OnSimilarItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
@@ -29,6 +30,7 @@ import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
+import com.ziqqi.model.similarproductsmodel.Payload;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
@@ -59,7 +61,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     List<Review> reviewDataList = new ArrayList<>();
     SimilarProductAdapter adapter;
     ReviewsAdapter reviewsAdapter;
-    OnItemClickListener listener;
+    OnSimilarItemClickListener listener;
     SpacesItemDecoration spacesItemDecoration;
     String product_id;
     String strSharingUrl;
@@ -126,6 +128,37 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
             authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
         }
+
+        listener = new OnSimilarItemClickListener() {
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
+
+            @Override
+            public void onItemClick(Payload payload, String type) {
+                switch (type) {
+                    case Constants.SHARE:
+                        Utils.share(ProductDetailActivity.this, payload.getId());
+                        break;
+                    case Constants.WISH_LIST:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                        }else{
+                            loginDialog.showDialog(ProductDetailActivity.this);
+                        }
+                        break;
+                    case Constants.CART:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                        }else{
+                            loginDialog.showDialog(ProductDetailActivity.this);
+                        }
+
+                        break;
+                }
+            }
+        };
 
         getDetails(Integer.parseInt(product_id), authToken);
         setUpAdapter();
@@ -339,7 +372,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvSimilar.addItemDecoration(spacesItemDecoration);
 
-        reviewsAdapter = new ReviewsAdapter(ProductDetailActivity.this, feedbackPayLoad, listener);
+        reviewsAdapter = new ReviewsAdapter(ProductDetailActivity.this, feedbackPayLoad);
         binding.rvReviews.setAdapter(reviewsAdapter);
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);

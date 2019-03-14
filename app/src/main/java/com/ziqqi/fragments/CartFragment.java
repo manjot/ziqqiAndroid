@@ -3,6 +3,7 @@ package com.ziqqi.fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.activities.BillingInfoActivity;
 import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.databinding.FragmentCartBinding;
@@ -96,6 +98,14 @@ public class CartFragment extends Fragment {
                         binding.rvCart.setVisibility(View.VISIBLE);
                         binding.progressBar.setVisibility(View.GONE);
                         binding.btSubmit.setVisibility(View.VISIBLE);
+                        binding.llTotal.setVisibility(View.VISIBLE);
+                        binding.tvTotalPrice.setText("$ " +viewCart.getTotal());
+                        binding.btSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(getContext(), BillingInfoActivity.class));
+                            }
+                        });
                         // adapter.notifyDataSetChanged();
                     }
                 } else {

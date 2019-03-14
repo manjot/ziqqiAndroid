@@ -3,11 +3,14 @@ package com.ziqqi.repository;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
+import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
@@ -344,5 +347,59 @@ public class Repository {
             }
         });
         return fetchDeals;
+    }
+
+    public MutableLiveData<HelpCenterByIdResponse> getHelpById(int helpId) {
+        final MutableLiveData<HelpCenterByIdResponse> fetchHelps = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<HelpCenterByIdResponse> call = apiInterface.getHelpById(helpId);
+        call.enqueue(new Callback<HelpCenterByIdResponse>() {
+            @Override
+            public void onResponse(Call<HelpCenterByIdResponse> call, Response<HelpCenterByIdResponse> response) {
+                fetchHelps.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<HelpCenterByIdResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return fetchHelps;
+    }
+
+    public MutableLiveData<AddBillingAddressModel> addBillingAddress(String authToken, String firstName, String lastName, String mobile, String address, String county) {
+        final MutableLiveData<AddBillingAddressModel> addBilling = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<AddBillingAddressModel> call = apiInterface.addBillingAddress(authToken, firstName, lastName, mobile, address, county);
+        call.enqueue(new Callback<AddBillingAddressModel>() {
+            @Override
+            public void onResponse(Call<AddBillingAddressModel> call, Response<AddBillingAddressModel> response) {
+                addBilling.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AddBillingAddressModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return addBilling;
+    }
+
+    public MutableLiveData<AddShippingAddressModel> addBillingAddress(String authToken, String name, String mobile, String country, String city, String location, String address) {
+        final MutableLiveData<AddShippingAddressModel> addBilling = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<AddShippingAddressModel> call = apiInterface.addShippingAddress(authToken, name, mobile, country, city, location, address);
+        call.enqueue(new Callback<AddShippingAddressModel>() {
+            @Override
+            public void onResponse(Call<AddShippingAddressModel> call, Response<AddShippingAddressModel> response) {
+                addBilling.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AddShippingAddressModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return addBilling;
     }
 }

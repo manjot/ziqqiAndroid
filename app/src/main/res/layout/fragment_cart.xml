@@ -66,6 +66,41 @@
 
                 </android.support.v7.widget.RecyclerView>
 
+                <LinearLayout
+                    android:id="@+id/ll_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:padding="@dimen/_8sdp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/total"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bold"
+                        android:paddingLeft="@dimen/_4sdp"
+                        android:paddingRight="@dimen/_4sdp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp"/>
+
+                    <TextView
+                        android:id="@+id/tv_total_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:fontFamily="@font/bold"
+                        android:paddingLeft="@dimen/_4sdp"
+                        android:paddingRight="@dimen/_4sdp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp"/>
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/bt_submit"
                     android:layout_width="match_parent"

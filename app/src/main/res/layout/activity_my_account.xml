@@ -9,7 +9,7 @@
             type="com.ziqqi.viewmodel.MyAccountViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -22,175 +22,33 @@
             android:background="@color/colorPrimary">
 
             <TextView
+                android:id="@+id/tv_toolbar_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="?android:attr/actionBarSize"
-                android:fontFamily="@font/bold"
-                android:gravity="center"
                 android:text="@string/my_account"
-                android:textAllCaps="true"
+                android:fontFamily="@font/bold"
+                android:gravity="center_horizontal"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_45sdp"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14sdp"/>
         </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:padding="@dimen/_16sdp"
+            android:id="@+id/rv_help"
+            android:layout_below="@+id/toolbar"
+            android:padding="@dimen/_8sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible" />
 
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/nsv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorStrokeGrey"
-            android:fillViewport="true"
-            android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:theme="@style/RadioButtonTheme"
+            android:visibility="gone" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/_16sdp"
-                android:visibility="visible">
-
-                <RelativeLayout
-                    android:id="@+id/rl_about_tnc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="@drawable/white_stroke_grey_rounded">
-
-                    <TextView
-                        android:id="@+id/tv_about_tnc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/bold"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/aotnc"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_arrow_down" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_about_tnc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/_24sdp"
-                        android:gravity="center"
-                        android:text="@string/dummy_data" />
-
-                    <ExpandableListView
-                        android:id="@+id/elv_about_tnc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:childDivider="@null"
-                        android:divider="@null"
-                        android:groupIndicator="@null" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="@drawable/white_stroke_grey_rounded">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/bold"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/order_of_rights"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_arrow_down" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="@drawable/white_stroke_grey_rounded">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/bold"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/_8sdp"
-                        android:paddingRight="@dimen/_8sdp"
-                        android:text="@string/guideliness_for"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_arrow_down" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="@drawable/white_stroke_grey_rounded">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/bold"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/website_purchase"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:padding="@dimen/_8sdp"
-                        android:src="@drawable/ic_arrow_down" />
-                </RelativeLayout>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

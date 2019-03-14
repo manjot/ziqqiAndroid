@@ -163,6 +163,7 @@
     <string name="login">Login</string>
     <string name="please_login_to_continue">Please login to continue</string>
     <string name="proceed_to_checkout">Proceed to checkout</string>
+    <string name="total">Total</string>
 
 
 </resources>

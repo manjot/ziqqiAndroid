@@ -30,4 +30,10 @@ public class Constants {
     public static final String PERFUMES_AND_BEAUTY = "275";
     public static final String PHARMACY_AND_HEALTH = "276";
     public static final String SUPERMARKET = "297";
+
+    public static final String BILLING_COUNTRY = "billing_country";
+    public static final String BILLING_ADRESS = "billing_address";
+    public static final String BILLING_FIRST_NAME = "billing_first_name";
+    public static final String BILLING_LAST_NAME = "billing_last_name";
+    public static final String BILLING_MOBILE = "billing_mobile";
 }

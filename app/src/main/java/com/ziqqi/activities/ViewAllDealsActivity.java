@@ -15,16 +15,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.ziqqi.OnDealsItemClickListener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.DealsAdapter;
 import com.ziqqi.databinding.ActivityViewAllDealsBinding;
 import com.ziqqi.databinding.FragmentDealsBinding;
+import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.dealsmodel.Payload;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
+import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.DealsViewModel;
 import com.ziqqi.viewmodel.ViewAllViewModel;
 
@@ -39,10 +47,12 @@ public class ViewAllDealsActivity extends AppCompatActivity {
     DealsViewModel viewModel;
     List<Payload> payloadList = new ArrayList<>();
     List<Payload> searchDataList = new ArrayList<>();
-    OnItemClickListener listener;
+    OnDealsItemClickListener listener;
     DealsAdapter adapter;
     SpacesItemDecoration spacesItemDecoration;
     int pageCount = 1;
+    LoginDialog loginDialog;
+    com.ziqqi.addToCartListener addToCartListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +68,41 @@ public class ViewAllDealsActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
+        loginDialog = new LoginDialog();
+        getDeals();
 
+        listener = new OnDealsItemClickListener() {
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
+
+            @Override
+            public void onItemClick(Payload payload, String type) {
+                switch (type) {
+                    case Constants.SHARE:
+                        Utils.share(ViewAllDealsActivity.this, payload.getId());
+                        break;
+                    case Constants.WISH_LIST:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
+                        }else{
+                            loginDialog.showDialog(ViewAllDealsActivity.this);
+                        }
+                        break;
+                    case Constants.CART:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            addToCart(payload.getId());
+                        }else{
+                            loginDialog.showDialog(ViewAllDealsActivity.this);
+                        }
+
+                        break;
+                }
+            }
+        };
 
         setUpAdapter();
-        getDeals();
 
         rvDeals.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -101,6 +142,34 @@ public class ViewAllDealsActivity extends AppCompatActivity {
                     binding.progressBar.setVisibility(View.GONE);
 
                 }
+            }
+        });
+    }
+
+    private void addToWishList(String authToken, String id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductWishlist(authToken, id);
+        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+            @Override
+            public void onChanged(@Nullable AddToModel addToModel) {
+                if (!addToModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void addToCart(String id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addToCart(id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+        viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
+            @Override
+            public void onChanged(@Nullable AddToCart addToCart) {
+                Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                addToCartListener.addToCart();
             }
         });
     }

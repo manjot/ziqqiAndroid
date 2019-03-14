@@ -3,6 +3,7 @@ package com.ziqqi.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,23 +19,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.ziqqi.OnDealsItemClickListener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.ViewAllDealsActivity;
 import com.ziqqi.adapters.BestSellerAdapter;
 import com.ziqqi.adapters.DealsAdapter;
 import com.ziqqi.adapters.SearchAdapter;
+import com.ziqqi.addToCartListener;
 import com.ziqqi.databinding.FragmentDealsBinding;
+import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.dealsmodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
+import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.DealsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,13 +58,15 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
     DealsViewModel viewModel;
     List<Payload> payloadList = new ArrayList<>();
     List<Payload> searchDataList = new ArrayList<>();
-    OnItemClickListener listener;
+    OnDealsItemClickListener listener;
     DealsAdapter adapter;
     SpacesItemDecoration spacesItemDecoration;
     Toolbar toolbar;
     TextView tvTitle;
     ImageView ivTitle;
     int pageCount = 1;
+    LoginDialog loginDialog;
+    addToCartListener addToCartListener;
 
     public DealsFragment() {
         // Required empty public constructor
@@ -73,14 +87,55 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
         ivTitle.setVisibility(View.VISIBLE);
         tvTitle.setVisibility(View.GONE);
         binding.tvViewAllDeals.setOnClickListener(this);
+        loginDialog = new LoginDialog();
 
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
         binding.setViewModel(viewModel);
         View view = binding.getRoot();
         rvDeals = binding.rvDeals;
-        setUpAdapter();
         getDeals();
+
+        listener = new OnDealsItemClickListener() {
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
+
+            @Override
+            public void onItemClick(Payload payload, String type) {
+                switch (type) {
+                    case Constants.SHARE:
+                        Utils.share(getActivity(), payload.getId());
+                        break;
+                    case Constants.WISH_LIST:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
+                        }else{
+                            loginDialog.showDialog(getActivity());
+                        }
+                        break;
+                    case Constants.CART:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            viewModel.addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
+                                @Override
+                                public void onChanged(@Nullable AddToCart addToCart) {
+                                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                                    addToCartListener.addToCart();
+                                }
+                            });
+                        }else{
+                            loginDialog.showDialog(getActivity());
+                        }
+
+                        break;
+                }
+            }
+        };
+
+        setUpAdapter();
+
         return view;
     }
 
@@ -112,6 +167,23 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    private void addToWishList(String authToken, String id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductWishlist(authToken, id);
+        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+            @Override
+            public void onChanged(@Nullable AddToModel addToModel) {
+                if (!addToModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
     private void setUpAdapter() {
         manager = new GridLayoutManager(getContext(), 3);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -130,5 +202,11 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        addToCartListener = (com.ziqqi.addToCartListener) context;
     }
 }

@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment {
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToWishList(Constants.AUTH_TOKEN, bestsellerProduct.getId());
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), bestsellerProduct.getId());
                         }else{
                             loginDialog.showDialog(getActivity());
                         }

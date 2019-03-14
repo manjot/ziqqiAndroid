@@ -1,6 +1,7 @@
 package com.ziqqi.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.activities.ViewAllProductsActivity;
 import com.ziqqi.model.homecategorymodel.Payload;
 import com.ziqqi.utils.FontCache;
 
@@ -64,13 +67,22 @@ public class SubCategoryAdapter extends RecyclerView.Adapter {
     public class SubCategoryViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
         ImageView ivImage;
+        RelativeLayout llCard;
 
         public SubCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTitle = itemView.findViewById(R.id.tv_sub_category_title);
             ivImage = itemView.findViewById(R.id.iv_sub_category_image);
-
+            llCard = itemView.findViewById(R.id.ll_card);
+            llCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ViewAllProductsActivity.class);
+                    intent.putExtra("categoryId", subCategoriesList.get(getAdapterPosition()).getId());
+                    context.startActivity(intent);
+                }
+            });
             tvTitle.setTypeface(medium);
         }
     }
@@ -78,13 +90,22 @@ public class SubCategoryAdapter extends RecyclerView.Adapter {
     public class LastGridViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
         ImageView ivImage;
+        RelativeLayout llCard;
 
         public LastGridViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTitle = itemView.findViewById(R.id.tv_sub_category_title);
             ivImage = itemView.findViewById(R.id.iv_sub_category_image);
-
+            llCard = itemView.findViewById(R.id.ll_card);
+            llCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ViewAllProductsActivity.class);
+                    intent.putExtra("categoryId", subCategoriesList.get(getAdapterPosition()).getId());
+                    context.startActivity(intent);
+                }
+            });
             tvTitle.setTypeface(medium);
         }
     }
