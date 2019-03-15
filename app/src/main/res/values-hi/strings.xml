@@ -164,6 +164,10 @@
     <string name="please_login_to_continue">Please login to continue</string>
     <string name="proceed_to_checkout">Proceed to checkout</string>
     <string name="total">Total</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="select_your_service_provider">Select your service provider</string>
+    <string name="checkout">Checkout</string>
+    <string name="continue_shopping">Continue shopping</string>
 
 
 </resources>

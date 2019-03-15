@@ -321,15 +321,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.wishlist:
                 if (!wishlistFragment.isVisible())
-                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                        replaceFragment(wishlistFragment, null);
-                    }else{
-                        loginDialog.showDialog(MainActivity.this);
-                    }
+                    replaceFragment(wishlistFragment, null);
                 break;
             case R.id.my_account:
-                if (!profileFragment.isVisible())
-                    replaceFragment(profileFragment, null);
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
         }
     }
@@ -475,8 +470,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     replaceFragment(dealsFragment, null);
                 break;
             case R.id.iv_bottom_profile:
-                if (!profileFragment.isVisible())
-                    replaceFragment(profileFragment, null);
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
         }
     }

@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/iv_circle"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_400sdp"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_350sdp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/_30sdp"

@@ -67,7 +67,7 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
 
     public class ViewAllViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvName, tvBrandName, tvDesc, tvMarketPrice, tvDiscountPrice;
-        ImageView ivImage;
+        ImageView ivImage, ivCart, ivShare, ivWishList;
         LinearLayout ll_card;
 
         public ViewAllViewHolder(@NonNull View itemView) {
@@ -79,6 +79,9 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvMarketPrice = itemView.findViewById(R.id.tv_market_price);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
+            ivWishList = itemView.findViewById(R.id.iv_wishlist);
+            ivShare = itemView.findViewById(R.id.iv_share);
+            ivCart = itemView.findViewById(R.id.iv_cart);
             ll_card = itemView.findViewById(R.id.ll_card);
 
             tvBrandName.setTypeface(regular);
@@ -86,6 +89,11 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
             tvDesc.setTypeface(light);
             tvMarketPrice.setTypeface(regular);
             tvDiscountPrice.setTypeface(bold);
+
+            ivWishList.setOnClickListener(this);
+            ivShare.setOnClickListener(this);
+            ivCart.setOnClickListener(this);
+            ll_card.setOnClickListener(this);
 
         }
 

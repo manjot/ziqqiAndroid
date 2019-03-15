@@ -16,16 +16,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ViewAllDealsActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".activities.ViewAllDealsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.MyAccountActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PaymentGatewayActivity"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
-        <activity android:name=".activities.ShippingInfoActivity"
+        <activity
+            android:name=".activities.PaymentGatewayActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.BillingInfoActivity"
+        <activity
+            android:name=".activities.ShippingInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.BillingInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SearchResultActivity"

@@ -51,7 +51,10 @@ public class MyAddressBookActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         setUpAdapter();
-        getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
     }
 
     private void getAddress(String authToken) {

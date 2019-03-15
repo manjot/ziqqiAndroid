@@ -62,6 +62,7 @@
         android:paddingEnd="@dimen/_6sdp"
         android:paddingBottom="@dimen/_3sdp"
         android:text="@string/login_signup"
+        android:textAllCaps="true"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/_12sdp" />
 </RelativeLayout>

@@ -9,16 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.ziqqi.PaymentGatewayActivity;
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityShippingInfoBinding;
-import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
-import com.ziqqi.viewmodel.BillingInfoViewModel;
 import com.ziqqi.viewmodel.ShippingInfoViewModel;
 
 public class ShippingInfoActivity extends AppCompatActivity {
@@ -34,6 +32,26 @@ public class ShippingInfoActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
+
+        binding.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if (isChecked){
+                    binding.etName.setText(PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME +" " +PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME)));
+                    binding.etMobileNumber.setText(PreferenceManager.getStringValue(Constants.BILLING_MOBILE ));
+                    binding.etCountry.setText(PreferenceManager.getStringValue(Constants.BILLING_COUNTRY));
+                    binding.etAddressDetails.setText(PreferenceManager.getStringValue(Constants.BILLING_ADRESS));
+                }else{
+                    binding.etName.getText().clear();
+                    binding.etMobileNumber.getText().clear();
+                    binding.etCountry.getText().clear();
+                    binding.etAddressDetails.getText().clear();
+                }
+
+            }
+        }
+        );
 
         binding.btNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +81,12 @@ public class ShippingInfoActivity extends AppCompatActivity {
                 if (!addShippingAddress.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), addShippingAddress.getMessage(), Toast.LENGTH_SHORT).show();
+                    PreferenceManager.setStringValue(Constants.SHIP_COUNTRY, binding.etCountry.getText().toString());
+                    PreferenceManager.setStringValue(Constants.SHIP_ADDRESS, binding.etAddressDetails.getText().toString());
+                    PreferenceManager.setStringValue(Constants.SHIP_NAME, binding.etName.getText().toString());
+                    PreferenceManager.setStringValue(Constants.SHIP_LOCATION, binding.etLocation.getText().toString());
+                    PreferenceManager.setStringValue(Constants.SHIP_MOBILE, binding.etMobileNumber.getText().toString());
+                    PreferenceManager.setStringValue(Constants.SHIP_CITY, binding.etCity.getText().toString());
 
                     startActivity(new Intent(ShippingInfoActivity.this, PaymentGatewayActivity.class));
                 } else {

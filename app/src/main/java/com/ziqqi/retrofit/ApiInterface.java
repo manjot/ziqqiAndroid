@@ -14,6 +14,8 @@ import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.languagemodel.LanguageModel;
 import com.ziqqi.model.loginResponse.LoginResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
+import com.ziqqi.model.myordersmodel.MyOrdersResponse;
+import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
@@ -137,7 +139,7 @@ public interface ApiInterface {
                                                    @Field("country") String country);
 
     @FormUrlEncoded
-    @POST("addBillingAddress")
+    @POST("addShippingAddress")
     Call<AddShippingAddressModel> addShippingAddress(@Field("auth_token") String auth_token,
                                                      @Field("name") String name,
                                                      @Field("mobile") String mobile,
@@ -145,5 +147,22 @@ public interface ApiInterface {
                                                      @Field("city") String city,
                                                      @Field("location") String location,
                                                      @Field("address") String address);
+
+    @FormUrlEncoded
+    @POST("placeOrder")
+    Call<PlaceOrderResponse> placeOrder(@Field("auth_token") String auth_token,
+                                        @Field("billing_fname") String billing_fname,
+                                        @Field("billing_lname") String billing_lname,
+                                        @Field("billing_mobile") String billing_mobile,
+                                        @Field("pickup_name") String pickup_name,
+                                        @Field("pickup_mobile") String pickup_mobile,
+                                        @Field("pickup_city") String pickup_city,
+                                        @Field("pickup_country") String pickup_country,
+                                        @Field("pickup_location") String pickup_location,
+                                        @Field("pickup_address") String pickup_address);
+
+    @FormUrlEncoded
+    @POST("getMyOrders")
+    Call<MyOrdersResponse> getOrder(@Field("auth_token") String auth_token);
 
 }

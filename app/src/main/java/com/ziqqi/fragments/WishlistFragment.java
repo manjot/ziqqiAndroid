@@ -62,7 +62,10 @@ public class WishlistFragment extends Fragment {
         View view = binding.getRoot();
         rvWishlist = binding.rvWishlist;
         setUpAdapter();
-        fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
         return view;
     }
 

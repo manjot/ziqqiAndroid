@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
+import com.ziqqi.fragments.CheckoutDialogFragment;
 import com.ziqqi.fragments.ProfileFragment;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
@@ -232,7 +234,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                    addToBuy(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                    CheckoutDialogFragment dialogFragment = new CheckoutDialogFragment();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_container, dialogFragment);
+                    ft.commit();
                 }else{
                     loginDialog.showDialog(ProductDetailActivity.this);
                 }
@@ -350,6 +356,21 @@ public class ProductDetailActivity extends AppCompatActivity {
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(ProductDetailActivity.this, MainActivity.class).putExtra("type", "cart"));
+                } else {
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void addToBuy(String id, String authToken, String quantity) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
+            @Override
+            public void onChanged(@Nullable AddToCart addToCart) {
+                if (!addToCart.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
                 }

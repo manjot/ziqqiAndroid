@@ -76,21 +76,13 @@ public class ProfileFragment extends Fragment{
         binding.llMyOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                    startActivity(new Intent(getContext(), MyOrdersActivity.class));
-                }else{
-                    loginDialog.showDialog(getActivity());
-                }
+                startActivity(new Intent(getContext(), MyOrdersActivity.class));
             }
         });
         binding.llMyAddressBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                    startActivity(new Intent(getContext(), MyAddressBookActivity.class));
-                }else{
-                    loginDialog.showDialog(getActivity());
-                }
+                startActivity(new Intent(getContext(), MyAddressBookActivity.class));
             }
         });
         binding.llCountryLang.setOnClickListener(new View.OnClickListener() {

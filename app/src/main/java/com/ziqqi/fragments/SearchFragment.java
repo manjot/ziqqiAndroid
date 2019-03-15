@@ -3,6 +3,7 @@ package com.ziqqi.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,6 +18,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -82,6 +84,9 @@ public class SearchFragment extends Fragment {
 
         binding.tvSearch.setTypeface(FontCache.get(getResources().getString(R.string.light), getContext()));
         viewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+
+        InputMethodManager inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(binding.rlSearch.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
 
         setUpAdapter();

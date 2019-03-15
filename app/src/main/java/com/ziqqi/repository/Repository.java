@@ -14,6 +14,8 @@ import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
+import com.ziqqi.model.myordersmodel.MyOrdersResponse;
+import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
@@ -385,7 +387,7 @@ public class Repository {
         return addBilling;
     }
 
-    public MutableLiveData<AddShippingAddressModel> addBillingAddress(String authToken, String name, String mobile, String country, String city, String location, String address) {
+    public MutableLiveData<AddShippingAddressModel> addShippingAddress(String authToken, String name, String mobile, String country, String city, String location, String address) {
         final MutableLiveData<AddShippingAddressModel> addBilling = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<AddShippingAddressModel> call = apiInterface.addShippingAddress(authToken, name, mobile, country, city, location, address);
@@ -401,5 +403,42 @@ public class Repository {
             }
         });
         return addBilling;
+    }
+
+
+    public MutableLiveData<PlaceOrderResponse> placeOrder(String authToken, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address) {
+        final MutableLiveData<PlaceOrderResponse> placingOrder = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<PlaceOrderResponse> call = apiInterface.placeOrder(authToken, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location,  pickup_address);
+        call.enqueue(new Callback<PlaceOrderResponse>() {
+            @Override
+            public void onResponse(Call<PlaceOrderResponse> call, Response<PlaceOrderResponse> response) {
+                placingOrder.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PlaceOrderResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return placingOrder;
+    }
+
+    public MutableLiveData<MyOrdersResponse> getOrder(String authToken) {
+        final MutableLiveData<MyOrdersResponse> placingOrder = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<MyOrdersResponse> call = apiInterface.getOrder(authToken);
+        call.enqueue(new Callback<MyOrdersResponse>() {
+            @Override
+            public void onResponse(Call<MyOrdersResponse> call, Response<MyOrdersResponse> response) {
+                placingOrder.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MyOrdersResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return placingOrder;
     }
 }

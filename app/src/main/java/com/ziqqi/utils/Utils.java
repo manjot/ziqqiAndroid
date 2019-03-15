@@ -98,7 +98,6 @@ public class Utils {
     public static void share(Context context, String strSharingUrl) {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, strSharingUrl);
         context.startActivity(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_using)));

@@ -109,6 +109,7 @@
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:hint="@string/mobile_number"
                     android:inputType="number"
+                    android:maxLength="10"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:paddingTop="@dimen/_12sdp"
                     android:paddingBottom="@dimen/_12sdp"

@@ -19,7 +19,7 @@ public class ShippingInfoViewModel extends AndroidViewModel {
     }
 
     public void fetchData(String authToken, String name, String mobile, String country, String city, String location, String address) {
-        addShippingAddressModel = repository.addBillingAddress(authToken, name, mobile, country, city, location, address);
+        addShippingAddressModel = repository.addShippingAddress(authToken, name, mobile, country, city, location, address);
     }
 
     public MutableLiveData<AddShippingAddressModel> addShippingAddressResponse() {

@@ -70,7 +70,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     public class SearchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvName, tvBrandName, tvDesc, tvMarketPrice, tvDiscountPrice;
-        ImageView ivImage;
+        ImageView ivImage, ivCart, ivShare, ivWishList;
         LinearLayout ll_card;
 
         public SearchViewHolder(@NonNull View itemView) {
@@ -82,12 +82,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvMarketPrice = itemView.findViewById(R.id.tv_market_price);
             ll_card = itemView.findViewById(R.id.ll_card);
+            ivWishList = itemView.findViewById(R.id.iv_wishlist);
+            ivShare = itemView.findViewById(R.id.iv_share);
+            ivCart = itemView.findViewById(R.id.iv_cart);
+            ll_card = itemView.findViewById(R.id.ll_card);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
             tvBrandName.setTypeface(regular);
             tvName.setTypeface(medium);
             tvDesc.setTypeface(light);
             tvMarketPrice.setTypeface(regular);
             tvDiscountPrice.setTypeface(bold);
+
+            ivWishList.setOnClickListener(this);
+            ivShare.setOnClickListener(this);
+            ivCart.setOnClickListener(this);
+            ll_card.setOnClickListener(this);
         }
 
         @Override

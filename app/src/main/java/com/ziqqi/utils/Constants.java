@@ -36,4 +36,12 @@ public class Constants {
     public static final String BILLING_FIRST_NAME = "billing_first_name";
     public static final String BILLING_LAST_NAME = "billing_last_name";
     public static final String BILLING_MOBILE = "billing_mobile";
+
+    public static final String SHIP_COUNTRY = "ship_country";
+    public static final String SHIP_ADDRESS = "ship_address";
+    public static final String SHIP_NAME = "ship_name";
+    public static final String SHIP_LOCATION = "ship_location";
+    public static final String SHIP_MOBILE = "ship_mobile";
+    public static final String SHIP_CITY = "ship_city";
 }
+
