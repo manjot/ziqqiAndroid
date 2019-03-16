@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
     public void onBindViewHolder(@NonNull ViewAllViewHolder holder, int i) {
         holder.tvBrandName.setText(payloadList.get(i).getBrandName());
         holder.tvName.setText(payloadList.get(i).getName());
-        holder.tvDesc.setText(payloadList.get(i).getSku());
+        holder.tvDesc.setText(Html.fromHtml(payloadList.get(i).getSku()));
         holder.tvMarketPrice.setText("$ " + payloadList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
         if (payloadList.get(i).getImage().size() > 0)

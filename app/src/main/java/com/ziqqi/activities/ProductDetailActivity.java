@@ -92,6 +92,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getStringExtra("product_id");
         }
+        setUpAdapter();
+        getSimilar(Integer.parseInt(product_id));
+        getDetails(Integer.parseInt(product_id), authToken);
 
         loginDialog = new LoginDialog();
         handler = new Handler();
@@ -162,9 +165,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         };
 
-        getDetails(Integer.parseInt(product_id), authToken);
-        setUpAdapter();
-        getSimilar(Integer.parseInt(product_id));
 
         binding.tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

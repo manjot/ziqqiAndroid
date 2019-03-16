@@ -91,7 +91,7 @@
             android:layout_marginLeft="@dimen/_4sdp"
             android:layout_marginRight="@dimen/_4sdp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/share" />
+            android:src="@drawable/ic_item_share" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -99,7 +99,7 @@
             android:layout_height="@dimen/_16sdp"
             android:layout_marginRight="@dimen/_4sdp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/shopping_cart" />
+            android:src="@drawable/ic_item_cart" />
 
         <ImageView
             android:id="@+id/iv_wishlist"
@@ -108,6 +108,6 @@
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/_4sdp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/like" />
+            android:src="@drawable/ic_item_wish" />
     </LinearLayout>
 </LinearLayout>

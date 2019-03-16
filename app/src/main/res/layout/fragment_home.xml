@@ -250,14 +250,15 @@
                             android:src="@drawable/ziqqi_logo" />
 
                         <TextView
+                            android:id="@+id/tv_copy_right"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tv_copy_right"
-                            android:layout_below="@id/tv_toolbar_title"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/copyright"
+                            android:layout_below="@+id/tv_toolbar_title"
                             android:layout_centerHorizontal="true"
-                            android:text="@string/all_right_reserved"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
                     </RelativeLayout>
                 </RelativeLayout>
             </android.support.v4.widget.NestedScrollView>
