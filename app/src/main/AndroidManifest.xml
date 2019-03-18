@@ -9,23 +9,33 @@
     <application
         android:name=".Ziqqi"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/q2"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/q2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".activities.ViewAllDealsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.MyAccountActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PaymentGatewayActivity">
-
-        </activity>
-        <activity android:name=".activities.BillingInformationActivity" />
-        <activity android:name=".activities.ShippingInfoActivity" />
-        <activity android:name=".activities.BillingInfoActivity" />
-        <activity android:name=".activities.SearchResultActivity" />
+        <activity
+            android:name=".activities.PaymentGatewayActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ShippingInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.BillingInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.SearchResultActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.FeedbackActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -99,6 +109,7 @@
         <activity
             android:name=".activities.ViewAllProductsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <meta-data
             android:name="com.hover.ApiKey"
             android:value="7295e4d4075b4d375a4923f2ea044ec3" />

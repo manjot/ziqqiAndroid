@@ -1,12 +1,16 @@
 package com.ziqqi.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +19,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
-import com.ziqqi.OnItemClickListener;
+import com.ziqqi.OnSimilarItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
+import com.ziqqi.fragments.CheckoutDialogFragment;
+import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
+import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
+import com.ziqqi.model.similarproductsmodel.Payload;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.ProductDetailsViewModel;
@@ -46,16 +58,19 @@ public class ProductDetailActivity extends AppCompatActivity {
     Handler handler;
     Runnable update;
     int currentPage = 0;
-    SpringDotsIndicator indicator;
+    DotsIndicator indicator;
     List<com.ziqqi.model.similarproductsmodel.Payload> payloadsList = new ArrayList<>();
     List<com.ziqqi.model.similarproductsmodel.Payload> similarDataList = new ArrayList<>();
     List<Review> reviewDataList = new ArrayList<>();
     SimilarProductAdapter adapter;
     ReviewsAdapter reviewsAdapter;
-    OnItemClickListener listener;
+    OnSimilarItemClickListener listener;
     SpacesItemDecoration spacesItemDecoration;
     String product_id;
     String strSharingUrl;
+    LoginDialog loginDialog;
+    int isWishlist = -1;
+    String authToken = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +94,42 @@ public class ProductDetailActivity extends AppCompatActivity {
             product_id = getIntent().getStringExtra("product_id");
         }
 
+        listener = new OnSimilarItemClickListener() {
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
+
+            @Override
+            public void onItemClick(Payload payload, String type) {
+                switch (type) {
+                    case Constants.SHARE:
+                        share(ProductDetailActivity.this, payload.getId());
+                        break;
+                    case Constants.WISH_LIST:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                        } else {
+                            loginDialog.showDialog(ProductDetailActivity.this);
+                        }
+                        break;
+                    case Constants.CART:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                        } else {
+                            loginDialog.showDialog(ProductDetailActivity.this);
+                        }
+
+                        break;
+                }
+            }
+        };
+
+        setUpAdapter();
+        getSimilar(Integer.parseInt(product_id));
+        getDetails(Integer.parseInt(product_id), authToken);
+
+        loginDialog = new LoginDialog();
         handler = new Handler();
         update = new Runnable() {
             public void run() {
@@ -112,9 +163,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             }
         });
-        getDetails(Integer.parseInt(product_id));
-        setUpAdapter();
-        getSimilar(Integer.parseInt(product_id));
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+            authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
+        }
 
         binding.tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -148,22 +199,56 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.ivWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToWishlist("5c2f405346f56", Integer.parseInt(product_id));
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                    if (isWishlist == 0) {
+                        addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                    } else if (isWishlist == 1) {
+                        removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                    }
+                } else {
+                    loginDialog.showDialog(ProductDetailActivity.this);
+                }
             }
         });
 
         binding.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.share(ProductDetailActivity.this, strSharingUrl);
+                share(ProductDetailActivity.this, strSharingUrl);
+            }
+        });
+
+        binding.tvAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                    addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                } else {
+                    loginDialog.showDialog(ProductDetailActivity.this);
+                }
+            }
+        });
+
+        binding.tvBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                    addToBuy(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                    CheckoutDialogFragment dialogFragment = new CheckoutDialogFragment();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.rl_container, dialogFragment);
+                    ft.commit();
+                } else {
+                    loginDialog.showDialog(ProductDetailActivity.this);
+                }
             }
         });
     }
 
 
-    private void getDetails(int id) {
+    private void getDetails(int id, String authToken) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.fetchData(id);
+        viewModel.fetchData(id, authToken);
         viewModel.getProductDetailsResponse().observe(this, new Observer<ProductDetails>() {
             @Override
             public void onChanged(@Nullable ProductDetails productDetails) {
@@ -176,6 +261,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                         String resultOverview = Html.fromHtml(productDetails.getPayload().getOverview()).toString();
                         String resultSpecification = Html.fromHtml(productDetails.getPayload().getSpecifications()).toString();
                         strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
+                        isWishlist = productDetails.getPayload().getIs_wishlist();
+
+                        if (isWishlist == 1) {
+                            binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
+                        } else if (isWishlist == 0) {
+                            binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                        }
 
                         binding.tvOverview.setText(resultOverview);
                         binding.tvSpecs.setText(resultSpecification);
@@ -184,7 +276,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                         if (productDetails.getPayload().getReviews().size() == 0) {
                             binding.rvReviews.setVisibility(View.GONE);
                             binding.tvNoReviews.setVisibility(View.VISIBLE);
-
                         }
                         productSliderAdapter.notifyDataSetChanged();
                     }
@@ -218,6 +309,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    /*Wihslist*/
     private void addToWishlist(String authToken, int id) {
         binding.progressBar.setVisibility(View.VISIBLE);
         viewModel.addProductWishlist(authToken, id);
@@ -226,9 +318,60 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onChanged(@Nullable AddToModel addToModel) {
                 if (!addToModel.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
+                    binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
                     Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void removeWishlist(String authToken, int id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.removeWishlist(authToken, id);
+        viewModel.deleteWishlistResponse().observe(this, new Observer<DeleteWishlistModel>() {
+            @Override
+            public void onChanged(@Nullable DeleteWishlistModel deleteWishlistModel) {
+                if (!deleteWishlistModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                    Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /*Cart*/
+    private void addToCart(String id, String authToken, String quantity) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
+            @Override
+            public void onChanged(@Nullable AddToCart addToCart) {
+                if (!addToCart.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ProductDetailActivity.this, MainActivity.class).putExtra("type", "cart"));
+                } else {
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void addToBuy(String id, String authToken, String quantity) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
+            @Override
+            public void onChanged(@Nullable AddToCart addToCart) {
+                if (!addToCart.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -249,7 +392,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvSimilar.addItemDecoration(spacesItemDecoration);
 
-        reviewsAdapter = new ReviewsAdapter(ProductDetailActivity.this, feedbackPayLoad, listener);
+        reviewsAdapter = new ReviewsAdapter(ProductDetailActivity.this, feedbackPayLoad);
         binding.rvReviews.setAdapter(reviewsAdapter);
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);
@@ -268,5 +411,21 @@ public class ProductDetailActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void share(Context context, String strSharingUrl) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "www.ziqqi.com/" + strSharingUrl);
+        startActivityForResult(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_using)), 1710);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+
+        }
     }
 }

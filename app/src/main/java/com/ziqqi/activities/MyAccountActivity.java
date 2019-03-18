@@ -1,15 +1,23 @@
 package com.ziqqi.activities;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ziqqi.R;
+import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.adapters.MyAccountAdapter;
 import com.ziqqi.databinding.ActivityMyAccountBinding;
+import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
+import com.ziqqi.model.helpcenterbyidmodel.Payload;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.viewmodel.MyAccountViewModel;
 
 import java.util.ArrayList;
@@ -19,11 +27,11 @@ import java.util.List;
 public class MyAccountActivity extends AppCompatActivity {
     ActivityMyAccountBinding binding;
     MyAccountViewModel viewModel;
-    List<String> headers;
-    List<String> parentHeaders;
-    HashMap<String, List<String>> children;
     MyAccountAdapter adapter;
     LinearLayoutManager manager;
+    List<Payload> payloadList = new ArrayList<>();
+    List<Payload> helpsDataList = new ArrayList<>();
+    String id = " ", title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +44,47 @@ public class MyAccountActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
-        manager = new LinearLayoutManager(this);
+        setUpAdapter();
+        if (getIntent().getExtras() != null){
+            id = getIntent().getStringExtra("id");
+            title = getIntent().getStringExtra("title");
+        }
+        binding.tvToolbarTitle.setText(title);
+        fetchHelps(Integer.parseInt(id));
+    }
+
+    private void fetchHelps(int helpId) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.rvHelp.setVisibility(View.GONE);
+        viewModel.fetchData(helpId);
+        viewModel.getHelpByIdResponse().observe(this, new Observer<HelpCenterByIdResponse>() {
+            @Override
+            public void onChanged(@Nullable HelpCenterByIdResponse helpCenter) {
+                if (!helpCenter.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    if (payloadList != null) {
+                        helpsDataList.clear();
+                        payloadList = helpCenter.getPayload();
+                        helpsDataList.addAll(payloadList);
+                        binding.rvHelp.setVisibility(View.VISIBLE);
+                        binding.progressBar.setVisibility(View.GONE);
+                        // adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    binding.progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void setUpAdapter() {
+        manager = new LinearLayoutManager(MyAccountActivity.this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.recyclerView.setLayoutManager(manager);
-
-        prepareListData();
-
-        adapter = new MyAccountAdapter(this, parentHeaders, headers, children);
-        binding.recyclerView.setAdapter(adapter);
+        binding.rvHelp.setLayoutManager(manager);
+        adapter = new MyAccountAdapter(MyAccountActivity.this, helpsDataList);
+        binding.rvHelp.setAdapter(adapter);
     }
 
     @Override
@@ -55,41 +95,4 @@ public class MyAccountActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void prepareListData() {
-        headers = new ArrayList<>();
-        children = new HashMap<>();
-        parentHeaders = new ArrayList<>();
-
-        parentHeaders.add(getResources().getString(R.string.aotnc));
-        parentHeaders.add(getResources().getString(R.string.order_of_rights));
-        parentHeaders.add(getResources().getString(R.string.guideliness_for));
-        parentHeaders.add(getResources().getString(R.string.website_purchase));
-
-        headers.add("View Information about ZIQQI.COM");
-        headers.add("PART A: INFORMATION ABOUT ZIQQI.COM");
-        headers.add("PART B: WEBSITE TERMS");
-        headers.add("YOUR USE OF THIS WEBSITE");
-        headers.add("USE OF THIS WEBSITE INTERNALLY");
-
-        List<String> childList1 = new ArrayList<String>();
-        childList1.add(getResources().getString(R.string.dummy_data));
-
-        List<String> childList2 = new ArrayList<String>();
-        childList2.add(getResources().getString(R.string.dummy_data));
-
-        List<String> childList3 = new ArrayList<String>();
-        childList3.add(getResources().getString(R.string.dummy_data));
-
-        List<String> childList4 = new ArrayList<String>();
-        childList4.add(getResources().getString(R.string.dummy_data));
-
-        List<String> childList5 = new ArrayList<String>();
-        childList5.add(getResources().getString(R.string.dummy_data));
-
-        children.put(headers.get(0), childList1);
-        children.put(headers.get(1), childList2);
-        children.put(headers.get(2), childList3);
-        children.put(headers.get(3), childList4);
-        children.put(headers.get(4), childList5);
-    }
 }

@@ -1,16 +1,21 @@
 package com.ziqqi.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -48,10 +53,13 @@ import com.ziqqi.fragments.ProfileFragment;
 import com.ziqqi.fragments.SearchFragment;
 import com.ziqqi.fragments.SubCategoryFragment;
 import com.ziqqi.fragments.WishlistFragment;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.CustomTypefaceSpan;
 import com.ziqqi.utils.FontCache;
+import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
+import com.ziqqi.viewmodel.CartViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Handler handler;
     ImageView ivProfilePic, ivBottomHome, ivBottomDeals, ivBottomSearch, ivBottomCart, ivBottomProfile;
-    TextView tvLogin;
+    TextView tvLogin,tv_cart;
     GoogleSignInAccount acct;
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
@@ -85,11 +93,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SubCategoryFragment mobileFragment, computerFragment, tvFragment, cameraFragment, gaminFragment, perfumesFragment, pharmacyFragment, superMarketFragment, appliancesFragment;
     int[] navItems = {R.string.mob_and_tabs, R.string.computers, R.string.tv_and_audio, R.string.cameras, R.string.appliances, R.string.gaming, R.string.perfumes_and_beauty, R.string.pharmacy_and_health, R.string.supermarket, R.string.my_acc, R.string.wishlist, R.string.track_order};
     int[] navIcons = {R.drawable.mobile, R.drawable.laptop, R.drawable.monitor, R.drawable.photo_camera, R.drawable.mixer, R.drawable.joystick, R.drawable.perfume, R.drawable.pharmacy, R.drawable.supermarket, R.drawable.avatar, R.drawable.like, R.drawable.tracking};
+    LoginDialog loginDialog;
+    String intentType = "main";
+    CartViewModel cartViewModel;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -131,10 +143,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         appliancesFragment = new SubCategoryFragment();
         superMarketFragment = new SubCategoryFragment();
 
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        toggle.setDrawerIndicatorEnabled(false);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_menu, getTheme());
+        toggle.setHomeAsUpIndicator(drawable);
         mDrawerLayout.addDrawerListener(toggle);
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
         toggle.syncState();
 
+        loginDialog = new LoginDialog();
         ivProfilePic = navigationView.getHeaderView(0).findViewById(R.id.iv_profile_pic);
         tvLogin = navigationView.getHeaderView(0).findViewById(R.id.tv_login);
         TextView tvWelcome = navigationView.getHeaderView(0).findViewById(R.id.tv_welcome);
@@ -144,6 +174,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tvLogin.setText(R.string.log_out);
         } else tvLogin.setText(R.string.login_signup);
 
+//        if (getIntent().getExtras() != null){
+//            intentType = getIntent().getStringExtra("type");
+//            if (intentType.equalsIgnoreCase("cart")){
+//                replaceFragment(wishlistFragment, null);
+//            }
+//        }
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,8 +339,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     replaceFragment(wishlistFragment, null);
                 break;
             case R.id.my_account:
-                if (!profileFragment.isVisible())
-                    replaceFragment(profileFragment, null);
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
         }
     }
@@ -416,6 +451,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mi.setTitle(mNewTitle);
     }
 
+    private void fetchCart(String authToken) {
+        cartViewModel.fetchData(authToken);
+        cartViewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
+            @Override
+            public void onChanged(@Nullable ViewCartResponse viewCart) {
+                if (!viewCart.getError()) {
+                    int cartSize = viewCart.getPayload().size();
+                    tvCart.setVisibility(View.VISIBLE);
+                    tvCart.setText(String.valueOf(cartSize));
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -436,8 +485,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     replaceFragment(dealsFragment, null);
                 break;
             case R.id.iv_bottom_profile:
-                if (!profileFragment.isVisible())
-                    replaceFragment(profileFragment, null);
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
         }
     }
@@ -447,5 +495,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //TODO when response change : payload size is in tvCart
         tvCart.setVisibility(View.VISIBLE);
         tvCart.setText("1");
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
     }
 }

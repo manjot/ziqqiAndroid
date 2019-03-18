@@ -69,6 +69,9 @@ public class Payload {
     @SerializedName("is_mobile_verify")
     @Expose
     private String isMobileVerify;
+    @SerializedName("auth_token")
+    @Expose
+    private String auth_token;
 
     public String getId() {
         return id;
@@ -238,4 +241,11 @@ public class Payload {
         this.isMobileVerify = isMobileVerify;
     }
 
+    public String getAuth_token() {
+        return auth_token;
+    }
+
+    public void setAuth_token(String auth_token) {
+        this.auth_token = auth_token;
+    }
 }

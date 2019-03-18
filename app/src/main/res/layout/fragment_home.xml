@@ -63,7 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_200sdp" />
 
-                    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                         android:id="@+id/circle_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -93,8 +93,7 @@
                         android:text="@string/top_cat"
                         android:textAllCaps="true"
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/_12sdp" />
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cv_top_categories_grid_1"
@@ -251,15 +250,15 @@
                             android:src="@drawable/ziqqi_logo" />
 
                         <TextView
+                            android:id="@+id/tv_copy_right"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tv_copy_right"
-                            android:layout_below="@id/tv_toolbar_title"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/copyright"
+                            android:layout_below="@+id/tv_toolbar_title"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="@dimen/_16sdp"
-                            android:text="@string/all_right_reserved"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_8sdp" />
                     </RelativeLayout>
                 </RelativeLayout>
             </android.support.v4.widget.NestedScrollView>

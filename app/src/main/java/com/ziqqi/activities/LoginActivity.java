@@ -353,6 +353,9 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
                     PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                    PreferenceManager.setStringValue(Constants.FIRST_NAME, loginResponse.getPayload().getFirstName());
+                    PreferenceManager.setStringValue(Constants.EMAIL, loginResponse.getPayload().getEmail());
+                    PreferenceManager.setStringValue(Constants.AUTH_TOKEN, loginResponse.getPayload().getAuth_token());
                     finishAffinity();
                     loginBinding.progressBar.setVisibility(View.GONE);
 
@@ -381,6 +384,9 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
                     PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                    PreferenceManager.setStringValue(Constants.FIRST_NAME, loginResponse.getPayload().getFirstName());
+                    PreferenceManager.setStringValue(Constants.EMAIL, loginResponse.getPayload().getEmail());
+                    PreferenceManager.setStringValue(Constants.AUTH_TOKEN, loginResponse.getPayload().getAuth_token());
                     finishAffinity();
                 }
             }

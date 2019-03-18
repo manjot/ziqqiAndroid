@@ -15,25 +15,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ziqqi.R;
 import com.ziqqi.activities.CommunicationPrefActivity;
 import com.ziqqi.activities.FeedbackActivity;
 import com.ziqqi.activities.HelpCenterActivity;
 import com.ziqqi.activities.MyAddressBookActivity;
 import com.ziqqi.activities.MyOrdersActivity;
+import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.activities.SelectYourLanguageActivity;
 import com.ziqqi.databinding.FragmentProfileBinding;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.ProfileViewModel;
 
 public class ProfileFragment extends Fragment{
 
     FragmentProfileBinding binding;
     ProfileViewModel viewModel;
-
     Toolbar toolbar;
     TextView tvTitle;
     ImageView ivTitle;
     String strSharingUrl;
+    LoginDialog loginDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,10 +54,24 @@ public class ProfileFragment extends Fragment{
         ivTitle.setVisibility(View.VISIBLE);
         tvTitle.setVisibility(View.GONE);
 
+        loginDialog = new LoginDialog();
+
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
         View view = binding.getRoot();
         strSharingUrl = "Hey check out my app at: https://play.google.com/store/apps/details?id=" + getContext().getPackageName();
+
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            binding.tvName.setText(PreferenceManager.getStringValue(Constants.FIRST_NAME));
+            binding.tvEmail.setText(PreferenceManager.getStringValue(Constants.EMAIL));
+            if (PreferenceManager.getStringValue(Constants.FACEBOOK_OR_GMAIL).equalsIgnoreCase("f") ||PreferenceManager.getStringValue(Constants.FACEBOOK_OR_GMAIL).equalsIgnoreCase("g")){
+                Glide.with(getActivity())
+                        .load(PreferenceManager.getStringValue(Constants.PROFILE_PIC))
+                        .into(binding.ivProfilePic);
+            }
+
+        }
+
 
         binding.llMyOrder.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,6 +11,7 @@
         app:cardCornerRadius="@dimen/_10sdp">
 
         <RelativeLayout
+            android:id="@+id/ll_card"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_100sdp">
 
@@ -34,7 +35,7 @@
                 android:layout_marginLeft="@dimen/_3sdp"
                 android:layout_marginRight="@dimen/_3sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:background="@drawable/black_rounded"
+                android:background="@drawable/black_rounded_transparent"
                 android:gravity="center"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_2sdp"

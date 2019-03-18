@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -94,6 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void onClickRegister(View view) {
+        Utils.hideKeyboard(this);
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             if (signUpViewModel.isValid()) {
                 signUpViewModel.init();
@@ -102,6 +102,9 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onChanged(@Nullable SignUpResponse signUpResponse) {
                         if (!signUpResponse.getError()) {
                             VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
+                            PreferenceManager.setStringValue(Constants.AUTH_TOKEN, signUpResponse.getPayload().getAuth_token());
+                            PreferenceManager.setStringValue(Constants.FIRST_NAME, signUpResponse.getPayload().getFirstName());
+                            PreferenceManager.setStringValue(Constants.EMAIL, signUpResponse.getPayload().getEmail());
                         } else {
                             signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
                             signUpViewModel.progressVisibility.set(View.GONE);
@@ -124,6 +127,9 @@ public class SignUpActivity extends AppCompatActivity {
                     signUpViewModel.progressVisibility.set(View.GONE);
                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                     PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                    PreferenceManager.setStringValue(Constants.AUTH_TOKEN, verifyOtpResponse.getPayload().get(0).getAuthToken());
+                    PreferenceManager.setStringValue(Constants.FIRST_NAME, verifyOtpResponse.getPayload().get(0).getFirstName());
+                    PreferenceManager.setStringValue(Constants.EMAIL, verifyOtpResponse.getPayload().get(0).getEmail());
                     finishAffinity();
                 } else {
                     signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);

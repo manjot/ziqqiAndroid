@@ -24,6 +24,8 @@ import com.ziqqi.databinding.FragmentWishlistBinding;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.viewwishlistmodel.Payload;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.viewmodel.WishlistViewModel;
 
@@ -60,7 +62,10 @@ public class WishlistFragment extends Fragment {
         View view = binding.getRoot();
         rvWishlist = binding.rvWishlist;
         setUpAdapter();
-        fetchWishlist("5c2f405346f56");
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
         return view;
     }
 
@@ -98,7 +103,7 @@ public class WishlistFragment extends Fragment {
         binding.rvWishlist.setLayoutManager(manager);
         adapter = new WishlistApdater(getContext(), wishlistDataList, listener);
         binding.rvWishlist.setAdapter(adapter);
-        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
-        binding.rvWishlist.addItemDecoration(spacesItemDecoration);
+//        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
+//        binding.rvWishlist.addItemDecoration(spacesItemDecoration);
     }
 }

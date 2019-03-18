@@ -10,7 +10,7 @@
             type="com.ziqqi.viewmodel.MyOrderViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -28,62 +28,72 @@
 
                 <TextView
                     android:id="@+id/tv_toolbar_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/your_order"
-                    android:layout_centerInParent="true"
                     android:fontFamily="@font/bold"
-                    android:layout_marginRight="?android:attr/actionBarSize"
+                    android:gravity="center_horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_45sdp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"/>
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rv_my_orders"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-            <!---->
-        <!--</android.support.v7.widget.RecyclerView>-->
+        <LinearLayout
+            android:id="@+id/ll_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            android:orientation="vertical">
 
-        <include layout="@layout/item_my_order"/>
+            <ImageView
+                android:layout_margin="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_no_data" />
 
-        <View
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:text="@string/whoooops"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorLightText"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/no_data"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorLightText"
+                android:textSize="@dimen/_14sdp" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:theme="@style/RadioButtonTheme"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/toolbar"
+            android:id="@+id/rv_my_orders"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorBlack"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"/>
+            android:layout_height="match_parent">
 
-        <include layout="@layout/item_my_order"/>
+        </android.support.v7.widget.RecyclerView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorBlack"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"/>
 
-        <include layout="@layout/item_my_order"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorBlack"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"/>
-
-        <include layout="@layout/item_my_order"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorBlack"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"/>
-
-        <include layout="@layout/item_my_order"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

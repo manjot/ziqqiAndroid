@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.SelectLanguageAdapter;
+import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.model.languagemodel.LanguageModel;
 import com.ziqqi.model.languagemodel.Payload;
 import com.ziqqi.utils.BlurBuilder;
@@ -64,6 +65,18 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
 
         rvSelectLanguage = findViewById(R.id.rv_select_language);
         mainLayout = findViewById(R.id.main_layout);
+        listener = new OnItemClickListener() {
+            @Override
+            public void onItemClick(String id, String type) {
+                setLocale(id);
+            }
+
+            @Override
+            public void onItemClick(BestsellerProduct bestsellerProduct, String type) {
+
+            }
+        };
+
         adapter = new SelectLanguageAdapter(payloadList, this, listener);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         rvSelectLanguage.setLayoutManager(mLayoutManager);

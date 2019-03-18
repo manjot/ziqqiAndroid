@@ -27,13 +27,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     Context context;
     List<Review> payloadList;
-    OnItemClickListener listener;
     Typeface regular, medium, light, bold;
 
-    public ReviewsAdapter(Context context, List<Review> payloadList, OnItemClickListener listener) {
+    public ReviewsAdapter(Context context, List<Review> payloadList) {
         this.context = context;
         this.payloadList = payloadList;
-        this.listener = listener;
         Resources resources = context.getResources();
         regular = FontCache.get(resources.getString(R.string.regular), context);
         medium = FontCache.get(resources.getString(R.string.medium), context);

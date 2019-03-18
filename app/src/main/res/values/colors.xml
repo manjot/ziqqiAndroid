@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00cb56</color>
     <color name="colorAccent">#d2d6cf</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorBlacktransparent">#BF000000</color>
     <color name="colorStrokeGrey">#e2e2e2</color>
     <color name="fb_color">#3b5997</color>
     <color name="colorWhite">#ffffff</color>
