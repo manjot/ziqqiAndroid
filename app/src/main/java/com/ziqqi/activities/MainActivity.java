@@ -444,6 +444,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void addToCart() {
-
+        //TODO when response change : payload size is in tvCart
+        tvCart.setVisibility(View.VISIBLE);
+        tvCart.setText("1");
     }
 }
