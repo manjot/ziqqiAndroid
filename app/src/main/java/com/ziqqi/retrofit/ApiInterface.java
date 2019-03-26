@@ -6,6 +6,8 @@ import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.citymodel.CityResponse;
+import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
@@ -86,7 +88,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("productDetails")
-    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("authToken")  String authToken);
+    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("authToken") String authToken);
 
 
     @FormUrlEncoded
@@ -164,5 +166,12 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("getMyOrders")
     Call<MyOrdersResponse> getOrder(@Field("auth_token") String auth_token);
+
+    @GET("country_master")
+    Call<CountryResponse> getCountry();
+
+    @FormUrlEncoded
+    @POST("getCity")
+    Call<CityResponse> getCity(@Field("country_id") String country_id);
 
 }

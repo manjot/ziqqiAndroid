@@ -8,6 +8,8 @@ import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.citymodel.CityResponse;
+import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
@@ -440,5 +442,41 @@ public class Repository {
             }
         });
         return placingOrder;
+    }
+
+    public MutableLiveData<CountryResponse> getCountries() {
+        final MutableLiveData<CountryResponse> countries = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<CountryResponse> call = apiInterface.getCountry();
+        call.enqueue(new Callback<CountryResponse>() {
+            @Override
+            public void onResponse(Call<CountryResponse> call, Response<CountryResponse> response) {
+                countries.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CountryResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return countries;
+    }
+
+    public MutableLiveData<CityResponse> getCities(String country_id) {
+        final MutableLiveData<CityResponse> countries = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<CityResponse> call = apiInterface.getCity(country_id);
+        call.enqueue(new Callback<CityResponse>() {
+            @Override
+            public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
+                countries.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CityResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return countries;
     }
 }

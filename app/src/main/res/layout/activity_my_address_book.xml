@@ -44,9 +44,37 @@
         <android.support.v7.widget.RecyclerView
             android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/rv_address">
         </android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/ziqqi_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorZiqqiBanner">
+
+            <ImageView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_16sdp"
+                android:src="@drawable/ziqqi_logo" />
+
+            <TextView
+                android:id="@+id/tv_copy_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/copyright"
+                android:layout_below="@+id/tv_title"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_8sdp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/ll_no_data"

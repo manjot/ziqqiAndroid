@@ -39,8 +39,37 @@
             android:layout_below="@+id/toolbar"
             android:padding="@dimen/_8sdp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="visible" />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/ziqqi_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_below="@id/rv_help"
+            android:background="@color/colorZiqqiBanner">
+
+            <ImageView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_16sdp"
+                android:src="@drawable/ziqqi_logo" />
+
+            <TextView
+                android:id="@+id/tv_copy_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/copyright"
+                android:layout_below="@+id/tv_title"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_8sdp" />
+        </RelativeLayout>
 
         <ProgressBar
             android:id="@+id/progress_bar"

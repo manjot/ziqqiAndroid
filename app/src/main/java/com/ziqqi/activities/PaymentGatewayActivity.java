@@ -42,10 +42,46 @@ public class PaymentGatewayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!isChecked){
                     binding.cbPaypal.setChecked(true);
+                    binding.rbDahab.setChecked(false);
+                    binding.rbZaad.setChecked(false);
                     isChecked = true;
                     binding.next.setVisibility(View.VISIBLE);
                 }else{
                     binding.cbPaypal.setChecked(false);
+                    isChecked = false;
+                    binding.next.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        binding.llZaad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isChecked){
+                    binding.rbZaad.setChecked(true);
+                    binding.rbDahab.setChecked(false);
+                    binding.cbPaypal.setChecked(false);
+                    isChecked = true;
+                    binding.next.setVisibility(View.VISIBLE);
+                }else{
+                    binding.rbZaad.setChecked(false);
+                    isChecked = false;
+                    binding.next.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        binding.llDahab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isChecked){
+                    binding.rbDahab.setChecked(true);
+                    binding.rbZaad.setChecked(false);
+                    binding.cbPaypal.setChecked(false);
+                    isChecked = true;
+                    binding.next.setVisibility(View.VISIBLE);
+                }else{
+                    binding.rbDahab.setChecked(false);
                     isChecked = false;
                     binding.next.setVisibility(View.GONE);
                 }

@@ -83,7 +83,6 @@ public class FeedbackActivity extends AppCompatActivity {
                 } else {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.rvQueries.setVisibility(View.GONE);
-
                 }
             }
         });
