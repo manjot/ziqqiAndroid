@@ -1,5 +1,6 @@
 package com.ziqqi.fragments;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -19,14 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
-import com.ziqqi.activities.MainActivity;
 import com.ziqqi.activities.SearchActivity;
 import com.ziqqi.activities.SubCategoryActivity;
 import com.ziqqi.activities.ViewAllProductsActivity;
@@ -54,8 +53,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +70,7 @@ public class HomeFragment extends Fragment {
     List<com.ziqqi.model.homecategorymodel.Payload> bestSellerPayloadList = new ArrayList<>();
 
     HomeViewModel viewModel;
-    SpringDotsIndicator indicator;
+    DotsIndicator indicator;
     FragmentHomeBinding binding;
     ViewPager viewPager;
     ImageSliderAdapter imageSliderAdapter;
@@ -147,26 +144,30 @@ public class HomeFragment extends Fragment {
             public void onItemClick(BestsellerProduct bestsellerProduct, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        Utils.share(getActivity(), bestsellerProduct.getId());
+                        share(getActivity(), bestsellerProduct.getLinkhref());
                         break;
                     case Constants.WISH_LIST:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                             addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), bestsellerProduct.getId());
-                        }else{
+                        } else {
                             loginDialog.showDialog(getActivity());
                         }
                         break;
                     case Constants.CART:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                             viewModel.addToCart(bestsellerProduct.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
-                                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                                    addToCartListener.addToCart();
+                                    if (!addToCart.getError()) {
+                                        addToCartListener.addToCart();
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    } else {
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    }
                                 }
                             });
-                        }else{
+                        } else {
                             loginDialog.showDialog(getActivity());
                         }
 
@@ -320,9 +321,9 @@ public class HomeFragment extends Fragment {
             public void onChanged(@Nullable AddToModel addToModel) {
                 if (!addToModel.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.showalertResponse(getActivity(), addToModel.getMessage());
                 } else {
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.showalertResponse(getActivity(), addToModel.getMessage());
                 }
             }
         });
@@ -332,5 +333,21 @@ public class HomeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         addToCartListener = (com.ziqqi.addToCartListener) context;
+    }
+
+    public void share(Context context, String strSharingUrl) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "www.ziqqi.com/" + strSharingUrl);
+        startActivityForResult(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_using)), 1710);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Activity.RESULT_OK) {
+
+        }
     }
 }

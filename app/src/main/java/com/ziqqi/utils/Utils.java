@@ -12,8 +12,10 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.ziqqi.R;
@@ -101,5 +103,31 @@ public class Utils {
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, strSharingUrl);
         context.startActivity(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_using)));
+    }
+
+    public static void showalertResponse(Context activity, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        builder.setTitle(activity.getString(R.string.app_name));
+        builder.setMessage(message);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        builder.create().show();
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        if (view != null)
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

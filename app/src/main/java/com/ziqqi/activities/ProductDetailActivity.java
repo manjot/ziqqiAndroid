@@ -1,7 +1,9 @@
 package com.ziqqi.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -17,8 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
-import com.ziqqi.OnItemClickListener;
 import com.ziqqi.OnSimilarItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.ProductSliderAdapter;
@@ -26,7 +28,6 @@ import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
 import com.ziqqi.fragments.CheckoutDialogFragment;
-import com.ziqqi.fragments.ProfileFragment;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
@@ -57,7 +58,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     Handler handler;
     Runnable update;
     int currentPage = 0;
-    SpringDotsIndicator indicator;
+    DotsIndicator indicator;
     List<com.ziqqi.model.similarproductsmodel.Payload> payloadsList = new ArrayList<>();
     List<com.ziqqi.model.similarproductsmodel.Payload> similarDataList = new ArrayList<>();
     List<Review> reviewDataList = new ArrayList<>();
@@ -92,6 +93,38 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getStringExtra("product_id");
         }
+
+        listener = new OnSimilarItemClickListener() {
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
+
+            @Override
+            public void onItemClick(Payload payload, String type) {
+                switch (type) {
+                    case Constants.SHARE:
+                        share(ProductDetailActivity.this, payload.getId());
+                        break;
+                    case Constants.WISH_LIST:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                        } else {
+                            loginDialog.showDialog(ProductDetailActivity.this);
+                        }
+                        break;
+                    case Constants.CART:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                        } else {
+                            loginDialog.showDialog(ProductDetailActivity.this);
+                        }
+
+                        break;
+                }
+            }
+        };
+
         setUpAdapter();
         getSimilar(Integer.parseInt(product_id));
         getDetails(Integer.parseInt(product_id), authToken);
@@ -130,54 +163,20 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             }
         });
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
         }
-
-        listener = new OnSimilarItemClickListener() {
-            @Override
-            public void onItemClick(String id, String type) {
-
-            }
-
-            @Override
-            public void onItemClick(Payload payload, String type) {
-                switch (type) {
-                    case Constants.SHARE:
-                        Utils.share(ProductDetailActivity.this, payload.getId());
-                        break;
-                    case Constants.WISH_LIST:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
-                        }else{
-                            loginDialog.showDialog(ProductDetailActivity.this);
-                        }
-                        break;
-                    case Constants.CART:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
-                        }else{
-                            loginDialog.showDialog(ProductDetailActivity.this);
-                        }
-
-                        break;
-                }
-            }
-        };
-
 
         binding.tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     binding.tvOverview.setVisibility(View.VISIBLE);
-                    binding.tvNoReviews.setVisibility(View.VISIBLE);
                     binding.tvSpecs.setVisibility(View.GONE);
                     binding.rvReviews.setVisibility(View.GONE);
                 } else if (tab.getPosition() == 1) {
                     binding.tvSpecs.setVisibility(View.VISIBLE);
                     binding.tvOverview.setVisibility(View.GONE);
-                    binding.tvNoReviews.setVisibility(View.VISIBLE);
                     binding.rvReviews.setVisibility(View.GONE);
                 } else if (tab.getPosition() == 2) {
                     binding.rvReviews.setVisibility(View.VISIBLE);
@@ -200,13 +199,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.ivWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                    if (isWishlist == 0){
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                    if (isWishlist == 0) {
                         addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
-                    }else if (isWishlist == 1){
+                    } else if (isWishlist == 1) {
                         removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
                     }
-                }else{
+                } else {
                     loginDialog.showDialog(ProductDetailActivity.this);
                 }
             }
@@ -215,16 +214,16 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.share(ProductDetailActivity.this, strSharingUrl);
+                share(ProductDetailActivity.this, strSharingUrl);
             }
         });
 
         binding.tvAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                     addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
-                }else{
+                } else {
                     loginDialog.showDialog(ProductDetailActivity.this);
                 }
             }
@@ -233,13 +232,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.tvBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                     addToBuy(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
                     CheckoutDialogFragment dialogFragment = new CheckoutDialogFragment();
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.rl_container, dialogFragment);
                     ft.commit();
-                }else{
+                } else {
                     loginDialog.showDialog(ProductDetailActivity.this);
                 }
             }
@@ -264,9 +263,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                         strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
                         isWishlist = productDetails.getPayload().getIs_wishlist();
 
-                        if (isWishlist == 1){
+                        if (isWishlist == 1) {
                             binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
-                        }else if (isWishlist == 0){
+                        } else if (isWishlist == 0) {
                             binding.ivWishlist.setImageResource(R.drawable.ic_wish);
                         }
 
@@ -412,5 +411,21 @@ public class ProductDetailActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void share(Context context, String strSharingUrl) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "www.ziqqi.com/" + strSharingUrl);
+        startActivityForResult(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_using)), 1710);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+
+        }
     }
 }

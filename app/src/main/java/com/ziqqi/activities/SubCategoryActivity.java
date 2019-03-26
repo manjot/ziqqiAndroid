@@ -1,7 +1,9 @@
 package com.ziqqi.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,9 +20,14 @@ import com.ziqqi.R;
 import com.ziqqi.adapters.BestSellerMainAdapter;
 import com.ziqqi.adapters.SubCategoryAdapter;
 import com.ziqqi.databinding.ActivityHomeCategoryBinding;
+import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.homecategorymodel.Payload;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.SubCategoryViewModel;
@@ -41,6 +48,7 @@ public class SubCategoryActivity extends AppCompatActivity {
     List<Payload> payloadList = new ArrayList<>();
     List<Payload> bestSellerPayloadList = new ArrayList<>();
     OnItemClickListener listener;
+    LoginDialog loginDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,8 @@ public class SubCategoryActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
+        loginDialog = new LoginDialog();
+
 
         listener = new OnItemClickListener() {
             @Override
@@ -63,7 +73,38 @@ public class SubCategoryActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(BestsellerProduct bestsellerProduct, String type) {
+                switch (type) {
+                    case Constants.SHARE:
+                        share(SubCategoryActivity.this, bestsellerProduct.getLinkhref());
+                        break;
+                    case Constants.WISH_LIST:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), bestsellerProduct.getId());
+                        } else {
+                            loginDialog.showDialog(SubCategoryActivity.this);
+                        }
+                        break;
+                    case Constants.CART:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            viewModel.addToCart(bestsellerProduct.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            viewModel.addToCartResponse().observe(SubCategoryActivity.this, new Observer<AddToCart>() {
+                                @Override
+                                public void onChanged(@Nullable AddToCart addToCart) {
+                                    if (!addToCart.getError()) {
+                                        Utils.showalertResponse(SubCategoryActivity.this, addToCart.getMessage());
+                                    } else {
+                                        Utils.showalertResponse(SubCategoryActivity.this, addToCart.getMessage());
+                                    }
 
+
+                                }
+                            });
+                        } else {
+                            loginDialog.showDialog(SubCategoryActivity.this);
+                        }
+
+                        break;
+                }
             }
         };
 
@@ -142,5 +183,37 @@ public class SubCategoryActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void share(Context context, String strSharingUrl) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ziqqi");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "www.ziqqi.com/" + strSharingUrl);
+        startActivityForResult(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_using)), 1710);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Activity.RESULT_OK) {
+
+        }
+    }
+
+    private void addToWishList(String authToken, String id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductWishlist(authToken, id);
+        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+            @Override
+            public void onChanged(@Nullable AddToModel addToModel) {
+                if (!addToModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Utils.showalertResponse(SubCategoryActivity.this, addToModel.getMessage());
+                } else {
+                    Utils.showalertResponse(SubCategoryActivity.this, addToModel.getMessage());
+                }
+            }
+        });
     }
 }

@@ -4,28 +4,22 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.ziqqi.OnDealsItemClickListener;
-import com.ziqqi.OnItemClickListener;
 import com.ziqqi.OnSearchedItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.SearchAdapter;
-import com.ziqqi.adapters.SearchCategoryAdapter;
-import com.ziqqi.addToCartListener;
 import com.ziqqi.databinding.ActivitySearchResultBinding;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
-import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.utils.Constants;
@@ -34,12 +28,9 @@ import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.SearchResultViewModel;
-import com.ziqqi.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SearchResultActivity extends AppCompatActivity {
 
@@ -65,7 +56,7 @@ public class SearchResultActivity extends AppCompatActivity {
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
 
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             catId = getIntent().getStringExtra("category_id");
             title = getIntent().getStringExtra("title");
         }
@@ -91,16 +82,16 @@ public class SearchResultActivity extends AppCompatActivity {
                         Utils.share(SearchResultActivity.this, payload.getId());
                         break;
                     case Constants.WISH_LIST:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                             addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
-                        }else{
+                        } else {
                             loginDialog.showDialog(SearchResultActivity.this);
                         }
                         break;
                     case Constants.CART:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                             addToCart(payload.getId());
-                        }else{
+                        } else {
                             loginDialog.showDialog(SearchResultActivity.this);
                         }
 
@@ -138,9 +129,9 @@ public class SearchResultActivity extends AppCompatActivity {
             public void onChanged(@Nullable AddToModel addToModel) {
                 if (!addToModel.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.showalertResponse(SearchResultActivity.this, addToModel.getMessage());
                 } else {
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.showalertResponse(SearchResultActivity.this, addToModel.getMessage());
                 }
             }
         });
@@ -152,8 +143,12 @@ public class SearchResultActivity extends AppCompatActivity {
         viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
             @Override
             public void onChanged(@Nullable AddToCart addToCart) {
-                Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                addToCartListener.addToCart();
+                if (!addToCart.getError()) {
+                    Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
+                    // addToCartListener.addToCart();
+                } else {
+                    Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
+                }
             }
         });
     }
@@ -187,7 +182,7 @@ public class SearchResultActivity extends AppCompatActivity {
     }
 
     private void setUpAdapter() {
-        manager = new GridLayoutManager(SearchResultActivity.this,3);
+        manager = new GridLayoutManager(SearchResultActivity.this, 3);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.recyclerView.setLayoutManager(manager);
         adapter = new SearchAdapter(SearchResultActivity.this, searchDataList, listener);

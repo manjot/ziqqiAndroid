@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -58,11 +57,11 @@
         </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_below="@id/appbar"
-            android:id="@+id/rl_container">
+            android:orientation="vertical">
 
             <ScrollView
                 android:id="@+id/scv"
@@ -116,7 +115,7 @@
                                 android:layout_gravity="center"
                                 android:padding="@dimen/_24sdp" />
 
-                            <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                                 android:id="@+id/circle_indicator"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -475,72 +474,74 @@
 
 
                     <android.support.design.widget.TabLayout
-                        android:layout_width="match_parent"
                         android:id="@+id/tablayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/_16sdp"
                         android:focusableInTouchMode="true"
                         app:tabIndicatorColor="@color/colorPrimary"
                         app:tabSelectedTextColor="@color/colorBlack"
-                        android:layout_marginLeft="@dimen/_16sdp"
-                        android:layout_marginRight="@dimen/_16sdp"
-                        app:tabTextColor="#c3c3c3"
-                        android:layout_height="50dp">
+                        app:tabTextColor="#c3c3c3">
 
                         <android.support.design.widget.TabItem
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="@string/overview" />
+
                         <android.support.design.widget.TabItem
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/specification"/>
+                            android:text="@string/specification" />
+
                         <android.support.design.widget.TabItem
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/reviews"/>
+                            android:text="@string/reviews" />
                     </android.support.design.widget.TabLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_16sdp"
                         android:focusableInTouchMode="true"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/_16sdp">
 
                         <TextView
                             android:id="@+id/tv_overview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/light"
-                            android:visibility="gone"
                             android:text="@string/shop_for_your_favorite_brands"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/tv_specs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/light"
-                            android:visibility="gone"
                             android:text="@string/shop_for_your_favorite_brands"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/tv_no_reviews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/light"
-                            android:visibility="gone"
                             android:layout_gravity="center"
+                            android:fontFamily="@font/light"
                             android:text="@string/no_reviews_yet"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
 
                         <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_reviews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/rv_reviews"
                             android:visibility="gone">
 
                         </android.support.v7.widget.RecyclerView>
@@ -550,10 +551,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/_50sdp"
-                        android:focusableInTouchMode="true"
                         android:background="@color/colorBottom"
-                        android:orientation="vertical">
+                        android:focusableInTouchMode="true"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/_50sdp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -592,8 +593,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_8sdp"
-                            android:layout_marginEnd="@dimen/_8sdp"
-                            android:layout_marginTop="@dimen/_8sdp"/>
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_8sdp" />
 
                     </LinearLayout>
 
@@ -603,7 +604,6 @@
 
             </ScrollView>
         </RelativeLayout>
-
 
 
         <ProgressBar
@@ -625,6 +625,7 @@
                 android:id="@+id/tv_add_to_cart"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:layout_weight="1"
                 android:background="@drawable/cart_btn"
                 android:gravity="center"
@@ -632,7 +633,6 @@
                 android:paddingTop="@dimen/dp_4"
                 android:paddingRight="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_4"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:text="@string/add_cart"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/sp_16" />
@@ -641,10 +641,10 @@
                 android:id="@+id/tv_buy"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="1"
                 android:background="@drawable/buy_btn"
                 android:gravity="center"
-                android:layout_marginLeft="@dimen/_5sdp"
                 android:paddingLeft="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_4"
                 android:paddingRight="@dimen/dp_16"
