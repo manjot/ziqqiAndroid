@@ -11,11 +11,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 
 import com.ziqqi.R;
 import com.ziqqi.adapters.CountryCodeAdapter;
@@ -53,6 +55,26 @@ public class SignUpActivity extends AppCompatActivity {
 
         adapter = new CountryCodeAdapter(this, flags, code);
         binding.ccp.setAdapter(adapter);
+
+        final InputFilter[] FilterArray = new InputFilter[1];
+
+       binding.ccp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+               if (binding.ccp.getSelectedItemPosition() == 0) {
+                   FilterArray[0] = new InputFilter.LengthFilter(9);
+                   binding.etMobileNumber.setFilters(FilterArray);
+               } else {
+                   FilterArray[0] = new InputFilter.LengthFilter(10);
+                   binding.etMobileNumber.setFilters(FilterArray);
+               }
+           }
+
+           @Override
+           public void onNothingSelected(AdapterView<?> adapterView) {
+
+           }
+       });
     }
 
     private void setUpFonts() {

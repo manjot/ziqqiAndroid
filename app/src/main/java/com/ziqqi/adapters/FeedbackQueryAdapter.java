@@ -3,6 +3,7 @@ package com.ziqqi.adapters;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class FeedbackQueryAdapter extends RecyclerView.Adapter<FeedbackQueryAdap
     @Override
     public void onBindViewHolder(@NonNull FeedbackQueryAdapter.FeedbackViewModel holder, final int i) {
         holder.tv_query.setText(payloadList.get(i).getFeedback());
+
     }
 
     @Override
@@ -49,7 +51,7 @@ public class FeedbackQueryAdapter extends RecyclerView.Adapter<FeedbackQueryAdap
 
     public class FeedbackViewModel extends RecyclerView.ViewHolder {
         TextView tv_query;
-        RatingBar ratingBar;
+        AppCompatRatingBar ratingBar;
 
         public FeedbackViewModel(@NonNull View itemView) {
             super(itemView);

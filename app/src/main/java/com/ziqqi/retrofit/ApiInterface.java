@@ -86,7 +86,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("productDetails")
-    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("authToken")  String authToken);
+    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("authToken") String authToken);
 
 
     @FormUrlEncoded
