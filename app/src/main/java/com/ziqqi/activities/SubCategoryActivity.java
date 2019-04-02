@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.BestSellerMainAdapter;
@@ -157,6 +159,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                 binding.mainLayout.setVisibility(View.VISIBLE);
                 if (!subCategories.getError()) {
                     payloadList.addAll(subCategories.getPayload());
+//                    Glide.with(getApplicationContext()).load(subCategories.getPayload().get(0).getCategoryImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
                     for (int i = 0; i < payloadList.size(); i++) {
                         if (!payloadList.get(i).getBestsellerProduct().isEmpty()) {
                             bestSellerPayloadList.add(payloadList.get(i));

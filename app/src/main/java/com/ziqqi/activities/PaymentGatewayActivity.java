@@ -1,5 +1,6 @@
 package com.ziqqi.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -8,24 +9,42 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityPaymentGatewayBinding;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PayPalConfig;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.BillingInfoViewModel;
 import com.ziqqi.viewmodel.PlaceOrderViewModel;
+
+import org.json.JSONException;
+
+import java.math.BigDecimal;
 
 public class PaymentGatewayActivity extends AppCompatActivity {
 
     PlaceOrderViewModel placeOrderViewModel;
     ActivityPaymentGatewayBinding binding;
     boolean isChecked = false;
+    private String strPaymentType = "null";
+    public static final int PAYPAL_REQUEST_CODE = 123;
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +56,14 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
+        Intent intent = new Intent(this, PayPalService.class);
+
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        startService(intent);
+
+
+
         binding.llPaypal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +71,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     binding.cbPaypal.setChecked(true);
                     binding.rbDahab.setChecked(false);
                     binding.rbZaad.setChecked(false);
+                    strPaymentType = "PAYPAL";
                     isChecked = true;
                     binding.next.setVisibility(View.VISIBLE);
                 }else{
@@ -61,6 +89,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     binding.rbZaad.setChecked(true);
                     binding.rbDahab.setChecked(false);
                     binding.cbPaypal.setChecked(false);
+                    strPaymentType = "ZAAD";
                     isChecked = true;
                     binding.next.setVisibility(View.VISIBLE);
                 }else{
@@ -79,6 +108,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     binding.rbZaad.setChecked(false);
                     binding.cbPaypal.setChecked(false);
                     isChecked = true;
+                    strPaymentType = "DAHAB";
                     binding.next.setVisibility(View.VISIBLE);
                 }else{
                     binding.rbDahab.setChecked(false);
@@ -91,20 +121,56 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                placeOrder(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
-                        PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME),
-                        PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME),
-                        PreferenceManager.getStringValue(Constants.BILLING_MOBILE),
-                        PreferenceManager.getStringValue(Constants.SHIP_NAME),
-                        PreferenceManager.getStringValue(Constants.SHIP_MOBILE),
-                        PreferenceManager.getStringValue(Constants.SHIP_COUNTRY),
-                        PreferenceManager.getStringValue(Constants.SHIP_CITY),
-                        PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
-                        PreferenceManager.getStringValue(Constants.SHIP_ADDRESS));
+                if (strPaymentType.equalsIgnoreCase("PAYPAL")){
+                    getPayment();
+                }else{
+                    Toast.makeText(PaymentGatewayActivity.this, "Please choose paypal", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
+    private void getPayment() {
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT))), "USD", "Simplified Coding Fee",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PAYPAL_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if (confirm != null) {
+                    try {
+                        String paymentDetails = confirm.toJSONObject().toString(4);
+                        Log.i("paymentExample", paymentDetails);
+                        placeOrder(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
+                                PreferenceManager.getStringValue(Constants.BILLING_NAME),
+                                PreferenceManager.getStringValue(Constants.BILLING_NAME),
+                                PreferenceManager.getStringValue(Constants.BILLING_MOBILE),
+                                PreferenceManager.getStringValue(Constants.SHIP_NAME),
+                                PreferenceManager.getStringValue(Constants.SHIP_MOBILE),
+                                PreferenceManager.getStringValue(Constants.SHIP_COUNTRY),
+                                PreferenceManager.getStringValue(Constants.SHIP_CITY),
+                                PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
+                                PreferenceManager.getStringValue(Constants.SHIP_ADDRESS));
+                        Toast.makeText(PaymentGatewayActivity.this, "Success", Toast.LENGTH_SHORT).show();
+
+                    } catch (JSONException e) {
+                        Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i("paymentExample", "The user canceled.");
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+            }
+        }
+    }
 
     private void placeOrder(String authToken, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address) {
         binding.progressBar.setVisibility(View.VISIBLE);
@@ -123,6 +189,13 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        Toast.makeText(getApplicationContext(), "Payment Canceled", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 
     @Override

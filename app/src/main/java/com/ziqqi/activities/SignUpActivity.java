@@ -116,12 +116,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onClickRegister(View view) {
         Utils.hideKeyboard(this);
+        binding.progressBar.setVisibility(View.VISIBLE);
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             if (signUpViewModel.isValid()) {
                 signUpViewModel.init();
                 signUpViewModel.getSignUpResponse().observe(this, new Observer<SignUpResponse>() {
                     @Override
                     public void onChanged(@Nullable SignUpResponse signUpResponse) {
+                        binding.progressBar.setVisibility(View.GONE);
                         if (!signUpResponse.getError()) {
                             VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
                             PreferenceManager.setStringValue(Constants.AUTH_TOKEN, signUpResponse.getPayload().getAuth_token());

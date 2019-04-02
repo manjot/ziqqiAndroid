@@ -61,7 +61,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_200sdp" />
+                        android:layout_height="@dimen/_140sdp" />
 
                     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                         android:id="@+id/circle_indicator"

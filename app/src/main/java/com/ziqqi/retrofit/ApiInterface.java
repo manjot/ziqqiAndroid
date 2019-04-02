@@ -134,12 +134,12 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("addBillingAddress")
     Call<AddBillingAddressModel> addBillingAddress(@Field("auth_token") String auth_token,
-                                                   @Field("first_name") String first_name,
-                                                   @Field("last_name") String last_name,
+                                                   @Field("name") String name,
                                                    @Field("mobile") String mobile,
-                                                   @Field("address_details") String address_details,
-                                                   @Field("country") String country);
-
+                                                   @Field("country") String country,
+                                                   @Field("city") String city,
+                                                   @Field("location") String location,
+                                                   @Field("address") String address);
     @FormUrlEncoded
     @POST("addShippingAddress")
     Call<AddShippingAddressModel> addShippingAddress(@Field("auth_token") String auth_token,

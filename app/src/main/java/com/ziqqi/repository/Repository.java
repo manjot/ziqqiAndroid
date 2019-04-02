@@ -371,10 +371,10 @@ public class Repository {
         return fetchHelps;
     }
 
-    public MutableLiveData<AddBillingAddressModel> addBillingAddress(String authToken, String firstName, String lastName, String mobile, String address, String county) {
+    public MutableLiveData<AddBillingAddressModel> addBillingAddress(String authToken, String Name, String mobile, String county, String city, String location, String address) {
         final MutableLiveData<AddBillingAddressModel> addBilling = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<AddBillingAddressModel> call = apiInterface.addBillingAddress(authToken, firstName, lastName, mobile, address, county);
+        Call<AddBillingAddressModel> call = apiInterface.addBillingAddress(authToken, Name, mobile, county, city, location, address);
         call.enqueue(new Callback<AddBillingAddressModel>() {
             @Override
             public void onResponse(Call<AddBillingAddressModel> call, Response<AddBillingAddressModel> response) {

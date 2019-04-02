@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.SubCategoryActivity;
@@ -207,6 +209,7 @@ public class SubCategoryFragment extends Fragment {
                 if (!subCategories.getError()) {
                     if (payloadList != null) {
                         bestSellerPayloadList.clear();
+                        Glide.with(getApplicationContext()).load(subCategories.getPayload()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
                         subCategoryList.clear();
                         payloadList = subCategories.getPayload();
                     }

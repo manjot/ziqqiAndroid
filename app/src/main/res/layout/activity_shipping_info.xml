@@ -167,7 +167,7 @@
                 <Spinner
                     android:id="@+id/et_country"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_12sdp"
@@ -185,7 +185,7 @@
                 <Spinner
                     android:id="@+id/et_city"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_12sdp"

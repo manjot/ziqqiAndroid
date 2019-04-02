@@ -296,7 +296,6 @@ public class HomeFragment extends Fragment {
                             bestSellerPayloadList.add(payLoadData.get(i));
                         }
                     }
-
                     topCategoriesGridAdapterOne.notifyDataSetChanged();
                     topCategoriesGridAdapterTwo.notifyDataSetChanged();
                     bestSellerMainAdapter.notifyDataSetChanged();

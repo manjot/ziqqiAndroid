@@ -21,8 +21,8 @@ public class BillingInfoViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchData(String authToken, String firstName, String lastName, String mobile, String address, String county) {
-        addBillingAddressModel = repository.addBillingAddress(authToken, firstName, lastName, mobile, address, county);
+    public void fetchData(String authToken, String Name, String mobile, String county, String city, String location, String address) {
+        addBillingAddressModel = repository.addBillingAddress(authToken, Name, mobile, county, city, location, address);
     }
 
     public MutableLiveData<AddBillingAddressModel> addBillingAddressResponse() {

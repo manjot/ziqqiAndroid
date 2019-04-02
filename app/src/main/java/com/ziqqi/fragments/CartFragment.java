@@ -87,7 +87,7 @@ public class CartFragment extends Fragment {
         viewModel.fetchData(authToken);
         viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
             @Override
-            public void onChanged(@Nullable ViewCartResponse viewCart) {
+            public void onChanged(@Nullable final ViewCartResponse viewCart) {
                 if (!viewCart.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.llNoData.setVisibility(View.GONE);
@@ -103,6 +103,7 @@ public class CartFragment extends Fragment {
                         binding.btSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal()+"");
                                 startActivity(new Intent(getContext(), BillingInfoActivity.class));
                             }
                         });

@@ -2,6 +2,7 @@ package com.ziqqi.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +51,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
+
         if (holder instanceof SubCategoryViewHolder) {
             ((SubCategoryViewHolder) holder).tvTitle.setText(subCategoriesList.get(i).getName());
             Glide.with(context).load(subCategoriesList.get(i).getCategoryImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(((SubCategoryViewHolder) holder).ivImage);
