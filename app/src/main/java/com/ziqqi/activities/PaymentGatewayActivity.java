@@ -57,27 +57,24 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         Intent intent = new Intent(this, PayPalService.class);
-
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-
         startService(intent);
-
-
 
         binding.llPaypal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isChecked){
+                if (!isChecked) {
                     binding.cbPaypal.setChecked(true);
                     binding.rbDahab.setChecked(false);
                     binding.rbZaad.setChecked(false);
                     strPaymentType = "PAYPAL";
                     isChecked = true;
                     binding.next.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     binding.cbPaypal.setChecked(false);
                     isChecked = false;
                     binding.next.setVisibility(View.GONE);
+                    strPaymentType = "null";
                 }
             }
         });
@@ -85,35 +82,37 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         binding.llZaad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isChecked){
+                if (!isChecked) {
                     binding.rbZaad.setChecked(true);
                     binding.rbDahab.setChecked(false);
                     binding.cbPaypal.setChecked(false);
                     strPaymentType = "ZAAD";
                     isChecked = true;
                     binding.next.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     binding.rbZaad.setChecked(false);
                     isChecked = false;
                     binding.next.setVisibility(View.GONE);
+                    strPaymentType = "null";
                 }
             }
         });
-
+        
         binding.llDahab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isChecked){
+                if (!isChecked) {
                     binding.rbDahab.setChecked(true);
                     binding.rbZaad.setChecked(false);
                     binding.cbPaypal.setChecked(false);
                     isChecked = true;
                     strPaymentType = "DAHAB";
                     binding.next.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     binding.rbDahab.setChecked(false);
                     isChecked = false;
                     binding.next.setVisibility(View.GONE);
+                    strPaymentType = "null";
                 }
             }
         });
@@ -121,9 +120,9 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (strPaymentType.equalsIgnoreCase("PAYPAL")){
+                if (strPaymentType.equalsIgnoreCase("PAYPAL")) {
                     getPayment();
-                }else{
+                } else {
                     Toast.makeText(PaymentGatewayActivity.this, "Please choose paypal", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -158,7 +157,6 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                                 PreferenceManager.getStringValue(Constants.SHIP_CITY),
                                 PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
                                 PreferenceManager.getStringValue(Constants.SHIP_ADDRESS));
-                        Toast.makeText(PaymentGatewayActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -174,14 +172,14 @@ public class PaymentGatewayActivity extends AppCompatActivity {
 
     private void placeOrder(String authToken, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        placeOrderViewModel.placeOder(authToken, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location,  pickup_address);
+        placeOrderViewModel.placeOder(authToken, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location, pickup_address);
         placeOrderViewModel.getPlaceOrderResponse().observe(this, new Observer<PlaceOrderResponse>() {
             @Override
             public void onChanged(@Nullable PlaceOrderResponse placeOrderResponse) {
                 if (!placeOrderResponse.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(PaymentGatewayActivity.this, MainActivity.class));
+                    startActivity(new Intent(PaymentGatewayActivity.this, PaymentConfirmationActivity.class));
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -194,7 +192,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
-        Toast.makeText(getApplicationContext(), "Payment Canceled", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "Payment Canceled", Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 

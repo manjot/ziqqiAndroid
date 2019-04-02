@@ -16,8 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity android:name=".activities.PaymentConfirmationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ViewAllDealsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -32,8 +35,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.BillingInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.SearchResultActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -114,6 +116,7 @@
         <meta-data
             android:name="com.hover.ApiKey"
             android:value="7295e4d4075b4d375a4923f2ea044ec3" />
+
         <service android:name=".firebase.FireIDService" />
         <service android:name=".firebase.FireMsgService" />
     </application>

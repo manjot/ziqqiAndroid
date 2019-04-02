@@ -82,8 +82,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/header"
                     android:nestedScrollingEnabled="false"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:layout_marginEnd="@dimen/dp_16" />
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"  />
 
                 <ImageView
                     android:id="@+id/iv_ndf"
