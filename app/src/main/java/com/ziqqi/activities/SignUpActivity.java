@@ -116,19 +116,26 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onClickRegister(View view) {
         Utils.hideKeyboard(this);
-        binding.progressBar.setVisibility(View.VISIBLE);
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             if (signUpViewModel.isValid()) {
                 signUpViewModel.init();
+                binding.progressBar.setVisibility(View.VISIBLE);
+                signUpViewModel.mainLayoutVisibility.set(View.GONE);
                 signUpViewModel.getSignUpResponse().observe(this, new Observer<SignUpResponse>() {
                     @Override
                     public void onChanged(@Nullable SignUpResponse signUpResponse) {
                         binding.progressBar.setVisibility(View.GONE);
+                        signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
                         if (!signUpResponse.getError()) {
-                            VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
+                            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                            PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                            PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "f or g");
+//                            VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
                             PreferenceManager.setStringValue(Constants.AUTH_TOKEN, signUpResponse.getPayload().getAuth_token());
                             PreferenceManager.setStringValue(Constants.FIRST_NAME, signUpResponse.getPayload().getFirstName());
                             PreferenceManager.setStringValue(Constants.EMAIL, signUpResponse.getPayload().getEmail());
+                            finishAffinity();
+
                         } else {
                             signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
                             signUpViewModel.progressVisibility.set(View.GONE);

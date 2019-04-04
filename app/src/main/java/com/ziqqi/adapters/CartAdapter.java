@@ -14,11 +14,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.ziqqi.OnCartItemlistener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
+import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
 
 import java.util.List;
@@ -27,9 +29,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     Context context;
     List<com.ziqqi.model.viewcartmodel.Payload> viewCartList;
-    OnItemClickListener listener;
+    OnCartItemlistener listener;
 
-    public CartAdapter(Context context, List<com.ziqqi.model.viewcartmodel.Payload> viewCartList,OnItemClickListener listener) {
+    public CartAdapter(Context context, List<com.ziqqi.model.viewcartmodel.Payload> viewCartList,OnCartItemlistener listener) {
         this.context = context;
         this.viewCartList = viewCartList;
         this.listener = listener;
@@ -49,14 +51,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.tvDiscountPrice.setText("$ " + viewCartList.get(i).getSalePrice());
         Glide.with(context).load(viewCartList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
 
-        holder.ll_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailActivity.class );
-                intent.putExtra("product_id", viewCartList.get(i).getId());
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -64,9 +58,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return viewCartList.size();
     }
 
-    public class CartViewHolder extends RecyclerView.ViewHolder {
+    public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvName, tvBrandName, tvDiscountPrice;
-        ImageView ivImage;
+        ImageView ivImage, ivRemoveCart;
         LinearLayout ll_card;
 
         public CartViewHolder(@NonNull View itemView) {
@@ -77,6 +71,25 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
             ll_card = itemView.findViewById(R.id.ll_card);
+            ivRemoveCart = itemView.findViewById(R.id.iv_remove_cart);
+
+            ivRemoveCart.setOnClickListener(this);
+            ll_card.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            switch (view.getId()) {
+                case R.id.ll_card:
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("product_id", viewCartList.get(getAdapterPosition()).getId());
+                    context.startActivity(intent);
+                    break;
+                case R.id.iv_remove_cart:
+                    listener.onCartItemClick(viewCartList.get(getAdapterPosition()), Constants.REMOVE_CART);
+                    break;
+            }
         }
     }
 }

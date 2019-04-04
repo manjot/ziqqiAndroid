@@ -48,5 +48,7 @@ public class Constants {
     public static final String SHIP_CITY = "ship_city";
 
     public static final String CART_TOTAL_AMOUNT = "cart_total_amount";
+
+    public static final String REMOVE_CART = "remove_cart";
 }
 

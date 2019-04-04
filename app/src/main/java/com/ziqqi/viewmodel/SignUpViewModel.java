@@ -64,8 +64,8 @@ public class SignUpViewModel extends AndroidViewModel {
     public void init() {
         if (signUpResponse != null) {
         } else {
-            progressVisibility.set(View.VISIBLE);
-            mainLayoutVisibility.set(View.GONE);
+//            progressVisibility.set(View.VISIBLE);
+//            mainLayoutVisibility.set(View.GONE);
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("email", email.get());
             hashMap.put("password", password.get());

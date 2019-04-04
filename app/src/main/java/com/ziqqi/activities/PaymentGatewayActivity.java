@@ -180,7 +180,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(PaymentGatewayActivity.this, PaymentConfirmationActivity.class));
-                    finish();
+                    finishAffinity();
                 } else {
                     Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     binding.progressBar.setVisibility(View.GONE);

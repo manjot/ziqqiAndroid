@@ -16,24 +16,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ziqqi.OnCartItemlistener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.BillingInfoActivity;
 import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.databinding.FragmentCartBinding;
+import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.viewcartmodel.Payload;
 import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
+import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.CartViewModel;
 import com.ziqqi.viewmodel.ProfileViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CartFragment extends Fragment {
 
@@ -44,7 +51,7 @@ public class CartFragment extends Fragment {
     ImageView ivTitle;
     List<Payload> payloadList = new ArrayList<>();
     List<Payload> cartDataList = new ArrayList<>();
-    OnItemClickListener listener;
+    OnCartItemlistener listener;
     CartAdapter adapter;
     SpacesItemDecoration spacesItemDecoration;
     LinearLayoutManager manager;
@@ -77,7 +84,40 @@ public class CartFragment extends Fragment {
             fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
 
+        listener = new OnCartItemlistener() {
+            @Override
+            public void onCartItemClick(String id, String type) {
+
+            }
+
+            @Override
+            public void onCartItemClick(Payload payload, String type) {
+                switch (type) {
+                    case Constants.REMOVE_CART:
+                        deleteCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
+                        break;
+                }
+            }
+        };
+
         return view;
+    }
+
+    private void deleteCart(String authToken, String productId) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.deleteCart(authToken, productId);
+        viewModel.deleteCartResponse().observe(this, new Observer<DeleteCartResponse>() {
+            @Override
+            public void onChanged(@Nullable final DeleteCartResponse viewCart) {
+                if (!viewCart.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                } else {
+                    binding.progressBar.setVisibility(View.GONE);
+
+                }
+            }
+        });
     }
 
     private void fetchCart(String authToken) {

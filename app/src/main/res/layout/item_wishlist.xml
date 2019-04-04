@@ -57,7 +57,7 @@
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:padding="@dimen/_5sdp"
-                android:src="@drawable/ic_new_my_order"/>
+                android:src="@drawable/ic_item_cart"/>
 
         </LinearLayout>
 

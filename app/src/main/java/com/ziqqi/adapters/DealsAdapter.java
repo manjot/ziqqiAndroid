@@ -58,9 +58,9 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.DealsViewHol
         holder.tvDesc.setText(Html.fromHtml(payloadList.get(i).getSku()));
         holder.tvMarketPrice.setText("$ " + payloadList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
-        if (payloadList.get(i).getImage().size() > 0)
-            Glide.with(context).load(payloadList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
-
+//        if (payloadList.get(i).getImage().size() > 0)
+//            Glide.with(context).load(payloadList.get(0).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
+        Glide.with(context).load(payloadList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
 
     }
 

@@ -52,15 +52,13 @@ public class SimilarProductAdapter extends RecyclerView.Adapter<SimilarProductAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SimilarProductAdapter.SimilarViewHolder holder,final int i) {
+    public void onBindViewHolder(@NonNull SimilarProductAdapter.SimilarViewHolder holder, final int i) {
         holder.tvBrandName.setText(payloadList.get(i).getBrandName());
         holder.tvName.setText(payloadList.get(i).getName());
         holder.tvDesc.setText(Html.fromHtml(payloadList.get(i).getSku()));
         holder.tvMarketPrice.setText("$ " + payloadList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
-        if (payloadList.get(i).getImage().size() > 0){
-            Glide.with(context).load(payloadList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
-        }
+        Glide.with(context).load(payloadList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
     }
 
     @Override
@@ -68,7 +66,7 @@ public class SimilarProductAdapter extends RecyclerView.Adapter<SimilarProductAd
         return payloadList.size();
     }
 
-    public class SimilarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class SimilarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvName, tvBrandName, tvDesc, tvMarketPrice, tvDiscountPrice;
         ImageView ivImage, ivCart, ivShare, ivWishList;
         LinearLayout ll_card;

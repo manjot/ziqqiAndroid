@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ziqqi.OnCartItemlistener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.BillingInfoActivity;
@@ -43,7 +44,7 @@ public class CheckoutDialogFragment extends DialogFragment {
     RecyclerView rv_cart;
     List<Payload> payloadList = new ArrayList<>();
     List<Payload> cartDataList = new ArrayList<>();
-    OnItemClickListener listener;
+    OnCartItemlistener listener;
     CartAdapter adapter;
     SpacesItemDecoration spacesItemDecoration;
     LinearLayoutManager manager;

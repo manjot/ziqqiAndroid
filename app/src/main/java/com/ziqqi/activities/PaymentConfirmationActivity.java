@@ -1,5 +1,6 @@
 package com.ziqqi.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,8 +27,15 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            startActivity(new Intent(PaymentConfirmationActivity.this, MainActivity.class));
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(PaymentConfirmationActivity.this, MainActivity.class));
+        finish();
     }
 }

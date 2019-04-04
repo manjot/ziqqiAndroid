@@ -1,6 +1,5 @@
 package com.ziqqi.model.dealsmodel;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -29,7 +28,7 @@ public class Payload {
     private String salePrice;
     @SerializedName("image")
     @Expose
-    private List<String> image = null;
+    private String image;
     @SerializedName("brand_name")
     @Expose
     private String brandName;
@@ -90,11 +89,11 @@ public class Payload {
         this.salePrice = salePrice;
     }
 
-    public List<String> getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(List<String> image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

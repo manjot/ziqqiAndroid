@@ -9,6 +9,7 @@ import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
+import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
@@ -118,6 +119,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("viewCartProduct")
     Call<ViewCartResponse> fetchCart(@Field("auth_token") String auth_token);
+
+    @FormUrlEncoded
+    @POST("deleteCartProduct")
+    Call<DeleteCartResponse> deleteCart(@Field("auth_token") String auth_token, @Field("product_id") String product_id);
 
     @FormUrlEncoded
     @POST("addTocart")

@@ -174,14 +174,17 @@ public class ProductDetailActivity extends AppCompatActivity {
                     binding.tvOverview.setVisibility(View.VISIBLE);
                     binding.tvSpecs.setVisibility(View.GONE);
                     binding.rvReviews.setVisibility(View.GONE);
+                    binding.tvNoReviews.setVisibility(View.GONE);
                 } else if (tab.getPosition() == 1) {
                     binding.tvSpecs.setVisibility(View.VISIBLE);
                     binding.tvOverview.setVisibility(View.GONE);
                     binding.rvReviews.setVisibility(View.GONE);
+                    binding.tvNoReviews.setVisibility(View.GONE);
                 } else if (tab.getPosition() == 2) {
                     binding.rvReviews.setVisibility(View.VISIBLE);
                     binding.tvOverview.setVisibility(View.GONE);
                     binding.tvSpecs.setVisibility(View.GONE);
+                    binding.tvNoReviews.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -301,6 +304,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                         similarDataList.addAll(payloadsList);
                         binding.rvSimilar.setVisibility(View.VISIBLE);
                         binding.progressBar.setVisibility(View.GONE);
+                    }else {
+                        binding.llSimilar.setVisibility(View.GONE);
                     }
                 } else {
 
@@ -355,6 +360,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(ProductDetailActivity.this, MainActivity.class).putExtra("type", "cart"));
+                    finishAffinity();
                 } else {
                     Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
                 }

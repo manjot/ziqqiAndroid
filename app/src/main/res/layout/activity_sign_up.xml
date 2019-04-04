@@ -277,7 +277,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:theme="@style/RadioButtonTheme"
-            android:visibility="@{signUpViewModel.progressVisibility}" />
+            android:visibility="gone" />
     </RelativeLayout>
 </layout>

@@ -11,6 +11,7 @@ import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
+import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
@@ -478,5 +479,23 @@ public class Repository {
             }
         });
         return countries;
+    }
+
+    public MutableLiveData<DeleteCartResponse> deleteCart(String authToken, String product_id) {
+        final MutableLiveData<DeleteCartResponse> removeCart = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<DeleteCartResponse> call = apiInterface.deleteCart(authToken, product_id);
+        call.enqueue(new Callback<DeleteCartResponse>() {
+            @Override
+            public void onResponse(Call<DeleteCartResponse> call, Response<DeleteCartResponse> response) {
+                removeCart.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DeleteCartResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return removeCart;
     }
 }

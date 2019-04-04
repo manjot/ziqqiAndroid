@@ -451,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mi.setTitle(mNewTitle);
     }
 
-    private void fetchCart(String authToken) {
+    public void fetchCart(String authToken) {
         cartViewModel.fetchData(authToken);
         cartViewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
             @Override

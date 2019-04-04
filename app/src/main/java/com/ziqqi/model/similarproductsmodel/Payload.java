@@ -1,6 +1,5 @@
 package com.ziqqi.model.similarproductsmodel;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,6 +17,9 @@ public class Payload {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("brand_id")
+    @Expose
+    private String brandId;
     @SerializedName("mrp_price")
     @Expose
     private String mrpPrice;
@@ -26,10 +28,13 @@ public class Payload {
     private String salePrice;
     @SerializedName("image")
     @Expose
-    private List<String> image = null;
+    private String image;
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("is_wishlist")
+    @Expose
+    private Integer isWishlist;
 
     public String getId() {
         return id;
@@ -63,6 +68,14 @@ public class Payload {
         this.name = name;
     }
 
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
+
     public String getMrpPrice() {
         return mrpPrice;
     }
@@ -79,11 +92,11 @@ public class Payload {
         this.salePrice = salePrice;
     }
 
-    public List<String> getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(List<String> image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -93,6 +106,14 @@ public class Payload {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
+    }
+
+    public Integer getIsWishlist() {
+        return isWishlist;
+    }
+
+    public void setIsWishlist(Integer isWishlist) {
+        this.isWishlist = isWishlist;
     }
 
 }
