@@ -37,6 +37,8 @@ import com.ziqqi.viewmodel.ViewAllViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class ViewAllProductsActivity extends AppCompatActivity {
     ActivityViewAllProductsBinding binding;
     ViewAllViewModel viewModel;
@@ -145,8 +147,10 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
             @Override
             public void onChanged(@Nullable AddToCart addToCart) {
-                Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                addToCartListener.addToCart();
+                if (!addToCart.getError()){
+                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    addToCartListener.addToCart();
+                }
             }
         });
     }

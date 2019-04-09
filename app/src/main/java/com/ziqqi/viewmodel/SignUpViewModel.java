@@ -55,10 +55,12 @@ public class SignUpViewModel extends AndroidViewModel {
         } else if (password.get().length() < 6) {
             Utils.ShowToast(getApplication().getApplicationContext(), "Password must contain minimum 6 letters");
             return false;
-        } else if (mobileNumber.get().length() != 10 || !Utils.isValidPhone(mobileNumber.get())) {
-            Utils.ShowToast(getApplication().getApplicationContext(), "Wrong Mobile Number");
-            return false;
-        } else return true;
+        }
+//        else if (mobileNumber.get().length() != 10 || !Utils.isValidPhone(mobileNumber.get())) {
+//            Utils.ShowToast(getApplication().getApplicationContext(), "Wrong Mobile Number");
+//            return false;
+//        }
+        else return true;
     }
 
     public void init() {

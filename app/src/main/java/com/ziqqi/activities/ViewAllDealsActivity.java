@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,6 +29,7 @@ import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.dealsmodel.Payload;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
@@ -69,7 +71,7 @@ public class ViewAllDealsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         loginDialog = new LoginDialog();
-        getDeals();
+        checkConnection();
 
         listener = new OnDealsItemClickListener() {
             @Override
@@ -122,9 +124,7 @@ public class ViewAllDealsActivity extends AppCompatActivity {
     }
 
     private void getDeals() {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.rvDeals.setVisibility(View.GONE);
-        viewModel.fetchData(1);
+        viewModel.fetchData(pageCount);
         viewModel.getDealsResponse().observe(this, new Observer<DealsResponse>() {
             @Override
             public void onChanged(@Nullable DealsResponse searchResponse) {
@@ -133,17 +133,43 @@ public class ViewAllDealsActivity extends AppCompatActivity {
                     if (payloadList != null) {
                         searchDataList.clear();
                         payloadList = searchResponse.getPayload();
-                        searchDataList.addAll(payloadList);
-                        binding.rvDeals.setVisibility(View.VISIBLE);
-                        binding.progressBar.setVisibility(View.GONE);
+
+
+                        if (pageCount == 1) {
+                            searchDataList.addAll(payloadList);
+                            // adapter.setPayloadList(viewAllList);
+                        } else {
+                            searchDataList.addAll(payloadList);
+                            // adapter.setPayloadList(viewAllList);
+                            rvDeals.loadMoreComplete();
+                        }
+
                         // adapter.notifyDataSetChanged();
                     }
                 } else {
-                    binding.progressBar.setVisibility(View.GONE);
+                    Utils.ShowToast(ViewAllDealsActivity.this, searchResponse.getMessage());
 
                 }
             }
         });
+    }
+
+    private void checkConnection() {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            getDeals();
+        } else {
+            Snackbar snackbar = Snackbar
+                    .make(binding.rlMain, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Try Again", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            checkConnection();
+                        }
+                    });
+
+            snackbar.show();
+        }
     }
 
     private void addToWishList(String authToken, String id) {
@@ -168,8 +194,11 @@ public class ViewAllDealsActivity extends AppCompatActivity {
         viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
             @Override
             public void onChanged(@Nullable AddToCart addToCart) {
-                Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                addToCartListener.addToCart();
+                if (!addToCart.getError()){
+                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    addToCartListener.addToCart();
+                }
+
             }
         });
     }

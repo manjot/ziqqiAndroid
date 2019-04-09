@@ -40,7 +40,10 @@ public class SubCategoryAdapter extends RecyclerView.Adapter {
     @Override
     public SubCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View inflater;
-        if (i == 3) {
+        if (i == 2) {
+            inflater = LayoutInflater.from(context).inflate(R.layout.item_grid_sub_categories, viewGroup, false);
+            return new SubCategoryViewHolder(inflater);
+        }else if (i == 3) {
             inflater = LayoutInflater.from(context).inflate(R.layout.last_grid_sub_category, viewGroup, false);
             return new SubCategoryViewHolder(inflater);
         } else {

@@ -2,11 +2,11 @@ package com.ziqqi.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,17 +16,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ziqqi.OnItemClickListener;
+import com.ziqqi.OnWishlistItemClick;
 import com.ziqqi.R;
-import com.ziqqi.adapters.SearchAdapter;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.databinding.FragmentWishlistBinding;
-import com.ziqqi.model.searchmodel.SearchResponse;
+import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.viewwishlistmodel.Payload;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
+import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.WishlistViewModel;
 
 import java.util.ArrayList;
@@ -39,13 +40,15 @@ public class WishlistFragment extends Fragment {
     RecyclerView rvWishlist;
     List<Payload> payloadList = new ArrayList<>();
     List<Payload> wishlistDataList = new ArrayList<>();
-    OnItemClickListener listener;
+    OnWishlistItemClick listener;
     WishlistApdater adapter;
     SpacesItemDecoration spacesItemDecoration;
     LinearLayoutManager manager;
     Toolbar toolbar;
     TextView tvTitle;
     ImageView ivTitle;
+    com.ziqqi.addToCartListener addToCartListener;
+    LoginDialog loginDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,10 +64,45 @@ public class WishlistFragment extends Fragment {
         tvTitle.setText("WISHLIST");
         View view = binding.getRoot();
         rvWishlist = binding.rvWishlist;
+        loginDialog = new LoginDialog();
+
         setUpAdapter();
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
             fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
+
+        listener = new OnWishlistItemClick() {
+            @Override
+            public void onItemClick(String id, String type) {
+
+            }
+
+            @Override
+            public void onItemClick(Payload payload, String type) {
+                switch (type){
+                    case Constants.CART:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            viewModel.addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
+                                @Override
+                                public void onChanged(@Nullable AddToCart addToCart) {
+                                    if (!addToCart.getError()) {
+                                        addToCartListener.addToCart();
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    } else {
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    }
+                                }
+                            });
+                        } else {
+                            loginDialog.showDialog(getActivity());
+                        }
+
+                        break;
+                }
+            }
+        };
+
 
         return view;
     }
@@ -105,5 +143,11 @@ public class WishlistFragment extends Fragment {
         binding.rvWishlist.setAdapter(adapter);
 //        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
 //        binding.rvWishlist.addItemDecoration(spacesItemDecoration);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        addToCartListener = (com.ziqqi.addToCartListener) context;
     }
 }

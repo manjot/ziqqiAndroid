@@ -1,5 +1,6 @@
 package com.ziqqi.activities;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -48,11 +49,22 @@ public class ShippingInfoActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
-        getCountries();
-        getCities(CountryId);
+//        getCountries();
+//        getCities(CountryId);
 
+        if (!PreferenceManager.getStringValue(Constants.BILLING_COUNTRY).equalsIgnoreCase("SOMALILAND")){
+            binding.checkbox.setVisibility(View.GONE);
+        }
+
+        String[] cities=getResources().getStringArray(R.array.array_cities);
+        cityAdapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, cities);
+        cityAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        binding.etCity.setAdapter(cityAdapter);
+
+        String[] countries=getResources().getStringArray(R.array.array_countries);
         adapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, countries);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        binding.etCountry.setAdapter(adapter);
 
         binding.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -63,8 +75,8 @@ public class ShippingInfoActivity extends AppCompatActivity {
                     binding.etMobileNumber.setText(PreferenceManager.getStringValue(Constants.BILLING_MOBILE ));
                     binding.etAddressDetails.setText(PreferenceManager.getStringValue(Constants.BILLING_ADRESS));
                     binding.etLocation.setText(PreferenceManager.getStringValue(Constants.BILLING_LOCATION));
-                    binding.etCity.setSelection(PreferenceManager.getIntValue(Constants.BILLING_CITY_POSITION));
-                    binding.etCountry.setSelection(PreferenceManager.getIntValue(Constants.BILLING_COUNTRY_POSITION));
+//                    binding.etCity.setSelection(PreferenceManager.getIntValue(Constants.BILLING_CITY_POSITION));
+//                    binding.etCountry.setSelection(PreferenceManager.getIntValue(Constants.BILLING_COUNTRY_POSITION));
                 }else{
                     binding.etName.getText().clear();
                     binding.etMobileNumber.getText().clear();
@@ -96,64 +108,64 @@ public class ShippingInfoActivity extends AppCompatActivity {
             }
         });
 
-        binding.etCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-//                CountryId = countryPayloadList.get(position).getId();
-                Log.i("Id", countryPayloadList.get(position).getId());
-                getCities(countryPayloadList.get(position).getId());
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-
-            }
-        });
+//        binding.etCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+////                CountryId = countryPayloadList.get(position).getId();
+//                Log.i("Id", countryPayloadList.get(position).getId());
+//                getCities(countryPayloadList.get(position).getId());
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//
+//            }
+//        });
     }
 
-    private void getCountries() {
-        shippingInfoViewModel.fetchCountry();
-        shippingInfoViewModel.getCountryResponse().observe(this, new Observer<CountryResponse>() {
-            @Override
-            public void onChanged(@Nullable CountryResponse countryResponse) {
-                if (!countryResponse.getError()) {
-                    adapter.notifyDataSetChanged();
-                    countryPayloadList.addAll(countryResponse.getPayload());
-                    for (int i = 0; i <= countryResponse.getPayload().size()-1; i++){
-                        countries.add(countryResponse.getPayload().get(i).getName());
-                    }
+//    private void getCountries() {
+//        shippingInfoViewModel.fetchCountry();
+//        shippingInfoViewModel.getCountryResponse().observe(this, new Observer<CountryResponse>() {
+//            @Override
+//            public void onChanged(@Nullable CountryResponse countryResponse) {
+//                if (!countryResponse.getError()) {
+//                    adapter.notifyDataSetChanged();
+//                    countryPayloadList.addAll(countryResponse.getPayload());
+//                    for (int i = 0; i <= countryResponse.getPayload().size()-1; i++){
+//                        countries.add(countryResponse.getPayload().get(i).getName());
+//                    }
+//
+//                    binding.etCountry.setAdapter(adapter);
+//
+//                } else {
+//
+//                }
+//            }
+//        });
+//    }
 
-                    binding.etCountry.setAdapter(adapter);
-
-                } else {
-
-                }
-            }
-        });
-    }
-
-    private void getCities(String country_id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        shippingInfoViewModel.fetchCity(country_id);
-        shippingInfoViewModel.getCityResponse().observe(this, new Observer<CityResponse>() {
-            @Override
-            public void onChanged(@Nullable CityResponse cityResponse) {
-                binding.progressBar.setVisibility(View.GONE);
-                if (!cityResponse.getError()) {
-                    cities.clear();
-                    for (int i = 0; i <= cityResponse.getPayload().size()-1; i++){
-                        cities.add(cityResponse.getPayload().get(i).getName());
-                    }
-                    cityAdapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, cities);
-                    cityAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                    binding.etCity.setAdapter(cityAdapter);
-
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
+//    private void getCities(String country_id) {
+//        binding.progressBar.setVisibility(View.VISIBLE);
+//        shippingInfoViewModel.fetchCity(country_id);
+//        shippingInfoViewModel.getCityResponse().observe(this, new Observer<CityResponse>() {
+//            @Override
+//            public void onChanged(@Nullable CityResponse cityResponse) {
+//                binding.progressBar.setVisibility(View.GONE);
+//                if (!cityResponse.getError()) {
+//                    cities.clear();
+//                    for (int i = 0; i <= cityResponse.getPayload().size()-1; i++){
+//                        cities.add(cityResponse.getPayload().get(i).getName());
+//                    }
+//                    cityAdapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, cities);
+//                    cityAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+//                    binding.etCity.setAdapter(cityAdapter);
+//
+//                } else {
+//                    binding.progressBar.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//    }
 
     private void addAddress(String authToken, String name, String mobile, String country, String city, String location, String address) {
         binding.progressBar.setVisibility(View.VISIBLE);

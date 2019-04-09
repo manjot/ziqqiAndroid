@@ -37,6 +37,8 @@ import com.ziqqi.viewmodel.SubCategoryViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class SubCategoryActivity extends AppCompatActivity {
     LinearLayoutManager managerBestSeller;
     GridLayoutManager manager;
@@ -159,8 +161,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                 binding.mainLayout.setVisibility(View.VISIBLE);
                 if (!subCategories.getError()) {
                     payloadList.addAll(subCategories.getPayload());
-//                    Glide.with(getApplicationContext()).load(subCategories.getPayload().get(0).getCategoryImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
-                    for (int i = 0; i < payloadList.size(); i++) {
+                    Glide.with(getApplicationContext()).load(subCategories.getCategory_banner()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);                    for (int i = 0; i < payloadList.size(); i++) {
                         if (!payloadList.get(i).getBestsellerProduct().isEmpty()) {
                             bestSellerPayloadList.add(payloadList.get(i));
                         }

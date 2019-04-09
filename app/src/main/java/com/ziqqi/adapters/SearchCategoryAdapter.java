@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.SearchResultActivity;
+import com.ziqqi.activities.ViewAllProductsActivity;
 import com.ziqqi.utils.FontCache;
 
 import java.util.List;
@@ -45,8 +46,8 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
         holder.ll_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SearchResultActivity.class);
-                intent.putExtra("category_id" , payloadList.get(i).getCategoryId());
+                Intent intent = new Intent(context, ViewAllProductsActivity.class);
+                intent.putExtra("categoryId" , payloadList.get(i).getCategoryId());
                 intent.putExtra("title" , payloadList.get(i).getCategoryName());
                 context.startActivity(intent);
 

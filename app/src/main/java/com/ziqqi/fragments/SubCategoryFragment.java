@@ -131,8 +131,11 @@ public class SubCategoryFragment extends Fragment {
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
-                                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                                    addToCartListener.addToCart();
+                                    if (!addToCart.getError()){
+                                        Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                                        addToCartListener.addToCart();
+                                    }
+
                                 }
                             });
                         }else{
@@ -209,7 +212,7 @@ public class SubCategoryFragment extends Fragment {
                 if (!subCategories.getError()) {
                     if (payloadList != null) {
                         bestSellerPayloadList.clear();
-                        Glide.with(getApplicationContext()).load(subCategories.getPayload()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
+                        Glide.with(getApplicationContext()).load(subCategories.getCategory_banner()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
                         subCategoryList.clear();
                         payloadList = subCategories.getPayload();
                     }

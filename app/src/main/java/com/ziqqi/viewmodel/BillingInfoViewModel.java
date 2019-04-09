@@ -8,11 +8,13 @@ import android.support.annotation.NonNull;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
+import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.repository.Repository;
 
 public class BillingInfoViewModel extends AndroidViewModel {
     Repository repository;
     MutableLiveData<AddBillingAddressModel> addBillingAddressModel;
+    MutableLiveData<BillingAddressModel> getBillingAddressModel;
     MutableLiveData<CountryResponse> countryResponse;
     MutableLiveData<CityResponse> cityResponse;
 
@@ -27,6 +29,14 @@ public class BillingInfoViewModel extends AndroidViewModel {
 
     public MutableLiveData<AddBillingAddressModel> addBillingAddressResponse() {
         return addBillingAddressModel;
+    }
+
+    public void getBillingAddress(String authToken){
+        getBillingAddressModel = repository.getBillingAddress(authToken);
+    }
+
+    public MutableLiveData<BillingAddressModel> getBillingAddressResponse() {
+        return getBillingAddressModel;
     }
 
     public void fetchCountry() {

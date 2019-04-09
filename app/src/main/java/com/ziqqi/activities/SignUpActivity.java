@@ -37,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     int[] flags = {R.drawable.flag_soloman_islands, R.drawable.flag_india};
     String[] code = {"+252", "+91"};
     CountryCodeAdapter adapter;
+    int countryPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,11 @@ public class SignUpActivity extends AppCompatActivity {
            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                if (binding.ccp.getSelectedItemPosition() == 0) {
                    FilterArray[0] = new InputFilter.LengthFilter(9);
+                   countryPosition = 0;
                    binding.etMobileNumber.setFilters(FilterArray);
                } else {
                    FilterArray[0] = new InputFilter.LengthFilter(10);
+                   countryPosition = 1;
                    binding.etMobileNumber.setFilters(FilterArray);
                }
            }
@@ -73,6 +76,21 @@ public class SignUpActivity extends AppCompatActivity {
            @Override
            public void onNothingSelected(AdapterView<?> adapterView) {
 
+           }
+       });
+
+       binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if (countryPosition == 0){
+                   if (binding.etMobileNumber.getText().toString().length() == 9){
+                       onClickRegister();
+                   }
+               }else if (countryPosition == 1){
+                   if (binding.etMobileNumber.getText().toString().length() == 10){
+                       onClickRegister();
+                   }
+               }
            }
        });
     }
@@ -114,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickRegister(View view) {
+    public void onClickRegister() {
         Utils.hideKeyboard(this);
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             if (signUpViewModel.isValid()) {

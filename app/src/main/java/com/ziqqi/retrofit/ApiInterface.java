@@ -11,6 +11,7 @@ import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
@@ -178,5 +179,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("getCity")
     Call<CityResponse> getCity(@Field("country_id") String country_id);
+
+    @FormUrlEncoded
+    @POST("getBillingAddress")
+    Call<BillingAddressModel> getBillingAddress(@Field("auth_token") String auth_token);
 
 }

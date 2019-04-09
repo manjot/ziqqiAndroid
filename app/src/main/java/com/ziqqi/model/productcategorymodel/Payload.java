@@ -1,7 +1,6 @@
 
 package com.ziqqi.model.productcategorymodel;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -54,10 +53,13 @@ public class Payload {
     private String categoriesId;
     @SerializedName("image")
     @Expose
-    private List<String> image = null;
+    private String image;
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("is_wishlist")
+    @Expose
+    private Integer isWishlist;
 
     public String getId() {
         return id;
@@ -179,11 +181,11 @@ public class Payload {
         this.categoriesId = categoriesId;
     }
 
-    public List<String> getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(List<String> image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -193,6 +195,14 @@ public class Payload {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
+    }
+
+    public Integer getIsWishlist() {
+        return isWishlist;
+    }
+
+    public void setIsWishlist(Integer isWishlist) {
+        this.isWishlist = isWishlist;
     }
 
 }

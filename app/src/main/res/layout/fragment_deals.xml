@@ -34,16 +34,16 @@
                     android:id="@+id/iv_banner_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_180"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/shop_now" />
+                    android:scaleType="fitXY" />
 
                 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/header"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:focusableInTouchMode="true"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_banner_image"
-                    android:layout_marginTop="@dimen/dp_16"
-                    android:layout_marginBottom="@dimen/dp_16">
+                    android:layout_marginTop="@dimen/dp_16">
 
                     <TextView
                         android:id="@+id/tv_deals"
@@ -73,11 +73,12 @@
                         android:paddingBottom="@dimen/dp_4"
                         android:text="@string/view_all"
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_10" />
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_deals"
+                    android:focusableInTouchMode="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/header"

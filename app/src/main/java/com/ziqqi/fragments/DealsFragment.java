@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.ziqqi.OnDealsItemClickListener;
 import com.ziqqi.OnItemClickListener;
@@ -121,8 +123,10 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
-                                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                                    addToCartListener.addToCart();
+                                    if (!addToCart.getError()){
+                                        Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                                        addToCartListener.addToCart();
+                                    }
                                 }
                             });
                         }else{
@@ -152,6 +156,8 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
                     binding.ivNdf.setVisibility(View.GONE);
                     if (payloadList != null) {
                         searchDataList.clear();
+                        binding.header.setVisibility(View.VISIBLE);
+                        Glide.with(getApplicationContext()).load(searchResponse.getCategory_banner()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
                         payloadList = searchResponse.getPayload();
                         searchDataList.addAll(payloadList);
                         binding.rvDeals.setVisibility(View.VISIBLE);

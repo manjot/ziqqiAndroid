@@ -41,12 +41,115 @@
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_below="@+id/toolbar"
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rv_address">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_below="@+id/toolbar"
+            android:layout_margin="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14sdp"/>
+
+                <TextView
+                    android:id="@+id/tv_line_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:fontFamily="@font/light"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_line_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:fontFamily="@font/light"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_10sdp" />
+
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:fontFamily="@font/light"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/light"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/edit_primary"
+                    android:fontFamily="@font/light"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/bt_edit"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:textAllCaps="false"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@drawable/button_bg"
+                    android:text="@string/edit"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/ziqqi_banner"

@@ -18,6 +18,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -27,7 +29,7 @@
 
                 <ImageView
                     android:id="@+id/tv_toolbar_title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_45sdp"
@@ -70,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorBottom"
             android:orientation="horizontal"
             android:weightSum="5">
 
@@ -86,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:padding="@dimen/_10sdp"
-                    android:src="@drawable/home__1_" />
+                    android:src="@drawable/ic_bottom_home" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -101,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:padding="@dimen/_10sdp"
-                    android:src="@drawable/tag" />
+                    android:src="@drawable/ic_bottom_offer" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -116,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:padding="@dimen/_10sdp"
-                    android:src="@drawable/magnifying_glass" />
+                    android:src="@drawable/ic_bottom_search" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -131,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:padding="@dimen/_10sdp"
-                    android:src="@drawable/shopping_cart" />
+                    android:src="@drawable/ic_bottom_cart" />
 
                 <TextView
                     android:id="@+id/tv_cart"
@@ -159,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:padding="@dimen/_10sdp"
-                    android:src="@drawable/avatar" />
+                    android:src="@drawable/ic_bottom_profile" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

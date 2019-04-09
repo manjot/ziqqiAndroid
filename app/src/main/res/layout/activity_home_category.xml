@@ -57,7 +57,7 @@
                     <ImageView
                         android:id="@+id/iv_banner_image"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_150sdp"
+                        android:layout_height="@dimen/_130sdp"
                         android:scaleType="fitXY"
                         android:src="@drawable/shop_now"
                         android:transitionName="transition"

@@ -32,10 +32,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ShippingInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".activities.BillingInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activities.SearchResultActivity"
             android:theme="@style/AppTheme.NoActionBar" />

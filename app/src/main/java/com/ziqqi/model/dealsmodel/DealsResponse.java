@@ -22,6 +22,9 @@ public class DealsResponse {
     @SerializedName("Code")
     @Expose
     private Integer code;
+    @SerializedName("category_banner")
+    @Expose
+    private String category_banner;
 
     public Boolean getError() {
         return error;
@@ -63,4 +66,11 @@ public class DealsResponse {
         this.code = code;
     }
 
+    public String getCategory_banner() {
+        return category_banner;
+    }
+
+    public void setCategory_banner(String category_banner) {
+        this.category_banner = category_banner;
+    }
 }

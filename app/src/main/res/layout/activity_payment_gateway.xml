@@ -72,45 +72,141 @@
                         android:id="@+id/rb_zaad"
                         style="@style/RadioButtonTheme"
                         android:layout_width="wrap_content"
+                        android:clickable="false"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center" />
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_zaad" />
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_zaad" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_zaad_number"
+                            android:layout_width="@dimen/_110sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:visibility="gone"
+                            android:layout_gravity="center"
+                            android:background="@drawable/black_rounded_empty">
+
+                            <LinearLayout
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:gravity="center"
+                                android:background="@drawable/black_rounded">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="63"
+                                    android:textColor="@color/colorWhite"/>
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/et_zaad"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:inputType="number"
+                                android:maxLength="7"
+                                android:hint="1234567"/>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_dahab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_24sdp">
+                    android:layout_marginTop="@dimen/_12sdp">
 
                     <RadioButton
                         android:id="@+id/rb_dahab"
                         style="@style/RadioButtonTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:layout_gravity="center" />
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edahab" />
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_edahab" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_dahab_number"
+                            android:layout_width="@dimen/_110sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:visibility="gone"
+                            android:layout_gravity="center"
+                            android:background="@drawable/black_rounded_empty">
+
+                            <LinearLayout
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:gravity="center"
+                                android:background="@drawable/black_rounded">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="65"
+                                    android:textColor="@color/colorWhite"/>
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/et_dahab"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:hint="1234567"
+                                android:inputType="number"
+                                android:maxLength="7"
+                                android:layout_marginLeft="@dimen/_5sdp"/>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
+
+
+
                 <LinearLayout
                     android:id="@+id/ll_paypal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_24sdp">
+                    android:layout_marginTop="@dimen/_12sdp">
 
                     <RadioButton
-                        android:id="@+id/cb_paypal"
+                        android:id="@+id/rb_paypal"
                         style="@style/RadioButtonTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
                         android:layout_gravity="center" />
 
                     <ImageView

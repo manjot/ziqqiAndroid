@@ -4,6 +4,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +17,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -47,6 +52,8 @@ import com.ziqqi.viewmodel.LoginViewModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -83,6 +90,21 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.ziqqi",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
         }
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
@@ -239,7 +261,6 @@ public class LoginActivity extends AppCompatActivity {
         parameters.putString("fields", "first_name,gender,last_name,id,email,name,link,picture");
         request.setParameters(parameters);
         request.executeAsync();
-
     }
 
     private void startFacebookLogin(CallbackManager callbackManager) {
@@ -257,7 +278,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-
+                error.printStackTrace();
             }
         });
 

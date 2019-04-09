@@ -23,6 +23,9 @@ public class Payload {
     @SerializedName("address2")
     @Expose
     private String address2;
+    @SerializedName("location")
+    @Expose
+    private String location;
     @SerializedName("city")
     @Expose
     private String city;
@@ -103,6 +106,14 @@ public class Payload {
 
     public void setAddress2(String address2) {
         this.address2 = address2;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getCity() {

@@ -21,6 +21,7 @@ import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.countrymodel.Payload;
+import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.BillingInfoViewModel;
@@ -54,23 +55,13 @@ public class BillingInfoActivity extends AppCompatActivity {
         getCountries();
         getCities(CountryId);
 
-        adapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, countries);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, countries);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        if (!PreferenceManager.getStringValue(Constants.BILLING_NAME).equalsIgnoreCase("billing_name")){
-            binding.etName.setText(PreferenceManager.getStringValue(Constants.BILLING_NAME));
-            binding.etMobileNumber.setText(PreferenceManager.getStringValue(Constants.BILLING_MOBILE));
-            binding.etLocation.setText(PreferenceManager.getStringValue(Constants.BILLING_LOCATION));
-            binding.etAddressDetails.setText(PreferenceManager.getStringValue(Constants.BILLING_ADRESS));
-            binding.etCity.setSelection(PreferenceManager.getIntValue(Constants.BILLING_CITY_POSITION));
-            binding.etCountry.setSelection(PreferenceManager.getIntValue(Constants.BILLING_COUNTRY_POSITION));
-        }else{
-            Toast.makeText(getApplicationContext(), "No billing address found", Toast.LENGTH_SHORT).show();
-        }
         binding.btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!binding.etName.getText().toString().equals("")  && !binding.etMobileNumber.getText().toString().equals("") && !binding.etAddressDetails.getText().toString().equals("")){
+                if (!binding.etName.getText().toString().equals("") && !binding.etMobileNumber.getText().toString().equals("") && !binding.etAddressDetails.getText().toString().equals("")) {
                     addAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
                             binding.etName.getText().toString(),
                             binding.etMobileNumber.getText().toString(),
@@ -78,7 +69,7 @@ public class BillingInfoActivity extends AppCompatActivity {
                             binding.etCity.getSelectedItem().toString(),
                             binding.etLocation.getText().toString(),
                             binding.etAddressDetails.getText().toString());
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
                 }
 
@@ -92,7 +83,9 @@ public class BillingInfoActivity extends AppCompatActivity {
                 PreferenceManager.setIntValue(Constants.BILLING_COUNTRY_POSITION, countrySpinnerPosition);
                 Log.i("Id", countryPayloadList.get(position).getId());
                 getCities(countryPayloadList.get(position).getId());
+
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
 
@@ -105,12 +98,12 @@ public class BillingInfoActivity extends AppCompatActivity {
                 citySpinnerPosition = binding.etCity.getSelectedItemPosition();
                 PreferenceManager.setIntValue(Constants.BILLING_CITY_POSITION, citySpinnerPosition);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
 
             }
         });
-
     }
 
     private void getCountries() {
@@ -121,7 +114,7 @@ public class BillingInfoActivity extends AppCompatActivity {
                 if (!countryResponse.getError()) {
                     adapter.notifyDataSetChanged();
                     countryPayloadList.addAll(countryResponse.getPayload());
-                    for (int i = 0; i <= countryResponse.getPayload().size()-1; i++){
+                    for (int i = 0; i <= countryResponse.getPayload().size() - 1; i++) {
                         countries.add(countryResponse.getPayload().get(i).getName());
                     }
 
@@ -143,15 +136,39 @@ public class BillingInfoActivity extends AppCompatActivity {
                 binding.progressBar.setVisibility(View.GONE);
                 if (!cityResponse.getError()) {
                     cities.clear();
-                    for (int i = 0; i <= cityResponse.getPayload().size()-1; i++){
+                    for (int i = 0; i <= cityResponse.getPayload().size() - 1; i++) {
                         cities.add(cityResponse.getPayload().get(i).getName());
                     }
-                    cityAdapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, cities);
-                    cityAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                    cityAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cities);
+                    cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     binding.etCity.setAdapter(cityAdapter);
+                    getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
 
                 } else {
                     binding.progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void getAddress(String authToken){
+        binding.progressBar.setVisibility(View.VISIBLE);
+        billingInfoViewModel.getBillingAddress(authToken);
+        billingInfoViewModel.getBillingAddressResponse().observe(this, new Observer<BillingAddressModel>() {
+            @Override
+            public void onChanged(@Nullable BillingAddressModel billingAddressModel) {
+                binding.progressBar.setVisibility(View.GONE);
+                if (!billingAddressModel.getError()){
+                    binding.etName.setText(billingAddressModel.getPayload().getFirstName());
+                    binding.etMobileNumber.setText(billingAddressModel.getPayload().getMobile());
+                    binding.etLocation.setText(billingAddressModel.getPayload().getLocation());
+                    binding.etAddressDetails.setText(billingAddressModel.getPayload().getAddressDetails());
+                    String strCity = billingAddressModel.getPayload().getCity();
+                    String strCountry = billingAddressModel.getPayload().getCountry();
+                    binding.etCity.setSelection(cityAdapter.getPosition(strCity));
+                    binding.etCountry.setSelection(adapter.getPosition(strCountry));
+                }else {
+
                 }
             }
         });

@@ -17,12 +17,10 @@
 
             <ImageView
                 android:id="@+id/iv_sub_category_image"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_30sdp"
-                android:layout_marginRight="@dimen/_30sdp"
                 android:scaleType="fitXY"
                 android:src="@drawable/apple" />
 

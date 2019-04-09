@@ -63,57 +63,36 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         binding.llPaypal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isChecked) {
-                    binding.cbPaypal.setChecked(true);
-                    binding.rbDahab.setChecked(false);
-                    binding.rbZaad.setChecked(false);
-                    strPaymentType = "PAYPAL";
-                    isChecked = true;
-                    binding.next.setVisibility(View.VISIBLE);
-                } else {
-                    binding.cbPaypal.setChecked(false);
-                    isChecked = false;
-                    binding.next.setVisibility(View.GONE);
-                    strPaymentType = "null";
-                }
+                clearAll();
+                binding.rbPaypal.setChecked(true);
+                binding.next.setVisibility(View.VISIBLE);
+                strPaymentType = "PAYPAL";
+                binding.llZaadNumber.setVisibility(View.GONE);
+                binding.llDahabNumber.setVisibility(View.GONE);
             }
         });
 
         binding.llZaad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isChecked) {
-                    binding.rbZaad.setChecked(true);
-                    binding.rbDahab.setChecked(false);
-                    binding.cbPaypal.setChecked(false);
-                    strPaymentType = "ZAAD";
-                    isChecked = true;
-                    binding.next.setVisibility(View.VISIBLE);
-                } else {
-                    binding.rbZaad.setChecked(false);
-                    isChecked = false;
-                    binding.next.setVisibility(View.GONE);
-                    strPaymentType = "null";
-                }
+                clearAll();
+                binding.rbZaad.setChecked(true);
+                binding.next.setVisibility(View.VISIBLE);
+                strPaymentType = "ZAAD";
+                binding.llZaadNumber.setVisibility(View.VISIBLE);
+                binding.llDahabNumber.setVisibility(View.GONE);
             }
         });
         
         binding.llDahab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isChecked) {
-                    binding.rbDahab.setChecked(true);
-                    binding.rbZaad.setChecked(false);
-                    binding.cbPaypal.setChecked(false);
-                    isChecked = true;
-                    strPaymentType = "DAHAB";
-                    binding.next.setVisibility(View.VISIBLE);
-                } else {
-                    binding.rbDahab.setChecked(false);
-                    isChecked = false;
-                    binding.next.setVisibility(View.GONE);
-                    strPaymentType = "null";
-                }
+                clearAll();
+                binding.rbDahab.setChecked(true);
+                binding.next.setVisibility(View.VISIBLE);
+                strPaymentType = "DAHAB";
+                binding.llZaadNumber.setVisibility(View.GONE);
+                binding.llDahabNumber.setVisibility(View.VISIBLE);
             }
         });
 
@@ -122,11 +101,22 @@ public class PaymentGatewayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (strPaymentType.equalsIgnoreCase("PAYPAL")) {
                     getPayment();
-                } else {
-                    Toast.makeText(PaymentGatewayActivity.this, "Please choose paypal", Toast.LENGTH_SHORT).show();
+                }else if (strPaymentType.equalsIgnoreCase("ZAAD")) {
+                    Toast.makeText(PaymentGatewayActivity.this, "ZAAD", Toast.LENGTH_SHORT).show();
+                }else if (strPaymentType.equalsIgnoreCase("DAHAB")) {
+                    Toast.makeText(PaymentGatewayActivity.this, "DAHAB", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(PaymentGatewayActivity.this, "Please choose a payment method", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void clearAll(){
+        binding.next.setVisibility(View.GONE);
+        binding.rbDahab.setChecked(false);
+        binding.rbZaad.setChecked(false);
+        binding.rbPaypal.setChecked(false);
     }
 
     private void getPayment() {

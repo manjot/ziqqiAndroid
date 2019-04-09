@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#5fff85</color>
     <color name="colorPrimaryDark">#00cb56</color>
     <color name="colorAccent">#d2d6cf</color>
@@ -21,5 +21,6 @@
     <color name="buttonColor">#ADD6AF</color>
     <color name="colorPrimaryLight">#daf4d0</color>
     <color name="light_grey">#f0f0f0</color>
-    <color name="colorBottom">#FAFAFA</color>
+    <color name="colorBottomIcon">#848484</color>
+    <color name="colorBottom" tools:ignore="MissingDefaultResource">#F4F4F4</color>
 </resources>

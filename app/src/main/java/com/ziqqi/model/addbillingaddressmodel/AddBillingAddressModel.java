@@ -1,7 +1,5 @@
 package com.ziqqi.model.addbillingaddressmodel;
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,7 +19,7 @@ public class AddBillingAddressModel {
     private String message;
     @SerializedName("Payload")
     @Expose
-    private List<Payload> payload = null;
+    private Payload payload;
 
     public Boolean getError() {
         return error;
@@ -55,11 +53,11 @@ public class AddBillingAddressModel {
         this.message = message;
     }
 
-    public List<Payload> getPayload() {
+    public Payload getPayload() {
         return payload;
     }
 
-    public void setPayload(List<Payload> payload) {
+    public void setPayload(Payload payload) {
         this.payload = payload;
     }
 

@@ -13,6 +13,7 @@ import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
@@ -497,5 +498,23 @@ public class Repository {
             }
         });
         return removeCart;
+    }
+
+    public MutableLiveData<BillingAddressModel> getBillingAddress(String authToken) {
+        final MutableLiveData<BillingAddressModel> billingAddress = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<BillingAddressModel> call = apiInterface.getBillingAddress(authToken);
+        call.enqueue(new Callback<BillingAddressModel>() {
+            @Override
+            public void onResponse(Call<BillingAddressModel> call, Response<BillingAddressModel> response) {
+                billingAddress.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<BillingAddressModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return billingAddress;
     }
 }

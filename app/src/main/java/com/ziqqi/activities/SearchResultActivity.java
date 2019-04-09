@@ -67,7 +67,8 @@ public class SearchResultActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0.0f);
         binding.tvToolbarTitle.setText(title);
 
-        searchQuery(catId, String.valueOf(pageCount));
+        setUpAdapter();
+        searchQuery();
 
         listener = new OnSearchedItemClickListener() {
             @Override
@@ -100,21 +101,19 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         };
 
-        setUpAdapter();
-
 
         binding.recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 pageCount = 1;
-                searchQuery(catId, String.valueOf(pageCount));
+                searchQuery();
             }
 
             @Override
             public void onLoadMore() {
                 pageCount++;
                 Log.e("PageCOunt ", " " + pageCount);
-                searchQuery(catId, String.valueOf(pageCount));
+                searchQuery();
             }
         });
         binding.recyclerView.setPullRefreshEnabled(false);
@@ -145,7 +144,7 @@ public class SearchResultActivity extends AppCompatActivity {
             public void onChanged(@Nullable AddToCart addToCart) {
                 if (!addToCart.getError()) {
                     Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
-                    // addToCartListener.addToCart();
+                    addToCartListener.addToCart();
                 } else {
                     Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
                 }
@@ -154,27 +153,26 @@ public class SearchResultActivity extends AppCompatActivity {
     }
 
 
-    private void searchQuery(String categoryId, String page) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.recyclerView.setVisibility(View.GONE);
-        binding.llNoData.setVisibility(View.GONE);
-        viewModel.fetchData(categoryId, page);
+    private void searchQuery() {
+        viewModel.fetchData(catId, String.valueOf(pageCount));
         viewModel.getSearchResponse().observe(this, new Observer<SearchResponse>() {
             @Override
             public void onChanged(@Nullable SearchResponse searchResponse) {
                 if (!searchResponse.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.recyclerView.setVisibility(View.VISIBLE);
-                    binding.llNoData.setVisibility(View.GONE);
                     if (payloadList != null) {
-                        searchDataList.clear();
+                        //searchDataList.clear();
                         payloadList = searchResponse.getPayload();
-                        searchDataList.addAll(payloadList);
+                        if (pageCount == 1) {
+                            searchDataList.addAll(payloadList);
+                            // adapter.setPayloadList(viewAllList);
+                        } else {
+                            searchDataList.addAll(payloadList);
+                            // adapter.setPayloadList(viewAllList);
+                            binding.recyclerView.loadMoreComplete();
+                        }
                     }
                 } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.recyclerView.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.VISIBLE);
+                    Utils.ShowToast(SearchResultActivity.this, searchResponse.getMessage());
 
                 }
             }
