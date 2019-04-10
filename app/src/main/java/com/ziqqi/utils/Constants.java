@@ -34,7 +34,8 @@ public class Constants {
     public static final String BILLING_COUNTRY = "billing_country";
     public static final String BILLING_COUNTRY_POSITION = "billing_country_position";
     public static final String BILLING_ADRESS = "billing_address";
-    public static final String BILLING_NAME = "billing_name";
+    public static final String BILLING_FIRST_NAME = "billing_first_name";
+    public static final String BILLING_LAST_NAME = "billing_last_name";
     public static final String BILLING_LOCATION = "billing_location";
     public static final String BILLING_MOBILE = "billing_mobile";
     public static final String BILLING_CITY = "billing_city";

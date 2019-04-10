@@ -61,9 +61,10 @@ public class BillingInfoActivity extends AppCompatActivity {
         binding.btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!binding.etName.getText().toString().equals("") && !binding.etMobileNumber.getText().toString().equals("") && !binding.etAddressDetails.getText().toString().equals("")) {
+                if (!binding.etFirstName.getText().toString().equals("") && !binding.etLastName.getText().toString().equals("") && !binding.etMobileNumber.getText().toString().equals("") && !binding.etAddressDetails.getText().toString().equals("")) {
                     addAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
-                            binding.etName.getText().toString(),
+                            binding.etFirstName.getText().toString(),
+                            binding.etLastName.getText().toString(),
                             binding.etMobileNumber.getText().toString(),
                             binding.etCountry.getSelectedItem().toString(),
                             binding.etCity.getSelectedItem().toString(),
@@ -152,14 +153,14 @@ public class BillingInfoActivity extends AppCompatActivity {
     }
 
     private void getAddress(String authToken){
-        binding.progressBar.setVisibility(View.VISIBLE);
         billingInfoViewModel.getBillingAddress(authToken);
         billingInfoViewModel.getBillingAddressResponse().observe(this, new Observer<BillingAddressModel>() {
             @Override
             public void onChanged(@Nullable BillingAddressModel billingAddressModel) {
                 binding.progressBar.setVisibility(View.GONE);
                 if (!billingAddressModel.getError()){
-                    binding.etName.setText(billingAddressModel.getPayload().getFirstName());
+                    binding.etFirstName.setText(billingAddressModel.getPayload().getFirstName());
+                    binding.etLastName.setText(billingAddressModel.getPayload().getLastName());
                     binding.etMobileNumber.setText(billingAddressModel.getPayload().getMobile());
                     binding.etLocation.setText(billingAddressModel.getPayload().getLocation());
                     binding.etAddressDetails.setText(billingAddressModel.getPayload().getAddressDetails());
@@ -174,9 +175,9 @@ public class BillingInfoActivity extends AppCompatActivity {
         });
     }
 
-    private void addAddress(String authToken, String Name, String mobile, String county, String city, String location, String address) {
+    private void addAddress(String authToken, String Fname, String Lname, String mobile, String county, String city, String location, String address) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        billingInfoViewModel.fetchData(authToken, Name, mobile, county, city, location, address);
+        billingInfoViewModel.fetchData(authToken, Fname, Lname, mobile, county, city, location, address);
         billingInfoViewModel.addBillingAddressResponse().observe(this, new Observer<AddBillingAddressModel>() {
             @Override
             public void onChanged(@Nullable AddBillingAddressModel addBillingAddress) {
@@ -186,7 +187,8 @@ public class BillingInfoActivity extends AppCompatActivity {
 
                     PreferenceManager.setStringValue(Constants.BILLING_COUNTRY, binding.etCountry.getSelectedItem().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_ADRESS, binding.etAddressDetails.getText().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_NAME, binding.etName.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_FIRST_NAME, binding.etFirstName.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_LAST_NAME, binding.etLastName.getText().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_MOBILE, binding.etMobileNumber.getText().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_CITY, binding.etCity.getSelectedItem().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_LOCATION, binding.etLocation.getText().toString());

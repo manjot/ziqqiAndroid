@@ -24,7 +24,9 @@ import com.ziqqi.R;
 import com.ziqqi.adapters.MyAddressAdapter;
 import com.ziqqi.adapters.SearchCategoryAdapter;
 import com.ziqqi.databinding.ActivityMyAddressBookBinding;
+import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
+import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.myaddressmodel.Payload;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
@@ -70,10 +72,10 @@ public class MyAddressBookActivity extends AppCompatActivity {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.mainLayout.setVisibility(View.GONE);
         binding.llNoData.setVisibility(View.GONE);
-        myAddressViewModel.fetchShippingAddress(authToken);
-        myAddressViewModel.getShippingAddressResponse().observe(this, new Observer<ShippingAddressModel>() {
+        myAddressViewModel.getBillingAddress(authToken);
+        myAddressViewModel.getBillingAddressResponse().observe(this, new Observer<BillingAddressModel>() {
             @Override
-            public void onChanged(@Nullable ShippingAddressModel shippingAddressModel) {
+            public void onChanged(@Nullable BillingAddressModel shippingAddressModel) {
                 if (!shippingAddressModel.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.mainLayout.setVisibility(View.VISIBLE);
@@ -87,9 +89,9 @@ public class MyAddressBookActivity extends AppCompatActivity {
                     strLastName = shippingAddressModel.getPayload().getLastName();
                     strMobile = shippingAddressModel.getPayload().getMobile();
 
-                    binding.tvUserName.setText(shippingAddressModel.getPayload().getFirstName() + shippingAddressModel.getPayload().getLastName());
-                    binding.tvLineOne.setText("Address : \n" +shippingAddressModel.getPayload().getAddress1());
-                    binding.tvLineTwo.setText(shippingAddressModel.getPayload().getAddress2());
+                    binding.tvUserName.setText(shippingAddressModel.getPayload().getFirstName() +" "+ shippingAddressModel.getPayload().getLastName());
+                    binding.tvLineOne.setText("Address : \n" +shippingAddressModel.getPayload().getLocation());
+                    binding.tvLineTwo.setText(shippingAddressModel.getPayload().getCity()+"\n"+shippingAddressModel.getPayload().getCountry());
                     binding.tvAddress.setText("Address Details : \n"+ shippingAddressModel.getPayload().getAddressDetails());
                     binding.tvMobile.setText("Mobile : "+shippingAddressModel.getPayload().getMobile());
 
@@ -137,6 +139,14 @@ public class MyAddressBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // DO SOMETHINGS
+                addAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
+                        et_first_name.getText().toString(),
+                        et_last_name.getText().toString(),
+                        et_mobile_number.getText().toString(),
+                        et_country.getText().toString(),
+                        et_city.getText().toString(),
+                        et_location.getText().toString(),
+                        et_address_details.getText().toString());
                 dialogBuilder.dismiss();
             }
         });
@@ -145,31 +155,44 @@ public class MyAddressBookActivity extends AppCompatActivity {
         dialogBuilder.show();
     }
 
-    private void addAddress(String authToken, String name, String mobile, String country, String city, String location, String address) {
+    private void addAddress(String authToken, String Fname, String Lname, String mobile, String county, String city, String location, String address) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        myAddressViewModel.fetchData(authToken, name, mobile, country, city, location, address);
-        myAddressViewModel.addShippingAddressResponse().observe(this, new Observer<AddShippingAddressModel>() {
+        myAddressViewModel.fetchData(authToken, Fname, Lname, mobile, county, city, location, address);
+        myAddressViewModel.addBillingAddressResponse().observe(this, new Observer<AddBillingAddressModel>() {
             @Override
-            public void onChanged(@Nullable AddShippingAddressModel addShippingAddress) {
-                if (!addShippingAddress.getError()) {
+            public void onChanged(@Nullable AddBillingAddressModel addBillingAddress) {
+                if (!addBillingAddress.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addShippingAddress.getMessage(), Toast.LENGTH_SHORT).show();
-                    PreferenceManager.setStringValue(Constants.SHIP_COUNTRY, et_country.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_ADDRESS, et_address_details.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_NAME, et_first_name.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_LOCATION, et_location.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_MOBILE, et_mobile_number.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_CITY, et_city.getText().toString());
+                    Toast.makeText(getApplicationContext(), addBillingAddress.getMessage(), Toast.LENGTH_SHORT).show();
+                    PreferenceManager.setStringValue(Constants.BILLING_COUNTRY, et_country.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_ADRESS, et_address_details.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_FIRST_NAME, et_first_name.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_LAST_NAME, et_last_name.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_MOBILE, et_mobile_number.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_CITY, et_city.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_LOCATION, et_location.getText().toString());
 
-                    startActivity(new Intent(MyAddressBookActivity.this, PaymentGatewayActivity.class));
+                    strCountry = addBillingAddress.getPayload().getCountry();
+                    strCity = addBillingAddress.getPayload().getCity();
+                    strLocation = addBillingAddress.getPayload().getLocation();
+                    strAddress = addBillingAddress.getPayload().getAddressDetails();
+                    strFirstName = addBillingAddress.getPayload().getFirstName();
+                    strLastName = addBillingAddress.getPayload().getLastName();
+                    strMobile = addBillingAddress.getPayload().getMobile();
+
+
+                    binding.tvUserName.setText(addBillingAddress.getPayload().getFirstName() +" "+ addBillingAddress.getPayload().getLastName());
+                    binding.tvLineOne.setText("Address : \n" +addBillingAddress.getPayload().getLocation());
+                    binding.tvLineTwo.setText(addBillingAddress.getPayload().getCity()+"\n"+addBillingAddress.getPayload().getCountry());
+                    binding.tvAddress.setText("Address Details : \n"+ addBillingAddress.getPayload().getAddressDetails());
+                    binding.tvMobile.setText("Mobile : "+addBillingAddress.getPayload().getMobile());
                 } else {
-                    Toast.makeText(getApplicationContext(), addShippingAddress.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), addBillingAddress.getMessage(), Toast.LENGTH_SHORT).show();
                     binding.progressBar.setVisibility(View.GONE);
                 }
             }
         });
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

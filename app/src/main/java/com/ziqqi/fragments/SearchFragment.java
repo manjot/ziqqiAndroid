@@ -32,6 +32,7 @@ import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
+import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
@@ -70,7 +71,6 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.activity_search, container, false);
-
         toolbar=  getActivity().findViewById(R.id.toolbar);
         tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
         ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);

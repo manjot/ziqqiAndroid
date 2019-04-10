@@ -120,14 +120,14 @@ public class SubCategoryFragment extends Fragment {
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), bestsellerProduct.getId());
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), bestsellerProduct.getProductId());
                         }else{
                             loginDialog.showDialog(getActivity());
                         }
                         break;
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            viewModel.addToCart(bestsellerProduct.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            viewModel.addToCart(bestsellerProduct.getProductId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {

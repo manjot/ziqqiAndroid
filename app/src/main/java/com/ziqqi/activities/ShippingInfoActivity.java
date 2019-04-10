@@ -71,7 +71,7 @@ public class ShippingInfoActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 if (isChecked){
-                    binding.etName.setText(PreferenceManager.getStringValue(Constants.BILLING_NAME));
+                    binding.etName.setText(PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME) + PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME));
                     binding.etMobileNumber.setText(PreferenceManager.getStringValue(Constants.BILLING_MOBILE ));
                     binding.etAddressDetails.setText(PreferenceManager.getStringValue(Constants.BILLING_ADRESS));
                     binding.etLocation.setText(PreferenceManager.getStringValue(Constants.BILLING_LOCATION));

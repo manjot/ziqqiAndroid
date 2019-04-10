@@ -140,7 +140,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("addBillingAddress")
     Call<AddBillingAddressModel> addBillingAddress(@Field("auth_token") String auth_token,
-                                                   @Field("name") String name,
+                                                   @Field("first_name") String first_name,
+                                                   @Field("last_name") String last_name,
                                                    @Field("mobile") String mobile,
                                                    @Field("country") String country,
                                                    @Field("city") String city,

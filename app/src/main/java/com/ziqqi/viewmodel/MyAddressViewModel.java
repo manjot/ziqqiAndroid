@@ -5,36 +5,36 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
+import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.repository.Repository;
 
 public class MyAddressViewModel extends AndroidViewModel {
     Repository repository;
-    private MutableLiveData<ShippingAddressModel> shippingAddressResponse;
-    MutableLiveData<AddShippingAddressModel> addShippingAddressModel;
+    MutableLiveData<BillingAddressModel> getBillingAddressModel;
+    MutableLiveData<AddBillingAddressModel> addBillingAddressModel;
 
     public MyAddressViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository();
     }
-    public void fetchShippingAddress(String authToken){
-        shippingAddressResponse = repository.getShippingAddress(authToken);
+    public void getBillingAddress(String authToken){
+        getBillingAddressModel = repository.getBillingAddress(authToken);
     }
 
-    public MutableLiveData<ShippingAddressModel> getShippingAddressResponse() {
-        if (shippingAddressResponse != null)
-            return shippingAddressResponse;
-        else return null;
+    public MutableLiveData<BillingAddressModel> getBillingAddressResponse() {
+        return getBillingAddressModel;
     }
 
-    public void fetchData(String authToken, String name, String mobile, String country, String city, String location, String address) {
-        addShippingAddressModel = repository.addShippingAddress(authToken, name, mobile, country, city, location, address);
+    public void fetchData(String authToken, String Fname, String Lname, String mobile, String county, String city, String location, String address) {
+        addBillingAddressModel = repository.addBillingAddress(authToken, Fname, Lname, mobile, county, city, location, address);
     }
 
-    public MutableLiveData<AddShippingAddressModel> addShippingAddressResponse() {
-        return addShippingAddressModel;
+    public MutableLiveData<AddBillingAddressModel> addBillingAddressResponse() {
+        return addBillingAddressModel;
     }
 
 }

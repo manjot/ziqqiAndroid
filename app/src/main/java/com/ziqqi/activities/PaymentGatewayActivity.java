@@ -6,12 +6,16 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -45,6 +49,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
+
+    TextView amount,zaad_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +108,20 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 if (strPaymentType.equalsIgnoreCase("PAYPAL")) {
                     getPayment();
                 }else if (strPaymentType.equalsIgnoreCase("ZAAD")) {
-                    Toast.makeText(PaymentGatewayActivity.this, "ZAAD", Toast.LENGTH_SHORT).show();
+                    String strZaad = binding.etZaad.getText().toString();
+                    if (!strZaad.isEmpty()){
+                        showZAADDialog(String.valueOf(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)), "63"+ binding.etZaad.getText().toString());
+                    }else{
+                        Toast.makeText(PaymentGatewayActivity.this, "Please enter your provider number.", Toast.LENGTH_SHORT).show();
+                    }
+
                 }else if (strPaymentType.equalsIgnoreCase("DAHAB")) {
-                    Toast.makeText(PaymentGatewayActivity.this, "DAHAB", Toast.LENGTH_SHORT).show();
+                    String strDahab = binding.etDahab.getText().toString();
+                    if (!strDahab.isEmpty()){
+                        showZAADDialog(String.valueOf(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)), "65"+ binding.etDahab.getText().toString());
+                    }else{
+                        Toast.makeText(PaymentGatewayActivity.this, "Please enter your provider number.", Toast.LENGTH_SHORT).show();
+                    }
                 }else {
                     Toast.makeText(PaymentGatewayActivity.this, "Please choose a payment method", Toast.LENGTH_SHORT).show();
                 }
@@ -117,6 +134,38 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         binding.rbDahab.setChecked(false);
         binding.rbZaad.setChecked(false);
         binding.rbPaypal.setChecked(false);
+    }
+
+    public void showZAADDialog(String strAmount, String strNumber){
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_alert_zaad, null);
+
+        amount = dialogView.findViewById(R.id.amount);
+        zaad_number = dialogView.findViewById(R.id.zaad_number);
+        Button pay = dialogView.findViewById(R.id.pay);
+
+        amount.setText(strAmount);
+        zaad_number.setText(strNumber);
+
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                placeOrder(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
+                        PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME),
+                        PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME),
+                        PreferenceManager.getStringValue(Constants.BILLING_MOBILE),
+                        PreferenceManager.getStringValue(Constants.SHIP_NAME),
+                        PreferenceManager.getStringValue(Constants.SHIP_MOBILE),
+                        PreferenceManager.getStringValue(Constants.SHIP_COUNTRY),
+                        PreferenceManager.getStringValue(Constants.SHIP_CITY),
+                        PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
+                        PreferenceManager.getStringValue(Constants.SHIP_ADDRESS));
+            }
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
     }
 
     private void getPayment() {
@@ -138,8 +187,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                         String paymentDetails = confirm.toJSONObject().toString(4);
                         Log.i("paymentExample", paymentDetails);
                         placeOrder(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
-                                PreferenceManager.getStringValue(Constants.BILLING_NAME),
-                                PreferenceManager.getStringValue(Constants.BILLING_NAME),
+                                PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME),
+                                PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME),
                                 PreferenceManager.getStringValue(Constants.BILLING_MOBILE),
                                 PreferenceManager.getStringValue(Constants.SHIP_NAME),
                                 PreferenceManager.getStringValue(Constants.SHIP_MOBILE),
