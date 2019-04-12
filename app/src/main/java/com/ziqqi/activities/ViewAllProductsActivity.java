@@ -126,33 +126,43 @@ public class ViewAllProductsActivity extends AppCompatActivity {
     }
 
     private void addToWishList(String authToken, String id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductWishlist(authToken, id);
-        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
-            @Override
-            public void onChanged(@Nullable AddToModel addToModel) {
-                if (!addToModel.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.addProductWishlist(authToken, id);
+            viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+                @Override
+                public void onChanged(@Nullable AddToModel addToModel) {
+                    if (!addToModel.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(ViewAllProductsActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void addToCart(String id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addToCart(id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
-        viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
-            @Override
-            public void onChanged(@Nullable AddToCart addToCart) {
-                if (!addToCart.getError()){
-                    Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                    addToCartListener.addToCart();
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.addToCart(id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+            viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
+                @Override
+                public void onChanged(@Nullable AddToCart addToCart) {
+                    if (!addToCart.getError()){
+                        Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                        addToCartListener.addToCart();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(ViewAllProductsActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

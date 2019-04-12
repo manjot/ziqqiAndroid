@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ziqqi.R;
 import com.ziqqi.adapters.CartAdapter;
@@ -17,7 +18,9 @@ import com.ziqqi.adapters.MyAccountAdapter;
 import com.ziqqi.databinding.ActivityMyAccountBinding;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcenterbyidmodel.Payload;
+import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.viewcartmodel.ViewCartResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.viewmodel.MyAccountViewModel;
 
 import java.util.ArrayList;
@@ -56,27 +59,31 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private void fetchHelps(int helpId) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.rvHelp.setVisibility(View.GONE);
-        viewModel.fetchData(helpId);
-        viewModel.getHelpByIdResponse().observe(this, new Observer<HelpCenterByIdResponse>() {
-            @Override
-            public void onChanged(@Nullable HelpCenterByIdResponse helpCenter) {
-                if (!helpCenter.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        helpsDataList.clear();
-                        payloadList = helpCenter.getPayload();
-                        helpsDataList.addAll(payloadList);
-                        binding.rvHelp.setVisibility(View.VISIBLE);
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.rvHelp.setVisibility(View.GONE);
+            viewModel.fetchData(helpId);
+            viewModel.getHelpByIdResponse().observe(this, new Observer<HelpCenterByIdResponse>() {
+                @Override
+                public void onChanged(@Nullable HelpCenterByIdResponse helpCenter) {
+                    if (!helpCenter.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
-                        // adapter.notifyDataSetChanged();
+                        if (payloadList != null) {
+                            helpsDataList.clear();
+                            payloadList = helpCenter.getPayload();
+                            helpsDataList.addAll(payloadList);
+                            binding.rvHelp.setVisibility(View.VISIBLE);
+                            binding.progressBar.setVisibility(View.GONE);
+                            // adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
                     }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(MyAccountActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setUpAdapter() {

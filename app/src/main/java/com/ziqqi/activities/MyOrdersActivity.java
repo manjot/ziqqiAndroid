@@ -20,8 +20,10 @@ import com.ziqqi.adapters.MyAddressAdapter;
 import com.ziqqi.adapters.MyOrdersAdapter;
 import com.ziqqi.databinding.ActivityMyOrdersBinding;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
+import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
 import com.ziqqi.model.myordersmodel.Payload;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
@@ -60,29 +62,34 @@ public class MyOrdersActivity extends AppCompatActivity {
     }
 
     private void getOrders(String authToken) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.rvMyOrders.setVisibility(View.GONE);
-        binding.llNoData.setVisibility(View.GONE);
-        myOrderViewModel.fetchData(authToken);
-        myOrderViewModel.getMyOrdersResponse().observe(this, new Observer<MyOrdersResponse>() {
-            @Override
-            public void onChanged(@Nullable MyOrdersResponse myOrdersResponse) {
-                if (!myOrdersResponse.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.rvMyOrders.setVisibility(View.VISIBLE);
-                    binding.llNoData.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        addressDataList.clear();
-                        payloadList = myOrdersResponse.getPayload();
-                        addressDataList.addAll(payloadList);
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.rvMyOrders.setVisibility(View.GONE);
+            binding.llNoData.setVisibility(View.GONE);
+            myOrderViewModel.fetchData(authToken);
+            myOrderViewModel.getMyOrdersResponse().observe(this, new Observer<MyOrdersResponse>() {
+                @Override
+                public void onChanged(@Nullable MyOrdersResponse myOrdersResponse) {
+                    if (!myOrdersResponse.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.rvMyOrders.setVisibility(View.VISIBLE);
+                        binding.llNoData.setVisibility(View.GONE);
+                        if (payloadList != null) {
+                            addressDataList.clear();
+                            payloadList = myOrdersResponse.getPayload();
+                            addressDataList.addAll(payloadList);
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.rvMyOrders.setVisibility(View.GONE);
+                        binding.llNoData.setVisibility(View.VISIBLE);
                     }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.rvMyOrders.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.VISIBLE);
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(MyOrdersActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpAdapter() {

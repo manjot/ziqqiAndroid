@@ -27,6 +27,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.ziqqi.OnDealsItemClickListener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.activities.BillingInfoActivity;
+import com.ziqqi.activities.MainActivity;
 import com.ziqqi.activities.ViewAllDealsActivity;
 import com.ziqqi.adapters.BestSellerAdapter;
 import com.ziqqi.adapters.DealsAdapter;
@@ -38,6 +40,8 @@ import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.dealsmodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
@@ -144,49 +148,59 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getDeals() {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.rvDeals.setVisibility(View.GONE);
-        binding.ivNdf.setVisibility(View.GONE);
-        viewModel.fetchData(1);
-        viewModel.getDealsResponse().observe(this, new Observer<DealsResponse>() {
-            @Override
-            public void onChanged(@Nullable DealsResponse searchResponse) {
-                if (!searchResponse.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.ivNdf.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        searchDataList.clear();
-                        binding.header.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(searchResponse.getCategory_banner()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
-                        payloadList = searchResponse.getPayload();
-                        searchDataList.addAll(payloadList);
-                        binding.rvDeals.setVisibility(View.VISIBLE);
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.rvDeals.setVisibility(View.GONE);
+            binding.ivNdf.setVisibility(View.GONE);
+            viewModel.fetchData(1);
+            viewModel.getDealsResponse().observe(this, new Observer<DealsResponse>() {
+                @Override
+                public void onChanged(@Nullable DealsResponse searchResponse) {
+                    if (!searchResponse.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
-                        // adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.ivNdf.setVisibility(View.VISIBLE);
+                        binding.ivNdf.setVisibility(View.GONE);
+                        if (payloadList != null) {
+                            searchDataList.clear();
+                            binding.header.setVisibility(View.VISIBLE);
+                            Glide.with(getApplicationContext()).load(searchResponse.getCategory_banner()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
+                            payloadList = searchResponse.getPayload();
+                            searchDataList.addAll(payloadList);
+                            binding.rvDeals.setVisibility(View.VISIBLE);
+                            binding.progressBar.setVisibility(View.GONE);
+                            // adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.ivNdf.setVisibility(View.VISIBLE);
 
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void addToWishList(String authToken, String id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductWishlist(authToken, id);
-        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
-            @Override
-            public void onChanged(@Nullable AddToModel addToModel) {
-                if (!addToModel.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.addProductWishlist(authToken, id);
+            viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+                @Override
+                public void onChanged(@Nullable AddToModel addToModel) {
+                    if (!addToModel.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

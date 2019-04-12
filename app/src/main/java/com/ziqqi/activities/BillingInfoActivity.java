@@ -22,6 +22,7 @@ import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.countrymodel.Payload;
 import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.BillingInfoViewModel;
@@ -42,6 +43,7 @@ public class BillingInfoActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     int countrySpinnerPosition = 0;
     int citySpinnerPosition = 0;
+    boolean isCityLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,98 +110,120 @@ public class BillingInfoActivity extends AppCompatActivity {
     }
 
     private void getCountries() {
-        billingInfoViewModel.fetchCountry();
-        billingInfoViewModel.getCountryResponse().observe(this, new Observer<CountryResponse>() {
-            @Override
-            public void onChanged(@Nullable CountryResponse countryResponse) {
-                if (!countryResponse.getError()) {
-                    adapter.notifyDataSetChanged();
-                    countryPayloadList.addAll(countryResponse.getPayload());
-                    for (int i = 0; i <= countryResponse.getPayload().size() - 1; i++) {
-                        countries.add(countryResponse.getPayload().get(i).getName());
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            billingInfoViewModel.fetchCountry();
+            billingInfoViewModel.getCountryResponse().observe(this, new Observer<CountryResponse>() {
+                @Override
+                public void onChanged(@Nullable CountryResponse countryResponse) {
+                    if (!countryResponse.getError()) {
+                        adapter.notifyDataSetChanged();
+                        countryPayloadList.addAll(countryResponse.getPayload());
+                        for (int i = 0; i <= countryResponse.getPayload().size() - 1; i++) {
+                            countries.add(countryResponse.getPayload().get(i).getName());
+                        }
+
+                        binding.etCountry.setAdapter(adapter);
+
+                    } else {
+
                     }
-
-                    binding.etCountry.setAdapter(adapter);
-
-                } else {
-
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(BillingInfoActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void getCities(String country_id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        billingInfoViewModel.fetchCity(country_id);
-        billingInfoViewModel.getCityResponse().observe(this, new Observer<CityResponse>() {
-            @Override
-            public void onChanged(@Nullable CityResponse cityResponse) {
-                binding.progressBar.setVisibility(View.GONE);
-                if (!cityResponse.getError()) {
-                    cities.clear();
-                    for (int i = 0; i <= cityResponse.getPayload().size() - 1; i++) {
-                        cities.add(cityResponse.getPayload().get(i).getName());
-                    }
-                    cityAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cities);
-                    cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.etCity.setAdapter(cityAdapter);
-                    getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
-
-                } else {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            billingInfoViewModel.fetchCity(country_id);
+            billingInfoViewModel.getCityResponse().observe(this, new Observer<CityResponse>() {
+                @Override
+                public void onChanged(@Nullable CityResponse cityResponse) {
                     binding.progressBar.setVisibility(View.GONE);
+                    if (!cityResponse.getError()) {
+                        cities.clear();
+                        for (int i = 0; i <= cityResponse.getPayload().size() - 1; i++) {
+                            cities.add(cityResponse.getPayload().get(i).getName());
+                        }
+                        cityAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cities);
+                        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        binding.etCity.setAdapter(cityAdapter);
+                        if (!isCityLoaded) {
+                            isCityLoaded = true;
+                            getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                        }
+
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(BillingInfoActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
-    private void getAddress(String authToken){
-        billingInfoViewModel.getBillingAddress(authToken);
-        billingInfoViewModel.getBillingAddressResponse().observe(this, new Observer<BillingAddressModel>() {
-            @Override
-            public void onChanged(@Nullable BillingAddressModel billingAddressModel) {
-                binding.progressBar.setVisibility(View.GONE);
-                if (!billingAddressModel.getError()){
-                    binding.etFirstName.setText(billingAddressModel.getPayload().getFirstName());
-                    binding.etLastName.setText(billingAddressModel.getPayload().getLastName());
-                    binding.etMobileNumber.setText(billingAddressModel.getPayload().getMobile());
-                    binding.etLocation.setText(billingAddressModel.getPayload().getLocation());
-                    binding.etAddressDetails.setText(billingAddressModel.getPayload().getAddressDetails());
-                    String strCity = billingAddressModel.getPayload().getCity();
-                    String strCountry = billingAddressModel.getPayload().getCountry();
-                    binding.etCity.setSelection(cityAdapter.getPosition(strCity));
-                    binding.etCountry.setSelection(adapter.getPosition(strCountry));
-                }else {
+    private void getAddress(String authToken) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            billingInfoViewModel.getBillingAddress(authToken);
+            billingInfoViewModel.getBillingAddressResponse().observe(this, new Observer<BillingAddressModel>() {
+                @Override
+                public void onChanged(@Nullable BillingAddressModel billingAddressModel) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    if (!billingAddressModel.getError()) {
+                        binding.etFirstName.setText(billingAddressModel.getPayload().getFirstName());
+                        binding.etLastName.setText(billingAddressModel.getPayload().getLastName());
+                        binding.etMobileNumber.setText(billingAddressModel.getPayload().getMobile());
+                        binding.etLocation.setText(billingAddressModel.getPayload().getLocation());
+                        binding.etAddressDetails.setText(billingAddressModel.getPayload().getAddressDetails());
+                        String strCity = billingAddressModel.getPayload().getCity();
+                        String strCountry = billingAddressModel.getPayload().getCountry();
+                        binding.etCity.setSelection(cityAdapter.getPosition(strCity));
+                        binding.etCountry.setSelection(adapter.getPosition(strCountry));
+                    } else {
 
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(BillingInfoActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addAddress(String authToken, String Fname, String Lname, String mobile, String county, String city, String location, String address) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        billingInfoViewModel.fetchData(authToken, Fname, Lname, mobile, county, city, location, address);
-        billingInfoViewModel.addBillingAddressResponse().observe(this, new Observer<AddBillingAddressModel>() {
-            @Override
-            public void onChanged(@Nullable AddBillingAddressModel addBillingAddress) {
-                if (!addBillingAddress.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addBillingAddress.getMessage(), Toast.LENGTH_SHORT).show();
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            billingInfoViewModel.fetchData(authToken, Fname, Lname, mobile, county, city, location, address);
+            billingInfoViewModel.addBillingAddressResponse().observe(this, new Observer<AddBillingAddressModel>() {
+                @Override
+                public void onChanged(@Nullable AddBillingAddressModel addBillingAddress) {
+                    if (!addBillingAddress.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), addBillingAddress.getMessage(), Toast.LENGTH_SHORT).show();
 
-                    PreferenceManager.setStringValue(Constants.BILLING_COUNTRY, binding.etCountry.getSelectedItem().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_ADRESS, binding.etAddressDetails.getText().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_FIRST_NAME, binding.etFirstName.getText().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_LAST_NAME, binding.etLastName.getText().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_MOBILE, binding.etMobileNumber.getText().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_CITY, binding.etCity.getSelectedItem().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_LOCATION, binding.etLocation.getText().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_COUNTRY, binding.etCountry.getSelectedItem().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_ADRESS, binding.etAddressDetails.getText().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_FIRST_NAME, binding.etFirstName.getText().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_LAST_NAME, binding.etLastName.getText().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_MOBILE, binding.etMobileNumber.getText().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_CITY, binding.etCity.getSelectedItem().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_LOCATION, binding.etLocation.getText().toString());
 
-                    startActivity(new Intent(BillingInfoActivity.this, ShippingInfoActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), addBillingAddress.getMessage(), Toast.LENGTH_SHORT).show();
-                    binding.progressBar.setVisibility(View.GONE);
+                        startActivity(new Intent(BillingInfoActivity.this, ShippingInfoActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(), addBillingAddress.getMessage(), Toast.LENGTH_SHORT).show();
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(BillingInfoActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -209,4 +233,5 @@ public class BillingInfoActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -134,36 +134,41 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onClickRegister() {
         Utils.hideKeyboard(this);
-        if (ConnectivityHelper.isConnectedToNetwork(this)) {
-            if (signUpViewModel.isValid()) {
-                signUpViewModel.init();
-                binding.progressBar.setVisibility(View.VISIBLE);
-                signUpViewModel.mainLayoutVisibility.set(View.GONE);
-                signUpViewModel.getSignUpResponse().observe(this, new Observer<SignUpResponse>() {
-                    @Override
-                    public void onChanged(@Nullable SignUpResponse signUpResponse) {
-                        binding.progressBar.setVisibility(View.GONE);
-                        signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
-                        if (!signUpResponse.getError()) {
-                            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                            PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
-                            PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "f or g");
-//                            VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
-                            PreferenceManager.setStringValue(Constants.AUTH_TOKEN, signUpResponse.getPayload().getAuth_token());
-                            PreferenceManager.setStringValue(Constants.FIRST_NAME, signUpResponse.getPayload().getFirstName());
-                            PreferenceManager.setStringValue(Constants.EMAIL, signUpResponse.getPayload().getEmail());
-                            finishAffinity();
-
-                        } else {
+        if (binding.etEmail.getText().toString().equalsIgnoreCase("") || binding.etPassword.getText().toString().equalsIgnoreCase("") || binding.etMobileNumber.getText().toString().equalsIgnoreCase("") || binding.etLastName.getText().toString().equalsIgnoreCase("") || binding.etFirstName.getText().toString().equalsIgnoreCase("")) {
+            Utils.ShowToast(getApplication().getApplicationContext(), "Fields can not be emplty");
+        }else{
+            if (ConnectivityHelper.isConnectedToNetwork(this)) {
+                    signUpViewModel.init();
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                    signUpViewModel.mainLayoutVisibility.set(View.GONE);
+                    signUpViewModel.getSignUpResponse().observe(this, new Observer<SignUpResponse>() {
+                        @Override
+                        public void onChanged(@Nullable SignUpResponse signUpResponse) {
+                            binding.progressBar.setVisibility(View.GONE);
                             signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
-                            signUpViewModel.progressVisibility.set(View.GONE);
-                            Utils.ShowToast(SignUpActivity.this, signUpResponse.getMessage());
-                        }
-                    }
-                });
-            }
+                            if (!signUpResponse.getError()) {
+                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                                PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "f or g");
+//                            VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
+                                PreferenceManager.setStringValue(Constants.AUTH_TOKEN, signUpResponse.getPayload().getAuth_token());
+                                PreferenceManager.setStringValue(Constants.FIRST_NAME, signUpResponse.getPayload().getFirstName());
+                                PreferenceManager.setStringValue(Constants.EMAIL, signUpResponse.getPayload().getEmail());
+                                finishAffinity();
 
-        } else Utils.ShowToast(this, "No Internet Connection");
+                            } else {
+                                signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
+                                signUpViewModel.progressVisibility.set(View.GONE);
+                                Utils.ShowToast(SignUpActivity.this, signUpResponse.getMessage());
+                            }
+                        }
+                    });
+
+            } else{
+                Utils.ShowToast(this, "No Internet Connection");
+            }
+        }
+
     }
 
     private void VerifyOtp(int customerId, int otp) {

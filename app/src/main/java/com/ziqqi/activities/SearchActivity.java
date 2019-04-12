@@ -11,19 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.SearchAdapter;
 import com.ziqqi.adapters.SearchCategoryAdapter;
 import com.ziqqi.databinding.ActivitySearchBinding;
+import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchcategorymodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.viewmodel.SearchViewModel;
@@ -119,30 +123,35 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchQuery(String searchname) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.recyclerView.setVisibility(View.GONE);
-        binding.llNoData.setVisibility(View.GONE);
-        viewModel.fetchData(searchname);
-        viewModel.getSearchCategoryResponse().observe(this, new Observer<SearchCategory>() {
-            @Override
-            public void onChanged(@Nullable SearchCategory searchCategory) {
-                if (!searchCategory.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.recyclerView.setVisibility(View.VISIBLE);
-                    binding.llNoData.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        searchDataList.clear();
-                        payloadList = searchCategory.getPayload();
-                        searchDataList.addAll(payloadList);
-                    }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.recyclerView.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.VISIBLE);
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.recyclerView.setVisibility(View.GONE);
+            binding.llNoData.setVisibility(View.GONE);
+            viewModel.fetchData(searchname);
+            viewModel.getSearchCategoryResponse().observe(this, new Observer<SearchCategory>() {
+                @Override
+                public void onChanged(@Nullable SearchCategory searchCategory) {
+                    if (!searchCategory.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.recyclerView.setVisibility(View.VISIBLE);
+                        binding.llNoData.setVisibility(View.GONE);
+                        if (payloadList != null) {
+                            searchDataList.clear();
+                            payloadList = searchCategory.getPayload();
+                            searchDataList.addAll(payloadList);
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.recyclerView.setVisibility(View.GONE);
+                        binding.llNoData.setVisibility(View.VISIBLE);
 
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(SearchActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpAdapter() {

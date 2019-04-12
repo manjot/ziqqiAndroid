@@ -4,6 +4,7 @@ package com.ziqqi.fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,15 +22,20 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.activities.BillingInfoActivity;
+import com.ziqqi.activities.MainActivity;
 import com.ziqqi.adapters.SearchAdapter;
 import com.ziqqi.adapters.SearchCategoryAdapter;
 import com.ziqqi.databinding.ActivitySearchBinding;
 import com.ziqqi.model.searchcategorymodel.Payload;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
@@ -37,6 +43,8 @@ import com.ziqqi.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -134,30 +142,35 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchQuery(String searchname) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.recyclerView.setVisibility(View.GONE);
-        binding.llNoData.setVisibility(View.GONE);
-        viewModel.fetchData(searchname);
-        viewModel.getSearchCategoryResponse().observe(this, new Observer<SearchCategory>() {
-            @Override
-            public void onChanged(@Nullable SearchCategory searchCategory) {
-                if (!searchCategory.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.recyclerView.setVisibility(View.VISIBLE);
-                    binding.llNoData.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        searchDataList.clear();
-                        payloadList = searchCategory.getPayload();
-                        searchDataList.addAll(payloadList);
-                    }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.recyclerView.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.VISIBLE);
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.recyclerView.setVisibility(View.GONE);
+            binding.llNoData.setVisibility(View.GONE);
+            viewModel.fetchData(searchname);
+            viewModel.getSearchCategoryResponse().observe(this, new Observer<SearchCategory>() {
+                @Override
+                public void onChanged(@Nullable SearchCategory searchCategory) {
+                    if (!searchCategory.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.recyclerView.setVisibility(View.VISIBLE);
+                        binding.llNoData.setVisibility(View.GONE);
+                        if (payloadList != null) {
+                            searchDataList.clear();
+                            payloadList = searchCategory.getPayload();
+                            searchDataList.addAll(payloadList);
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.recyclerView.setVisibility(View.GONE);
+                        binding.llNoData.setVisibility(View.VISIBLE);
 
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpAdapter() {

@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -54,6 +55,7 @@ import com.ziqqi.fragments.SearchFragment;
 import com.ziqqi.fragments.SubCategoryFragment;
 import com.ziqqi.fragments.WishlistFragment;
 import com.ziqqi.model.viewcartmodel.ViewCartResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.CustomTypefaceSpan;
 import com.ziqqi.utils.FontCache;
@@ -452,17 +454,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void fetchCart(String authToken) {
-        cartViewModel.fetchData(authToken);
-        cartViewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
-            @Override
-            public void onChanged(@Nullable ViewCartResponse viewCart) {
-                if (!viewCart.getError()) {
-                    int cartSize = viewCart.getPayload().size();
-                    tvCart.setVisibility(View.VISIBLE);
-                    tvCart.setText(String.valueOf(cartSize));
+        if (ConnectivityHelper.isConnectedToNetwork(MainActivity.this)){
+            cartViewModel.fetchData(authToken);
+            cartViewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
+                @Override
+                public void onChanged(@Nullable ViewCartResponse viewCart) {
+                    if (!viewCart.getError()) {
+                        int cartSize = viewCart.getPayload().size();
+                        tvCart.setVisibility(View.VISIBLE);
+                        tvCart.setText(String.valueOf(cartSize));
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(MainActivity.this, "You're not connected", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

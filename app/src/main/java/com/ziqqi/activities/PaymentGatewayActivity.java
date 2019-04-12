@@ -26,10 +26,13 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityPaymentGatewayBinding;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
+import com.ziqqi.model.myordersmodel.MyOrdersResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PayPalConfig;
 import com.ziqqi.utils.PreferenceManager;
+import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.BillingInfoViewModel;
 import com.ziqqi.viewmodel.PlaceOrderViewModel;
 
@@ -51,6 +54,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
             .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
 
     TextView amount,zaad_number;
+    String paymentMethod = "0";
+    String walletNumber = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 binding.rbPaypal.setChecked(true);
                 binding.next.setVisibility(View.VISIBLE);
                 strPaymentType = "PAYPAL";
+                paymentMethod = "paypal";
                 binding.llZaadNumber.setVisibility(View.GONE);
                 binding.llDahabNumber.setVisibility(View.GONE);
             }
@@ -85,6 +91,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 binding.rbZaad.setChecked(true);
                 binding.next.setVisibility(View.VISIBLE);
                 strPaymentType = "ZAAD";
+                paymentMethod = "mobileWallet";
                 binding.llZaadNumber.setVisibility(View.VISIBLE);
                 binding.llDahabNumber.setVisibility(View.GONE);
             }
@@ -97,6 +104,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 binding.rbDahab.setChecked(true);
                 binding.next.setVisibility(View.VISIBLE);
                 strPaymentType = "DAHAB";
+                paymentMethod = "mobileWallet";
                 binding.llZaadNumber.setVisibility(View.GONE);
                 binding.llDahabNumber.setVisibility(View.VISIBLE);
             }
@@ -105,12 +113,19 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utils.hideKeyboard(PaymentGatewayActivity.this);
                 if (strPaymentType.equalsIgnoreCase("PAYPAL")) {
                     getPayment();
                 }else if (strPaymentType.equalsIgnoreCase("ZAAD")) {
                     String strZaad = binding.etZaad.getText().toString();
                     if (!strZaad.isEmpty()){
-                        showZAADDialog(String.valueOf(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)), "63"+ binding.etZaad.getText().toString());
+                        walletNumber = "63"+binding.etZaad.getText().toString();
+                        PreferenceManager.setStringValue(Constants.WALLET_NUMBER, walletNumber);
+                        if(Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) > 100000){
+                            showZAADDialog("SLS " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "63"+ binding.etZaad.getText().toString());
+                        }else{
+                            showZAADDialog("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "63"+ binding.etZaad.getText().toString());
+                        }
                     }else{
                         Toast.makeText(PaymentGatewayActivity.this, "Please enter your provider number.", Toast.LENGTH_SHORT).show();
                     }
@@ -118,7 +133,13 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 }else if (strPaymentType.equalsIgnoreCase("DAHAB")) {
                     String strDahab = binding.etDahab.getText().toString();
                     if (!strDahab.isEmpty()){
-                        showZAADDialog(String.valueOf(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)), "65"+ binding.etDahab.getText().toString());
+                        walletNumber = "65"+binding.etDahab.getText().toString();
+                        PreferenceManager.setStringValue(Constants.WALLET_NUMBER, walletNumber);
+                        if(Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) > 100000){
+                            showZAADDialog("SLS " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "65"+ binding.etDahab.getText().toString());
+                        }else{
+                            showZAADDialog("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "65"+ binding.etDahab.getText().toString());
+                        }
                     }else{
                         Toast.makeText(PaymentGatewayActivity.this, "Please enter your provider number.", Toast.LENGTH_SHORT).show();
                     }
@@ -152,6 +173,11 @@ public class PaymentGatewayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 placeOrder(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
+                        paymentMethod,
+                        "",
+                        "UNPAID" ,
+                        "",
+                        walletNumber,
                         PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME),
                         PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME),
                         PreferenceManager.getStringValue(Constants.BILLING_MOBILE),
@@ -169,7 +195,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
     }
 
     private void getPayment() {
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT))), "USD", "Simplified Coding Fee",
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT))), "USD", "Ziqqi.com",
                 PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -187,6 +213,11 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                         String paymentDetails = confirm.toJSONObject().toString(4);
                         Log.i("paymentExample", paymentDetails);
                         placeOrder(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
+                                paymentMethod,
+                                "",
+                                "UNPAID" ,
+                                "",
+                                walletNumber,
                                 PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME),
                                 PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME),
                                 PreferenceManager.getStringValue(Constants.BILLING_MOBILE),
@@ -209,23 +240,28 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         }
     }
 
-    private void placeOrder(String authToken, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        placeOrderViewModel.placeOder(authToken, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location, pickup_address);
-        placeOrderViewModel.getPlaceOrderResponse().observe(this, new Observer<PlaceOrderResponse>() {
-            @Override
-            public void onChanged(@Nullable PlaceOrderResponse placeOrderResponse) {
-                if (!placeOrderResponse.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(PaymentGatewayActivity.this, PaymentConfirmationActivity.class));
-                    finishAffinity();
-                } else {
-                    Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    binding.progressBar.setVisibility(View.GONE);
+    private void placeOrder(String authToken, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            placeOrderViewModel.placeOder(authToken,paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location, pickup_address);
+            placeOrderViewModel.getPlaceOrderResponse().observe(this, new Observer<PlaceOrderResponse>() {
+                @Override
+                public void onChanged(@Nullable PlaceOrderResponse placeOrderResponse) {
+                    if (!placeOrderResponse.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(PaymentGatewayActivity.this, PaymentConfirmationActivity.class).putExtra("type", strPaymentType));
+                        finishAffinity();
+                    } else {
+                        Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(PaymentGatewayActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

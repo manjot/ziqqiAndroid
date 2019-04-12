@@ -30,6 +30,7 @@ import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.viewcartmodel.Payload;
 import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
@@ -121,41 +122,46 @@ public class CartFragment extends Fragment {
     }
 
     private void fetchCart(String authToken) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.rvCart.setVisibility(View.GONE);
-        binding.llNoData.setVisibility(View.GONE);
-        viewModel.fetchData(authToken);
-        viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
-            @Override
-            public void onChanged(@Nullable final ViewCartResponse viewCart) {
-                if (!viewCart.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        cartDataList.clear();
-                        payloadList = viewCart.getPayload();
-                        cartDataList.addAll(payloadList);
-                        binding.rvCart.setVisibility(View.VISIBLE);
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.rvCart.setVisibility(View.GONE);
+            binding.llNoData.setVisibility(View.GONE);
+            viewModel.fetchData(authToken);
+            viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
+                @Override
+                public void onChanged(@Nullable final ViewCartResponse viewCart) {
+                    if (!viewCart.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
-                        binding.btSubmit.setVisibility(View.VISIBLE);
-                        binding.llTotal.setVisibility(View.VISIBLE);
-                        binding.tvTotalPrice.setText("$ " +viewCart.getTotal());
-                        binding.btSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal()+"");
-                                startActivity(new Intent(getContext(), BillingInfoActivity.class));
-                            }
-                        });
-                        // adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.VISIBLE);
+                        binding.llNoData.setVisibility(View.GONE);
+                        if (payloadList != null) {
+                            cartDataList.clear();
+                            payloadList = viewCart.getPayload();
+                            cartDataList.addAll(payloadList);
+                            binding.rvCart.setVisibility(View.VISIBLE);
+                            binding.progressBar.setVisibility(View.GONE);
+                            binding.btSubmit.setVisibility(View.VISIBLE);
+                            binding.llTotal.setVisibility(View.VISIBLE);
+                            binding.tvTotalPrice.setText("$ " +viewCart.getTotal());
+                            binding.btSubmit.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal()+"");
+                                    startActivity(new Intent(getContext(), BillingInfoActivity.class));
+                                }
+                            });
+                            // adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.llNoData.setVisibility(View.VISIBLE);
 
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpAdapter() {

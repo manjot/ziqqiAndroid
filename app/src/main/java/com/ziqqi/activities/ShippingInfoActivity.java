@@ -22,6 +22,7 @@ import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.countrymodel.Payload;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.ShippingInfoViewModel;
@@ -168,28 +169,33 @@ public class ShippingInfoActivity extends AppCompatActivity {
 //    }
 
     private void addAddress(String authToken, String name, String mobile, String country, String city, String location, String address) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        shippingInfoViewModel.fetchData(authToken, name, mobile, country, city, location, address);
-        shippingInfoViewModel.addShippingAddressResponse().observe(this, new Observer<AddShippingAddressModel>() {
-            @Override
-            public void onChanged(@Nullable AddShippingAddressModel addShippingAddress) {
-                if (!addShippingAddress.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addShippingAddress.getMessage(), Toast.LENGTH_SHORT).show();
-                    PreferenceManager.setStringValue(Constants.SHIP_COUNTRY, binding.etCountry.getSelectedItem().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_ADDRESS, binding.etAddressDetails.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_NAME, binding.etName.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_LOCATION, binding.etLocation.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_MOBILE, binding.etMobileNumber.getText().toString());
-                    PreferenceManager.setStringValue(Constants.SHIP_CITY, binding.etCity.getSelectedItem().toString());
 
-                    startActivity(new Intent(ShippingInfoActivity.this, PaymentGatewayActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), addShippingAddress.getMessage(), Toast.LENGTH_SHORT).show();
-                    binding.progressBar.setVisibility(View.GONE);
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            shippingInfoViewModel.fetchData(authToken, name, mobile, country, city, location, address);
+            shippingInfoViewModel.addShippingAddressResponse().observe(this, new Observer<AddShippingAddressModel>() {
+                @Override
+                public void onChanged(@Nullable AddShippingAddressModel addShippingAddress) {
+                    if (!addShippingAddress.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), addShippingAddress.getMessage(), Toast.LENGTH_SHORT).show();
+                        PreferenceManager.setStringValue(Constants.SHIP_COUNTRY, binding.etCity.getSelectedItem().toString());
+                        PreferenceManager.setStringValue(Constants.SHIP_ADDRESS, binding.etAddressDetails.getText().toString());
+                        PreferenceManager.setStringValue(Constants.SHIP_NAME, binding.etName.getText().toString());
+                        PreferenceManager.setStringValue(Constants.SHIP_LOCATION, binding.etLocation.getText().toString());
+                        PreferenceManager.setStringValue(Constants.SHIP_MOBILE, binding.etMobileNumber.getText().toString());
+                        PreferenceManager.setStringValue(Constants.SHIP_CITY, binding.etCountry.getSelectedItem().toString());
+
+                        startActivity(new Intent(ShippingInfoActivity.this, PaymentGatewayActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(), addShippingAddress.getMessage(), Toast.LENGTH_SHORT).show();
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(ShippingInfoActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

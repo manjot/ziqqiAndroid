@@ -30,11 +30,13 @@ import com.ziqqi.databinding.ActivityProductDetailBinding;
 import com.ziqqi.fragments.CheckoutDialogFragment;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
+import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.similarproductsmodel.Payload;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
@@ -250,44 +252,49 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     private void getDetails(int id, String authToken) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.fetchData(id, authToken);
-        viewModel.getProductDetailsResponse().observe(this, new Observer<ProductDetails>() {
-            @Override
-            public void onChanged(@Nullable ProductDetails productDetails) {
-                if (!productDetails.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    if (productDetails.getPayload() != null) {
-                        binding.tvBrandName.setText(productDetails.getPayload().getBrandName());
-                        binding.tvProductName.setText(productDetails.getPayload().getName());
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.fetchData(id, authToken);
+            viewModel.getProductDetailsResponse().observe(this, new Observer<ProductDetails>() {
+                @Override
+                public void onChanged(@Nullable ProductDetails productDetails) {
+                    if (!productDetails.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        if (productDetails.getPayload() != null) {
+                            binding.tvBrandName.setText(productDetails.getPayload().getBrandName());
+                            binding.tvProductName.setText(productDetails.getPayload().getName());
 
-                        String resultOverview = Html.fromHtml(productDetails.getPayload().getOverview()).toString();
-                        String resultSpecification = Html.fromHtml(productDetails.getPayload().getSpecifications()).toString();
-                        strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
-                        isWishlist = productDetails.getPayload().getIs_wishlist();
+                            String resultOverview = Html.fromHtml(productDetails.getPayload().getOverview()).toString();
+                            String resultSpecification = Html.fromHtml(productDetails.getPayload().getSpecifications()).toString();
+                            strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
+                            isWishlist = productDetails.getPayload().getIs_wishlist();
 
-                        if (isWishlist == 1) {
-                            binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
-                        } else if (isWishlist == 0) {
-                            binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                            if (isWishlist == 1) {
+                                binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
+                            } else if (isWishlist == 0) {
+                                binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                            }
+
+                            binding.tvOverview.setText(resultOverview);
+                            binding.tvSpecs.setText(resultSpecification);
+                            bannerPayLoad.addAll(productDetails.getPayload().getImage());
+                            feedbackPayLoad.addAll(productDetails.getPayload().getReviews());
+                            if (productDetails.getPayload().getReviews().size() == 0) {
+                                binding.rvReviews.setVisibility(View.GONE);
+                                binding.tvNoReviews.setVisibility(View.VISIBLE);
+                            }
+                            productSliderAdapter.notifyDataSetChanged();
                         }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
 
-                        binding.tvOverview.setText(resultOverview);
-                        binding.tvSpecs.setText(resultSpecification);
-                        bannerPayLoad.addAll(productDetails.getPayload().getImage());
-                        feedbackPayLoad.addAll(productDetails.getPayload().getReviews());
-                        if (productDetails.getPayload().getReviews().size() == 0) {
-                            binding.rvReviews.setVisibility(View.GONE);
-                            binding.tvNoReviews.setVisibility(View.VISIBLE);
-                        }
-                        productSliderAdapter.notifyDataSetChanged();
                     }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(ProductDetailActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void getSimilar(int id) {

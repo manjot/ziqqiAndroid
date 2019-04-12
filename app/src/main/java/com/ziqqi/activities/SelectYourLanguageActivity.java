@@ -16,7 +16,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.ziqqi.OnItemClickListener;
@@ -49,6 +51,9 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
     OnItemClickListener listener;
     ImageView ivBgImage;
     TextView tvSelectLanguage;
+    RelativeLayout rl_country;
+    TextView tv_country_code, tv_country;
+    boolean isCountrySelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,27 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
         Bitmap resultBmp = BlurBuilder.blur(this, BitmapFactory.decodeResource(getResources(), R.drawable.splash));
 
         tvApply = findViewById(R.id.tv_apply);
+        rl_country = findViewById(R.id.rl_country);
+        tv_country_code = findViewById(R.id.tv_country_code);
+        tv_country = findViewById(R.id.tv_county);
+
+        rl_country.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCountrySelected){
+                    isCountrySelected = true;
+                    rl_country.setBackground(getResources().getDrawable(R.drawable.selected_bg) );
+                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.black_circle));
+                    tv_country.setBackground(getResources().getDrawable(R.drawable.black_circle));
+                }else{
+                    isCountrySelected = false;
+                    rl_country.setBackground(getResources().getDrawable(R.drawable.white_bg_ripple) );
+                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.grey_circle));
+                }
+
+            }
+        });
+
 
 
         rvSelectLanguage = findViewById(R.id.rv_select_language);
@@ -137,8 +163,13 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
     }
 
     public void onClickApply(View view) {
-        PreferenceManager.setBoolValue(Constants.LANG_SELECTED, true);
-        startActivity(new Intent(this, MainActivity.class));
-        finishAffinity();
+        if (isCountrySelected){
+            PreferenceManager.setBoolValue(Constants.LANG_SELECTED, true);
+            startActivity(new Intent(this, MainActivity.class));
+            finishAffinity();
+        }else{
+            Toast.makeText(SelectYourLanguageActivity.this, "Please select country", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -35,6 +35,8 @@ import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.homecategorymodel.Payload;
+import com.ziqqi.model.searchcategorymodel.SearchCategory;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
@@ -154,19 +156,24 @@ public class SubCategoryFragment extends Fragment {
     }
 
     private void addToWishList(String authToken, String id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductWishlist(authToken, id);
-        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
-            @Override
-            public void onChanged(@Nullable AddToModel addToModel) {
-                if (!addToModel.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.addProductWishlist(authToken, id);
+            viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+                @Override
+                public void onChanged(@Nullable AddToModel addToModel) {
+                    if (!addToModel.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
@@ -200,35 +207,40 @@ public class SubCategoryFragment extends Fragment {
     }
 
     public void setUpListUpdate() {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.mainLayout.setVisibility(View.GONE);
-        Log.e("CategoryId", categoryId);
-        viewModel.fetchData(categoryId);
-        viewModel.getSubCategoriesResponse().observe(this, new Observer<HomeCategoriesResponse>() {
-            @Override
-            public void onChanged(@Nullable HomeCategoriesResponse subCategories) {
-                binding.progressBar.setVisibility(View.GONE);
-                binding.mainLayout.setVisibility(View.VISIBLE);
-                if (!subCategories.getError()) {
-                    if (payloadList != null) {
-                        bestSellerPayloadList.clear();
-                        Glide.with(getApplicationContext()).load(subCategories.getCategory_banner()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
-                        subCategoryList.clear();
-                        payloadList = subCategories.getPayload();
-                    }
-                    subCategoryList.addAll(payloadList);
-                    for (int i = 0; i < payloadList.size(); i++) {
-                        if (!payloadList.get(i).getBestsellerProduct().isEmpty()) {
-                            bestSellerPayloadList.add(payloadList.get(i));
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.mainLayout.setVisibility(View.GONE);
+            Log.e("CategoryId", categoryId);
+            viewModel.fetchData(categoryId);
+            viewModel.getSubCategoriesResponse().observe(this, new Observer<HomeCategoriesResponse>() {
+                @Override
+                public void onChanged(@Nullable HomeCategoriesResponse subCategories) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.mainLayout.setVisibility(View.VISIBLE);
+                    if (!subCategories.getError()) {
+                        if (payloadList != null) {
+                            bestSellerPayloadList.clear();
+                            Glide.with(getApplicationContext()).load(subCategories.getCategory_banner()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(binding.ivBannerImage);
+                            subCategoryList.clear();
+                            payloadList = subCategories.getPayload();
                         }
+                        subCategoryList.addAll(payloadList);
+                        for (int i = 0; i < payloadList.size(); i++) {
+                            if (!payloadList.get(i).getBestsellerProduct().isEmpty()) {
+                                bestSellerPayloadList.add(payloadList.get(i));
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        bestSellerMainAdapter.notifyDataSetChanged();
+                    } else {
+                        Utils.ShowToast(getContext(), subCategories.getMessage());
                     }
-                    adapter.notifyDataSetChanged();
-                    bestSellerMainAdapter.notifyDataSetChanged();
-                } else {
-                    Utils.ShowToast(getContext(), subCategories.getMessage());
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

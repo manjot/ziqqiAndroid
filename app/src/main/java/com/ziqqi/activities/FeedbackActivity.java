@@ -19,9 +19,13 @@ import com.ziqqi.adapters.FeedbackQueryAdapter;
 import com.ziqqi.adapters.SearchCategoryAdapter;
 import com.ziqqi.databinding.ActivityFeedbackBinding;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
+import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.feedbackmastermodel.Payload;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
+import com.ziqqi.utils.ConnectivityHelper;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.viewmodel.FeedbackViewModel;
 import com.ziqqi.viewmodel.ProductDetailsViewModel;
@@ -65,27 +69,32 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     private void getQueries() {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.rvQueries.setVisibility(View.GONE);
-        viewModel.fetchData();
-        viewModel.getFeedbackMasterResponse().observe(this, new Observer<FeedbackMaster>() {
-            @Override
-            public void onChanged(@Nullable FeedbackMaster feedbackMaster) {
-                if (!feedbackMaster.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.rvQueries.setVisibility(View.VISIBLE);
-                    if (payloadList != null) {
-                        queryList.clear();
-                        payloadList = feedbackMaster.getPayload();
-                        queryList.addAll(payloadList);
-                        binding.btSubmit.setVisibility(View.VISIBLE);
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.rvQueries.setVisibility(View.GONE);
+            viewModel.fetchData();
+            viewModel.getFeedbackMasterResponse().observe(this, new Observer<FeedbackMaster>() {
+                @Override
+                public void onChanged(@Nullable FeedbackMaster feedbackMaster) {
+                    if (!feedbackMaster.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.rvQueries.setVisibility(View.VISIBLE);
+                        if (payloadList != null) {
+                            queryList.clear();
+                            payloadList = feedbackMaster.getPayload();
+                            queryList.addAll(payloadList);
+                            binding.btSubmit.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.rvQueries.setVisibility(View.GONE);
                     }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.rvQueries.setVisibility(View.GONE);
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(FeedbackActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpAdapter() {

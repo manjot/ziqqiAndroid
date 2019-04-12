@@ -15,14 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ziqqi.OnWishlistItemClick;
 import com.ziqqi.R;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.databinding.FragmentWishlistBinding;
 import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.viewwishlistmodel.Payload;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
@@ -32,6 +35,8 @@ import com.ziqqi.viewmodel.WishlistViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class WishlistFragment extends Fragment {
 
@@ -108,31 +113,36 @@ public class WishlistFragment extends Fragment {
     }
 
     private void fetchWishlist(String authToken) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.rvWishlist.setVisibility(View.GONE);
-        binding.llNoData.setVisibility(View.GONE);
-        viewModel.fetchWishlist(authToken);
-        viewModel.getWishlistResponse().observe(this, new Observer<ViewWishlist>() {
-            @Override
-            public void onChanged(@Nullable ViewWishlist viewWishlist) {
-                if (!viewWishlist.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        wishlistDataList.clear();
-                        payloadList = viewWishlist.getPayload();
-                        wishlistDataList.addAll(payloadList);
-                        binding.rvWishlist.setVisibility(View.VISIBLE);
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.rvWishlist.setVisibility(View.GONE);
+            binding.llNoData.setVisibility(View.GONE);
+            viewModel.fetchWishlist(authToken);
+            viewModel.getWishlistResponse().observe(this, new Observer<ViewWishlist>() {
+                @Override
+                public void onChanged(@Nullable ViewWishlist viewWishlist) {
+                    if (!viewWishlist.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
-                        // adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.llNoData.setVisibility(View.VISIBLE);
+                        binding.llNoData.setVisibility(View.GONE);
+                        if (payloadList != null) {
+                            wishlistDataList.clear();
+                            payloadList = viewWishlist.getPayload();
+                            wishlistDataList.addAll(payloadList);
+                            binding.rvWishlist.setVisibility(View.VISIBLE);
+                            binding.progressBar.setVisibility(View.GONE);
+                            // adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.llNoData.setVisibility(View.VISIBLE);
 
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpAdapter() {

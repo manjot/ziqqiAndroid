@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ziqqi.OnCartItemlistener;
 import com.ziqqi.OnItemClickListener;
@@ -30,6 +31,7 @@ import com.ziqqi.activities.MainActivity;
 import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.model.viewcartmodel.Payload;
 import com.ziqqi.model.viewcartmodel.ViewCartResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
@@ -37,6 +39,8 @@ import com.ziqqi.viewmodel.CartViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CheckoutDialogFragment extends DialogFragment {
 
@@ -117,38 +121,42 @@ public class CheckoutDialogFragment extends DialogFragment {
     }
 
     private void fetchCart(String authToken) {
-        viewModel.fetchData(authToken);
-        viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
-            @Override
-            public void onChanged(@Nullable ViewCartResponse viewCart) {
-                if (!viewCart.getError()) {
-                    if (payloadList != null) {
-                        cartDataList.clear();
-                        payloadList = viewCart.getPayload();
-                        cartDataList.addAll(payloadList);
-                        ll_total.setVisibility(View.VISIBLE);
-                        tv_total_price.setText("$ " +viewCart.getTotal());
-                        bt_checkout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                startActivity(new Intent(getContext(), BillingInfoActivity.class));
-                            }
-                        });
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+            viewModel.fetchData(authToken);
+            viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
+                @Override
+                public void onChanged(@Nullable ViewCartResponse viewCart) {
+                    if (!viewCart.getError()) {
+                        if (payloadList != null) {
+                            cartDataList.clear();
+                            payloadList = viewCart.getPayload();
+                            cartDataList.addAll(payloadList);
+                            ll_total.setVisibility(View.VISIBLE);
+                            tv_total_price.setText("$ " +viewCart.getTotal());
+                            bt_checkout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivity(new Intent(getContext(), BillingInfoActivity.class));
+                                }
+                            });
 
-                        bt_next.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                                dismiss();
-                            }
-                        });
-                        // adapter.notifyDataSetChanged();
+                            bt_next.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivity(new Intent(getContext(), MainActivity.class));
+                                    dismiss();
+                                }
+                            });
+                            // adapter.notifyDataSetChanged();
+                        }
+                    } else {
+
                     }
-                } else {
-
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setUpAdapter() {

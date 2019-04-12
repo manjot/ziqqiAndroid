@@ -1,7 +1,9 @@
 package com.ziqqi.activities;
 
+import android.arch.lifecycle.Observer;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ziqqi.R;
+import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.Utils;
 
@@ -63,35 +67,39 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     }
 
     private void getPassword() {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<String> call = apiInterface.getPassword(etEmail.getText().toString());
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                try {
-                    Log.e("JSON", response.body());
-                    JSONObject object = new JSONObject(response.body());
-                    if (object.getInt("Status") == 1) {
-                        progressBar.setVisibility(View.GONE);
-                        rlMain.setVisibility(View.VISIBLE);
-                        Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        rlMain.setVisibility(View.VISIBLE);
-                        Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<String> call = apiInterface.getPassword(etEmail.getText().toString());
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        Log.e("JSON", response.body());
+                        JSONObject object = new JSONObject(response.body());
+                        if (object.getInt("Status") == 1) {
+                            progressBar.setVisibility(View.GONE);
+                            rlMain.setVisibility(View.VISIBLE);
+                            Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            rlMain.setVisibility(View.VISIBLE);
+                            Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
                 }
 
-            }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
+                }
+            });
+        }else{
+            Toast.makeText(ForgetPasswordActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void init() {

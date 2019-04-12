@@ -160,6 +160,11 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("placeOrder")
     Call<PlaceOrderResponse> placeOrder(@Field("auth_token") String auth_token,
+                                        @Field("payment_method") String payment_method,
+                                        @Field("order_status") String order_status,
+                                        @Field("payment_status") String payment_status,
+                                        @Field("transaction_id") String transaction_id,
+                                        @Field("wallet_mobile_no") String wallet_mobile_no,
                                         @Field("billing_fname") String billing_fname,
                                         @Field("billing_lname") String billing_lname,
                                         @Field("billing_mobile") String billing_mobile,

@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.ziqqi.OnSearchedItemClickListener;
@@ -20,8 +21,10 @@ import com.ziqqi.adapters.SearchAdapter;
 import com.ziqqi.databinding.ActivitySearchResultBinding;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
+import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
@@ -121,62 +124,75 @@ public class SearchResultActivity extends AppCompatActivity {
     }
 
     private void addToWishList(String authToken, String id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductWishlist(authToken, id);
-        viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
-            @Override
-            public void onChanged(@Nullable AddToModel addToModel) {
-                if (!addToModel.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    Utils.showalertResponse(SearchResultActivity.this, addToModel.getMessage());
-                } else {
-                    Utils.showalertResponse(SearchResultActivity.this, addToModel.getMessage());
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.addProductWishlist(authToken, id);
+            viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
+                @Override
+                public void onChanged(@Nullable AddToModel addToModel) {
+                    if (!addToModel.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Utils.showalertResponse(SearchResultActivity.this, addToModel.getMessage());
+                    } else {
+                        Utils.showalertResponse(SearchResultActivity.this, addToModel.getMessage());
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(SearchResultActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addToCart(String id) {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addToCart(id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
-        viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
-            @Override
-            public void onChanged(@Nullable AddToCart addToCart) {
-                if (!addToCart.getError()) {
-                    Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
-                    addToCartListener.addToCart();
-                } else {
-                    Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.addToCart(id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+            viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
+                @Override
+                public void onChanged(@Nullable AddToCart addToCart) {
+                    if (!addToCart.getError()) {
+                        Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
+                        addToCartListener.addToCart();
+                    } else {
+                        Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(SearchResultActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
     private void searchQuery() {
-        viewModel.fetchData(catId, String.valueOf(pageCount));
-        viewModel.getSearchResponse().observe(this, new Observer<SearchResponse>() {
-            @Override
-            public void onChanged(@Nullable SearchResponse searchResponse) {
-                if (!searchResponse.getError()) {
-                    if (payloadList != null) {
-                        //searchDataList.clear();
-                        payloadList = searchResponse.getPayload();
-                        if (pageCount == 1) {
-                            searchDataList.addAll(payloadList);
-                            // adapter.setPayloadList(viewAllList);
-                        } else {
-                            searchDataList.addAll(payloadList);
-                            // adapter.setPayloadList(viewAllList);
-                            binding.recyclerView.loadMoreComplete();
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            viewModel.fetchData(catId, String.valueOf(pageCount));
+            viewModel.getSearchResponse().observe(this, new Observer<SearchResponse>() {
+                @Override
+                public void onChanged(@Nullable SearchResponse searchResponse) {
+                    if (!searchResponse.getError()) {
+                        if (payloadList != null) {
+                            //searchDataList.clear();
+                            payloadList = searchResponse.getPayload();
+                            if (pageCount == 1) {
+                                searchDataList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                            } else {
+                                searchDataList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                                binding.recyclerView.loadMoreComplete();
+                            }
                         }
-                    }
-                } else {
-                    Utils.ShowToast(SearchResultActivity.this, searchResponse.getMessage());
+                    } else {
+                        Utils.ShowToast(SearchResultActivity.this, searchResponse.getMessage());
 
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(SearchResultActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setUpAdapter() {

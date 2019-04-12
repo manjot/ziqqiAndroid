@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +22,18 @@ import com.ziqqi.databinding.ActivityHelpCenterBinding;
 import com.ziqqi.databinding.ActivityMyAddressBookBinding;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
+import com.ziqqi.retrofit.ApiClient;
+import com.ziqqi.retrofit.ApiInterface;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.viewmodel.HelpCenterViewModel;
 import com.ziqqi.viewmodel.MyAddressViewModel;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HelpCenterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -60,61 +71,67 @@ public class HelpCenterActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void fetchHelps() {
-        binding.progressBar.setVisibility(View.VISIBLE);
-        helpCenterViewModel.fetchHelpCenter();
-        helpCenterViewModel.getHelpResponse().observe(this, new Observer<HelpCenterModel>() {
-            @Override
-            public void onChanged(@Nullable final HelpCenterModel helpCenterModel) {
-                if (!helpCenterModel.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.tvHelpFirst.setText(helpCenterModel.getPayload().get(0).getTitle());
-                    binding.tvHelpSecond.setText(helpCenterModel.getPayload().get(1).getTitle());
-                    binding.tvHelpThird.setText(helpCenterModel.getPayload().get(2).getTitle());
-                    binding.tvHelpFourth.setText(helpCenterModel.getPayload().get(3).getTitle());
-                    binding.tvHelpFifth.setText(helpCenterModel.getPayload().get(4).getTitle());
-                    binding.tvHelpSixth.setText(helpCenterModel.getPayload().get(5).getTitle());
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            helpCenterViewModel.fetchHelpCenter();
+            helpCenterViewModel.getHelpResponse().observe(this, new Observer<HelpCenterModel>() {
+                @Override
+                public void onChanged(@Nullable final HelpCenterModel helpCenterModel) {
+                    if (!helpCenterModel.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.tvHelpFirst.setText(helpCenterModel.getPayload().get(0).getTitle());
+                        binding.tvHelpSecond.setText(helpCenterModel.getPayload().get(1).getTitle());
+                        binding.tvHelpThird.setText(helpCenterModel.getPayload().get(2).getTitle());
+                        binding.tvHelpFourth.setText(helpCenterModel.getPayload().get(3).getTitle());
+                        binding.tvHelpFifth.setText(helpCenterModel.getPayload().get(4).getTitle());
+                        binding.tvHelpSixth.setText(helpCenterModel.getPayload().get(5).getTitle());
 
-                    binding.llOne.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(0).getId()).putExtra("title" ,helpCenterModel.getPayload().get(0).getTitle()));
-                        }
-                    });
-                    binding.llTwo.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(1).getId()).putExtra("title" ,helpCenterModel.getPayload().get(1).getTitle()));
-                        }
-                    });
-                    binding.llThree.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(2).getId()).putExtra("title" ,helpCenterModel.getPayload().get(2).getTitle()));
-                        }
-                    });
-                    binding.llFour.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(3).getId()).putExtra("title" ,helpCenterModel.getPayload().get(3).getTitle()));
-                        }
-                    });
-                    binding.llFive.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(4).getId()).putExtra("title" ,helpCenterModel.getPayload().get(4).getTitle()));
-                        }
-                    });
-                    binding.llSix.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(5).getId()).putExtra("title" ,helpCenterModel.getPayload().get(5).getTitle()));
-                        }
-                    });
-                } else {
-                    binding.progressBar.setVisibility(View.GONE);
+                        binding.llOne.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(0).getId()).putExtra("title" ,helpCenterModel.getPayload().get(0).getTitle()));
+                            }
+                        });
+                        binding.llTwo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(1).getId()).putExtra("title" ,helpCenterModel.getPayload().get(1).getTitle()));
+                            }
+                        });
+                        binding.llThree.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(2).getId()).putExtra("title" ,helpCenterModel.getPayload().get(2).getTitle()));
+                            }
+                        });
+                        binding.llFour.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(3).getId()).putExtra("title" ,helpCenterModel.getPayload().get(3).getTitle()));
+                            }
+                        });
+                        binding.llFive.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(4).getId()).putExtra("title" ,helpCenterModel.getPayload().get(4).getTitle()));
+                            }
+                        });
+                        binding.llSix.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(HelpCenterActivity.this, MyAccountActivity.class).putExtra("id" ,helpCenterModel.getPayload().get(5).getId()).putExtra("title" ,helpCenterModel.getPayload().get(5).getTitle()));
+                            }
+                        });
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(HelpCenterActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
