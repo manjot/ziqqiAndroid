@@ -41,6 +41,7 @@ public class BillingInfoActivity extends AppCompatActivity {
     String CountryId = "1";
     ArrayAdapter<String> cityAdapter;
     ArrayAdapter<String> adapter;
+    ArrayAdapter<String> locationAdapter;
     int countrySpinnerPosition = 0;
     int citySpinnerPosition = 0;
     boolean isCityLoaded = false;
@@ -55,10 +56,20 @@ public class BillingInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getCountries();
-        getCities(CountryId);
+        /*getCities(CountryId);*/
 
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, countries);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        String[] citiy =getResources().getStringArray(R.array.array_cities);
+        cityAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, citiy);
+        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.etCity.setAdapter(cityAdapter);
+
+        String[] locations =getResources().getStringArray(R.array.array_locations);
+        locationAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, locations);
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.etLocation.setAdapter(locationAdapter);
 
         binding.btNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +81,7 @@ public class BillingInfoActivity extends AppCompatActivity {
                             binding.etMobileNumber.getText().toString(),
                             binding.etCountry.getSelectedItem().toString(),
                             binding.etCity.getSelectedItem().toString(),
-                            binding.etLocation.getText().toString(),
+                            binding.etLocation.getSelectedItem().toString(),
                             binding.etAddressDetails.getText().toString());
                 } else {
                     Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
@@ -85,8 +96,14 @@ public class BillingInfoActivity extends AppCompatActivity {
                 countrySpinnerPosition = binding.etCountry.getSelectedItemPosition();
                 PreferenceManager.setIntValue(Constants.BILLING_COUNTRY_POSITION, countrySpinnerPosition);
                 Log.i("Id", countryPayloadList.get(position).getId());
-                getCities(countryPayloadList.get(position).getId());
-
+                /*getCities(countryPayloadList.get(position).getId());*/
+                if (binding.etCountry.getSelectedItem().toString().equalsIgnoreCase("SOMALILAND")){
+                    binding.etCity.setVisibility(View.VISIBLE);
+                    binding.etLocation.setVisibility(View.VISIBLE);
+                }else {
+                    binding.etCity.setVisibility(View.GONE);
+                    binding.etLocation.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -121,6 +138,10 @@ public class BillingInfoActivity extends AppCompatActivity {
                         for (int i = 0; i <= countryResponse.getPayload().size() - 1; i++) {
                             countries.add(countryResponse.getPayload().get(i).getName());
                         }
+                        if (!isCityLoaded) {
+                            isCityLoaded = true;
+                            getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                        }
 
                         binding.etCountry.setAdapter(adapter);
 
@@ -135,7 +156,7 @@ public class BillingInfoActivity extends AppCompatActivity {
 
     }
 
-    private void getCities(String country_id) {
+/*    private void getCities(String country_id) {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             billingInfoViewModel.fetchCity(country_id);
@@ -165,7 +186,7 @@ public class BillingInfoActivity extends AppCompatActivity {
             Toast.makeText(BillingInfoActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
-    }
+    }*/
 
     private void getAddress(String authToken) {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
@@ -178,12 +199,13 @@ public class BillingInfoActivity extends AppCompatActivity {
                         binding.etFirstName.setText(billingAddressModel.getPayload().getFirstName());
                         binding.etLastName.setText(billingAddressModel.getPayload().getLastName());
                         binding.etMobileNumber.setText(billingAddressModel.getPayload().getMobile());
-                        binding.etLocation.setText(billingAddressModel.getPayload().getLocation());
                         binding.etAddressDetails.setText(billingAddressModel.getPayload().getAddressDetails());
                         String strCity = billingAddressModel.getPayload().getCity();
                         String strCountry = billingAddressModel.getPayload().getCountry();
+                        String strLocation = billingAddressModel.getPayload().getLocation();
                         binding.etCity.setSelection(cityAdapter.getPosition(strCity));
                         binding.etCountry.setSelection(adapter.getPosition(strCountry));
+                        binding.etLocation.setSelection(locationAdapter.getPosition(strLocation));
                     } else {
 
                     }
@@ -211,7 +233,7 @@ public class BillingInfoActivity extends AppCompatActivity {
                         PreferenceManager.setStringValue(Constants.BILLING_LAST_NAME, binding.etLastName.getText().toString());
                         PreferenceManager.setStringValue(Constants.BILLING_MOBILE, binding.etMobileNumber.getText().toString());
                         PreferenceManager.setStringValue(Constants.BILLING_CITY, binding.etCity.getSelectedItem().toString());
-                        PreferenceManager.setStringValue(Constants.BILLING_LOCATION, binding.etLocation.getText().toString());
+                        PreferenceManager.setStringValue(Constants.BILLING_LOCATION, binding.etLocation.getSelectedItem().toString());
 
                         startActivity(new Intent(BillingInfoActivity.this, ShippingInfoActivity.class));
                     } else {

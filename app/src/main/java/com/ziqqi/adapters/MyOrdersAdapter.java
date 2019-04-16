@@ -44,13 +44,14 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
         holder.tvBrandName.setText(payloadList.get(i).getBrandName());
         holder.tvName.setText(payloadList.get(i).getProductName());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getPrice());
+        holder.tvStatus.setText(payloadList.get(i).getStatus());
         Glide.with(context).load(payloadList.get(i).getProductImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
 
         holder.ll_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailActivity.class );
-                intent.putExtra("product_id", payloadList.get(i).getId());
+                intent.putExtra("product_id", payloadList.get(i).getProductId());
                 context.startActivity(intent);
             }
         });
@@ -62,7 +63,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     }
 
     public class MyOrdedersViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvBrandName, tvDiscountPrice;
+        TextView tvName, tvBrandName, tvDiscountPrice, tvStatus;
         ImageView ivImage;
         LinearLayout ll_card;
 
@@ -73,6 +74,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
             ivImage = itemView.findViewById(R.id.iv_product_image);
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
+            tvStatus = itemView.findViewById(R.id.tv_status);
             ll_card = itemView.findViewById(R.id.ll_card);
         }
     }

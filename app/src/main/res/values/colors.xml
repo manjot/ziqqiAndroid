@@ -20,6 +20,7 @@
     <color name="colorCardBox">#DAF4D0</color>
     <color name="buttonColor">#ADD6AF</color>
     <color name="colorPrimaryLight">#daf4d0</color>
+    <color name="colorTrackCard">#F7F7F7</color>
     <color name="light_grey">#f0f0f0</color>
     <color name="colorBottomIcon">#848484</color>
     <color name="colorBottom" tools:ignore="MissingDefaultResource">#F4F4F4</color>

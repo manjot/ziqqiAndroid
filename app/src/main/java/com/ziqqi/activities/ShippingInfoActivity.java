@@ -40,6 +40,7 @@ public class ShippingInfoActivity extends AppCompatActivity {
     String CountryId = "1";
     ArrayAdapter<String> cityAdapter;
     ArrayAdapter<String> adapter;
+    ArrayAdapter<String> locationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,11 @@ public class ShippingInfoActivity extends AppCompatActivity {
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         binding.etCountry.setAdapter(adapter);
 
+        String[] locations =getResources().getStringArray(R.array.array_locations);
+        locationAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, locations);
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.etLocation.setAdapter(locationAdapter);
+
         binding.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -75,14 +81,13 @@ public class ShippingInfoActivity extends AppCompatActivity {
                     binding.etName.setText(PreferenceManager.getStringValue(Constants.BILLING_FIRST_NAME) + PreferenceManager.getStringValue(Constants.BILLING_LAST_NAME));
                     binding.etMobileNumber.setText(PreferenceManager.getStringValue(Constants.BILLING_MOBILE ));
                     binding.etAddressDetails.setText(PreferenceManager.getStringValue(Constants.BILLING_ADRESS));
-                    binding.etLocation.setText(PreferenceManager.getStringValue(Constants.BILLING_LOCATION));
-//                    binding.etCity.setSelection(PreferenceManager.getIntValue(Constants.BILLING_CITY_POSITION));
-//                    binding.etCountry.setSelection(PreferenceManager.getIntValue(Constants.BILLING_COUNTRY_POSITION));
+                    binding.etLocation.setSelection(locationAdapter.getPosition(PreferenceManager.getStringValue(Constants.BILLING_LOCATION)));
+//                    binding.etCountry.setSelection(adapter.getPosition(PreferenceManager.getStringValue(Constants.BILLING_COUNTRY)));
                 }else{
                     binding.etName.getText().clear();
                     binding.etMobileNumber.getText().clear();
                     binding.etAddressDetails.getText().clear();
-                    binding.etLocation.getText().clear();
+                    binding.etLocation.setSelection(0);
                     binding.etCity.setSelection(0);
                     binding.etCountry.setSelection(0);
                 }
@@ -94,13 +99,13 @@ public class ShippingInfoActivity extends AppCompatActivity {
         binding.btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!binding.etName.getText().toString().equals("") && !binding.etMobileNumber.getText().toString().equals("") &&  !binding.etAddressDetails.getText().toString().equals("") && !binding.etLocation.getText().toString().equals("")){
+                if (!binding.etName.getText().toString().equals("") && !binding.etMobileNumber.getText().toString().equals("") &&  !binding.etAddressDetails.getText().toString().equals("") && !binding.etLocation.getSelectedItem().toString().equals("")){
                     addAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
                             binding.etName.getText().toString(),
                             binding.etMobileNumber.getText().toString(),
                             binding.etCountry.getSelectedItem().toString(),
                             binding.etCity.getSelectedItem().toString(),
-                            binding.etLocation.getText().toString(),
+                            binding.etLocation.getSelectedItem().toString(),
                             binding.etAddressDetails.getText().toString());
                 }else{
                     Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
@@ -182,7 +187,7 @@ public class ShippingInfoActivity extends AppCompatActivity {
                         PreferenceManager.setStringValue(Constants.SHIP_COUNTRY, binding.etCity.getSelectedItem().toString());
                         PreferenceManager.setStringValue(Constants.SHIP_ADDRESS, binding.etAddressDetails.getText().toString());
                         PreferenceManager.setStringValue(Constants.SHIP_NAME, binding.etName.getText().toString());
-                        PreferenceManager.setStringValue(Constants.SHIP_LOCATION, binding.etLocation.getText().toString());
+                        PreferenceManager.setStringValue(Constants.SHIP_LOCATION, binding.etLocation.getSelectedItem().toString());
                         PreferenceManager.setStringValue(Constants.SHIP_MOBILE, binding.etMobileNumber.getText().toString());
                         PreferenceManager.setStringValue(Constants.SHIP_CITY, binding.etCountry.getSelectedItem().toString());
 

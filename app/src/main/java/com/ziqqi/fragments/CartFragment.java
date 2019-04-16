@@ -80,11 +80,6 @@ public class CartFragment extends Fragment {
         binding.setViewModel(viewModel);
         binding.setViewModel(viewModel);
         View view = binding.getRoot();
-        setUpAdapter();
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
-        }
-
         listener = new OnCartItemlistener() {
             @Override
             public void onCartItemClick(String id, String type) {
@@ -100,6 +95,10 @@ public class CartFragment extends Fragment {
                 }
             }
         };
+        setUpAdapter();
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
 
         return view;
     }
@@ -133,7 +132,7 @@ public class CartFragment extends Fragment {
                     if (!viewCart.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.llNoData.setVisibility(View.GONE);
-                        if (payloadList != null) {
+                        if (viewCart.getPayload().size() != 0) {
                             cartDataList.clear();
                             payloadList = viewCart.getPayload();
                             cartDataList.addAll(payloadList);
@@ -149,7 +148,11 @@ public class CartFragment extends Fragment {
                                     startActivity(new Intent(getContext(), BillingInfoActivity.class));
                                 }
                             });
-                            // adapter.notifyDataSetChanged();
+//                             adapter.notifyDataSetChanged();
+                        }else{
+                            binding.btSubmit.setVisibility(View.GONE);
+                            binding.llTotal.setVisibility(View.GONE);
+                            binding.llNoData.setVisibility(View.VISIBLE);
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);

@@ -19,6 +19,7 @@ import com.ziqqi.model.languagemodel.LanguageModel;
 import com.ziqqi.model.loginResponse.LoginResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
+import com.ziqqi.model.ordertrackingmodel.OrderTrackingResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
@@ -78,7 +79,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("forgot_password")
-    Call<String> getPassword(@Field("email") String email);
+    Call<String> getPassword(@Field("email") String email, @Field("otp_method") String otp_method);
 
     @FormUrlEncoded
     @POST("verifyotp")
@@ -189,5 +190,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("getBillingAddress")
     Call<BillingAddressModel> getBillingAddress(@Field("auth_token") String auth_token);
+
+    @FormUrlEncoded
+    @POST("orderTracking")
+    Call<OrderTrackingResponse> getOrderTracking(@Field("auth_token") String auth_token);
 
 }

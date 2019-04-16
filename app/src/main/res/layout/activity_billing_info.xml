@@ -204,18 +204,23 @@
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@color/colorLightText" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/et_location"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
-                    android:hint="@string/location"
-                    android:inputType="text"
                     android:paddingTop="@dimen/_12sdp"
                     android:paddingBottom="@dimen/_12sdp"
                     android:textSize="@dimen/_12sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@color/colorLightText" />
 
 
                 <EditText

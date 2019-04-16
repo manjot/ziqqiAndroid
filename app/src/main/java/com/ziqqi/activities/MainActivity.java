@@ -50,6 +50,7 @@ import com.ziqqi.addToCartListener;
 import com.ziqqi.fragments.CartFragment;
 import com.ziqqi.fragments.DealsFragment;
 import com.ziqqi.fragments.HomeFragment;
+import com.ziqqi.fragments.OrderTracking;
 import com.ziqqi.fragments.ProfileFragment;
 import com.ziqqi.fragments.SearchFragment;
 import com.ziqqi.fragments.SubCategoryFragment;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DealsFragment dealsFragment;
     ProfileFragment profileFragment;
     WishlistFragment wishlistFragment;
+    OrderTracking orderTrackingFragment;
     CallbackManager callbackManager;
     SubCategoryFragment mobileFragment, computerFragment, tvFragment, cameraFragment, gaminFragment, perfumesFragment, pharmacyFragment, superMarketFragment, appliancesFragment;
     int[] navItems = {R.string.mob_and_tabs, R.string.computers, R.string.tv_and_audio, R.string.cameras, R.string.appliances, R.string.gaming, R.string.perfumes_and_beauty, R.string.pharmacy_and_health, R.string.supermarket, R.string.my_acc, R.string.wishlist, R.string.track_order};
@@ -135,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dealsFragment = new DealsFragment();
         profileFragment = new ProfileFragment();
         wishlistFragment = new WishlistFragment();
+        orderTrackingFragment = new OrderTracking();
         mobileFragment = new SubCategoryFragment();
         cameraFragment = new SubCategoryFragment();
         computerFragment = new SubCategoryFragment();
@@ -339,6 +342,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.wishlist:
                 if (!wishlistFragment.isVisible())
                     replaceFragment(wishlistFragment, null);
+                break;
+            case R.id.track_order:
+                if (!orderTrackingFragment.isVisible())
+                    replaceFragment(orderTrackingFragment, null);
                 break;
             case R.id.my_account:
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class));

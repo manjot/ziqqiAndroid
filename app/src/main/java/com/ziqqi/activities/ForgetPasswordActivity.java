@@ -40,6 +40,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     RadioButton rbSms, rbEmail;
     ProgressBar progressBar;
     RelativeLayout rlMain;
+    String strOtpMethod = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +53,27 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         init();
 
+        rbEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strOtpMethod = "0";
+            }
+        });
+
+        rbSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strOtpMethod = "1";
+            }
+        });
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (Utils.isValidEmail(etEmail.getText().toString())) {
                     progressBar.setVisibility(View.VISIBLE);
-                    rlMain.setVisibility(View.GONE);
+                    /*rlMain.setVisibility(View.GONE);*/
                     getPassword();
                 } else {
                     Toast.makeText(ForgetPasswordActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
@@ -69,7 +85,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private void getPassword() {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<String> call = apiInterface.getPassword(etEmail.getText().toString());
+            Call<String> call = apiInterface.getPassword(etEmail.getText().toString(), strOtpMethod);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -78,12 +94,12 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         JSONObject object = new JSONObject(response.body());
                         if (object.getInt("Status") == 1) {
                             progressBar.setVisibility(View.GONE);
-                            rlMain.setVisibility(View.VISIBLE);
+                            /*rlMain.setVisibility(View.VISIBLE);*/
                             Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
                             progressBar.setVisibility(View.GONE);
-                            rlMain.setVisibility(View.VISIBLE);
+                            /*rlMain.setVisibility(View.VISIBLE);*/
                             Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {

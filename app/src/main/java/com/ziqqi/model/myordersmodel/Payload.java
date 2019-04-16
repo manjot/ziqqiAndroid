@@ -47,6 +47,9 @@ public class Payload {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("status")
+    @Expose
+    private String status;
 
     public String getId() {
         return id;
@@ -158,6 +161,14 @@ public class Payload {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

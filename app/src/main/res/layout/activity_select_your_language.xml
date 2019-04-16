@@ -84,10 +84,12 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_country"
-                    android:layout_margin="@dimen/_16sdp"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
-                    android:background="@drawable/white_bg_ripple"
+                    android:background="@drawable/selected_bg"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -95,8 +97,9 @@
                         android:id="@+id/tv_country_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/grey_circle"
+                        android:background="@drawable/black_circle"
                         android:gravity="center"
+                        android:textColor="@color/colorWhite"
                         android:text="SM"
                         android:fontFamily="@font/light"
                         android:padding="@dimen/_4sdp"
@@ -111,7 +114,6 @@
                         android:layout_centerVertical="true"
                         android:text="SOMALILAND"
                         android:fontFamily="@font/light"
-                        android:textColor="@color/colorBlack"
                         android:layout_toRightOf="@id/tv_country_code"
                         android:paddingStart="@dimen/_8sdp"
                         android:paddingTop="@dimen/_4sdp"

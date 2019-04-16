@@ -181,4 +181,31 @@
         <item>Hargeisa</item>
     </string-array>
 
+    <string-array name="array_locations">
+
+        <item>150-ka</item>
+        <item>Ambassador Hotel Area</item>
+        <item>Calaamaha</item>
+        <item>Daloodh</item>
+        <item>Dunbuluq</item>
+        <item>Gacanta</item>
+        <item>Idaacada</item>
+        <item>Isha Borama</item>
+        <item>Jigjiga Yar</item>
+        <item>Koodbuur</item>
+        <item>Mohamed Moge</item>
+        <item>Mohamed Qalaaf</item>
+        <item>New Hargaisa</item>
+        <item>Pepsi</item>
+        <item>Saylada</item>
+        <item>Sha’ab ka</item>
+        <item>Siinaay</item>
+        <item>Star</item>
+        <item>Suuqa Hoose</item>
+        <item>test</item>
+        <item>Tiiyaatarka</item>
+        <item>Togdheer</item>
+        <item>Xero-awr</item>
+    </string-array>
+
 </resources>

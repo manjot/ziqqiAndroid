@@ -70,23 +70,23 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
         tv_country_code = findViewById(R.id.tv_country_code);
         tv_country = findViewById(R.id.tv_county);
 
-        rl_country.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isCountrySelected){
-                    isCountrySelected = true;
-                    rl_country.setBackground(getResources().getDrawable(R.drawable.selected_bg) );
-                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.black_circle));
-                    tv_country.setBackground(getResources().getDrawable(R.drawable.black_circle));
-                }else{
-                    isCountrySelected = false;
-                    rl_country.setBackground(getResources().getDrawable(R.drawable.white_bg_ripple) );
-                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.grey_circle));
-                }
-
-            }
-        });
-
+//        rl_country.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!isCountrySelected){
+//                    isCountrySelected = true;
+//                    rl_country.setBackground(getResources().getDrawable(R.drawable.selected_bg) );
+//                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.black_circle));
+//                    tv_country_code.setTextColor(getResources().getColor(R.color.colorWhite));
+//                }else{
+//                    isCountrySelected = false;
+//                    rl_country.setBackground(getResources().getDrawable(R.drawable.white_bg_ripple) );
+//                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.grey_circle));
+//                    tv_country_code.setTextColor(getResources().getColor(R.color.colorBlack));
+//                }
+//
+//            }
+//        });
 
 
         rvSelectLanguage = findViewById(R.id.rv_select_language);
@@ -163,13 +163,10 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
     }
 
     public void onClickApply(View view) {
-        if (isCountrySelected){
-            PreferenceManager.setBoolValue(Constants.LANG_SELECTED, true);
-            startActivity(new Intent(this, MainActivity.class));
-            finishAffinity();
-        }else{
-            Toast.makeText(SelectYourLanguageActivity.this, "Please select country", Toast.LENGTH_SHORT).show();
-        }
+
+        PreferenceManager.setBoolValue(Constants.LANG_SELECTED, true);
+        startActivity(new Intent(this, MainActivity.class));
+        finishAffinity();
 
     }
 }

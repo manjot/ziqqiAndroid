@@ -19,6 +19,7 @@ import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
+import com.ziqqi.model.ordertrackingmodel.OrderTrackingResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
@@ -512,6 +513,24 @@ public class Repository {
 
             @Override
             public void onFailure(Call<BillingAddressModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return billingAddress;
+    }
+
+    public MutableLiveData<OrderTrackingResponse> getOrderTrack(String authToken) {
+        final MutableLiveData<OrderTrackingResponse> billingAddress = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<OrderTrackingResponse> call = apiInterface.getOrderTracking(authToken);
+        call.enqueue(new Callback<OrderTrackingResponse>() {
+            @Override
+            public void onResponse(Call<OrderTrackingResponse> call, Response<OrderTrackingResponse> response) {
+                billingAddress.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<OrderTrackingResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

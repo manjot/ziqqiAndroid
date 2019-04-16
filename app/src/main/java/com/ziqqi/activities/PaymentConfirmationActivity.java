@@ -21,6 +21,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
     Button bt_click, bt_method;
     String strPaymentType;
     TextView tv_send;
+    String strUSSD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,13 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null){
             strPaymentType = getIntent().getStringExtra("type");
             if (strPaymentType.equalsIgnoreCase("ZAAD")){
+                strUSSD = "*883*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
                 bt_method.setText("ZAAD - 504880");
-                tv_send.setText("To complete the order, please send us the payment of USD "+PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+ "from your USD account with phone number " +PreferenceManager.getStringValue(Constants.WALLET_NUMBER)+ " to our "+strPaymentType+" Merchant account mentioned below.");
+                tv_send.setText("To complete the order, please send us the payment of USD "+PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+ " from your USD account with phone number " +PreferenceManager.getStringValue(Constants.WALLET_NUMBER)+ " to our "+strPaymentType+" Merchant account mentioned below.");
             }else if (strPaymentType.equalsIgnoreCase("DAHAB")){
                 bt_method.setText("E-Dahab - 74110");
-                tv_send.setText("To complete the order, please send us the payment of USD "+PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+ "from your USD account with phone number " +PreferenceManager.getStringValue(Constants.WALLET_NUMBER)+ " to our "+strPaymentType+" Merchant account mentioned below.");
+                strUSSD = "*113*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                tv_send.setText("To complete the order, please send us the payment of USD "+PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+ " from your USD account with phone number " +PreferenceManager.getStringValue(Constants.WALLET_NUMBER)+ " to our "+strPaymentType+" Merchant account mentioned below.");
             }
         }
 
@@ -51,7 +54,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" +"*883*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+"#"));
+                intent.setData(Uri.parse("tel:" + strUSSD));
                 startActivity(intent);
             }
         });
