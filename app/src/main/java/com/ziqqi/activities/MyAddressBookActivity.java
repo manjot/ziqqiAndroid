@@ -15,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ziqqi.OnItemClickListener;
@@ -26,9 +28,10 @@ import com.ziqqi.adapters.SearchCategoryAdapter;
 import com.ziqqi.databinding.ActivityMyAddressBookBinding;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
+import com.ziqqi.model.countrymodel.CountryResponse;
+import com.ziqqi.model.countrymodel.Payload;
 import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
-import com.ziqqi.model.myaddressmodel.Payload;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.utils.ConnectivityHelper;
@@ -46,8 +49,14 @@ public class MyAddressBookActivity extends AppCompatActivity {
     MyAddressViewModel myAddressViewModel;
     ActivityMyAddressBookBinding binding;
     String strCountry, strCity, strLocation, strAddress, strFirstName, strLastName, strMobile;
-
-    EditText et_country, et_city, et_location, et_address_details, et_first_name, et_last_name, et_mobile_number;
+    List<Payload> countryPayloadList;
+    EditText  et_address_details, et_first_name, et_last_name, et_mobile_number;
+    Spinner et_country, et_city, et_location;
+    ArrayAdapter<String> cityAdapter;
+    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> locationAdapter;
+    List<String> countries = new ArrayList<>();
+    boolean isCityLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,8 @@ public class MyAddressBookActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
+
+
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
             getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
@@ -128,13 +139,25 @@ public class MyAddressBookActivity extends AppCompatActivity {
 
         Button cancel =  dialogView.findViewById(R.id.cancel);
         Button save = dialogView.findViewById(R.id.save);
-        et_country.setText(strCountry);
-        et_city.setText(strCity);
-        et_location.setText(strLocation);
         et_address_details.setText(strAddress);
         et_first_name.setText(strFirstName);
         et_last_name.setText(strLastName);
         et_mobile_number.setText(strMobile);
+
+        String[] citiy =getResources().getStringArray(R.array.array_cities);
+        cityAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, citiy);
+        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        et_city.setAdapter(cityAdapter);
+
+        String[] locations =getResources().getStringArray(R.array.array_locations);
+        locationAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, locations);
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        et_location.setAdapter(locationAdapter);
+
+        getCountries();
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, countries);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,9 +174,9 @@ public class MyAddressBookActivity extends AppCompatActivity {
                         et_first_name.getText().toString(),
                         et_last_name.getText().toString(),
                         et_mobile_number.getText().toString(),
-                        et_country.getText().toString(),
-                        et_city.getText().toString(),
-                        et_location.getText().toString(),
+                        et_country.getSelectedItem().toString(),
+                        et_city.getSelectedItem().toString(),
+                        et_location.getSelectedItem().toString(),
                         et_address_details.getText().toString());
                 dialogBuilder.dismiss();
             }
@@ -172,13 +195,13 @@ public class MyAddressBookActivity extends AppCompatActivity {
                 if (!addBillingAddress.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), addBillingAddress.getMessage(), Toast.LENGTH_SHORT).show();
-                    PreferenceManager.setStringValue(Constants.BILLING_COUNTRY, et_country.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_COUNTRY, et_country.getSelectedItem().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_ADRESS, et_address_details.getText().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_FIRST_NAME, et_first_name.getText().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_LAST_NAME, et_last_name.getText().toString());
                     PreferenceManager.setStringValue(Constants.BILLING_MOBILE, et_mobile_number.getText().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_CITY, et_city.getText().toString());
-                    PreferenceManager.setStringValue(Constants.BILLING_LOCATION, et_location.getText().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_CITY, et_city.getSelectedItem().toString());
+                    PreferenceManager.setStringValue(Constants.BILLING_LOCATION, et_location.getSelectedItem().toString());
 
                     strCountry = addBillingAddress.getPayload().getCountry();
                     strCity = addBillingAddress.getPayload().getCity();
@@ -201,6 +224,37 @@ public class MyAddressBookActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getCountries() {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            myAddressViewModel.fetchCountry();
+            myAddressViewModel.getCountryResponse().observe(this, new Observer<CountryResponse>() {
+                @Override
+                public void onChanged(@Nullable CountryResponse countryResponse) {
+                    if (!countryResponse.getError()) {
+                        adapter.notifyDataSetChanged();
+                        countryPayloadList.addAll(countryResponse.getPayload());
+                        for (int i = 0; i <= countryResponse.getPayload().size() - 1; i++) {
+                            countries.add(countryResponse.getPayload().get(i).getName());
+                        }
+                        if (!isCityLoaded) {
+                            isCityLoaded = true;
+                            getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                        }
+
+                        et_country.setAdapter(adapter);
+
+                    } else {
+
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(MyAddressBookActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

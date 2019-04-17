@@ -172,6 +172,13 @@
     <string name="edit_primary">EDIT Primary</string>
     <string name="you_are_paying">You are paying</string>
     <string name="pay_now">Pay Now</string>
+    <string name="enter_email">Enter email</string>
+    <string name="change_password">Change Password</string>
+    <string name="enter_code">Enter code</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="enter_verification_code">Enter verification code</string>
+    <string name="verify_otp">Verify OTP</string>
 
 
 </resources>

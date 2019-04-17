@@ -13,6 +13,7 @@ import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.forgotpasswordmodel.ForgotPasswordResponse;
 import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
@@ -535,5 +536,23 @@ public class Repository {
             }
         });
         return billingAddress;
+    }
+
+    public MutableLiveData<ForgotPasswordResponse> forgotPassword(String email, String otp, String newPassword ) {
+        final MutableLiveData<ForgotPasswordResponse> password = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ForgotPasswordResponse> call = apiInterface.forgotPassword(email, otp, newPassword);
+        call.enqueue(new Callback<ForgotPasswordResponse>() {
+            @Override
+            public void onResponse(Call<ForgotPasswordResponse> call, Response<ForgotPasswordResponse> response) {
+                password.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ForgotPasswordResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return password;
     }
 }

@@ -31,6 +31,8 @@ import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.SignUpViewModel;
 
+import java.util.HashMap;
+
 public class SignUpActivity extends AppCompatActivity {
     SignUpViewModel signUpViewModel;
     ActivitySignUpBinding binding;
@@ -38,6 +40,8 @@ public class SignUpActivity extends AppCompatActivity {
     String[] code = {"+252", "+91"};
     CountryCodeAdapter adapter;
     int countryPosition = 0;
+    String strCountryCode = "252";
+    String strGender = "M";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,40 +63,56 @@ public class SignUpActivity extends AppCompatActivity {
 
         final InputFilter[] FilterArray = new InputFilter[1];
 
-       binding.ccp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               if (binding.ccp.getSelectedItemPosition() == 0) {
-                   FilterArray[0] = new InputFilter.LengthFilter(9);
-                   countryPosition = 0;
-                   binding.etMobileNumber.setFilters(FilterArray);
-               } else {
-                   FilterArray[0] = new InputFilter.LengthFilter(10);
-                   countryPosition = 1;
-                   binding.etMobileNumber.setFilters(FilterArray);
-               }
-           }
+        binding.ccp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (binding.ccp.getSelectedItemPosition() == 0) {
+                    FilterArray[0] = new InputFilter.LengthFilter(9);
+                    countryPosition = 0;
+                    strCountryCode = "252";
+                    binding.etMobileNumber.setFilters(FilterArray);
+                } else {
+                    FilterArray[0] = new InputFilter.LengthFilter(10);
+                    countryPosition = 1;
+                    strCountryCode = "91";
+                    binding.etMobileNumber.setFilters(FilterArray);
+                }
+            }
 
-           @Override
-           public void onNothingSelected(AdapterView<?> adapterView) {
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-           }
-       });
+            }
+        });
 
-       binding.btnRegister.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if (countryPosition == 0){
-                   if (binding.etMobileNumber.getText().toString().length() == 9){
-                       onClickRegister();
-                   }
-               }else if (countryPosition == 1){
-                   if (binding.etMobileNumber.getText().toString().length() == 10){
-                       onClickRegister();
-                   }
-               }
-           }
-       });
+        binding.rbMale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strGender = "M";
+            }
+        });
+
+        binding.rbFemale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strGender = "F";
+            }
+        });
+
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (countryPosition == 0) {
+                    if (binding.etMobileNumber.getText().toString().length() == 9) {
+                        onClickRegister();
+                    }
+                } else if (countryPosition == 1) {
+                    if (binding.etMobileNumber.getText().toString().length() == 10) {
+                        onClickRegister();
+                    }
+                }
+            }
+        });
     }
 
     private void setUpFonts() {
@@ -136,63 +156,67 @@ public class SignUpActivity extends AppCompatActivity {
         Utils.hideKeyboard(this);
         if (binding.etEmail.getText().toString().equalsIgnoreCase("") || binding.etPassword.getText().toString().equalsIgnoreCase("") || binding.etMobileNumber.getText().toString().equalsIgnoreCase("") || binding.etLastName.getText().toString().equalsIgnoreCase("") || binding.etFirstName.getText().toString().equalsIgnoreCase("")) {
             Utils.ShowToast(getApplication().getApplicationContext(), "Fields can not be emplty");
-        }else{
+        } else {
             if (ConnectivityHelper.isConnectedToNetwork(this)) {
-                    signUpViewModel.init();
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    signUpViewModel.mainLayoutVisibility.set(View.GONE);
-                    signUpViewModel.getSignUpResponse().observe(this, new Observer<SignUpResponse>() {
-                        @Override
-                        public void onChanged(@Nullable SignUpResponse signUpResponse) {
+
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.scroll.setVisibility(View.GONE);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("email", binding.etEmail.getText().toString());
+                hashMap.put("password", binding.etPassword.getText().toString());
+                hashMap.put("fname", binding.etFirstName.getText().toString());
+                hashMap.put("lname", binding.etLastName.getText().toString());
+                hashMap.put("phone", binding.etMobileNumber.getText().toString());
+                hashMap.put("phonecode", strCountryCode);
+                hashMap.put("gender", strGender);
+
+                signUpViewModel.init(hashMap);
+                signUpViewModel.getSignUpResponse().observe(this, new Observer<SignUpResponse>() {
+                    @Override
+                    public void onChanged(@Nullable SignUpResponse signUpResponse) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.scroll.setVisibility(View.VISIBLE);
+                        if (!signUpResponse.getError()) {
+                            startActivity(new Intent(SignUpActivity.this, OtpVerifyActivity.class).putExtra("cId", signUpResponse.getPayload().getId()));
+                            finish();
+
+                        } else {
+                            binding.scroll.setVisibility(View.VISIBLE);
                             binding.progressBar.setVisibility(View.GONE);
-                            signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
-                            if (!signUpResponse.getError()) {
-                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                                PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
-                                PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "f or g");
-//                            VerifyOtp(signUpResponse.getOtpdetails().getCustomerId(), signUpResponse.getOtpdetails().getOtp());
-                                PreferenceManager.setStringValue(Constants.AUTH_TOKEN, signUpResponse.getPayload().getAuth_token());
-                                PreferenceManager.setStringValue(Constants.FIRST_NAME, signUpResponse.getPayload().getFirstName());
-                                PreferenceManager.setStringValue(Constants.EMAIL, signUpResponse.getPayload().getEmail());
-                                finishAffinity();
-
-                            } else {
-                                signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
-                                signUpViewModel.progressVisibility.set(View.GONE);
-                                Utils.ShowToast(SignUpActivity.this, signUpResponse.getMessage());
-                            }
+                            Utils.ShowToast(SignUpActivity.this, signUpResponse.getMessage());
                         }
-                    });
+                    }
+                });
 
-            } else{
+            } else {
                 Utils.ShowToast(this, "No Internet Connection");
             }
         }
 
     }
 
-    private void VerifyOtp(int customerId, int otp) {
-        signUpViewModel.verifyOtp(customerId, otp);
-        signUpViewModel.getVerifyOtp().observe(this, new Observer<VerifyOtpResponse>() {
-            @Override
-            public void onChanged(@Nullable VerifyOtpResponse verifyOtpResponse) {
-                if (!verifyOtpResponse.getError()) {
-                    signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
-                    signUpViewModel.progressVisibility.set(View.GONE);
-                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                    PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
-                    PreferenceManager.setStringValue(Constants.AUTH_TOKEN, verifyOtpResponse.getPayload().get(0).getAuthToken());
-                    PreferenceManager.setStringValue(Constants.FIRST_NAME, verifyOtpResponse.getPayload().get(0).getFirstName());
-                    PreferenceManager.setStringValue(Constants.EMAIL, verifyOtpResponse.getPayload().get(0).getEmail());
-                    finishAffinity();
-                } else {
-                    signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
-                    signUpViewModel.progressVisibility.set(View.GONE);
-                    Utils.ShowToast(SignUpActivity.this, verifyOtpResponse.getMessage());
-                }
-            }
-        });
-    }
+//    private void VerifyOtp(int customerId, int otp) {
+//        signUpViewModel.verifyOtp(customerId, otp);
+//        signUpViewModel.getVerifyOtp().observe(this, new Observer<VerifyOtpResponse>() {
+//            @Override
+//            public void onChanged(@Nullable VerifyOtpResponse verifyOtpResponse) {
+//                if (!verifyOtpResponse.getError()) {
+//                    signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
+//                    signUpViewModel.progressVisibility.set(View.GONE);
+//                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+//                    PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+//                    PreferenceManager.setStringValue(Constants.AUTH_TOKEN, verifyOtpResponse.getPayload().get(0).getAuthToken());
+//                    PreferenceManager.setStringValue(Constants.FIRST_NAME, verifyOtpResponse.getPayload().get(0).getFirstName());
+//                    PreferenceManager.setStringValue(Constants.EMAIL, verifyOtpResponse.getPayload().get(0).getEmail());
+//                    finishAffinity();
+//                } else {
+//                    signUpViewModel.mainLayoutVisibility.set(View.VISIBLE);
+//                    signUpViewModel.progressVisibility.set(View.GONE);
+//                    Utils.ShowToast(SignUpActivity.this, verifyOtpResponse.getMessage());
+//                }
+//            }
+//        });
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

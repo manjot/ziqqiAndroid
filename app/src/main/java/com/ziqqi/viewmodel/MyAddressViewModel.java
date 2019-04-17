@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
+import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
@@ -16,6 +17,7 @@ public class MyAddressViewModel extends AndroidViewModel {
     Repository repository;
     MutableLiveData<BillingAddressModel> getBillingAddressModel;
     MutableLiveData<AddBillingAddressModel> addBillingAddressModel;
+    MutableLiveData<CountryResponse> countryResponse;
 
     public MyAddressViewModel(@NonNull Application application) {
         super(application);
@@ -35,6 +37,14 @@ public class MyAddressViewModel extends AndroidViewModel {
 
     public MutableLiveData<AddBillingAddressModel> addBillingAddressResponse() {
         return addBillingAddressModel;
+    }
+
+    public void fetchCountry() {
+        countryResponse = repository.getCountries();
+    }
+
+    public MutableLiveData<CountryResponse> getCountryResponse() {
+        return countryResponse;
     }
 
 }

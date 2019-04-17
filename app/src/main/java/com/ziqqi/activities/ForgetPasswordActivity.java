@@ -1,6 +1,7 @@
 package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -95,6 +96,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         if (object.getInt("Status") == 1) {
                             progressBar.setVisibility(View.GONE);
                             /*rlMain.setVisibility(View.VISIBLE);*/
+                            startActivity(new Intent(ForgetPasswordActivity.this, ChangePasswordActivity.class));
                             Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
                             finish();
                         } else {

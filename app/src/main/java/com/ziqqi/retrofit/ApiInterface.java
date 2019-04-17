@@ -11,6 +11,7 @@ import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.forgotpasswordmodel.ForgotPasswordResponse;
 import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
@@ -194,5 +195,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("orderTracking")
     Call<OrderTrackingResponse> getOrderTracking(@Field("auth_token") String auth_token);
+
+    @FormUrlEncoded
+    @POST("forgot_password")
+    Call<ForgotPasswordResponse> forgotPassword(@Field("email") String email, @Field("otp") String otp, @Field("new_password") String new_password);
 
 }

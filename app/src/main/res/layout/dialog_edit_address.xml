@@ -40,14 +40,12 @@
                 android:text="@string/country"
                 android:fontFamily="@font/light" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/et_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:background="@drawable/edittext_bg"
-                android:padding="@dimen/_8sdp"
-                android:textSize="@dimen/_12sdp" />
+                android:padding="@dimen/_8sdp" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,14 +65,12 @@
                 android:text="@string/city"
                 android:fontFamily="@font/light" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/et_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:background="@drawable/edittext_bg"
-                android:padding="@dimen/_8sdp"
-                android:textSize="@dimen/_12sdp" />
+                android:padding="@dimen/_8sdp" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,14 +90,12 @@
                 android:text="@string/location"
                 android:fontFamily="@font/light" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/et_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:background="@drawable/edittext_bg"
-                android:padding="@dimen/_8sdp"
-                android:textSize="@dimen/_12sdp" />
+                android:padding="@dimen/_8sdp" />
         </LinearLayout>
 
         <LinearLayout
@@ -217,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_margin="@dimen/_8sdp"
             android:orientation="horizontal">
 
 
@@ -227,9 +221,9 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/light_btn"
-                android:text="@string/cancel"
                 android:fontFamily="@font/regular"
-                android:textAllCaps="false"/>
+                android:text="@string/cancel"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/save"
@@ -237,9 +231,9 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/button_bg"
-                android:text="@string/save"
                 android:fontFamily="@font/regular"
-                android:textAllCaps="false"/>
+                android:text="@string/save"
+                android:textAllCaps="false" />
         </LinearLayout>
 
 

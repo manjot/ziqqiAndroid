@@ -33,28 +33,27 @@
                 android:src="@drawable/ziqqi_logo" />
         </android.support.v7.widget.Toolbar>
 
-        <ImageView
-            android:id="@+id/iv_circle"
-            android:layout_width="@dimen/_300sdp"
-            android:layout_height="@dimen/_500sdp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_register" />
-
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar"
-            android:fillViewport="true"
-            android:visibility="@{signUpViewModel.mainLayoutVisibility}">
+            android:fillViewport="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp">
+
+                <ImageView
+                    android:id="@+id/iv_circle"
+                    android:layout_width="@dimen/_300sdp"
+                    android:layout_height="@dimen/_500sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_register" />
 
                 <LinearLayout
                     android:id="@+id/ll_name"
@@ -85,7 +84,6 @@
                             android:inputType="textPersonName"
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_12sdp"
-                            android:text="@={signUpViewModel.firstName}"
                             android:textSize="@dimen/_12sdp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -108,7 +106,6 @@
                             android:inputType="textPersonName"
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_12sdp"
-                            android:text="@={signUpViewModel.lastName}"
                             android:textSize="@dimen/_12sdp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -130,7 +127,6 @@
                         android:inputType="textEmailAddress"
                         android:paddingTop="@dimen/_12sdp"
                         android:paddingBottom="@dimen/_12sdp"
-                        android:text="@={signUpViewModel.email}"
                         android:textSize="@dimen/_12sdp" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -154,7 +150,6 @@
                         android:inputType="textPassword"
                         android:paddingTop="@dimen/_12sdp"
                         android:paddingBottom="@dimen/_12sdp"
-                        android:text="@={signUpViewModel.password}"
                         android:textSize="@dimen/_12sdp" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -210,7 +205,6 @@
                             android:maxLength="10"
                             android:paddingTop="@dimen/_12sdp"
                             android:paddingBottom="@dimen/_12sdp"
-                            android:text="@={signUpViewModel.mobileNumber}"
                             android:textSize="@dimen/_12sdp" />
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
@@ -232,8 +226,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp_30"
-                        android:checked="@={signUpViewModel.male}"
                         android:text="@string/male"
+                        android:checked="true"
                         android:theme="@style/RadioButtonTheme" />
 
                     <RadioButton
@@ -241,7 +235,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_30"
-                        android:checked="@={signUpViewModel.female}"
                         android:text="@string/female"
                         android:theme="@style/RadioButtonTheme" />
                 </RadioGroup>
@@ -275,8 +268,8 @@
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:theme="@style/RadioButtonTheme"
             android:visibility="gone" />
     </RelativeLayout>
