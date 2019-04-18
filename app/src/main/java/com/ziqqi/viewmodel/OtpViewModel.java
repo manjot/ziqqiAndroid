@@ -25,7 +25,7 @@ public class OtpViewModel extends AndroidViewModel {
         } else return null;
     }
 
-    public void verifyOtp(int customerId, int otp) {
+    public void verifyOtp(String customerId, String otp) {
         if (verifyOtpResponse != null) {
 
         } else {

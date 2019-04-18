@@ -3,6 +3,7 @@ package com.ziqqi.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import com.ziqqi.viewmodel.HelpCenterViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BillingInfoActivity extends AppCompatActivity {
 
@@ -51,6 +53,12 @@ public class BillingInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_billing_info);
         billingInfoViewModel = ViewModelProviders.of(this).get(BillingInfoViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         setSupportActionBar(binding.toolbar);
         countryPayloadList = new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,6 +47,7 @@ import com.ziqqi.viewmodel.SubCategoryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -86,6 +88,11 @@ public class SubCategoryFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.activity_home_category, container, false);
         viewModel = ViewModelProviders.of(this).get(SubCategoryViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getApplicationContext().getResources().getConfiguration();
+        config.locale = locale;
+        getApplicationContext().getResources().updateConfiguration(config, getApplicationContext().getResources().getDisplayMetrics());
 
         toolbar=  getActivity().findViewById(R.id.toolbar);
         tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);

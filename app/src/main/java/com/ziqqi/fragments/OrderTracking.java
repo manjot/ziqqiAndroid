@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.ziqqi.viewmodel.OrderTrackingViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -67,12 +69,17 @@ public class OrderTracking extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.layout_order_track, container, false);
 
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getApplicationContext().getResources().getConfiguration();
+        config.locale = locale;
+        getApplicationContext().getResources().updateConfiguration(config, getApplicationContext().getResources().getDisplayMetrics());
+
         toolbar=  getActivity().findViewById(R.id.toolbar);
         tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
         ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);
         ivTitle.setVisibility(View.GONE);
         tvTitle.setVisibility(View.VISIBLE);
-        tvTitle.setText("Order Tracking");
+        tvTitle.setText(getString(R.string.order_tracking));
 
         binding.executePendingBindings();
         binding.setViewModel(viewModel);

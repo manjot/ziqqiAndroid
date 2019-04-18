@@ -52,19 +52,19 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
 
         if (payloadList.get(i).getStatus().equalsIgnoreCase("Payment Pending")){
             holder.cb_pending.setChecked(true);
-        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Received")){
+        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Confirmed")){
             holder.cb_pending.setChecked(true);
             holder.cb_confirmed.setChecked(true);
+        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Out for Delivery")){
+            holder.cb_pending.setChecked(true);
+            holder.cb_confirmed.setChecked(true);
+            holder.cb_hargeisa.setChecked(true);
         }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Shipped")){
             holder.cb_pending.setChecked(true);
             holder.cb_confirmed.setChecked(true);
             holder.cb_hargeisa.setChecked(true);
-        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Ready for pick up at ZIQQI store")){
-            holder.cb_pending.setChecked(true);
-            holder.cb_confirmed.setChecked(true);
-            holder.cb_hargeisa.setChecked(true);
             holder.cb_out.setChecked(true);
-        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Delivered")){
+        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Delivery Completed")){
             holder.status.setVisibility(View.GONE);
             holder.tv_delivered.setVisibility(View.VISIBLE);
         }

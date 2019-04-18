@@ -3,6 +3,7 @@ package com.ziqqi.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,11 +22,14 @@ import com.ziqqi.model.helpcenterbyidmodel.Payload;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.utils.ConnectivityHelper;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.MyAccountViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MyAccountActivity extends AppCompatActivity {
     ActivityMyAccountBinding binding;
@@ -41,6 +45,11 @@ public class MyAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_account);
         viewModel = ViewModelProviders.of(this).get(MyAccountViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         binding.executePendingBindings();
         binding.setViewModel(viewModel);

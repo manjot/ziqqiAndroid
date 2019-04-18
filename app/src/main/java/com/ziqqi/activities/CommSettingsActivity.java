@@ -1,6 +1,7 @@
 package com.ziqqi.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +11,12 @@ import android.view.MenuItem;
 
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityCommSettingsBinding;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.CommSettingsViewModel;
 import com.ziqqi.viewmodel.CommunicationPrefViewModel;
+
+import java.util.Locale;
 
 public class CommSettingsActivity extends AppCompatActivity {
 
@@ -24,6 +29,12 @@ public class CommSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_comm_settings);
         commSettingsViewModel = ViewModelProviders.of(this).get(CommSettingsViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         binding.executePendingBindings();
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -35,13 +46,13 @@ public class CommSettingsActivity extends AppCompatActivity {
 
             if (value != null){
                 if (value.equalsIgnoreCase("1")){
-                    binding.tvToolbarTitle.setText("Recommendation");
+                    binding.tvToolbarTitle.setText(getString(R.string.recommendations));
                 }else if (value.equalsIgnoreCase("2")){
-                    binding.tvToolbarTitle.setText("Promotional");
+                    binding.tvToolbarTitle.setText(getString(R.string.promotional));
                 }else if (value.equalsIgnoreCase("3")){
-                    binding.tvToolbarTitle.setText("Newsletters");
+                    binding.tvToolbarTitle.setText(getString(R.string.newsletters));
                 }else if (value.equalsIgnoreCase("4")){
-                    binding.tvToolbarTitle.setText("Alerts");
+                    binding.tvToolbarTitle.setText(getString(R.string.alerts));
                 }
             }
         }

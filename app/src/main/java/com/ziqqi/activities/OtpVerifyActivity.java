@@ -3,6 +3,7 @@ package com.ziqqi.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.OtpViewModel;
 import com.ziqqi.viewmodel.SignUpViewModel;
 
+import java.util.Locale;
+
 public class OtpVerifyActivity extends AppCompatActivity {
 
     ActivityOtpVerifyBinding binding;
@@ -33,6 +36,12 @@ public class OtpVerifyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_otp_verify);
         viewModel = ViewModelProviders.of(this).get(OtpViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         binding.executePendingBindings();
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -46,7 +55,7 @@ public class OtpVerifyActivity extends AppCompatActivity {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VerifyOtp(Integer.parseInt(strCId), Integer.parseInt(binding.etEnter.getText().toString()));
+                VerifyOtp(strCId, binding.etEnter.getText().toString());
             }
         });
     }
@@ -59,7 +68,7 @@ public class OtpVerifyActivity extends AppCompatActivity {
         }
     }
 
-    private void VerifyOtp(int customerId, int otp) {
+    private void VerifyOtp(String customerId, String otp) {
         if (ConnectivityHelper.isConnectedToNetwork(OtpVerifyActivity.this)){
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.rlMain.setVisibility(View.GONE);

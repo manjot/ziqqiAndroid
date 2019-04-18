@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,11 +25,15 @@ import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
 import com.ziqqi.utils.ConnectivityHelper;
+import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +52,12 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

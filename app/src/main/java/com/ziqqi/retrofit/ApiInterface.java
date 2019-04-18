@@ -84,7 +84,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("verifyotp")
-    Call<VerifyOtpResponse> verifyOtp(@Field("customer_id") int id, @Field("otp") int otp);
+    Call<VerifyOtpResponse> verifyOtp(@Field("customer_id") String id, @Field("otp") String otp);
 
     @FormUrlEncoded
     @POST("getcategoryProduct")

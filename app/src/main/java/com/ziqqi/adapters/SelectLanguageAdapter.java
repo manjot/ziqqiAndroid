@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.model.languagemodel.Payload;
+import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
+import com.ziqqi.utils.PreferenceManager;
 
 import java.util.List;
 
@@ -48,6 +50,15 @@ public class SelectLanguageAdapter extends RecyclerView.Adapter<SelectLanguageAd
         holder.rlLang.setBackground(selectedPosition == i ? context.getResources().getDrawable(R.drawable.selected_bg) : context.getResources().getDrawable(R.drawable.white_bg_ripple));
         holder.tvLanguageCode.setBackground(selectedPosition == i ? context.getResources().getDrawable(R.drawable.black_circle) : context.getResources().getDrawable(R.drawable.grey_circle));
         holder.tvLanguageCode.setTextColor(selectedPosition == i ? context.getResources().getColor(R.color.colorWhite) : context.getResources().getColor(R.color.colorBlack));
+
+        if (PreferenceManager.getBoolValue(Constants.LANG_SELECTED)){
+            if (holder.tvLanguage.getText().toString().equalsIgnoreCase(PreferenceManager.getStringValue(Constants.LANG_NAME))) {
+                holder.rlLang.setBackground(context.getResources().getDrawable(R.drawable.selected_bg));
+                holder.tvLanguageCode.setBackground(context.getResources().getDrawable(R.drawable.black_circle));
+                holder.tvLanguageCode.setTextColor(context.getResources().getColor(R.color.colorWhite));
+            }
+        }
+
     }
 
     @Override
@@ -78,6 +89,15 @@ public class SelectLanguageAdapter extends RecyclerView.Adapter<SelectLanguageAd
             selectedPosition = getAdapterPosition();
             notifyItemChanged(selectedPosition);
             listener.onItemClick(tvLanguage.getText().toString(),null);
+            clearAll();
+        }
+
+        public void clearAll(){
+            rlLang.setBackground(context.getResources().getDrawable(R.drawable.white_bg_ripple) );
+            tvLanguageCode.setBackground(context.getResources().getDrawable(R.drawable.grey_circle));
+            tvLanguageCode.setTextColor(context.getResources().getColor(R.color.colorBlack));
         }
     }
+
+
 }

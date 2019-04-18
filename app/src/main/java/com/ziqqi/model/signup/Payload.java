@@ -21,58 +21,18 @@ public class Payload {
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("password")
-    @Expose
-    private String password;
     @SerializedName("phone_code")
     @Expose
     private String phoneCode;
     @SerializedName("mobile")
     @Expose
     private String mobile;
-    @SerializedName("reg_date")
-    @Expose
-    private String regDate;
-    @SerializedName("zoho_contact_id")
-    @Expose
-    private Object zohoContactId;
     @SerializedName("is_active")
     @Expose
     private String isActive;
-    @SerializedName("is_facebook_login")
-    @Expose
-    private String isFacebookLogin;
-    @SerializedName("facebook_oauth_uid")
-    @Expose
-    private String facebookOauthUid;
-    @SerializedName("is_google_login")
-    @Expose
-    private String isGoogleLogin;
-    @SerializedName("google_oauth_uid")
-    @Expose
-    private String googleOauthUid;
-    @SerializedName("email_token_id")
-    @Expose
-    private String emailTokenId;
-    @SerializedName("mobile_token_id")
-    @Expose
-    private String mobileTokenId;
-    @SerializedName("password_token_id")
-    @Expose
-    private Object passwordTokenId;
-    @SerializedName("password_reset_date")
-    @Expose
-    private Object passwordResetDate;
-    @SerializedName("is_email_verify")
-    @Expose
-    private String isEmailVerify;
-    @SerializedName("is_mobile_verify")
-    @Expose
-    private String isMobileVerify;
-
     @SerializedName("auth_token")
     @Expose
-    private String auth_token;
+    private String authToken;
 
     public String getId() {
         return id;
@@ -114,14 +74,6 @@ public class Payload {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPhoneCode() {
         return phoneCode;
     }
@@ -138,22 +90,6 @@ public class Payload {
         this.mobile = mobile;
     }
 
-    public String getRegDate() {
-        return regDate;
-    }
-
-    public void setRegDate(String regDate) {
-        this.regDate = regDate;
-    }
-
-    public Object getZohoContactId() {
-        return zohoContactId;
-    }
-
-    public void setZohoContactId(Object zohoContactId) {
-        this.zohoContactId = zohoContactId;
-    }
-
     public String getIsActive() {
         return isActive;
     }
@@ -162,91 +98,12 @@ public class Payload {
         this.isActive = isActive;
     }
 
-    public String getIsFacebookLogin() {
-        return isFacebookLogin;
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public void setIsFacebookLogin(String isFacebookLogin) {
-        this.isFacebookLogin = isFacebookLogin;
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
-    public String getFacebookOauthUid() {
-        return facebookOauthUid;
-    }
-
-    public void setFacebookOauthUid(String facebookOauthUid) {
-        this.facebookOauthUid = facebookOauthUid;
-    }
-
-    public String getIsGoogleLogin() {
-        return isGoogleLogin;
-    }
-
-    public void setIsGoogleLogin(String isGoogleLogin) {
-        this.isGoogleLogin = isGoogleLogin;
-    }
-
-    public String getGoogleOauthUid() {
-        return googleOauthUid;
-    }
-
-    public void setGoogleOauthUid(String googleOauthUid) {
-        this.googleOauthUid = googleOauthUid;
-    }
-
-    public String getEmailTokenId() {
-        return emailTokenId;
-    }
-
-    public void setEmailTokenId(String emailTokenId) {
-        this.emailTokenId = emailTokenId;
-    }
-
-    public String getMobileTokenId() {
-        return mobileTokenId;
-    }
-
-    public void setMobileTokenId(String mobileTokenId) {
-        this.mobileTokenId = mobileTokenId;
-    }
-
-    public Object getPasswordTokenId() {
-        return passwordTokenId;
-    }
-
-    public void setPasswordTokenId(Object passwordTokenId) {
-        this.passwordTokenId = passwordTokenId;
-    }
-
-    public Object getPasswordResetDate() {
-        return passwordResetDate;
-    }
-
-    public void setPasswordResetDate(Object passwordResetDate) {
-        this.passwordResetDate = passwordResetDate;
-    }
-
-    public String getIsEmailVerify() {
-        return isEmailVerify;
-    }
-
-    public void setIsEmailVerify(String isEmailVerify) {
-        this.isEmailVerify = isEmailVerify;
-    }
-
-    public String getIsMobileVerify() {
-        return isMobileVerify;
-    }
-
-    public void setIsMobileVerify(String isMobileVerify) {
-        this.isMobileVerify = isMobileVerify;
-    }
-
-    public String getAuth_token() {
-        return auth_token;
-    }
-
-    public void setAuth_token(String auth_token) {
-        this.auth_token = auth_token;
-    }
 }

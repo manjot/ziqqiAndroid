@@ -3,6 +3,8 @@ package com.ziqqi.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -13,6 +15,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -40,7 +43,7 @@ import java.util.Locale;
 
 public class SelectYourLanguageActivity extends AppCompatActivity {
     Locale myLocale;
-    String currentLanguage = "en", currentLang;
+    String currentLanguage = "";
     RecyclerView rvSelectLanguage;
     SelectLanguageViewModel viewModel;
     List<Payload> payloadList = new ArrayList<>();
@@ -54,6 +57,7 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
     RelativeLayout rl_country;
     TextView tv_country_code, tv_country;
     boolean isCountrySelected = false;
+    String strLangName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,23 +74,25 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
         tv_country_code = findViewById(R.id.tv_country_code);
         tv_country = findViewById(R.id.tv_county);
 
-//        rl_country.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!isCountrySelected){
-//                    isCountrySelected = true;
-//                    rl_country.setBackground(getResources().getDrawable(R.drawable.selected_bg) );
-//                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.black_circle));
-//                    tv_country_code.setTextColor(getResources().getColor(R.color.colorWhite));
-//                }else{
-//                    isCountrySelected = false;
-//                    rl_country.setBackground(getResources().getDrawable(R.drawable.white_bg_ripple) );
-//                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.grey_circle));
-//                    tv_country_code.setTextColor(getResources().getColor(R.color.colorBlack));
-//                }
-//
-//            }
-//        });
+
+
+/*        rl_country.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCountrySelected){
+                    isCountrySelected = true;
+                    rl_country.setBackground(getResources().getDrawable(R.drawable.selected_bg) );
+                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.black_circle));
+                    tv_country_code.setTextColor(getResources().getColor(R.color.colorWhite));
+                }else{
+                    isCountrySelected = false;
+                    rl_country.setBackground(getResources().getDrawable(R.drawable.white_bg_ripple) );
+                    tv_country_code.setBackground(getResources().getDrawable(R.drawable.grey_circle));
+                    tv_country_code.setTextColor(getResources().getColor(R.color.colorBlack));
+                }
+
+            }
+        });*/
 
 
         rvSelectLanguage = findViewById(R.id.rv_select_language);
@@ -94,6 +100,13 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
         listener = new OnItemClickListener() {
             @Override
             public void onItemClick(String id, String type) {
+                if (id.equalsIgnoreCase("English")) {
+                    currentLanguage = "en";
+                    strLangName = id;
+                } else if (id.equalsIgnoreCase("Somali")) {
+                    currentLanguage = "so";
+                    strLangName = id;
+                }
                 setLocale(id);
             }
 
@@ -143,28 +156,19 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
 
     public void setLocale(String localeName) {
         tvApply.setVisibility(View.VISIBLE);
-
-      /*  if (!localeName.equals(currentLanguage)) {
-            myLocale = new Locale(localeName);
-            Resources res = getResources();
-            DisplayMetrics dm = res.getDisplayMetrics();
-            Configuration conf = res.getConfiguration();
-            conf.locale = myLocale;
-            res.updateConfiguration(conf, dm);
-            tvApply.setVisibility(View.VISIBLE);
-            PreferenceManager.setStringValue(Constants.LANG, localeName);
-        *//*    Intent refresh = new Intent(this, SelectYourLanguageActivity.class);
-            refresh.putExtra(currentLang, localeName);
-            startActivity(refresh);
-            finish();*//*
-        } else {
-            Toast.makeText(this, "Language already selected!", Toast.LENGTH_SHORT).show();
-        }*/
+        /*myLocale = new Locale(localeName);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);*/
     }
 
     public void onClickApply(View view) {
 
         PreferenceManager.setBoolValue(Constants.LANG_SELECTED, true);
+        PreferenceManager.setStringValue(Constants.LANG, currentLanguage);
+        PreferenceManager.setStringValue(Constants.LANG_NAME, strLangName);
         startActivity(new Intent(this, MainActivity.class));
         finishAffinity();
 

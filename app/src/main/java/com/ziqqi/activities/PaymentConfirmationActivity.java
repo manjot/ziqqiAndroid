@@ -1,6 +1,7 @@
 package com.ziqqi.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import com.ziqqi.R;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 
+import java.util.Locale;
+
 public class PaymentConfirmationActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -27,6 +30,11 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_confirmation);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         toolbar = findViewById(R.id.toolbar);
         bt_click = findViewById(R.id.bt_click);

@@ -3,6 +3,7 @@ package com.ziqqi.fragments;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +31,10 @@ import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.ProfileViewModel;
 
+import java.util.Locale;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class ProfileFragment extends Fragment{
 
     FragmentProfileBinding binding;
@@ -47,6 +52,11 @@ public class ProfileFragment extends Fragment{
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_profile, container, false);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getApplicationContext().getResources().getConfiguration();
+        config.locale = locale;
+        getApplicationContext().getResources().updateConfiguration(config, getApplicationContext().getResources().getDisplayMetrics());
 
         toolbar=  getActivity().findViewById(R.id.toolbar);
         tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.SignUpViewModel;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class SignUpActivity extends AppCompatActivity {
     SignUpViewModel signUpViewModel;
@@ -48,6 +50,12 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
         signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         binding.executePendingBindings();
         binding.setSignUpViewModel(signUpViewModel);
         Toolbar toolbar = binding.toolbar;
@@ -177,7 +185,8 @@ public class SignUpActivity extends AppCompatActivity {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.scroll.setVisibility(View.VISIBLE);
                         if (!signUpResponse.getError()) {
-                            startActivity(new Intent(SignUpActivity.this, OtpVerifyActivity.class).putExtra("cId", signUpResponse.getPayload().getId()));
+                            Utils.ShowToast(SignUpActivity.this, signUpResponse.getMessage());
+                            startActivity(new Intent(SignUpActivity.this, OtpVerifyActivity.class).putExtra("cId", String.valueOf(signUpResponse.getOtpdetails().getCustomerId())));
                             finish();
 
                         } else {

@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ import com.ziqqi.viewmodel.CartViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -59,6 +61,11 @@ public class CheckoutDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getApplicationContext().getResources().getConfiguration();
+        config.locale = locale;
+        getApplicationContext().getResources().updateConfiguration(config, getApplicationContext().getResources().getDisplayMetrics());
 
 
         if (getArguments() != null) {

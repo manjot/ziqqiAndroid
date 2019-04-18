@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -25,11 +26,15 @@ import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
 import com.ziqqi.utils.ConnectivityHelper;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.HelpCenterViewModel;
 import com.ziqqi.viewmodel.MyAddressViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +51,12 @@ public class HelpCenterActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_help_center);
         helpCenterViewModel = ViewModelProviders.of(this).get(HelpCenterViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         binding.executePendingBindings();
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -164,7 +175,7 @@ public class HelpCenterActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.ll_linkedin:
-//                OpenUrl("");
+                OpenUrl("https://www.linkedin.com/company/ziqqi-com");
                 break;
 
             case R.id.ll_twitter:
@@ -172,7 +183,7 @@ public class HelpCenterActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.ll_v:
-//                OpenUrl("");
+                OpenUrl("https://vimeo.com/ziqqi");
                 break;
 
         }

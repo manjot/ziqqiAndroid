@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -43,6 +44,7 @@ import com.ziqqi.viewmodel.MyOrderViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MyAddressBookActivity extends AppCompatActivity {
 
@@ -63,6 +65,12 @@ public class MyAddressBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_address_book);
         myAddressViewModel = ViewModelProviders.of(this).get(MyAddressViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         binding.executePendingBindings();
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);

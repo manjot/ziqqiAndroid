@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import com.ziqqi.viewmodel.SubCategoryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -62,6 +64,11 @@ public class SubCategoryActivity extends AppCompatActivity {
 
         binding.executePendingBindings();
         binding.setViewModel(viewModel);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

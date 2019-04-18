@@ -71,17 +71,17 @@ public class SignUpViewModel extends AndroidViewModel {
             return signUpResponse;
     }
 
-    public MutableLiveData<VerifyOtpResponse> getVerifyOtp() {
-        if (verifyOtpResponse != null) {
-            return verifyOtpResponse;
-        } else return null;
-    }
-
-    public void verifyOtp(int customerId, int otp) {
-        if (verifyOtpResponse != null) {
-
-        } else {
-            verifyOtpResponse = repository.verifyOtpResponse(customerId, otp);
-        }
-    }
+//    public MutableLiveData<VerifyOtpResponse> getVerifyOtp() {
+//        if (verifyOtpResponse != null) {
+//            return verifyOtpResponse;
+//        } else return null;
+//    }
+//
+//    public void verifyOtp(int customerId, int otp) {
+//        if (verifyOtpResponse != null) {
+//
+//        } else {
+//            verifyOtpResponse = repository.verifyOtpResponse(customerId, otp);
+//        }
+//    }
 }

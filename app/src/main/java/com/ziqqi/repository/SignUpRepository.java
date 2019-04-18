@@ -45,7 +45,7 @@ public class SignUpRepository {
         return languageModel;
     }
 
-    public MutableLiveData<VerifyOtpResponse> verifyOtpResponse(int customerId, int otp) {
+    public MutableLiveData<VerifyOtpResponse> verifyOtpResponse(String customerId, String otp) {
         final MutableLiveData<VerifyOtpResponse> languageModel = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<VerifyOtpResponse> call = apiInterface.verifyOtp(customerId, otp);

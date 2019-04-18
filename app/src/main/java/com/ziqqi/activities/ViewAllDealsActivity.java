@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -40,6 +41,7 @@ import com.ziqqi.viewmodel.ViewAllViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ViewAllDealsActivity extends AppCompatActivity {
 
@@ -61,6 +63,11 @@ public class ViewAllDealsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_all_deals);
         viewModel = ViewModelProviders.of(this).get(DealsViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         binding.executePendingBindings();
         binding.setViewModel(viewModel);

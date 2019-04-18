@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.ziqqi.R;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
+
+import java.util.Locale;
 
 import static com.ziqqi.utils.Utils.setWindowFlag;
 
@@ -40,6 +43,12 @@ public class SecondSplashActivity extends Activity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_second_splash);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         ivSplash = findViewById(R.id.iv_splash);
         ivCircle = findViewById(R.id.iv_circle);
 

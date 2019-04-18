@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -28,12 +29,15 @@ import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchcategorymodel.Payload;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.utils.ConnectivityHelper;
+import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SearchActivity extends AppCompatActivity {
     ActivitySearchBinding binding;
@@ -55,6 +59,11 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         viewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         binding.executePendingBindings();
         binding.setViewModel(viewModel);

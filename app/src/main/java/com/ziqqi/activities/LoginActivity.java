@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -56,6 +57,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 import static com.ziqqi.utils.Utils.setWindowFlag;
@@ -108,6 +110,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         loginBinding.executePendingBindings();
         loginBinding.setViewModel(loginViewModel);
@@ -365,9 +372,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable LoginResponse loginResponse) {
                 if (loginResponse.getError()) {
-                    Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
                     loginBinding.progressBar.setVisibility(View.GONE);
+                    startActivity(new Intent(LoginActivity.this, OtpVerifyActivity.class).putExtra("cId", loginResponse.getPayload().getCustomer_id()));
+                    Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
+                    finish();
                 } else {
+                    loginBinding.progressBar.setVisibility(View.GONE);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
                     PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
@@ -375,8 +385,6 @@ public class LoginActivity extends AppCompatActivity {
                     PreferenceManager.setStringValue(Constants.EMAIL, loginResponse.getPayload().getEmail());
                     PreferenceManager.setStringValue(Constants.AUTH_TOKEN, loginResponse.getPayload().getAuth_token());
                     finishAffinity();
-                    loginBinding.progressBar.setVisibility(View.GONE);
-
                 }
             }
         });

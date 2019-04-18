@@ -12,6 +12,7 @@ public class Constants {
     public static final String DEVICE_ID = "device id";
     public static final String LOGGED_IN = "logged in";
     public static final String LANG = "language";
+    public static final String LANG_NAME = "language_name";
     public static final String LANG_SELECTED = "lang selected";
     public static final String SHARE = "share";
     public static final String CART = "cart";

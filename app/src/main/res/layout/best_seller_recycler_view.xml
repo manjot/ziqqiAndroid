@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_best_sellers"
             android:paddingTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_80sdp"
             android:paddingRight="@dimen/_12sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:textSize="@dimen/_10sdp" />

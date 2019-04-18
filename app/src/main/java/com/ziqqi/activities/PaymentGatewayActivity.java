@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +40,7 @@ import com.ziqqi.viewmodel.PlaceOrderViewModel;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 public class PaymentGatewayActivity extends AppCompatActivity {
 
@@ -62,6 +64,11 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment_gateway);
         placeOrderViewModel = ViewModelProviders.of(this).get(PlaceOrderViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -3,6 +3,7 @@ package com.ziqqi.fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +36,7 @@ import com.ziqqi.viewmodel.WishlistViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -61,12 +63,18 @@ public class WishlistFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_wishlist, container, false);
         viewModel = ViewModelProviders.of(this).get(WishlistViewModel.class);
+
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getApplicationContext().getResources().getConfiguration();
+        config.locale = locale;
+        getApplicationContext().getResources().updateConfiguration(config, getApplicationContext().getResources().getDisplayMetrics());
+
         toolbar=  getActivity().findViewById(R.id.toolbar);
         tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
         ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);
         ivTitle.setVisibility(View.GONE);
         tvTitle.setVisibility(View.VISIBLE);
-        tvTitle.setText("WISHLIST");
+        tvTitle.setText(getString(R.string.wishlist));
         View view = binding.getRoot();
         rvWishlist = binding.rvWishlist;
         loginDialog = new LoginDialog();

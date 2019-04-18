@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +13,12 @@ import android.view.View;
 
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityCommunicationPrefBinding;
+import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.viewmodel.CommunicationPrefViewModel;
 import com.ziqqi.viewmodel.MyAddressViewModel;
+
+import java.util.Locale;
 
 public class CommunicationPrefActivity extends AppCompatActivity {
 
@@ -25,6 +30,11 @@ public class CommunicationPrefActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_communication_pref);
         communicationPrefViewModel = ViewModelProviders.of(this).get(CommunicationPrefViewModel.class);
+        Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         binding.executePendingBindings();
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);

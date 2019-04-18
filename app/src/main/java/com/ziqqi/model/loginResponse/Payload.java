@@ -72,6 +72,12 @@ public class Payload {
     @SerializedName("auth_token")
     @Expose
     private String auth_token;
+    @SerializedName("customer_id")
+    @Expose
+    private String customer_id;
+    @SerializedName("otp")
+    @Expose
+    private String otp;
 
     public String getId() {
         return id;
@@ -247,5 +253,21 @@ public class Payload {
 
     public void setAuth_token(String auth_token) {
         this.auth_token = auth_token;
+    }
+
+    public String getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(String customer_id) {
+        this.customer_id = customer_id;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 }
