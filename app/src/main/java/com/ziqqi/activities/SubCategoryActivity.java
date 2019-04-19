@@ -3,6 +3,7 @@ package com.ziqqi.activities;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.ziqqi.activities.MainActivity.eventName;
 
 public class SubCategoryActivity extends AppCompatActivity {
     LinearLayoutManager managerBestSeller;
@@ -106,8 +108,6 @@ public class SubCategoryActivity extends AppCompatActivity {
                                     } else {
                                         Utils.showalertResponse(SubCategoryActivity.this, addToCart.getMessage());
                                     }
-
-
                                 }
                             });
                         } else {

@@ -74,7 +74,7 @@
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/white_rounded_background"
-                android:drawableStart="@drawable/ic_icon_search"
+                android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:hint="@string/search_hint"

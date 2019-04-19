@@ -58,6 +58,7 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
     TextView tv_country_code, tv_country;
     boolean isCountrySelected = false;
     String strLangName;
+    int languagePos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
         listener = new OnItemClickListener() {
             @Override
             public void onItemClick(String id, String type) {
+                languagePos = Integer.parseInt(type);
                 if (id.equalsIgnoreCase("English")) {
                     currentLanguage = "en";
                     strLangName = id;
@@ -165,9 +167,9 @@ public class SelectYourLanguageActivity extends AppCompatActivity {
     }
 
     public void onClickApply(View view) {
-
         PreferenceManager.setBoolValue(Constants.LANG_SELECTED, true);
         PreferenceManager.setStringValue(Constants.LANG, currentLanguage);
+        PreferenceManager.setIntValue(Constants.LANG_POS, languagePos);
         PreferenceManager.setStringValue(Constants.LANG_NAME, strLangName);
         startActivity(new Intent(this, MainActivity.class));
         finishAffinity();

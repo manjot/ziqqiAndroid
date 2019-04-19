@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import com.ziqqi.activities.BillingInfoActivity;
 import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.databinding.FragmentCartBinding;
+import com.ziqqi.fetchCartListener;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.viewcartmodel.Payload;
@@ -58,6 +60,7 @@ public class CartFragment extends Fragment {
     CartAdapter adapter;
     SpacesItemDecoration spacesItemDecoration;
     LinearLayoutManager manager;
+    fetchCartListener fcListener;
 
     public CartFragment() {
         // Required empty public constructor
@@ -76,9 +79,9 @@ public class CartFragment extends Fragment {
         config.locale = locale;
         getApplicationContext().getResources().updateConfiguration(config, getApplicationContext().getResources().getDisplayMetrics());
 
-        toolbar=  getActivity().findViewById(R.id.toolbar);
-        tvTitle=  toolbar.findViewById(R.id.tv_toolbar_title_text);
-        ivTitle=  toolbar.findViewById(R.id.tv_toolbar_title);
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        tvTitle = toolbar.findViewById(R.id.tv_toolbar_title_text);
+        ivTitle = toolbar.findViewById(R.id.tv_toolbar_title);
         ivTitle.setVisibility(View.GONE);
         tvTitle.setVisibility(View.VISIBLE);
         tvTitle.setText(getString(R.string.cart));
@@ -103,7 +106,7 @@ public class CartFragment extends Fragment {
             }
         };
         setUpAdapter();
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
 
@@ -119,7 +122,10 @@ public class CartFragment extends Fragment {
                 if (!viewCart.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                  //  adapter.notifyDataSetChanged();
+                   // fcListener.fetchCartSize();
                 } else {
+                    adapter.notifyDataSetChanged();
                     binding.progressBar.setVisibility(View.GONE);
 
                 }
@@ -128,7 +134,7 @@ public class CartFragment extends Fragment {
     }
 
     private void fetchCart(String authToken) {
-        if (ConnectivityHelper.isConnectedToNetwork(getContext())){
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())) {
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.rvCart.setVisibility(View.GONE);
             binding.llNoData.setVisibility(View.GONE);
@@ -147,19 +153,20 @@ public class CartFragment extends Fragment {
                             binding.progressBar.setVisibility(View.GONE);
                             binding.btSubmit.setVisibility(View.VISIBLE);
                             binding.llTotal.setVisibility(View.VISIBLE);
-                            binding.tvTotalPrice.setText("$ " +viewCart.getTotal());
+                            binding.tvTotalPrice.setText("$ " + viewCart.getTotal());
                             binding.btSubmit.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal()+"");
+                                    PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal() + "");
                                     startActivity(new Intent(getContext(), BillingInfoActivity.class));
                                 }
                             });
-//                             adapter.notifyDataSetChanged();
-                        }else{
+                             adapter.notifyDataSetChanged();
+                        } else {
                             binding.btSubmit.setVisibility(View.GONE);
                             binding.llTotal.setVisibility(View.GONE);
                             binding.llNoData.setVisibility(View.VISIBLE);
+                            adapter.notifyDataSetChanged();
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
@@ -168,8 +175,8 @@ public class CartFragment extends Fragment {
                     }
                 }
             });
-        }else{
-            Toast.makeText(getApplicationContext(),"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -187,5 +194,11 @@ public class CartFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        fcListener = (com.ziqqi.fetchCartListener) context;
     }
 }

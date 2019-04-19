@@ -179,6 +179,7 @@
     <string name="confirm_new_password">Confirm new password</string>
     <string name="enter_verification_code">Enter verification code</string>
     <string name="verify_otp">Verify OTP</string>
+    <string name="hello_user">Hello User</string>
 
 
 </resources>

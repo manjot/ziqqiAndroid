@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_16"
         android:background="@drawable/white_rounded_background"
-        android:drawableStart="@drawable/ic_icon_search"
+        android:drawableStart="@drawable/ic_search"
         android:drawablePadding="@dimen/dp_8"
         android:hint="@string/search_hint"
         android:padding="@dimen/dp_10"

@@ -83,6 +83,10 @@ public interface ApiInterface {
     Call<String> getPassword(@Field("email") String email, @Field("otp_method") String otp_method);
 
     @FormUrlEncoded
+    @POST("forgot_password")
+    Call<String> changedPassword(@Field("email") String email, @Field("otp") String otp, @Field("new_password") String new_password);
+
+    @FormUrlEncoded
     @POST("verifyotp")
     Call<VerifyOtpResponse> verifyOtp(@Field("customer_id") String id, @Field("otp") String otp);
 

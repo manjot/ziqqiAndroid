@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import com.ziqqi.R;
 import com.ziqqi.adapters.DealsAdapter;
 import com.ziqqi.databinding.ActivityViewAllDealsBinding;
 import com.ziqqi.databinding.FragmentDealsBinding;
+import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.dealsmodel.DealsResponse;
@@ -131,34 +133,39 @@ public class ViewAllDealsActivity extends AppCompatActivity {
     }
 
     private void getDeals() {
-        viewModel.fetchData(pageCount);
-        viewModel.getDealsResponse().observe(this, new Observer<DealsResponse>() {
-            @Override
-            public void onChanged(@Nullable DealsResponse searchResponse) {
-                if (!searchResponse.getError()) {
-                    binding.progressBar.setVisibility(View.GONE);
-                    if (payloadList != null) {
-                        searchDataList.clear();
-                        payloadList = searchResponse.getPayload();
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            viewModel.fetchData(pageCount);
+            viewModel.getDealsResponse().observe(this, new Observer<DealsResponse>() {
+                @Override
+                public void onChanged(@Nullable DealsResponse searchResponse) {
+                    if (!searchResponse.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        if (payloadList != null) {
+                            searchDataList.clear();
+                            payloadList = searchResponse.getPayload();
 
 
-                        if (pageCount == 1) {
-                            searchDataList.addAll(payloadList);
-                            // adapter.setPayloadList(viewAllList);
-                        } else {
-                            searchDataList.addAll(payloadList);
-                            // adapter.setPayloadList(viewAllList);
-                            rvDeals.loadMoreComplete();
+                            if (pageCount == 1) {
+                                searchDataList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                            } else {
+                                searchDataList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                                rvDeals.loadMoreComplete();
+                            }
+
+                            // adapter.notifyDataSetChanged();
                         }
+                    } else {
+                        Utils.ShowToast(ViewAllDealsActivity.this, searchResponse.getMessage());
 
-                        // adapter.notifyDataSetChanged();
                     }
-                } else {
-                    Utils.ShowToast(ViewAllDealsActivity.this, searchResponse.getMessage());
-
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(ViewAllDealsActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void checkConnection() {

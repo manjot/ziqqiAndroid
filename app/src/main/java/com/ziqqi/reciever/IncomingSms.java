@@ -29,7 +29,7 @@ public class IncomingSms extends BroadcastReceiver
                     String message = currentMessage .getDisplayMessageBody();
                     try
                     {
-                        if (senderNum.equals("VK-075188"))
+                        if (senderNum.equals("57273"))
                         {
                             OtpVerifyActivity Sms = new OtpVerifyActivity();
                             Sms.recivedSms(message );

@@ -2,7 +2,10 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
@@ -48,6 +51,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ziqqi.R;
 import com.ziqqi.addToCartListener;
+import com.ziqqi.fetchCartListener;
 import com.ziqqi.fragments.CartFragment;
 import com.ziqqi.fragments.DealsFragment;
 import com.ziqqi.fragments.HomeFragment;
@@ -70,13 +74,13 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, addToCartListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, addToCartListener, fetchCartListener {
     int permissionCode = 1234;
     DrawerLayout mDrawerLayout;
     NavigationView navigationView;
     Handler handler;
     ImageView ivProfilePic, ivBottomHome, ivBottomDeals, ivBottomSearch, ivBottomCart, ivBottomProfile;
-    TextView tvLogin,tv_cart;
+    TextView tvLogin, tv_cart;
     GoogleSignInAccount acct;
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
@@ -102,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int[] navIcons = {R.drawable.mobile, R.drawable.laptop, R.drawable.monitor, R.drawable.photo_camera, R.drawable.mixer, R.drawable.joystick, R.drawable.perfume, R.drawable.pharmacy, R.drawable.supermarket, R.drawable.avatar, R.drawable.like, R.drawable.tracking};
     LoginDialog loginDialog;
     String intentType = "main";
-    CartViewModel cartViewModel;;
+    CartViewModel cartViewModel;
+    public static final String eventName = "com.ziqqi.UPDATE_CART";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         appliancesFragment = new SubCategoryFragment();
         superMarketFragment = new SubCategoryFragment();
 
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
 
@@ -469,19 +474,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void fetchCart(String authToken) {
-        if (ConnectivityHelper.isConnectedToNetwork(MainActivity.this)){
+        if (ConnectivityHelper.isConnectedToNetwork(MainActivity.this)) {
             cartViewModel.fetchData(authToken);
             cartViewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
                 @Override
                 public void onChanged(@Nullable ViewCartResponse viewCart) {
                     if (!viewCart.getError()) {
                         int cartSize = viewCart.getPayload().size();
-                        tvCart.setVisibility(View.VISIBLE);
-                        tvCart.setText(String.valueOf(cartSize));
+                        if (cartSize == 0) {
+                            tvCart.setVisibility(View.GONE);
+                        } else {
+                            tvCart.setVisibility(View.VISIBLE);
+                            tvCart.setText(String.valueOf(cartSize));
+                        }
                     }
                 }
             });
-        }else{
+        } else {
             Toast.makeText(MainActivity.this, "You're not connected", Toast.LENGTH_SHORT).show();
         }
 
@@ -515,11 +524,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void addToCart() {
         //TODO when response change : payload size is in tvCart
-        tvCart.setVisibility(View.VISIBLE);
-        tvCart.setText("1");
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+      //  tvCart.setVisibility(View.VISIBLE);
+        // tvCart.setText("1");
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
 
+    }
+
+    public void addToCart2() {
+        //TODO when response change : payload size is in tvCart
+        //  tvCart.setVisibility(View.VISIBLE);
+        // tvCart.setText("1");
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
+    }
+
+    private void updateCart(Intent intent) {
+        addToCart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addToCart2();
+    }
+
+    @Override
+    public void fetchCartSize() {
+        fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
     }
 }

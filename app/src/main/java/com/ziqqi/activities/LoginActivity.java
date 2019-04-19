@@ -371,11 +371,15 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginResponse().observe(LoginActivity.this, new Observer<LoginResponse>() {
             @Override
             public void onChanged(@Nullable LoginResponse loginResponse) {
+                loginBinding.progressBar.setVisibility(View.GONE);
                 if (loginResponse.getError()) {
-                    loginBinding.progressBar.setVisibility(View.GONE);
-                    startActivity(new Intent(LoginActivity.this, OtpVerifyActivity.class).putExtra("cId", loginResponse.getPayload().getCustomer_id()));
-                    Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
-                    finish();
+                    if (loginResponse.getCode() == 204){
+                        Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
+                    }else if (loginResponse.getCode() == 203){
+                        startActivity(new Intent(LoginActivity.this, OtpVerifyActivity.class).putExtra("cId", loginResponse.getPayload().getCustomer_id()));
+                        Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
+                        finish();
+                    }
                 } else {
                     loginBinding.progressBar.setVisibility(View.GONE);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));

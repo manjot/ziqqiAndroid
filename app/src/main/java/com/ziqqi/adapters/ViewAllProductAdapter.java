@@ -102,7 +102,7 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
             switch (view.getId()) {
                 case R.id.ll_card:
                     Intent intent = new Intent(context, ProductDetailActivity.class);
-                    intent.putExtra("product_id", payloadList.get(getAdapterPosition()).getId());
+                    intent.putExtra("product_id", payloadList.get(getAdapterPosition()).getProductId());
                     context.startActivity(intent);
                     break;
                 case R.id.iv_share:

@@ -31,6 +31,7 @@ public class SelectLanguageAdapter extends RecyclerView.Adapter<SelectLanguageAd
         this.context = context;
         this.listener = listener;
         regular = FontCache.get(context.getResources().getString(R.string.regular), context);
+        selectedPosition = PreferenceManager.getIntValue(Constants.LANG_POS);
 
     }
 
@@ -47,17 +48,19 @@ public class SelectLanguageAdapter extends RecyclerView.Adapter<SelectLanguageAd
         Payload payload = payloadList.get(i);
         holder.tvLanguageCode.setText(payload.getLanguageShortname());
         holder.tvLanguage.setText(payload.getLanguageName());
+
         holder.rlLang.setBackground(selectedPosition == i ? context.getResources().getDrawable(R.drawable.selected_bg) : context.getResources().getDrawable(R.drawable.white_bg_ripple));
         holder.tvLanguageCode.setBackground(selectedPosition == i ? context.getResources().getDrawable(R.drawable.black_circle) : context.getResources().getDrawable(R.drawable.grey_circle));
         holder.tvLanguageCode.setTextColor(selectedPosition == i ? context.getResources().getColor(R.color.colorWhite) : context.getResources().getColor(R.color.colorBlack));
 
-        if (PreferenceManager.getBoolValue(Constants.LANG_SELECTED)){
+        /*if (PreferenceManager.getBoolValue(Constants.LANG_SELECTED)){
             if (holder.tvLanguage.getText().toString().equalsIgnoreCase(PreferenceManager.getStringValue(Constants.LANG_NAME))) {
                 holder.rlLang.setBackground(context.getResources().getDrawable(R.drawable.selected_bg));
                 holder.tvLanguageCode.setBackground(context.getResources().getDrawable(R.drawable.black_circle));
                 holder.tvLanguageCode.setTextColor(context.getResources().getColor(R.color.colorWhite));
             }
-        }
+        }*/
+
 
     }
 
@@ -88,12 +91,12 @@ public class SelectLanguageAdapter extends RecyclerView.Adapter<SelectLanguageAd
             notifyItemChanged(selectedPosition);
             selectedPosition = getAdapterPosition();
             notifyItemChanged(selectedPosition);
-            listener.onItemClick(tvLanguage.getText().toString(),null);
-            clearAll();
+            listener.onItemClick(tvLanguage.getText().toString(), String.valueOf(getAdapterPosition()));
+            // clearAll();
         }
 
-        public void clearAll(){
-            rlLang.setBackground(context.getResources().getDrawable(R.drawable.white_bg_ripple) );
+        public void clearAll() {
+            rlLang.setBackground(context.getResources().getDrawable(R.drawable.white_bg_ripple));
             tvLanguageCode.setBackground(context.getResources().getDrawable(R.drawable.grey_circle));
             tvLanguageCode.setTextColor(context.getResources().getColor(R.color.colorBlack));
         }
