@@ -12,13 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -59,6 +62,8 @@ public class MyAddressBookActivity extends AppCompatActivity {
     ArrayAdapter<String> locationAdapter;
     List<String> countries = new ArrayList<>();
     boolean isCityLoaded = false;
+    int  countrySpinnerPosition = 0;
+    LinearLayout ll_city, ll_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +75,7 @@ public class MyAddressBookActivity extends AppCompatActivity {
         Configuration config = getBaseContext().getResources().getConfiguration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
+        countryPayloadList = new ArrayList<>();
         binding.executePendingBindings();
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -87,6 +92,7 @@ public class MyAddressBookActivity extends AppCompatActivity {
                 showEditAddressDialog();
             }
         });
+
     }
 
     private void getAddress(String authToken) {
@@ -111,11 +117,26 @@ public class MyAddressBookActivity extends AppCompatActivity {
                         strLastName = shippingAddressModel.getPayload().getLastName();
                         strMobile = shippingAddressModel.getPayload().getMobile();
 
-                        binding.tvUserName.setText(shippingAddressModel.getPayload().getFirstName() +" "+ shippingAddressModel.getPayload().getLastName());
-                        binding.tvLineOne.setText("Address : \n" +shippingAddressModel.getPayload().getLocation());
-                        binding.tvLineTwo.setText(shippingAddressModel.getPayload().getCity()+"\n"+shippingAddressModel.getPayload().getCountry());
-                        binding.tvAddress.setText("Address Details : \n"+ shippingAddressModel.getPayload().getAddressDetails());
-                        binding.tvMobile.setText("Mobile : "+shippingAddressModel.getPayload().getMobile());
+                        if (shippingAddressModel.getPayload().getCountry().equalsIgnoreCase("SOMALILAND")){
+                            binding.tvUserName.setText(shippingAddressModel.getPayload().getFirstName() +" "+ shippingAddressModel.getPayload().getLastName());
+                            binding.tvLineOne.setText("Address : \n" +shippingAddressModel.getPayload().getLocation());
+                            binding.tvLineTwo.setText(shippingAddressModel.getPayload().getCity()+"\n"+shippingAddressModel.getPayload().getCountry());
+                            binding.tvAddress.setText("Address Details : \n"+ shippingAddressModel.getPayload().getAddressDetails());
+                            binding.tvMobile.setText("Mobile : "+shippingAddressModel.getPayload().getMobile());
+                        }else{
+                            binding.tvUserName.setText(shippingAddressModel.getPayload().getFirstName() +" "+ shippingAddressModel.getPayload().getLastName());
+                            binding.tvLineTwo.setText(shippingAddressModel.getPayload().getCountry());
+                            binding.tvAddress.setText("Address Details : \n"+ shippingAddressModel.getPayload().getAddressDetails());
+                            binding.tvMobile.setText("Mobile : "+shippingAddressModel.getPayload().getMobile());
+                        }
+
+
+
+//                    }else if (shippingAddressModel.getCode() == 204){
+//                        binding.progressBar.setVisibility(View.GONE);
+//                        binding.mainLayout.setVisibility(View.GONE);
+//                        binding.llNoData.setVisibility(View.VISIBLE);
+//                        Toast.makeText(getApplicationContext(), shippingAddressModel.getMessage(), Toast.LENGTH_SHORT).show();
 
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
@@ -144,6 +165,8 @@ public class MyAddressBookActivity extends AppCompatActivity {
         et_first_name = dialogView.findViewById(R.id.et_first_name);
         et_last_name = dialogView.findViewById(R.id.et_last_name);
         et_mobile_number = dialogView.findViewById(R.id.et_mobile_number);
+        ll_city = dialogView.findViewById(R.id.ll_city);
+        ll_location = dialogView.findViewById(R.id.ll_location);
 
         Button cancel =  dialogView.findViewById(R.id.cancel);
         Button save = dialogView.findViewById(R.id.save);
@@ -167,6 +190,29 @@ public class MyAddressBookActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, countries);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        et_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                countrySpinnerPosition = et_country.getSelectedItemPosition();
+                PreferenceManager.setIntValue(Constants.BILLING_COUNTRY_POSITION, countrySpinnerPosition);
+                Log.i("Id", countryPayloadList.get(position).getId());
+                /*getCities(countryPayloadList.get(position).getId());*/
+                if (et_country.getSelectedItem().toString().equalsIgnoreCase("SOMALILAND")){
+                    ll_city.setVisibility(View.VISIBLE);
+                    ll_location.setVisibility(View.VISIBLE);
+                }else {
+                    ll_city.setVisibility(View.GONE);
+                    ll_location.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
+
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,14 +223,22 @@ public class MyAddressBookActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (!et_country.getSelectedItem().toString().equalsIgnoreCase("SOMALILAND")){
+                    strCity = "";
+                    strLocation = "";
+                }else{
+                    strCity = et_city.getSelectedItem().toString();
+                    strLocation = et_location.getSelectedItem().toString();
+                }
                 // DO SOMETHINGS
                 addAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
                         et_first_name.getText().toString(),
                         et_last_name.getText().toString(),
                         et_mobile_number.getText().toString(),
                         et_country.getSelectedItem().toString(),
-                        et_city.getSelectedItem().toString(),
-                        et_location.getSelectedItem().toString(),
+                        strCity,
+                        strLocation,
                         et_address_details.getText().toString());
                 dialogBuilder.dismiss();
             }

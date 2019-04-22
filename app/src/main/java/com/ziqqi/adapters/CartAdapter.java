@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -49,6 +50,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.tvBrandName.setText(viewCartList.get(i).getBrandName());
         holder.tvName.setText(viewCartList.get(i).getName());
         holder.tvDiscountPrice.setText("$ " + viewCartList.get(i).getSalePrice());
+        holder.tvQuantity.setText(viewCartList.get(i).getQty());
         Glide.with(context).load(viewCartList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
 
     }
@@ -59,8 +61,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView tvName, tvBrandName, tvDiscountPrice;
-        ImageView ivImage, ivRemoveCart;
+        TextView tvName, tvBrandName, tvDiscountPrice, tvQuantity;
+        ImageView ivImage, ivRemoveCart, ivIncrease, ivDecrease;
         LinearLayout ll_card;
 
         public CartViewHolder(@NonNull View itemView) {
@@ -72,14 +74,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
             ll_card = itemView.findViewById(R.id.ll_card);
             ivRemoveCart = itemView.findViewById(R.id.iv_remove_cart);
+            tvQuantity = itemView.findViewById(R.id.tv_quantity);
+            ivIncrease = itemView.findViewById(R.id.iv_increase);
+            ivDecrease = itemView.findViewById(R.id.iv_decrease);
 
             ivRemoveCart.setOnClickListener(this);
             ll_card.setOnClickListener(this);
+            ivIncrease.setOnClickListener(this);
+            ivDecrease.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-
+            int quantity = Integer.parseInt(viewCartList.get(getAdapterPosition()).getQty());
             switch (view.getId()) {
                 case R.id.ll_card:
                     Intent intent = new Intent(context, ProductDetailActivity.class);
@@ -88,6 +95,24 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     break;
                 case R.id.iv_remove_cart:
                     listener.onCartItemClick(viewCartList.get(getAdapterPosition()), Constants.REMOVE_CART);
+                    break;
+                case R.id.iv_increase:
+                    listener.onCartItemClick(viewCartList.get(getAdapterPosition()), Constants.ADD_ITEM);
+                    quantity++;
+                    viewCartList.get(getAdapterPosition()).setQty(String.valueOf(quantity));
+                    tvQuantity.setText(String.valueOf(quantity));
+                    break;
+                case R.id.iv_decrease:
+
+                    if (!tvQuantity.getText().toString().equalsIgnoreCase("1")){
+                        listener.onCartItemClick(viewCartList.get(getAdapterPosition()), Constants.MINUS_ITEM);
+                        quantity--;
+                        viewCartList.get(getAdapterPosition()).setQty(String.valueOf(quantity));
+                        tvQuantity.setText(String.valueOf(quantity));
+                    }else{
+                        Toast.makeText(context, "Already minimum!", Toast.LENGTH_SHORT).show();
+                    }
+
                     break;
             }
         }

@@ -66,9 +66,9 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         placeOrderViewModel = ViewModelProviders.of(this).get(PlaceOrderViewModel.class);
 
         Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
-        Configuration config = getBaseContext().getResources().getConfiguration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        Configuration configuration = getBaseContext().getResources().getConfiguration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

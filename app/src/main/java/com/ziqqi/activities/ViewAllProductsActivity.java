@@ -160,9 +160,9 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
                 @Override
                 public void onChanged(@Nullable AddToCart addToCart) {
+                    binding.progressBar.setVisibility(View.GONE);
                     if (!addToCart.getError()){
                         Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                        addToCartListener.addToCart();
                     }
                 }
             });

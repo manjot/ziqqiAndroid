@@ -6,6 +6,7 @@ import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.changequantitymodel.ChangeQuantityResponse;
 import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
@@ -199,6 +200,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("orderTracking")
     Call<OrderTrackingResponse> getOrderTracking(@Field("auth_token") String auth_token);
+
+    @FormUrlEncoded
+    @POST("change_cart_quantity")
+    Call<ChangeQuantityResponse> changeCartQuantity(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("type") String type);
 
     @FormUrlEncoded
     @POST("forgot_password")

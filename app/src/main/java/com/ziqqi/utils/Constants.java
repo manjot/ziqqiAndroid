@@ -50,6 +50,8 @@ public class Constants {
     public static final String SHIP_CITY = "ship_city";
 
     public static final String CART_TOTAL_AMOUNT = "cart_total_amount";
+    public static final String ADD_ITEM = "add_item";
+    public static final String MINUS_ITEM = "minus_item";
 
     public static final String REMOVE_CART = "remove_cart";
     public static final String WALLET_NUMBER = "mobile_number";

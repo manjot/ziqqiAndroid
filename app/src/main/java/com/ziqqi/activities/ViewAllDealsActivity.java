@@ -216,7 +216,7 @@ public class ViewAllDealsActivity extends AppCompatActivity {
                 public void onChanged(@Nullable AddToCart addToCart) {
                     if (!addToCart.getError()){
                         Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
-                        addToCartListener.addToCart();
+//                        addToCartListener.addToCart();
                     }
 
                 }

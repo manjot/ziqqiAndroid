@@ -47,6 +47,8 @@ public class BillingInfoActivity extends AppCompatActivity {
     int countrySpinnerPosition = 0;
     int citySpinnerPosition = 0;
     boolean isCityLoaded = false;
+    String strCity;
+    String strLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +85,20 @@ public class BillingInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!binding.etFirstName.getText().toString().equals("") && !binding.etLastName.getText().toString().equals("") && !binding.etMobileNumber.getText().toString().equals("") && !binding.etAddressDetails.getText().toString().equals("")) {
+                    if (!binding.etCountry.getSelectedItem().toString().equalsIgnoreCase("SOMALILAND")){
+                        strCity = "";
+                        strLocation = "";
+                    }else{
+                        strCity = binding.etCity.getSelectedItem().toString();
+                        strLocation = binding.etLocation.getSelectedItem().toString();
+                    }
                     addAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),
                             binding.etFirstName.getText().toString(),
                             binding.etLastName.getText().toString(),
                             binding.etMobileNumber.getText().toString(),
                             binding.etCountry.getSelectedItem().toString(),
-                            binding.etCity.getSelectedItem().toString(),
-                            binding.etLocation.getSelectedItem().toString(),
+                            strCity,
+                            strLocation,
                             binding.etAddressDetails.getText().toString());
                 } else {
                     Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
@@ -208,12 +217,10 @@ public class BillingInfoActivity extends AppCompatActivity {
                         binding.etLastName.setText(billingAddressModel.getPayload().getLastName());
                         binding.etMobileNumber.setText(billingAddressModel.getPayload().getMobile());
                         binding.etAddressDetails.setText(billingAddressModel.getPayload().getAddressDetails());
-                        String strCity = billingAddressModel.getPayload().getCity();
                         String strCountry = billingAddressModel.getPayload().getCountry();
-                        String strLocation = billingAddressModel.getPayload().getLocation();
-                        binding.etCity.setSelection(cityAdapter.getPosition(strCity));
+//                        binding.etCity.setSelection(cityAdapter.getPosition(strCity));
                         binding.etCountry.setSelection(adapter.getPosition(strCountry));
-                        binding.etLocation.setSelection(locationAdapter.getPosition(strLocation));
+//                        binding.etLocation.setSelection(locationAdapter.getPosition(strLocation));
                     } else {
 
                     }

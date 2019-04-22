@@ -24,11 +24,14 @@ import com.ziqqi.OnCartItemlistener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.BillingInfoActivity;
+import com.ziqqi.activities.MainActivity;
+import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.databinding.FragmentCartBinding;
 import com.ziqqi.fetchCartListener;
 import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.changequantitymodel.ChangeQuantityResponse;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.viewcartmodel.Payload;
 import com.ziqqi.model.viewcartmodel.ViewCartResponse;
@@ -102,6 +105,12 @@ public class CartFragment extends Fragment {
                     case Constants.REMOVE_CART:
                         deleteCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
                         break;
+                    case Constants.ADD_ITEM:
+                        updateQuantity(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), "1");
+                        break;
+                    case Constants.MINUS_ITEM:
+                        updateQuantity(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), "0");
+                        break;
                 }
             }
         };
@@ -122,8 +131,8 @@ public class CartFragment extends Fragment {
                 if (!viewCart.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
-                  //  adapter.notifyDataSetChanged();
-                   // fcListener.fetchCartSize();
+                    //  adapter.notifyDataSetChanged();
+                    // fcListener.fetchCartSize();
                 } else {
                     adapter.notifyDataSetChanged();
                     binding.progressBar.setVisibility(View.GONE);
@@ -161,7 +170,7 @@ public class CartFragment extends Fragment {
                                     startActivity(new Intent(getContext(), BillingInfoActivity.class));
                                 }
                             });
-                             adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
                         } else {
                             binding.btSubmit.setVisibility(View.GONE);
                             binding.llTotal.setVisibility(View.GONE);
@@ -181,6 +190,23 @@ public class CartFragment extends Fragment {
 
     }
 
+    private void setTotal(String authToken) {
+        if (ConnectivityHelper.isConnectedToNetwork(getContext())) {
+            viewModel.fetchData(authToken);
+            viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
+                @Override
+                public void onChanged(@Nullable final ViewCartResponse viewCart) {
+                    if (!viewCart.getError()) {
+                        binding.tvTotalPrice.setText("$ " + viewCart.getTotal());
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     private void setUpAdapter() {
         manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -189,6 +215,39 @@ public class CartFragment extends Fragment {
         binding.rvCart.setAdapter(adapter);
 //        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
 //        binding.rvCart.addItemDecoration(spacesItemDecoration);
+    }
+
+    private void addToCart(String id, String authToken, String quantity) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
+            @Override
+            public void onChanged(@Nullable AddToCart addToCart) {
+                binding.progressBar.setVisibility(View.GONE);
+                if (!addToCart.getError()) {
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void updateQuantity(String authToken, String productId, String type) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.changeCart(authToken, productId, type);
+        viewModel.changeCartResponse().observe(this, new Observer<ChangeQuantityResponse>() {
+            @Override
+            public void onChanged(@Nullable ChangeQuantityResponse changeCart) {
+                binding.progressBar.setVisibility(View.GONE);
+                if (!changeCart.getError()) {
+                    Toast.makeText(getApplicationContext(), changeCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    setTotal(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                } else {
+                    Toast.makeText(getApplicationContext(), changeCart.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

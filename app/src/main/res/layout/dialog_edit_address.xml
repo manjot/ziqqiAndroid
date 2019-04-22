@@ -43,12 +43,13 @@
             <Spinner
                 android:id="@+id/et_country"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_33sdp"
                 android:background="@drawable/edittext_bg"
                 android:padding="@dimen/_8sdp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
@@ -68,12 +69,13 @@
             <Spinner
                 android:id="@+id/et_city"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_33sdp"
                 android:background="@drawable/edittext_bg"
                 android:padding="@dimen/_8sdp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
@@ -93,7 +95,7 @@
             <Spinner
                 android:id="@+id/et_location"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_33sdp"
                 android:background="@drawable/edittext_bg"
                 android:padding="@dimen/_8sdp" />
         </LinearLayout>

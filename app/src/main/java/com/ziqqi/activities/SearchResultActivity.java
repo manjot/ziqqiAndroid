@@ -19,6 +19,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.ziqqi.OnSearchedItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.SearchAdapter;
+import com.ziqqi.addToCartListener;
 import com.ziqqi.databinding.ActivitySearchResultBinding;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
@@ -160,7 +161,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 public void onChanged(@Nullable AddToCart addToCart) {
                     if (!addToCart.getError()) {
                         Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
-                        addToCartListener.addToCart();
+//                        addToCartListener.addToCart();
                     } else {
                         Utils.showalertResponse(SearchResultActivity.this, addToCart.getMessage());
                     }

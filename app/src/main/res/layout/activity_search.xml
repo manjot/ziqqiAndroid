@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
+                android:focusedByDefault="true"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/white_rounded_background"
                 android:drawableStart="@drawable/ic_search"

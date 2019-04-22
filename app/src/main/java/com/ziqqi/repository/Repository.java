@@ -8,6 +8,7 @@ import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
+import com.ziqqi.model.changequantitymodel.ChangeQuantityResponse;
 import com.ziqqi.model.citymodel.CityResponse;
 import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
@@ -554,5 +555,23 @@ public class Repository {
             }
         });
         return password;
+    }
+
+    public MutableLiveData<ChangeQuantityResponse> changeQuantity(String authToken, String productId, String type ) {
+        final MutableLiveData<ChangeQuantityResponse> editCart = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ChangeQuantityResponse> call = apiInterface.changeCartQuantity(authToken, productId, type);
+        call.enqueue(new Callback<ChangeQuantityResponse>() {
+            @Override
+            public void onResponse(Call<ChangeQuantityResponse> call, Response<ChangeQuantityResponse> response) {
+                editCart.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ChangeQuantityResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return editCart;
     }
 }
