@@ -350,6 +350,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (!addToModel.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
+                    isWishlist = 1;
                     Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), addToModel.getMessage(), Toast.LENGTH_SHORT).show();
@@ -367,6 +368,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (!deleteWishlistModel.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                    isWishlist = 0;
                     Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();

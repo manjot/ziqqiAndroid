@@ -79,11 +79,6 @@ public class WishlistFragment extends Fragment {
         rvWishlist = binding.rvWishlist;
         loginDialog = new LoginDialog();
 
-        setUpAdapter();
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-            fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
-        }
-
         listener = new OnWishlistItemClick() {
             @Override
             public void onItemClick(String id, String type) {
@@ -115,6 +110,13 @@ public class WishlistFragment extends Fragment {
                 }
             }
         };
+
+        setUpAdapter();
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        }
+
+
 
 
         return view;
