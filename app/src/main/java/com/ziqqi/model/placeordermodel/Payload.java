@@ -26,6 +26,9 @@ public class Payload {
     @SerializedName("grand_total")
     @Expose
     private String grandTotal;
+    @SerializedName("sls_grand_total")
+    @Expose
+    private String slsGrandTotal;
     @SerializedName("baddress1")
     @Expose
     private String baddress1;
@@ -108,6 +111,14 @@ public class Payload {
 
     public void setGrandTotal(String grandTotal) {
         this.grandTotal = grandTotal;
+    }
+
+    public String getSlsGrandTotal() {
+        return slsGrandTotal;
+    }
+
+    public void setSlsGrandTotal(String slsGrandTotal) {
+        this.slsGrandTotal = slsGrandTotal;
     }
 
     public String getBaddress1() {

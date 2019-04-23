@@ -1,10 +1,14 @@
 package com.ziqqi.activities;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,11 +16,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ziqqi.OnCartItemlistener;
 import com.ziqqi.R;
+import com.ziqqi.adapters.CartAdapter;
+import com.ziqqi.adapters.PlaceOrderAdapter;
+import com.ziqqi.model.placeordermodel.Payload;
+import com.ziqqi.model.viewcartmodel.ViewCartResponse;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PaymentConfirmationActivity extends AppCompatActivity {
 
@@ -25,6 +39,11 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
     String strPaymentType;
     TextView tv_send;
     String strUSSD;
+    List<Payload> payloadList = new ArrayList<>();
+    RecyclerView rvCart;
+    LinearLayoutManager manager;
+    OnCartItemlistener listener;
+    PlaceOrderAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +59,14 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
         bt_click = findViewById(R.id.bt_click);
         bt_method = findViewById(R.id.bt_method);
         tv_send = findViewById(R.id.tv_send);
+        rvCart = findViewById(R.id.rv_cart);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         if (getIntent().getExtras() != null){
             strPaymentType = getIntent().getStringExtra("type");
+//            payloadList = getIntent().getParcelableExtra("cartdata");
             if (strPaymentType.equalsIgnoreCase("ZAAD")){
                 strUSSD = "*883*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
                 bt_method.setText("ZAAD - 504880");
@@ -57,6 +78,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             }
         }
 
+//        setUpAdapter();
 
         bt_click.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +90,15 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
         });
 
     }
+
+    private void setUpAdapter() {
+        manager = new LinearLayoutManager(PaymentConfirmationActivity.this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvCart.setLayoutManager(manager);
+        adapter = new PlaceOrderAdapter(PaymentConfirmationActivity.this, payloadList, listener);
+        rvCart.setAdapter(adapter);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

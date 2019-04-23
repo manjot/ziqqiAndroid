@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityCommSettingsBinding;

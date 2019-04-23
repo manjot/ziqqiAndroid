@@ -26,6 +26,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -360,38 +361,48 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn() {
-        final HashMap<String, Object> loginRequest = new HashMap<>();
-        loginRequest.put("username", loginBinding.etEmail.getText().toString());
-        loginRequest.put("password", loginBinding.etPassword.getText().toString());
-        loginRequest.put("device_id", deviceId);
-        loginRequest.put("device_type", 1);
+        if (ConnectivityHelper.isConnectedToNetwork(LoginActivity.this)){
+            if (!loginBinding.etEmail.getText().toString().equalsIgnoreCase("")&&!loginBinding.etPassword.getText().toString().equalsIgnoreCase("")){
+                final HashMap<String, Object> loginRequest = new HashMap<>();
+                loginRequest.put("username", loginBinding.etEmail.getText().toString());
+                loginRequest.put("password", loginBinding.etPassword.getText().toString());
+                loginRequest.put("device_id", deviceId);
+                loginRequest.put("device_type", 1);
 
-        loginViewModel.init(loginRequest);
-        loginBinding.progressBar.setVisibility(View.VISIBLE);
-        loginViewModel.getLoginResponse().observe(LoginActivity.this, new Observer<LoginResponse>() {
-            @Override
-            public void onChanged(@Nullable LoginResponse loginResponse) {
-                loginBinding.progressBar.setVisibility(View.GONE);
-                if (loginResponse.getError()) {
-                    if (loginResponse.getCode() == 204){
-                        Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
-                    }else if (loginResponse.getCode() == 203){
-                        startActivity(new Intent(LoginActivity.this, OtpVerifyActivity.class).putExtra("cId", loginResponse.getPayload().getCustomer_id()));
-                        Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
-                        finish();
+                loginViewModel.init(loginRequest);
+                loginBinding.progressBar.setVisibility(View.VISIBLE);
+                loginViewModel.getLoginResponse().observe(LoginActivity.this, new Observer<LoginResponse>() {
+                    @Override
+                    public void onChanged(@Nullable LoginResponse loginResponse) {
+                        loginBinding.progressBar.setVisibility(View.GONE);
+                        if (loginResponse.getError()) {
+                            if (loginResponse.getCode() == 204){
+                                Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
+                            }else if (loginResponse.getCode() == 203){
+                                startActivity(new Intent(LoginActivity.this, OtpVerifyActivity.class).putExtra("cId", loginResponse.getPayload().getCustomer_id()));
+                                Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
+                                finish();
+                            }
+                        } else {
+                            loginBinding.progressBar.setVisibility(View.GONE);
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
+                            PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                            PreferenceManager.setStringValue(Constants.FIRST_NAME, loginResponse.getPayload().getFirstName());
+                            PreferenceManager.setStringValue(Constants.EMAIL, loginResponse.getPayload().getEmail());
+                            PreferenceManager.setStringValue(Constants.AUTH_TOKEN, loginResponse.getPayload().getAuth_token());
+                            finishAffinity();
+                        }
                     }
-                } else {
-                    loginBinding.progressBar.setVisibility(View.GONE);
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    PreferenceManager.setStringValue(Constants.DEVICE_ID, deviceId);
-                    PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
-                    PreferenceManager.setStringValue(Constants.FIRST_NAME, loginResponse.getPayload().getFirstName());
-                    PreferenceManager.setStringValue(Constants.EMAIL, loginResponse.getPayload().getEmail());
-                    PreferenceManager.setStringValue(Constants.AUTH_TOKEN, loginResponse.getPayload().getAuth_token());
-                    finishAffinity();
-                }
+                });
+            }else{
+                Toast.makeText(getApplicationContext(), "Please enter all fields", Toast.LENGTH_SHORT).show();
             }
-        });
+        }else{
+            Toast.makeText(getApplicationContext(), "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     public void sendReqToServer(String firstName, String lastName, String email, String type, String userId) {

@@ -28,6 +28,7 @@ import com.ziqqi.activities.MainActivity;
 import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.adapters.WishlistApdater;
+import com.ziqqi.addToCartListener;
 import com.ziqqi.databinding.FragmentCartBinding;
 import com.ziqqi.fetchCartListener;
 import com.ziqqi.model.addtocart.AddToCart;
@@ -64,6 +65,7 @@ public class CartFragment extends Fragment {
     SpacesItemDecoration spacesItemDecoration;
     LinearLayoutManager manager;
     fetchCartListener fcListener;
+    com.ziqqi.addToCartListener addToCartListener;
 
     public CartFragment() {
         // Required empty public constructor
@@ -130,9 +132,9 @@ public class CartFragment extends Fragment {
             public void onChanged(@Nullable final DeleteCartResponse viewCart) {
                 if (!viewCart.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), viewCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    addToCartListener.addToCart();
                     fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
-                    //  adapter.notifyDataSetChanged();
-                    // fcListener.fetchCartSize();
                 } else {
                     adapter.notifyDataSetChanged();
                     binding.progressBar.setVisibility(View.GONE);
@@ -173,13 +175,17 @@ public class CartFragment extends Fragment {
                             adapter.notifyDataSetChanged();
                         } else {
                             binding.btSubmit.setVisibility(View.GONE);
-                            binding.llTotal.setVisibility(View.GONE);
                             binding.llNoData.setVisibility(View.VISIBLE);
-                            adapter.notifyDataSetChanged();
+                            binding.llTotal.setVisibility(View.GONE);
+                            binding.tvTotalPrice.setVisibility(View.GONE);
+//                            adapter.notifyDataSetChanged();
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.llNoData.setVisibility(View.VISIBLE);
+                        binding.llTotal.setVisibility(View.GONE);
+                        binding.tvTotalPrice.setVisibility(View.GONE);
+                        binding.btSubmit.setVisibility(View.GONE);
 
                     }
                 }
@@ -259,5 +265,6 @@ public class CartFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         fcListener = (com.ziqqi.fetchCartListener) context;
+        addToCartListener = (com.ziqqi.addToCartListener) context;
     }
 }

@@ -218,9 +218,10 @@ public class BillingInfoActivity extends AppCompatActivity {
                         binding.etMobileNumber.setText(billingAddressModel.getPayload().getMobile());
                         binding.etAddressDetails.setText(billingAddressModel.getPayload().getAddressDetails());
                         String strCountry = billingAddressModel.getPayload().getCountry();
-//                        binding.etCity.setSelection(cityAdapter.getPosition(strCity));
+                        strLocation = billingAddressModel.getPayload().getLocation();
+                        binding.etCity.setSelection(cityAdapter.getPosition(strCity));
                         binding.etCountry.setSelection(adapter.getPosition(strCountry));
-//                        binding.etLocation.setSelection(locationAdapter.getPosition(strLocation));
+                        binding.etLocation.setSelection(locationAdapter.getPosition(strLocation));
                     } else {
 
                     }

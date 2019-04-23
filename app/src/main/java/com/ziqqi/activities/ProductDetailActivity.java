@@ -74,7 +74,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     String strSharingUrl;
     LoginDialog loginDialog;
     int isWishlist = -1;
-    String authToken = " ";
+    String authToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +99,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         binding.rvReviews.setHasFixedSize(true);
         binding.rvReviews.setNestedScrollingEnabled(false);
+
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+            authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
+        }else {
+            authToken = " ";
+        }
 
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getStringExtra("product_id");
@@ -173,9 +179,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             }
         });
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-            authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
-        }
+
 
         binding.tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -310,20 +314,27 @@ public class ProductDetailActivity extends AppCompatActivity {
         viewModel.fetchSimilarProducts(id);
         viewModel.getSimilarProductsResponse().observe(this, new Observer<SimilarProduct>() {
             @Override
-            public void onChanged(@Nullable SimilarProduct similarProduct) {
+            public void onChanged(@Nullable final SimilarProduct similarProduct) {
                 if (!similarProduct.getError()) {
                     binding.progressBar.setVisibility(View.GONE);
-                    if (payloadsList != null) {
+                    if (similarProduct.getPayload().size() != 0) {
                         similarDataList.clear();
                         payloadsList = similarProduct.getPayload();
                         similarDataList.addAll(payloadsList);
                         binding.rvSimilar.setVisibility(View.VISIBLE);
                         binding.progressBar.setVisibility(View.GONE);
+
+                        binding.tvViewAllMobiles.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(ProductDetailActivity.this, ViewAllProductsActivity.class).putExtra("categoryId", similarProduct.getCat_id()));
+                            }
+                        });
                     }else {
                         binding.llSimilar.setVisibility(View.GONE);
                     }
                 } else {
-
+                    binding.llSimilar.setVisibility(View.GONE);
                 }
             }
         });

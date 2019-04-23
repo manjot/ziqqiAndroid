@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityPaymentGatewayBinding;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
+import com.ziqqi.model.placeordermodel.Payload;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
@@ -39,7 +41,10 @@ import com.ziqqi.viewmodel.PlaceOrderViewModel;
 
 import org.json.JSONException;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class PaymentGatewayActivity extends AppCompatActivity {
@@ -58,6 +63,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
     TextView amount,zaad_number;
     String paymentMethod = "0";
     String walletNumber = "0";
+    List<Payload> cartDataList = new ArrayList<>();
+    List<Payload> payloadList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,6 +264,9 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     if (!placeOrderResponse.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        payloadList = placeOrderResponse.getPayload();
+                        cartDataList.addAll(payloadList);
+
                         startActivity(new Intent(PaymentGatewayActivity.this, PaymentConfirmationActivity.class).putExtra("type", strPaymentType));
                         finishAffinity();
                     } else {

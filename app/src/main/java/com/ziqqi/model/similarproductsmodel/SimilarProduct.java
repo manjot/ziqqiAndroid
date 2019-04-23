@@ -21,6 +21,9 @@ public class SimilarProduct {
     @SerializedName("Code")
     @Expose
     private Integer code;
+    @SerializedName("cat_id")
+    @Expose
+    private String cat_id;
 
     public Boolean getError() {
         return error;
@@ -60,6 +63,14 @@ public class SimilarProduct {
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public String getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(String cat_id) {
+        this.cat_id = cat_id;
     }
 
 }

@@ -94,7 +94,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             /*rlMain.setVisibility(View.VISIBLE);*/
                             startActivity(new Intent(ChangePasswordActivity.this, LoginActivity.class));
                             Toast.makeText(ChangePasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
-                            finishAffinity();
+                            finish();
                         } else {
                             binding.progressBar.setVisibility(View.GONE);
                             /*rlMain.setVisibility(View.VISIBLE);*/

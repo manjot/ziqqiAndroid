@@ -86,6 +86,12 @@ public class MyAddressBookActivity extends AppCompatActivity {
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
             getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
+
+        getCountries();
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, countries);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         binding.btEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,19 +131,10 @@ public class MyAddressBookActivity extends AppCompatActivity {
                             binding.tvMobile.setText("Mobile : "+shippingAddressModel.getPayload().getMobile());
                         }else{
                             binding.tvUserName.setText(shippingAddressModel.getPayload().getFirstName() +" "+ shippingAddressModel.getPayload().getLastName());
-                            binding.tvLineTwo.setText(shippingAddressModel.getPayload().getCountry());
+                            binding.tvLineTwo.setText("Address : \n" +shippingAddressModel.getPayload().getCountry());
                             binding.tvAddress.setText("Address Details : \n"+ shippingAddressModel.getPayload().getAddressDetails());
                             binding.tvMobile.setText("Mobile : "+shippingAddressModel.getPayload().getMobile());
                         }
-
-
-
-//                    }else if (shippingAddressModel.getCode() == 204){
-//                        binding.progressBar.setVisibility(View.GONE);
-//                        binding.mainLayout.setVisibility(View.GONE);
-//                        binding.llNoData.setVisibility(View.VISIBLE);
-//                        Toast.makeText(getApplicationContext(), shippingAddressModel.getMessage(), Toast.LENGTH_SHORT).show();
-
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.mainLayout.setVisibility(View.GONE);
@@ -184,11 +181,10 @@ public class MyAddressBookActivity extends AppCompatActivity {
         locationAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, locations);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         et_location.setAdapter(locationAdapter);
+        et_location.setSelection(adapter.getPosition(strLocation));
 
-        getCountries();
-
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, countries);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        et_country.setAdapter(adapter);
+        et_country.setSelection(adapter.getPosition(strCountry));
 
         et_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -299,12 +295,10 @@ public class MyAddressBookActivity extends AppCompatActivity {
                         for (int i = 0; i <= countryResponse.getPayload().size() - 1; i++) {
                             countries.add(countryResponse.getPayload().get(i).getName());
                         }
-                        if (!isCityLoaded) {
-                            isCityLoaded = true;
-                            getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
-                        }
-
-                        et_country.setAdapter(adapter);
+//                        if (!isCityLoaded) {
+//                            isCityLoaded = true;
+//                            getAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+//                        }
 
                     } else {
 

@@ -36,6 +36,7 @@ public class Payload {
     @Expose
     private Integer isWishlist;
 
+
     public String getId() {
         return id;
     }
@@ -115,5 +116,6 @@ public class Payload {
     public void setIsWishlist(Integer isWishlist) {
         this.isWishlist = isWishlist;
     }
+
 
 }

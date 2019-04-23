@@ -178,10 +178,19 @@
                 android:background="@color/colorSeacrhBox"
                 android:fontFamily="@font/bold"
                 android:gravity="center"
+                android:visibility="gone"
                 android:padding="@dimen/_8sdp"
                 android:text="Your Order Details"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false">
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
 

@@ -487,6 +487,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             tvCart.setVisibility(View.VISIBLE);
                             tvCart.setText(String.valueOf(cartSize));
                         }
+                    }else{
+                        tvCart.setVisibility(View.GONE);
                     }
                 }
             });
