@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "59476849974",
+    "firebase_url": "https://ziqqi-1f5b7.firebaseio.com",
+    "project_id": "ziqqi-1f5b7",
+    "storage_bucket": "ziqqi-1f5b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59476849974:android:a609f47994f71f2a",
+        "android_client_info": {
+          "package_name": "com.ziqqi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59476849974-0ejjdctft5l50sistd70299e7n3bb51k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOxzHxEXWa5CP1JTCGEazp9ifS9LpF1Uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59476849974-0ejjdctft5l50sistd70299e7n3bb51k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

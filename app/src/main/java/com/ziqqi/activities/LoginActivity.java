@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityLoginBinding;
 import com.ziqqi.model.loginResponse.LoginResponse;
@@ -120,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBinding.executePendingBindings();
         loginBinding.setViewModel(loginViewModel);
 
-        deviceId = UUID.randomUUID().toString();
+        deviceId = FirebaseInstanceId.getInstance().getToken();
         initViews();
         setUpFonts();
 
@@ -378,6 +380,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (loginResponse.getError()) {
                             if (loginResponse.getCode() == 204){
                                 Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());
+                                String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                                PreferenceManager.setStringValue(Constants.GUEST_ID, android_id);
                             }else if (loginResponse.getCode() == 203){
                                 startActivity(new Intent(LoginActivity.this, OtpVerifyActivity.class).putExtra("cId", loginResponse.getPayload().getCustomer_id()));
                                 Utils.ShowToast(LoginActivity.this, loginResponse.getMessage());

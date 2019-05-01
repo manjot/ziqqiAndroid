@@ -83,13 +83,24 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (Utils.isValidEmail(etEmail.getText().toString())) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    /*rlMain.setVisibility(View.GONE);*/
-                    getPassword();
-                } else {
-                    Toast.makeText(ForgetPasswordActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                if (strOtpMethod.equalsIgnoreCase("0")){
+                    if (Utils.isValidEmail(etEmail.getText().toString())) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        /*rlMain.setVisibility(View.GONE);*/
+                        getPassword();
+                    } else {
+                        Toast.makeText(ForgetPasswordActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                    }
+                }if (strOtpMethod.equalsIgnoreCase("1")){
+                    if (etEmail.getText().toString().length() > 9) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        /*rlMain.setVisibility(View.GONE);*/
+                        getPassword();
+                    } else {
+                        Toast.makeText(ForgetPasswordActivity.this, "Invalid Phone", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
     }

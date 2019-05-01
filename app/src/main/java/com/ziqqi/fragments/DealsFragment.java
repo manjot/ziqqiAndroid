@@ -122,26 +122,39 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
                         Utils.share(getActivity(), payload.getId());
                         break;
                     case Constants.WISH_LIST:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
-                        }else{
-                            loginDialog.showDialog(getActivity());
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                        } else {
+                            addToWishList("", payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            viewModel.addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            viewModel.addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
-                                    if (!addToCart.getError()){
-                                        Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                                    if (!addToCart.getError()) {
                                         addToCartListener.addToCart();
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    } else {
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
                                     }
                                 }
                             });
-                        }else{
-                            loginDialog.showDialog(getActivity());
+                        } else {
+                            viewModel.addToCart(payload.getId(), "", "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
+                                @Override
+                                public void onChanged(@Nullable AddToCart addToCart) {
+                                    if (!addToCart.getError()) {
+                                        addToCartListener.addToCart();
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    } else {
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    }
+                                }
+                            });
                         }
 
                         break;
@@ -189,10 +202,10 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void addToWishList(String authToken, String id) {
+    private void addToWishList(String authToken, String id, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(getContext())){
             binding.progressBar.setVisibility(View.VISIBLE);
-            viewModel.addProductWishlist(authToken, id);
+            viewModel.addProductWishlist(authToken, id, guest_id);
             viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
                 @Override
                 public void onChanged(@Nullable AddToModel addToModel) {

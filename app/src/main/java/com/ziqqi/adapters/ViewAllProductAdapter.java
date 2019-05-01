@@ -20,6 +20,7 @@ import com.ziqqi.OnAllItemClickListener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.ProductDetailActivity;
+import com.ziqqi.activities.ViewAllProductsActivity;
 import com.ziqqi.model.productcategorymodel.Payload;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
@@ -51,13 +52,21 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewAllViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull ViewAllViewHolder holder,final int i) {
         holder.tvBrandName.setText(payloadList.get(i).getBrandName());
         holder.tvName.setText(payloadList.get(i).getName());
         holder.tvDesc.setText(Html.fromHtml(payloadList.get(i).getSku()));
         holder.tvMarketPrice.setText("$ " + payloadList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
         Glide.with(context).load(payloadList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
+
+//        holder.ll_card.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                context.startActivity(new Intent(context, ProductDetailActivity.class).putExtra("product_id", payloadList.get(i).getProductId()));
+//            }
+//        });
+
     }
 
     @Override
@@ -93,7 +102,7 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
             ivWishList.setOnClickListener(this);
             ivShare.setOnClickListener(this);
             ivCart.setOnClickListener(this);
-            ll_card.setOnClickListener(this);
+//            ll_card.setOnClickListener(this);
 
         }
 
@@ -118,9 +127,9 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
         }
     }
 
-    public void setPayloadList(List<Payload> payloadList) {
-        this.payloadList = payloadList;
-        notifyDataSetChanged();
-    }
+//    public void setPayloadList(List<Payload> payloadList) {
+//        this.payloadList = payloadList;
+//        notifyDataSetChanged();
+//    }
 
 }

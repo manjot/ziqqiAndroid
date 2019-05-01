@@ -106,15 +106,15 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("addTowishlist")
-    Call<AddToModel> addToWishlist(@Field("auth_token") String auth_token, @Field("product_id") String product_id);
+    Call<AddToModel> addToWishlist(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("guest_id") String guest_id);
 
     @FormUrlEncoded
     @POST("deleteWishlistProduct")
-    Call<DeleteWishlistModel> removeWishlist(@Field("auth_token") String auth_token, @Field("product_id") String product_id);
+    Call<DeleteWishlistModel> removeWishlist(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("guest_id") String guest_id);
 
     @FormUrlEncoded
     @POST("veiwWishlistProduct")
-    Call<ViewWishlist> viewWishlist(@Field("auth_token") String auth_token);
+    Call<ViewWishlist> viewWishlist(@Field("auth_token") String auth_token, @Field("guest_id") String guest_id);
 
     @FormUrlEncoded
     @POST("categorysearch")
@@ -126,15 +126,15 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("viewCartProduct")
-    Call<ViewCartResponse> fetchCart(@Field("auth_token") String auth_token);
+    Call<ViewCartResponse> fetchCart(@Field("auth_token") String auth_token, @Field("guest_id") String guest_id);
 
     @FormUrlEncoded
     @POST("deleteCartProduct")
-    Call<DeleteCartResponse> deleteCart(@Field("auth_token") String auth_token, @Field("product_id") String product_id);
+    Call<DeleteCartResponse> deleteCart(@Field("auth_token") String auth_token, @Field("guest_id") String guest_id, @Field("product_id") String product_id);
 
     @FormUrlEncoded
     @POST("addTocart")
-    Call<AddToCart> addToCart(@Field("product_id") String productId, @Field("auth_token") String auth_token, @Field("quantity") String quantity);
+    Call<AddToCart> addToCart(@Field("product_id") String productId, @Field("auth_token") String auth_token, @Field("quantity") String quantity, @Field("guest_id") String guest_id);
 
     @FormUrlEncoded
     @POST("deals")
@@ -203,7 +203,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("change_cart_quantity")
-    Call<ChangeQuantityResponse> changeCartQuantity(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("type") String type);
+    Call<ChangeQuantityResponse> changeCartQuantity(@Field("auth_token") String auth_token, @Field("guest_id") String guest_id, @Field("product_id") String product_id, @Field("type") String type);
 
     @FormUrlEncoded
     @POST("forgot_password")

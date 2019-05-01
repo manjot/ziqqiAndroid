@@ -18,6 +18,7 @@ import com.ziqqi.R;
 import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.model.myordersmodel.Payload;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrdedersViewHolder> {
@@ -25,6 +26,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
     Context context;
     List<Payload> payloadList;
     OnItemClickListener listener;
+    ArrayList<String> names = new ArrayList<>();
 
     public MyOrdersAdapter(Context context, List<Payload> payloadList, OnItemClickListener listener) {
         this.context = context;
@@ -41,6 +43,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
 
     @Override
     public void onBindViewHolder(@NonNull MyOrdersAdapter.MyOrdedersViewHolder holder, final int i) {
+        names.add(payloadList.get(i).getProductName());
         holder.tvBrandName.setText(payloadList.get(i).getBrandName());
         holder.tvName.setText(payloadList.get(i).getProductName());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getPrice());
@@ -77,5 +80,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyOrde
             tvStatus = itemView.findViewById(R.id.tv_status);
             ll_card = itemView.findViewById(R.id.ll_card);
         }
+    }
+
+    public void filterList(ArrayList<String> filterdNames) {
+        this.names = filterdNames;
+        notifyDataSetChanged();
     }
 }

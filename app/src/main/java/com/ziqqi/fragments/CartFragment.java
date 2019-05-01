@@ -105,28 +105,46 @@ public class CartFragment extends Fragment {
             public void onCartItemClick(Payload payload, String type) {
                 switch (type) {
                     case Constants.REMOVE_CART:
-                        deleteCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            deleteCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),PreferenceManager.getStringValue(Constants.GUEST_ID), payload.getId());
+                        }else{
+                            deleteCart("",PreferenceManager.getStringValue(Constants.GUEST_ID), payload.getId());
+                        }
+
                         break;
                     case Constants.ADD_ITEM:
-                        updateQuantity(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), "1");
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            updateQuantity(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),PreferenceManager.getStringValue(Constants.GUEST_ID), payload.getId(), "1");
+                        }else{
+                            updateQuantity("",PreferenceManager.getStringValue(Constants.GUEST_ID), payload.getId(), "1");
+                        }
+
                         break;
                     case Constants.MINUS_ITEM:
-                        updateQuantity(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), "0");
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                            updateQuantity(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),PreferenceManager.getStringValue(Constants.GUEST_ID), payload.getId(), "0");
+                        }else{
+                            updateQuantity("",PreferenceManager.getStringValue(Constants.GUEST_ID), payload.getId(), "0");
+                        }
+
                         break;
                 }
             }
         };
         setUpAdapter();
+
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN) , PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
         }
 
         return view;
     }
 
-    private void deleteCart(String authToken, String productId) {
+    private void deleteCart(String authToken, String guest_id, String productId) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.deleteCart(authToken, productId);
+        viewModel.deleteCart(authToken, guest_id, productId);
         viewModel.deleteCartResponse().observe(this, new Observer<DeleteCartResponse>() {
             @Override
             public void onChanged(@Nullable final DeleteCartResponse viewCart) {
@@ -134,7 +152,12 @@ public class CartFragment extends Fragment {
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), viewCart.getMessage(), Toast.LENGTH_SHORT).show();
                     addToCartListener.addToCart();
-                    fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    }else{
+                        fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    }
+
                 } else {
                     adapter.notifyDataSetChanged();
                     binding.progressBar.setVisibility(View.GONE);
@@ -144,12 +167,12 @@ public class CartFragment extends Fragment {
         });
     }
 
-    private void fetchCart(String authToken) {
+    private void fetchCart(String authToken, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(getContext())) {
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.rvCart.setVisibility(View.GONE);
             binding.llNoData.setVisibility(View.GONE);
-            viewModel.fetchData(authToken);
+            viewModel.fetchData(authToken, guest_id);
             viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
                 @Override
                 public void onChanged(@Nullable final ViewCartResponse viewCart) {
@@ -196,9 +219,9 @@ public class CartFragment extends Fragment {
 
     }
 
-    private void setTotal(String authToken) {
+    private void setTotal(String authToken, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(getContext())) {
-            viewModel.fetchData(authToken);
+            viewModel.fetchData(authToken, guest_id);
             viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
                 @Override
                 public void onChanged(@Nullable final ViewCartResponse viewCart) {
@@ -223,9 +246,9 @@ public class CartFragment extends Fragment {
 //        binding.rvCart.addItemDecoration(spacesItemDecoration);
     }
 
-    private void addToCart(String id, String authToken, String quantity) {
+    private void addToCart(String id, String authToken, String quantity, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addProductToCart(id, authToken, quantity, guest_id);
         viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
             @Override
             public void onChanged(@Nullable AddToCart addToCart) {
@@ -239,16 +262,21 @@ public class CartFragment extends Fragment {
         });
     }
 
-    private void updateQuantity(String authToken, String productId, String type) {
+    private void updateQuantity(String authToken,String guest_id, String productId, String type) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.changeCart(authToken, productId, type);
+        viewModel.changeCart(authToken, guest_id, productId, type);
         viewModel.changeCartResponse().observe(this, new Observer<ChangeQuantityResponse>() {
             @Override
             public void onChanged(@Nullable ChangeQuantityResponse changeCart) {
                 binding.progressBar.setVisibility(View.GONE);
                 if (!changeCart.getError()) {
                     Toast.makeText(getApplicationContext(), changeCart.getMessage(), Toast.LENGTH_SHORT).show();
-                    setTotal(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        setTotal(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    }else{
+                        setTotal("", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), changeCart.getMessage(), Toast.LENGTH_SHORT).show();
                 }

@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -82,6 +83,8 @@ public class OtpVerifyActivity extends AppCompatActivity {
                         binding.rlMain.setVisibility(View.VISIBLE);
                         startActivity(new Intent(OtpVerifyActivity.this, MainActivity.class));
                         PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
+                        String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                        PreferenceManager.setStringValue(Constants.GUEST_ID, android_id);
                         PreferenceManager.setStringValue(Constants.FACEBOOK_OR_GMAIL, "f or g");
                         PreferenceManager.setStringValue(Constants.AUTH_TOKEN, verifyOtpResponse.getPayload().get(0).getAuthToken());
                         PreferenceManager.setStringValue(Constants.FIRST_NAME, verifyOtpResponse.getPayload().get(0).getFirstName());

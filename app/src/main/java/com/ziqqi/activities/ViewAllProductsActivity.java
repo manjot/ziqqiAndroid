@@ -2,6 +2,7 @@ package com.ziqqi.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -83,27 +84,27 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         listener = new OnAllItemClickListener() {
             @Override
             public void onItemClick(String id, String type) {
-
+                startActivity(new Intent(ViewAllProductsActivity.this, ProductDetailActivity.class).putExtra("product_id", id));
             }
 
             @Override
             public void onItemClick(Payload payload, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        Utils.share(ViewAllProductsActivity.this, payload.getId());
+                        Utils.share(ViewAllProductsActivity.this, payload.getProductId());
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }else{
-                            loginDialog.showDialog(ViewAllProductsActivity.this);
+                            addToWishList("", payload.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToCart(payload.getId());
+                            addToCart(payload.getProductId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }else{
-                            loginDialog.showDialog(ViewAllProductsActivity.this);
+                            addToCart(payload.getProductId(), "", PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
 
                         break;
@@ -132,10 +133,10 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         binding.recyclerView.setPullRefreshEnabled(false);
     }
 
-    private void addToWishList(String authToken, String id) {
+    private void addToWishList(String authToken, String id, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
-            viewModel.addProductWishlist(authToken, id);
+            viewModel.addProductWishlist(authToken, id, guest_id);
             viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
                 @Override
                 public void onChanged(@Nullable AddToModel addToModel) {
@@ -153,10 +154,10 @@ public class ViewAllProductsActivity extends AppCompatActivity {
 
     }
 
-    private void addToCart(String id) {
+    private void addToCart(String id, String authToken, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
-            viewModel.addToCart(id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+            viewModel.addToCart(id, authToken, "1" , guest_id);
             viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
                 @Override
                 public void onChanged(@Nullable AddToCart addToCart) {

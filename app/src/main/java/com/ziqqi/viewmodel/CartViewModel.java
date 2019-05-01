@@ -24,11 +24,11 @@ public class CartViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchData(String authToken) {
+    public void fetchData(String authToken, String guest_id) {
       /*  if (searchResponse != null) {
 
         } else {*/
-        viewCartResponse = repository.viewCart(authToken);
+        viewCartResponse = repository.viewCart(authToken, guest_id);
         //  }
     }
 
@@ -38,11 +38,11 @@ public class CartViewModel extends AndroidViewModel {
         else return null;
     }
 
-    public void deleteCart(String authToken, String ProductId) {
+    public void deleteCart(String authToken, String guest_id, String ProductId) {
       /*  if (searchResponse != null) {
 
         } else {*/
-        deleteCartResponse = repository.deleteCart(authToken, ProductId);
+        deleteCartResponse = repository.deleteCart(authToken, guest_id, ProductId);
         //  }
     }
 
@@ -52,16 +52,16 @@ public class CartViewModel extends AndroidViewModel {
         else return null;
     }
 
-    public void addProductToCart(String productId, String authToken, String quantity){
-        addToCartResponse = repository.addToCart(productId, authToken, quantity);
+    public void addProductToCart(String productId, String authToken, String guest_id, String quantity){
+        addToCartResponse = repository.addToCart(productId, authToken, guest_id, quantity);
     }
 
     public MutableLiveData<AddToCart> addCartResponse() {
         return addToCartResponse;
     }
 
-    public void changeCart(String authToken, String productId, String type){
-        changeQuantityResponse = repository.changeQuantity(authToken, productId, type);
+    public void changeCart(String authToken, String productId, String type, String guest_id){
+        changeQuantityResponse = repository.changeQuantity(authToken, productId, type, guest_id);
     }
 
     public MutableLiveData<ChangeQuantityResponse> changeCartResponse() {

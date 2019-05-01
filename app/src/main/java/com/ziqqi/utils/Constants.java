@@ -19,6 +19,7 @@ public class Constants {
     public static final String WISH_LIST = "wish list";
     public static final String VIEW_ALL = "view all";
     public static final String AUTH_TOKEN = "5c2f405346f56";
+    public static final String GUEST_ID = "5c2f405346f56fnds";
 
     /*Categories Id*/
 

@@ -180,6 +180,7 @@
     <string name="enter_verification_code">Enter verification code</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="hello_user">Hello User</string>
+    <string name="search_product">Search product</string>
 
 
 </resources>

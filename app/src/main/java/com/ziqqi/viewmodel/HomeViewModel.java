@@ -40,12 +40,12 @@ public class HomeViewModel extends AndroidViewModel {
         }
     }
 
-    public void addToCart(String productId, String authToken,  String quantity) {
-        addToCartResponse = repository.addToCart(productId, authToken, quantity);
+    public void addToCart(String productId, String authToken,  String quantity, String guest_id) {
+        addToCartResponse = repository.addToCart(productId, authToken, quantity, guest_id);
     }
 
-    public void addProductWishlist(String authToken, String productId) {
-        addToModelResponse = repository.addToWishlist(authToken, productId);
+    public void addProductWishlist(String authToken, String productId, String guest_id) {
+        addToModelResponse = repository.addToWishlist(authToken, productId, guest_id);
     }
 
     public MutableLiveData<BannerImageModel> getHomeBanners() {

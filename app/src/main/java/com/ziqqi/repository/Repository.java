@@ -178,10 +178,10 @@ public class Repository {
         return similarProductsResponse;
     }
 
-    public MutableLiveData<AddToModel> addToWishlist(String authToken, String id) {
+    public MutableLiveData<AddToModel> addToWishlist(String authToken, String id, String guest_id) {
         final MutableLiveData<AddToModel> addwishlist = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<AddToModel> call = apiInterface.addToWishlist(authToken, id);
+        Call<AddToModel> call = apiInterface.addToWishlist(authToken, id, guest_id);
         call.enqueue(new Callback<AddToModel>() {
             @Override
             public void onResponse(Call<AddToModel> call, Response<AddToModel> response) {
@@ -196,10 +196,10 @@ public class Repository {
         return addwishlist;
     }
 
-    public MutableLiveData<DeleteWishlistModel> removeWishlist(String authToken, String id) {
+    public MutableLiveData<DeleteWishlistModel> removeWishlist(String authToken, String id, String guest_id) {
         final MutableLiveData<DeleteWishlistModel> addwishlist = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<DeleteWishlistModel> call = apiInterface.removeWishlist(authToken, id);
+        Call<DeleteWishlistModel> call = apiInterface.removeWishlist(authToken, id, guest_id);
         call.enqueue(new Callback<DeleteWishlistModel>() {
             @Override
             public void onResponse(Call<DeleteWishlistModel> call, Response<DeleteWishlistModel> response) {
@@ -214,10 +214,10 @@ public class Repository {
         return addwishlist;
     }
 
-    public MutableLiveData<ViewWishlist> fetchWishlist(String authToken) {
+    public MutableLiveData<ViewWishlist> fetchWishlist(String authToken, String guest_id) {
         final MutableLiveData<ViewWishlist> viewWishlist = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ViewWishlist> call = apiInterface.viewWishlist(authToken);
+        Call<ViewWishlist> call = apiInterface.viewWishlist(authToken, guest_id);
         call.enqueue(new Callback<ViewWishlist>() {
             @Override
             public void onResponse(Call<ViewWishlist> call, Response<ViewWishlist> response) {
@@ -304,10 +304,10 @@ public class Repository {
         return getShipAddress;
     }
 
-    public MutableLiveData<AddToCart> addToCart(String productId, String authToken, String quantity) {
+    public MutableLiveData<AddToCart> addToCart(String productId, String authToken, String quantity, String guest_id) {
         final MutableLiveData<AddToCart> addToCart = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<AddToCart> call = apiInterface.addToCart(productId, authToken, quantity);
+        Call<AddToCart> call = apiInterface.addToCart(productId, authToken, quantity, guest_id);
         call.enqueue(new Callback<AddToCart>() {
             @Override
             public void onResponse(Call<AddToCart> call, Response<AddToCart> response) {
@@ -322,10 +322,10 @@ public class Repository {
         return addToCart;
     }
 
-    public MutableLiveData<ViewCartResponse> viewCart(String authToken) {
+    public MutableLiveData<ViewCartResponse> viewCart(String authToken, String guest_id) {
         final MutableLiveData<ViewCartResponse> getCart = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ViewCartResponse> call = apiInterface.fetchCart(authToken);
+        Call<ViewCartResponse> call = apiInterface.fetchCart(authToken, guest_id);
         call.enqueue(new Callback<ViewCartResponse>() {
             @Override
             public void onResponse(Call<ViewCartResponse> call, Response<ViewCartResponse> response) {
@@ -485,10 +485,10 @@ public class Repository {
         return countries;
     }
 
-    public MutableLiveData<DeleteCartResponse> deleteCart(String authToken, String product_id) {
+    public MutableLiveData<DeleteCartResponse> deleteCart(String authToken, String guest_id, String product_id) {
         final MutableLiveData<DeleteCartResponse> removeCart = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<DeleteCartResponse> call = apiInterface.deleteCart(authToken, product_id);
+        Call<DeleteCartResponse> call = apiInterface.deleteCart(authToken, guest_id, product_id);
         call.enqueue(new Callback<DeleteCartResponse>() {
             @Override
             public void onResponse(Call<DeleteCartResponse> call, Response<DeleteCartResponse> response) {
@@ -557,10 +557,10 @@ public class Repository {
         return password;
     }
 
-    public MutableLiveData<ChangeQuantityResponse> changeQuantity(String authToken, String productId, String type ) {
+    public MutableLiveData<ChangeQuantityResponse> changeQuantity(String authToken, String productId, String type , String guest_id ) {
         final MutableLiveData<ChangeQuantityResponse> editCart = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ChangeQuantityResponse> call = apiInterface.changeCartQuantity(authToken, productId, type);
+        Call<ChangeQuantityResponse> call = apiInterface.changeCartQuantity(authToken, productId, type, guest_id);
         call.enqueue(new Callback<ChangeQuantityResponse>() {
             @Override
             public void onResponse(Call<ChangeQuantityResponse> call, Response<ChangeQuantityResponse> response) {

@@ -110,7 +110,12 @@ public class CheckoutDialogFragment extends DialogFragment {
         bt_next = view.findViewById(R.id.bt_next);
 
         setUpAdapter();
-        fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }
+
         return view;
 
     }
@@ -127,9 +132,9 @@ public class CheckoutDialogFragment extends DialogFragment {
 
     }
 
-    private void fetchCart(String authToken) {
+    private void fetchCart(String authToken, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(getContext())){
-            viewModel.fetchData(authToken);
+            viewModel.fetchData(authToken, guest_id);
             viewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
                 @Override
                 public void onChanged(@Nullable ViewCartResponse viewCart) {

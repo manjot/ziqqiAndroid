@@ -39,16 +39,16 @@ public class ProductDetailsViewModel extends AndroidViewModel {
         similarProductResponse = repository.getSimilarProduct(productId);
     }
 
-    public void addProductWishlist(String authToken, int productId){
-        addToModelResponse = repository.addToWishlist(authToken, String.valueOf(productId));
+    public void addProductWishlist(String authToken, int productId, String guest_id){
+        addToModelResponse = repository.addToWishlist(authToken, String.valueOf(productId), guest_id);
     }
 
-    public void addProductToCart(String productId, String authToken, String quantity){
-        addToCartResponse = repository.addToCart(productId, authToken, quantity);
+    public void addProductToCart(String productId, String authToken, String quantity, String guest_id){
+        addToCartResponse = repository.addToCart(productId, authToken, quantity, guest_id);
     }
 
-    public void removeWishlist(String authToken, int productId){
-        deleteWishlistResponse = repository.removeWishlist(authToken, String.valueOf(productId));
+    public void removeWishlist(String authToken, int productId, String guest_id){
+        deleteWishlistResponse = repository.removeWishlist(authToken, String.valueOf(productId), guest_id);
     }
 
     public MutableLiveData<ProductDetails> getProductDetailsResponse() {

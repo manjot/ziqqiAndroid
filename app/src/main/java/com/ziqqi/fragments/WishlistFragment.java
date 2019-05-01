@@ -90,7 +90,7 @@ public class WishlistFragment extends Fragment {
                 switch (type){
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            viewModel.addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            viewModel.addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
@@ -103,7 +103,18 @@ public class WishlistFragment extends Fragment {
                                 }
                             });
                         } else {
-                            loginDialog.showDialog(getActivity());
+                            viewModel.addToCart(payload.getId(), "", "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
+                                @Override
+                                public void onChanged(@Nullable AddToCart addToCart) {
+                                    if (!addToCart.getError()) {
+                                        addToCartListener.addToCart();
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    } else {
+                                        Utils.showalertResponse(getActivity(), addToCart.getMessage());
+                                    }
+                                }
+                            });
                         }
 
                         break;
@@ -113,7 +124,9 @@ public class WishlistFragment extends Fragment {
 
         setUpAdapter();
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-            fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+            fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchWishlist("", PreferenceManager.getStringValue(Constants.GUEST_ID));
         }
 
 
@@ -122,12 +135,12 @@ public class WishlistFragment extends Fragment {
         return view;
     }
 
-    private void fetchWishlist(String authToken) {
+    private void fetchWishlist(String authToken, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(getContext())){
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.rvWishlist.setVisibility(View.GONE);
             binding.llNoData.setVisibility(View.GONE);
-            viewModel.fetchWishlist(authToken);
+            viewModel.fetchWishlist(authToken, guest_id);
             viewModel.getWishlistResponse().observe(this, new Observer<ViewWishlist>() {
                 @Override
                 public void onChanged(@Nullable ViewWishlist viewWishlist) {

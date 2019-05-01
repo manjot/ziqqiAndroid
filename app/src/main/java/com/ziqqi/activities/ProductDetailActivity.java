@@ -124,16 +124,16 @@ public class ProductDetailActivity extends AppCompatActivity {
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                            addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         } else {
-                            loginDialog.showDialog(ProductDetailActivity.this);
+                            addToWishlist("", Integer.parseInt(product_id), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                         } else {
-                            loginDialog.showDialog(ProductDetailActivity.this);
+                            addToCart(product_id, "", "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
 
                         break;
@@ -218,12 +218,16 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                     if (isWishlist == 0) {
-                        addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                        addToWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id), PreferenceManager.getStringValue(Constants.GUEST_ID));
                     } else if (isWishlist == 1) {
-                        removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id));
+                        removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(product_id), PreferenceManager.getStringValue(Constants.GUEST_ID));
                     }
                 } else {
-                    loginDialog.showDialog(ProductDetailActivity.this);
+                    if (isWishlist == 0) {
+                        addToWishlist("", Integer.parseInt(product_id), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    } else if (isWishlist == 1) {
+                        removeWishlist("", Integer.parseInt(product_id), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    }
                 }
             }
         });
@@ -239,9 +243,9 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                    addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                    addToCart(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                 } else {
-                    loginDialog.showDialog(ProductDetailActivity.this);
+                    addToCart(product_id, "", "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                 }
             }
         });
@@ -250,13 +254,13 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                    addToBuy(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                    addToBuy(product_id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                     CheckoutDialogFragment dialogFragment = new CheckoutDialogFragment();
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.rl_container, dialogFragment);
                     ft.commit();
                 } else {
-                    loginDialog.showDialog(ProductDetailActivity.this);
+                    addToBuy(product_id, "", "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                 }
             }
         });
@@ -341,9 +345,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     /*Wihslist*/
-    private void addToWishlist(String authToken, int id) {
+    private void addToWishlist(String authToken, int id, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductWishlist(authToken, id);
+        viewModel.addProductWishlist(authToken, id, guest_id);
         viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
             @Override
             public void onChanged(@Nullable AddToModel addToModel) {
@@ -359,9 +363,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void removeWishlist(String authToken, int id) {
+    private void removeWishlist(String authToken, int id, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.removeWishlist(authToken, id);
+        viewModel.removeWishlist(authToken, id, guest_id);
         viewModel.deleteWishlistResponse().observe(this, new Observer<DeleteWishlistModel>() {
             @Override
             public void onChanged(@Nullable DeleteWishlistModel deleteWishlistModel) {
@@ -378,9 +382,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     /*Cart*/
-    private void addToCart(String id, String authToken, String quantity) {
+    private void addToCart(String id, String authToken, String quantity, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addProductToCart(id, authToken, quantity, guest_id);
         viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
             @Override
             public void onChanged(@Nullable AddToCart addToCart) {
@@ -396,9 +400,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void addToBuy(String id, String authToken, String quantity) {
+    private void addToBuy(String id, String authToken, String quantity, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductToCart(id, authToken, quantity);
+        viewModel.addProductToCart(id, authToken, quantity, guest_id);
         viewModel.addCartResponse().observe(this, new Observer<AddToCart>() {
             @Override
             public void onChanged(@Nullable AddToCart addToCart) {

@@ -68,12 +68,23 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             strPaymentType = getIntent().getStringExtra("type");
 //            payloadList = getIntent().getParcelableExtra("cartdata");
             if (strPaymentType.equalsIgnoreCase("ZAAD")){
-                strUSSD = "*883*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                if (Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
+                    strUSSD = "*883*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                } else{
+                    strUSSD = "*223*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                }
+
                 bt_method.setText("ZAAD - 504880");
                 tv_send.setText("To complete the order, please send us the payment of USD "+PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+ " from your USD account with phone number " +PreferenceManager.getStringValue(Constants.WALLET_NUMBER)+ " to our "+strPaymentType+" Merchant account mentioned below.");
             }else if (strPaymentType.equalsIgnoreCase("DAHAB")){
+
+                if (Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
+                    strUSSD = "*113*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                } else{
+                    strUSSD = "*773*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                }
+
                 bt_method.setText("E-Dahab - 74110");
-                strUSSD = "*113*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
                 tv_send.setText("To complete the order, please send us the payment of USD "+PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+ " from your USD account with phone number " +PreferenceManager.getStringValue(Constants.WALLET_NUMBER)+ " to our "+strPaymentType+" Merchant account mentioned below.");
             }
         }

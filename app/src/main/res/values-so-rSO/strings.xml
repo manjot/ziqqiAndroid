@@ -184,6 +184,7 @@
     <string name="enter_verification_code">Gali lambarka caddaynta</string>
     <string name="verify_otp">Hubi OTP</string>
     <string name="hello_user">Isticmaal user</string>
+    <string name="search_product">Search product</string>
 
     <string-array name="array_countries">
         <item>SOMALILAND</item>

@@ -96,17 +96,16 @@ public class SearchResultActivity extends AppCompatActivity {
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId());
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         } else {
-                            loginDialog.showDialog(SearchResultActivity.this);
+                            addToWishList("", payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            addToCart(payload.getId());
+                            addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         } else {
-                            loginDialog.showDialog(SearchResultActivity.this);
-                        }
+                            addToCart(payload.getId(), "", PreferenceManager.getStringValue(Constants.GUEST_ID));                        }
 
                         break;
                 }
@@ -132,10 +131,10 @@ public class SearchResultActivity extends AppCompatActivity {
 
     }
 
-    private void addToWishList(String authToken, String id) {
+    private void addToWishList(String authToken, String id, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
-            viewModel.addProductWishlist(authToken, id);
+            viewModel.addProductWishlist(authToken, id, guest_id);
             viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
                 @Override
                 public void onChanged(@Nullable AddToModel addToModel) {
@@ -152,10 +151,10 @@ public class SearchResultActivity extends AppCompatActivity {
         }
     }
 
-    private void addToCart(String id) {
+    private void addToCart(String id, String authToken, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
-            viewModel.addToCart(id, PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+            viewModel.addToCart(id, authToken, "1", guest_id);
             viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
                 @Override
                 public void onChanged(@Nullable AddToCart addToCart) {

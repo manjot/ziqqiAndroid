@@ -21,8 +21,8 @@ public class WishlistViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchWishlist(String authToken){
-        viewWishlistResponse = repository.fetchWishlist(authToken);
+    public void fetchWishlist(String authToken, String guest_id){
+        viewWishlistResponse = repository.fetchWishlist(authToken, guest_id);
     }
 
     public MutableLiveData<ViewWishlist> getWishlistResponse() {
@@ -31,8 +31,8 @@ public class WishlistViewModel extends AndroidViewModel {
         else return null;
     }
 
-    public void addToCart(String productId, String authToken,  String quantity) {
-        addToCartResponse = repository.addToCart(productId, authToken, quantity);
+    public void addToCart(String productId, String authToken,  String quantity, String guest_id) {
+        addToCartResponse = repository.addToCart(productId, authToken, quantity,guest_id );
     }
 
     public MutableLiveData<AddToCart> addToCartResponse() {

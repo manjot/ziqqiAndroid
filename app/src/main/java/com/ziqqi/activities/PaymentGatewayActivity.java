@@ -135,8 +135,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     if (!strZaad.isEmpty()){
                         walletNumber = "63"+binding.etZaad.getText().toString();
                         PreferenceManager.setStringValue(Constants.WALLET_NUMBER, walletNumber);
-                        if(Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) > 100000){
-                            showZAADDialog("SLS " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "63"+ binding.etZaad.getText().toString());
+                        if(Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
+                            showZAADDialog("SLS " + Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) * 9500, "63"+ binding.etZaad.getText().toString());
                         }else{
                             showZAADDialog("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "63"+ binding.etZaad.getText().toString());
                         }
@@ -149,8 +149,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     if (!strDahab.isEmpty()){
                         walletNumber = "65"+binding.etDahab.getText().toString();
                         PreferenceManager.setStringValue(Constants.WALLET_NUMBER, walletNumber);
-                        if(Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) > 100000){
-                            showZAADDialog("SLS " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "65"+ binding.etDahab.getText().toString());
+                        if(Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
+                            showZAADDialog("SLS " + Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) * 9500 , "65"+ binding.etDahab.getText().toString());
                         }else{
                             showZAADDialog("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "65"+ binding.etDahab.getText().toString());
                         }

@@ -162,7 +162,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         superMarketFragment = new SubCategoryFragment();
 
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
         }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
@@ -190,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvWelcome.setTypeface(FontCache.get(getResources().getString(R.string.bold), this));
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             tvLogin.setText(R.string.log_out);
+            tvWelcome.setText("WELCOME " + PreferenceManager.getStringValue(Constants.FIRST_NAME));
         } else tvLogin.setText(R.string.login_signup);
 
 //        if (getIntent().getExtras() != null){
@@ -473,9 +476,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mi.setTitle(mNewTitle);
     }
 
-    public void fetchCart(String authToken) {
+    public void fetchCart(String authToken, String guest_id) {
         if (ConnectivityHelper.isConnectedToNetwork(MainActivity.this)) {
-            cartViewModel.fetchData(authToken);
+            cartViewModel.fetchData(authToken, guest_id);
             cartViewModel.getCartResponse().observe(this, new Observer<ViewCartResponse>() {
                 @Override
                 public void onChanged(@Nullable ViewCartResponse viewCart) {
@@ -529,7 +532,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       //  tvCart.setVisibility(View.VISIBLE);
         // tvCart.setText("1");
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
         }
 
     }
@@ -539,7 +544,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //  tvCart.setVisibility(View.VISIBLE);
         // tvCart.setText("1");
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
         }
 
     }
@@ -561,6 +568,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void fetchCartSize() {
-        fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }
     }
 }

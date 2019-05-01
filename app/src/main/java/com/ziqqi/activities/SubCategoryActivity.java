@@ -92,14 +92,14 @@ public class SubCategoryActivity extends AppCompatActivity {
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), bestsellerProduct.getProductId());
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), bestsellerProduct.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         } else {
-                            loginDialog.showDialog(SubCategoryActivity.this);
+                            addToWishList("", bestsellerProduct.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            viewModel.addToCart(bestsellerProduct.getProductId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1");
+                            viewModel.addToCart(bestsellerProduct.getProductId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
                             viewModel.addToCartResponse().observe(SubCategoryActivity.this, new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
@@ -111,7 +111,17 @@ public class SubCategoryActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            loginDialog.showDialog(SubCategoryActivity.this);
+                            viewModel.addToCart(bestsellerProduct.getProductId(), "", "1", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            viewModel.addToCartResponse().observe(SubCategoryActivity.this, new Observer<AddToCart>() {
+                                @Override
+                                public void onChanged(@Nullable AddToCart addToCart) {
+                                    if (!addToCart.getError()) {
+                                        Utils.showalertResponse(SubCategoryActivity.this, addToCart.getMessage());
+                                    } else {
+                                        Utils.showalertResponse(SubCategoryActivity.this, addToCart.getMessage());
+                                    }
+                                }
+                            });
                         }
 
                         break;
@@ -212,9 +222,9 @@ public class SubCategoryActivity extends AppCompatActivity {
         }
     }
 
-    private void addToWishList(String authToken, String id) {
+    private void addToWishList(String authToken, String id, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
-        viewModel.addProductWishlist(authToken, id);
+        viewModel.addProductWishlist(authToken, id, guest_id);
         viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
             @Override
             public void onChanged(@Nullable AddToModel addToModel) {

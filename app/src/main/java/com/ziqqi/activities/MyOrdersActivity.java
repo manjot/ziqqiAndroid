@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +47,7 @@ public class MyOrdersActivity extends AppCompatActivity {
     MyOrdersAdapter adapter;
     SpacesItemDecoration spacesItemDecoration;
     OnItemClickListener listener;
+    ArrayList<String> names = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,24 @@ public class MyOrdersActivity extends AppCompatActivity {
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
             getOrders(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
+
+        binding.tvSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //after the change calling the method and passing the search input
+                filter(editable.toString());
+            }
+        });
     }
 
     private void getOrders(String authToken) {
@@ -79,6 +100,7 @@ public class MyOrdersActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(@Nullable MyOrdersResponse myOrdersResponse) {
                     if (!myOrdersResponse.getError()) {
+
                         binding.progressBar.setVisibility(View.GONE);
                         binding.rvMyOrders.setVisibility(View.VISIBLE);
                         binding.llNoData.setVisibility(View.GONE);
@@ -86,6 +108,10 @@ public class MyOrdersActivity extends AppCompatActivity {
                             addressDataList.clear();
                             payloadList = myOrdersResponse.getPayload();
                             addressDataList.addAll(payloadList);
+
+                            for (int i = 0;  i <= myOrdersResponse.getPayload().size()-1; i++){
+                                names.add(payloadList.get(i).getProductName());
+                            }
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
@@ -108,6 +134,23 @@ public class MyOrdersActivity extends AppCompatActivity {
         binding.rvMyOrders.setAdapter(adapter);
         spacesItemDecoration = new SpacesItemDecoration(MyOrdersActivity.this, R.dimen.dp_4);
         binding.rvMyOrders.addItemDecoration(spacesItemDecoration);
+    }
+
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<String> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (String s : names) {
+            //if the existing elements contains the search input
+            if (s.toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+            }
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+        adapter.filterList(filterdNames);
     }
 
 
