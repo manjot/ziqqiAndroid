@@ -63,6 +63,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
     TextView amount,zaad_number;
     String paymentMethod = "0";
     String walletNumber = "0";
+    String strCurrency = "";
     List<Payload> cartDataList = new ArrayList<>();
     List<Payload> payloadList = new ArrayList<>();
 
@@ -162,6 +163,13 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
+            strCurrency = "SLS";
+        }else{
+            strCurrency = "USD";
+        }
+
     }
 
     private void clearAll(){
@@ -200,7 +208,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                         PreferenceManager.getStringValue(Constants.SHIP_COUNTRY),
                         PreferenceManager.getStringValue(Constants.SHIP_CITY),
                         PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
-                        PreferenceManager.getStringValue(Constants.SHIP_ADDRESS));
+                        PreferenceManager.getStringValue(Constants.SHIP_ADDRESS),
+                        strCurrency);
             }
         });
 
@@ -240,7 +249,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                                 PreferenceManager.getStringValue(Constants.SHIP_COUNTRY),
                                 PreferenceManager.getStringValue(Constants.SHIP_CITY),
                                 PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
-                                PreferenceManager.getStringValue(Constants.SHIP_ADDRESS));
+                                PreferenceManager.getStringValue(Constants.SHIP_ADDRESS),
+                                strCurrency);
 
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -254,10 +264,10 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         }
     }
 
-    private void placeOrder(String authToken, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address) {
+    private void placeOrder(String authToken, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address, String payment_currency) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
-            placeOrderViewModel.placeOder(authToken,paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location, pickup_address);
+            placeOrderViewModel.placeOder(authToken,paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location, pickup_address, payment_currency);
             placeOrderViewModel.getPlaceOrderResponse().observe(this, new Observer<PlaceOrderResponse>() {
                 @Override
                 public void onChanged(@Nullable PlaceOrderResponse placeOrderResponse) {

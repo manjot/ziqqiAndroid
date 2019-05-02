@@ -38,7 +38,7 @@ import java.util.Locale;
 public class SignUpActivity extends AppCompatActivity {
     SignUpViewModel signUpViewModel;
     ActivitySignUpBinding binding;
-    int[] flags = {R.drawable.flag_soloman_islands, R.drawable.flag_india};
+    int[] flags = {R.drawable.ic_flag_somaliland, R.drawable.flag_india};
     String[] code = {"+252", "+91"};
     CountryCodeAdapter adapter;
     int countryPosition = 0;

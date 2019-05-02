@@ -23,6 +23,7 @@ import com.ziqqi.R;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.databinding.FragmentWishlistBinding;
 import com.ziqqi.model.addtocart.AddToCart;
+import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.viewwishlistmodel.Payload;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
@@ -118,6 +119,14 @@ public class WishlistFragment extends Fragment {
                         }
 
                         break;
+                    case Constants.REMOVE_WISHLIST:
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+                            removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(payload.getId()), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                        } else {
+                            removeWishlist("", Integer.parseInt(payload.getId()), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                        }
+
+                        break;
                 }
             }
         };
@@ -128,11 +137,28 @@ public class WishlistFragment extends Fragment {
         }else{
             fetchWishlist("", PreferenceManager.getStringValue(Constants.GUEST_ID));
         }
-
-
-
-
         return view;
+    }
+
+    private void removeWishlist(String authToken, int id, String guest_id) {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        viewModel.removeWishlist(authToken, id, guest_id);
+        viewModel.deleteWishlistResponse().observe(this, new Observer<DeleteWishlistModel>() {
+            @Override
+            public void onChanged(@Nullable DeleteWishlistModel deleteWishlistModel) {
+                if (!deleteWishlistModel.getError()) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    }else{
+                        fetchWishlist("", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), deleteWishlistModel.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void fetchWishlist(String authToken, String guest_id) {

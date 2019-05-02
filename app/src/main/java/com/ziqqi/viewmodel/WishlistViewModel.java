@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
+import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 import com.ziqqi.repository.Repository;
 
@@ -14,6 +15,7 @@ public class WishlistViewModel extends AndroidViewModel {
     Repository repository;
     MutableLiveData<ViewWishlist> viewWishlistResponse;
     private MutableLiveData<AddToCart> addToCartResponse;
+    MutableLiveData<DeleteWishlistModel> deleteWishlistResponse;
 
 
     public WishlistViewModel(@NonNull Application application) {
@@ -38,4 +40,13 @@ public class WishlistViewModel extends AndroidViewModel {
     public MutableLiveData<AddToCart> addToCartResponse() {
         return addToCartResponse;
     }
+
+    public void removeWishlist(String authToken, int productId, String guest_id){
+        deleteWishlistResponse = repository.removeWishlist(authToken, String.valueOf(productId), guest_id);
+    }
+
+    public MutableLiveData<DeleteWishlistModel> deleteWishlistResponse() {
+        return deleteWishlistResponse;
+    }
+
 }

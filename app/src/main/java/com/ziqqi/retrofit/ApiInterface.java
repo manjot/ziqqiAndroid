@@ -180,7 +180,8 @@ public interface ApiInterface {
                                         @Field("pickup_city") String pickup_city,
                                         @Field("pickup_country") String pickup_country,
                                         @Field("pickup_location") String pickup_location,
-                                        @Field("pickup_address") String pickup_address);
+                                        @Field("pickup_address") String pickup_address,
+                                        @Field("payment_currency") String payment_currency);
 
     @FormUrlEncoded
     @POST("getMyOrders")

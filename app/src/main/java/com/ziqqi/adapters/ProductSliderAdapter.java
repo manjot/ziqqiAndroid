@@ -1,5 +1,6 @@
 package com.ziqqi.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bogdwellers.pinchtozoom.ImageMatrixTouchHandler;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.R;
@@ -36,11 +38,13 @@ public class ProductSliderAdapter extends PagerAdapter {
         return view.equals(o);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View myImageLayout = inflater.inflate(R.layout.item_product_slider, container, false);
         ImageView myImage = myImageLayout.findViewById(R.id.iv_pager);
+//        myImage.setOnTouchListener(new ImageMatrixTouchHandler(context));
         Glide.with(container).load(imageModelList.get(position)).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(myImage);
         container.addView(myImageLayout, 0);
         return myImageLayout;

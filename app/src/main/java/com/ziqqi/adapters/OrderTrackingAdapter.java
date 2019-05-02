@@ -52,7 +52,7 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
 
         if (payloadList.get(i).getStatus().equalsIgnoreCase("Payment Pending")){
             holder.cb_pending.setChecked(true);
-        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Confirmed")){
+        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Received")){
             holder.cb_pending.setChecked(true);
             holder.cb_confirmed.setChecked(true);
         }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Out for Delivery")){

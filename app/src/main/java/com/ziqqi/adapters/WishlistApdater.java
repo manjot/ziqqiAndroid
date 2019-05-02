@@ -64,7 +64,7 @@ public class WishlistApdater extends RecyclerView.Adapter<WishlistApdater.WishLi
 
     public class WishListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
         TextView tvName, tvBrandName, tvDiscountPrice;
-        ImageView ivImage, iv_cart;
+        ImageView ivImage, iv_cart, iv_remove_wishlist;
         LinearLayout ll_card;
 
         public WishListViewHolder(@NonNull View itemView) {
@@ -73,11 +73,13 @@ public class WishlistApdater extends RecyclerView.Adapter<WishlistApdater.WishLi
             tvName = itemView.findViewById(R.id.tv_name);
             ivImage = itemView.findViewById(R.id.iv_product_image);
             iv_cart = itemView.findViewById(R.id.iv_cart);
+            iv_remove_wishlist = itemView.findViewById(R.id.iv_remove_wishlist);
             tvBrandName = itemView.findViewById(R.id.tv_brand_name);
             tvDiscountPrice = itemView.findViewById(R.id.tv_discount_price);
             ll_card = itemView.findViewById(R.id.ll_card);
 
             iv_cart.setOnClickListener(this);
+            iv_remove_wishlist.setOnClickListener(this);
         }
 
         @Override
@@ -85,6 +87,9 @@ public class WishlistApdater extends RecyclerView.Adapter<WishlistApdater.WishLi
             switch (view.getId()) {
                 case R.id.iv_cart:
                     listener.onItemClick(viewWishlistList.get(getAdapterPosition()), Constants.CART);
+                    break;
+                case R.id.iv_remove_wishlist:
+                    listener.onItemClick(viewWishlistList.get(getAdapterPosition()), Constants.REMOVE_WISHLIST);
                     break;
             }
         }

@@ -181,6 +181,7 @@
     <string name="verify_otp">Verify OTP</string>
     <string name="hello_user">Hello User</string>
     <string name="search_product">Search product</string>
+    <string name="discount_code">Discount Code</string>
 
 
 </resources>

@@ -185,6 +185,7 @@
     <string name="verify_otp">Hubi OTP</string>
     <string name="hello_user">Isticmaal user</string>
     <string name="search_product">Search product</string>
+    <string name="discount_code">Discount Code</string>
 
     <string-array name="array_countries">
         <item>SOMALILAND</item>
