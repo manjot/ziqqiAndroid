@@ -101,6 +101,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_below="@+id/ll_content"
@@ -110,7 +111,7 @@
             android:id="@+id/rv_deals"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/ll_content"/>
+            android:layout_below="@id/view"/>
 
         <ProgressBar
             android:id="@+id/progress_bar"

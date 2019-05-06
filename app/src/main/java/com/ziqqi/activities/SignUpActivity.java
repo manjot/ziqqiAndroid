@@ -23,7 +23,6 @@ import android.widget.AdapterView;
 import com.ziqqi.R;
 import com.ziqqi.adapters.CountryCodeAdapter;
 import com.ziqqi.databinding.ActivitySignUpBinding;
-import com.ziqqi.model.VerifyOtpResponse;
 import com.ziqqi.model.signup.SignUpResponse;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;

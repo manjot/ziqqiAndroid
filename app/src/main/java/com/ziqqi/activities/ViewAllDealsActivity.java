@@ -130,6 +130,12 @@ public class ViewAllDealsActivity extends AppCompatActivity {
             }
         });
         binding.rvDeals.setPullRefreshEnabled(false);
+        binding.rlFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(ViewAllDealsActivity.this, FilterActivity.class), 100);
+            }
+        });
     }
 
     private void getDeals() {

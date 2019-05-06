@@ -56,6 +56,16 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp" />
 
+            <TextView
+                android:id="@+id/tv_cart_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/bold"
+                android:text="$180"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_18sdp" />
+
             <RadioGroup
                 android:id="@+id/rg_payment"
                 android:layout_width="match_parent"
@@ -256,6 +266,7 @@
                         android:hint="@string/discount_code"/>
 
                     <Button
+                        android:id="@+id/bt_coupon_apply"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_gravity="center"

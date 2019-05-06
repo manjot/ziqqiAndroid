@@ -1,11 +1,9 @@
 package com.ziqqi.activities;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,16 +15,12 @@ import android.widget.Toast;
 
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityChangePasswordBinding;
-import com.ziqqi.model.VerifyOtpResponse;
-import com.ziqqi.model.forgotpasswordmodel.ForgotPasswordResponse;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
-import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.ChangePasswordViewModel;
-import com.ziqqi.viewmodel.HelpCenterViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

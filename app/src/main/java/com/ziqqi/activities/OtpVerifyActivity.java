@@ -16,13 +16,13 @@ import android.view.View;
 
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityOtpVerifyBinding;
-import com.ziqqi.model.VerifyOtpResponse;
+import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
+import com.ziqqi.model.resendotpmodel;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.OtpViewModel;
-import com.ziqqi.viewmodel.SignUpViewModel;
 
 import java.util.Locale;
 
@@ -59,14 +59,13 @@ public class OtpVerifyActivity extends AppCompatActivity {
                 VerifyOtp(strCId, binding.etEnter.getText().toString());
             }
         });
-    }
 
-    public void recivedSms(String message) {
-        try {
-            binding.etEnter.setText(message);
-        } catch (Exception e) {
-
-        }
+        binding.tvResend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ResendOtp(strCId);
+            }
+        });
     }
 
     private void VerifyOtp(String customerId, String otp) {
@@ -81,6 +80,7 @@ public class OtpVerifyActivity extends AppCompatActivity {
                     if (!verifyOtpResponse.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.rlMain.setVisibility(View.VISIBLE);
+                        binding.llContent.setVisibility(View.VISIBLE);
                         startActivity(new Intent(OtpVerifyActivity.this, MainActivity.class));
                         PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
                         String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -94,6 +94,32 @@ public class OtpVerifyActivity extends AppCompatActivity {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.rlMain.setVisibility(View.VISIBLE);
                         Utils.ShowToast(OtpVerifyActivity.this, verifyOtpResponse.getMessage());
+                    }
+                }
+            });
+        }else{
+            Utils.ShowToast(this, "No Internet Connection");
+        }
+
+    }
+
+    private void ResendOtp(String customerId) {
+        if (ConnectivityHelper.isConnectedToNetwork(OtpVerifyActivity.this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.rlMain.setVisibility(View.GONE);
+
+            viewModel.resendOtp(customerId);
+            viewModel.getResendOtp().observe(this, new Observer<resendotpmodel>() {
+                @Override
+                public void onChanged(@Nullable resendotpmodel resendotp) {
+                    if (!resendotp.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.rlMain.setVisibility(View.VISIBLE);
+                        Utils.ShowToast(OtpVerifyActivity.this, resendotp.getMessage());
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+                        binding.rlMain.setVisibility(View.VISIBLE);
+                        Utils.ShowToast(OtpVerifyActivity.this, resendotp.getMessage());
                     }
                 }
             });

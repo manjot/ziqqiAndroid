@@ -28,6 +28,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.ziqqi.R;
 import com.ziqqi.databinding.ActivityPaymentGatewayBinding;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
+import com.ziqqi.model.applycouponmodel.ApplyCouponModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
 import com.ziqqi.model.placeordermodel.Payload;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
@@ -85,6 +86,19 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
+
+        binding.tvCartTotal.setText("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT));
+
+        binding.btCouponApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!binding.etCoupon.getText().toString().equalsIgnoreCase("")){
+                    applyCouponCode(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), binding.etCoupon.getText().toString(), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                }else{
+                    Toast.makeText(PaymentGatewayActivity.this, "Please enter code", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         binding.llPaypal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,6 +295,29 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                         finishAffinity();
                     } else {
                         Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }else{
+            Toast.makeText(PaymentGatewayActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void applyCouponCode(String authToken, String couponCode, String guest_id) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            placeOrderViewModel.applyCoupon(authToken, couponCode, guest_id);
+            placeOrderViewModel.applyCouponResponse().observe(this, new Observer<ApplyCouponModel>() {
+                @Override
+                public void onChanged(@Nullable ApplyCouponModel applyCouponModel) {
+                    if (!applyCouponModel.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), applyCouponModel.getMessage(), Toast.LENGTH_SHORT).show();
+                        binding.tvCartTotal.setText(String.valueOf(applyCouponModel.getPayload().getTotal()));
+                    } else {
+                        Toast.makeText(getApplicationContext(), applyCouponModel.getMessage(), Toast.LENGTH_SHORT).show();
                         binding.progressBar.setVisibility(View.GONE);
                     }
                 }

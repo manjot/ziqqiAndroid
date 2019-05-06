@@ -1,10 +1,11 @@
 package com.ziqqi.retrofit;
 
-import com.ziqqi.model.VerifyOtpResponse;
+import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
+import com.ziqqi.model.applycouponmodel.ApplyCouponModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.changequantitymodel.ChangeQuantityResponse;
 import com.ziqqi.model.citymodel.CityResponse;
@@ -26,6 +27,7 @@ import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
+import com.ziqqi.model.resendotpmodel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
 import com.ziqqi.model.signup.SignUpResponse;
@@ -209,5 +211,13 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("forgot_password")
     Call<ForgotPasswordResponse> forgotPassword(@Field("email") String email, @Field("otp") String otp, @Field("new_password") String new_password);
+
+    @FormUrlEncoded
+    @POST("resendotp")
+    Call<resendotpmodel> resendOtp(@Field("customer_id") String customer_id);
+
+    @FormUrlEncoded
+    @POST("applyCoupon")
+    Call<ApplyCouponModel> applyCoupon(@Field("auth_token") String auth_token, @Field("coupon_code") String coupon_code, @Field("guest_id") String guest_id);
 
 }

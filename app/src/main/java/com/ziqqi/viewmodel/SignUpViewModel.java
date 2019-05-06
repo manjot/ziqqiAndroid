@@ -3,15 +3,11 @@ package com.ziqqi.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.View;
 
-import com.ziqqi.model.VerifyOtpResponse;
+import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
 import com.ziqqi.model.signup.SignUpResponse;
 import com.ziqqi.repository.SignUpRepository;
-import com.ziqqi.utils.Utils;
 
 import java.util.HashMap;
 

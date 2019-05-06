@@ -1,11 +1,9 @@
-
 package com.ziqqi.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class VerifyOtpResponse {
+public class resendotpmodel {
 
     @SerializedName("Error")
     @Expose
@@ -19,9 +17,9 @@ public class VerifyOtpResponse {
     @SerializedName("Message")
     @Expose
     private String message;
-    @SerializedName("Payload")
+    @SerializedName("otp")
     @Expose
-    private List<Payload> payload = null;
+    private String otp;
 
     public Boolean getError() {
         return error;
@@ -55,12 +53,12 @@ public class VerifyOtpResponse {
         this.message = message;
     }
 
-    public List<Payload> getPayload() {
-        return payload;
+    public String getOtp() {
+        return otp;
     }
 
-    public void setPayload(List<Payload> payload) {
-        this.payload = payload;
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 
 }

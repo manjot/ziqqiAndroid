@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.ziqqi.model.applycouponmodel.ApplyCouponModel;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.repository.Repository;
@@ -13,6 +14,7 @@ public class PlaceOrderViewModel extends AndroidViewModel {
 
     Repository repository;
     private MutableLiveData<PlaceOrderResponse> placeOrderResponse;
+    private MutableLiveData<ApplyCouponModel> applyCouponResponse;
 
     public PlaceOrderViewModel(@NonNull Application application) {
         super(application);
@@ -26,6 +28,16 @@ public class PlaceOrderViewModel extends AndroidViewModel {
     public MutableLiveData<PlaceOrderResponse> getPlaceOrderResponse() {
         if (placeOrderResponse != null)
             return placeOrderResponse;
+        else return null;
+    }
+
+    public void applyCoupon(String authToken, String couponCode, String guest_id){
+        applyCouponResponse = repository.applyCoupon(authToken, couponCode, guest_id);
+    }
+
+    public MutableLiveData<ApplyCouponModel> applyCouponResponse() {
+        if (applyCouponResponse != null)
+            return applyCouponResponse;
         else return null;
     }
 }

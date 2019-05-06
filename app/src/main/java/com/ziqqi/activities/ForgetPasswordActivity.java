@@ -92,7 +92,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         Toast.makeText(ForgetPasswordActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                     }
                 }if (strOtpMethod.equalsIgnoreCase("1")){
-                    if (etEmail.getText().toString().length() > 9) {
+                    if (etEmail.getText().toString().length() > 9 && etEmail.getText().toString().length() < 10) {
                         progressBar.setVisibility(View.VISIBLE);
                         /*rlMain.setVisibility(View.GONE);*/
                         getPassword();

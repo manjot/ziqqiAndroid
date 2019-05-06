@@ -3,8 +3,8 @@ package com.ziqqi.repository;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import com.ziqqi.model.VerifyOtpResponse;
-import com.ziqqi.model.languagemodel.LanguageModel;
+import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
+import com.ziqqi.model.resendotpmodel;
 import com.ziqqi.model.signup.SignUpResponse;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
@@ -60,6 +60,28 @@ public class SignUpRepository {
 
             @Override
             public void onFailure(Call<VerifyOtpResponse> call, Throwable t) {
+
+            }
+        });
+
+        return languageModel;
+    }
+
+    public MutableLiveData<resendotpmodel> resendOtpResponse(String customerId) {
+        final MutableLiveData<resendotpmodel> languageModel = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<resendotpmodel> call = apiInterface.resendOtp(customerId);
+        call.enqueue(new Callback<resendotpmodel>() {
+            @Override
+            public void onResponse(Call<resendotpmodel> call, Response<resendotpmodel> response) {
+                if (response.body() != null) {
+                    languageModel.setValue(response.body());
+                    Log.e("LanguageData ", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resendotpmodel> call, Throwable t) {
 
             }
         });

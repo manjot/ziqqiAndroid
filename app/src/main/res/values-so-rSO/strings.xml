@@ -186,6 +186,15 @@
     <string name="hello_user">Isticmaal user</string>
     <string name="search_product">Search product</string>
     <string name="discount_code">Discount Code</string>
+    <string name="range">Range</string>
+    <string name="filter">Filter</string>
+    <string name="clear">Clear</string>
+    <string name="sort_by">SORT BY</string>
+    <string name="popular">Popular</string>
+    <string name="price_low_to_high">Price Low to High</string>
+    <string name="price_high_to_low">Price High to Low</string>
+    <string name="name_asc">Name Asc</string>
+    <string name="name_desc">Name Desc</string>
 
     <string-array name="array_countries">
         <item>SOMALILAND</item>

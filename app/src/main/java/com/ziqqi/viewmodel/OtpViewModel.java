@@ -5,14 +5,15 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.ziqqi.model.VerifyOtpResponse;
-import com.ziqqi.repository.Repository;
+import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
+import com.ziqqi.model.resendotpmodel;
 import com.ziqqi.repository.SignUpRepository;
 
 public class OtpViewModel extends AndroidViewModel {
 
     SignUpRepository repository;
     MutableLiveData<VerifyOtpResponse> verifyOtpResponse;
+    MutableLiveData<resendotpmodel> resendotpResponse;
 
     public OtpViewModel(@NonNull Application application) {
         super(application);
@@ -30,6 +31,20 @@ public class OtpViewModel extends AndroidViewModel {
 
         } else {
             verifyOtpResponse = repository.verifyOtpResponse(customerId, otp);
+        }
+    }
+
+    public MutableLiveData<resendotpmodel> getResendOtp() {
+        if (resendotpResponse != null) {
+            return resendotpResponse;
+        } else return null;
+    }
+
+    public void resendOtp(String customerId) {
+        if (resendotpResponse != null) {
+
+        } else {
+            resendotpResponse = repository.resendOtpResponse(customerId);
         }
     }
 }

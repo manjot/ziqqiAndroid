@@ -7,6 +7,7 @@ import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
+import com.ziqqi.model.applycouponmodel.ApplyCouponModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.changequantitymodel.ChangeQuantityResponse;
 import com.ziqqi.model.citymodel.CityResponse;
@@ -569,6 +570,24 @@ public class Repository {
 
             @Override
             public void onFailure(Call<ChangeQuantityResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return editCart;
+    }
+
+    public MutableLiveData<ApplyCouponModel> applyCoupon(String authToken, String coupon , String guest_id ) {
+        final MutableLiveData<ApplyCouponModel> editCart = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ApplyCouponModel> call = apiInterface.applyCoupon(authToken, coupon, guest_id);
+        call.enqueue(new Callback<ApplyCouponModel>() {
+            @Override
+            public void onResponse(Call<ApplyCouponModel> call, Response<ApplyCouponModel> response) {
+                editCart.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ApplyCouponModel> call, Throwable t) {
                 t.printStackTrace();
             }
         });
