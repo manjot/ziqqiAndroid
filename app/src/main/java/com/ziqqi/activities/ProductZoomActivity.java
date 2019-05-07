@@ -14,7 +14,7 @@ import com.ziqqi.utils.ZoomableRelativeLayout;
 
 public class ProductZoomActivity extends AppCompatActivity {
 
-    ImageView image;
+    ImageView image, iv_close;
     ZoomableRelativeLayout zoomableRelativeLayout;
     String strUrl;
 
@@ -24,6 +24,7 @@ public class ProductZoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_zoom);
 
         image = findViewById(R.id.image);
+        iv_close = findViewById(R.id.iv_close);
         final ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(this, new OnPinchListener());
         zoomableRelativeLayout = findViewById(R.id.zoom);
 
@@ -34,11 +35,17 @@ public class ProductZoomActivity extends AppCompatActivity {
         Glide.with(ProductZoomActivity.this).load(strUrl).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(image);
 
         zoomableRelativeLayout.setOnTouchListener(new View.OnTouchListener() {
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 scaleGestureDetector.onTouchEvent(event);
                 return true;
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

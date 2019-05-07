@@ -80,7 +80,6 @@ public class OtpVerifyActivity extends AppCompatActivity {
                     if (!verifyOtpResponse.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.rlMain.setVisibility(View.VISIBLE);
-                        binding.llContent.setVisibility(View.VISIBLE);
                         startActivity(new Intent(OtpVerifyActivity.this, MainActivity.class));
                         PreferenceManager.setBoolValue(Constants.LOGGED_IN, true);
                         String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);

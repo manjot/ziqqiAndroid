@@ -26,6 +26,7 @@ import com.ziqqi.R;
 import com.ziqqi.activities.BillingInfoActivity;
 import com.ziqqi.activities.MainActivity;
 import com.ziqqi.activities.ProductDetailActivity;
+import com.ziqqi.activities.ProfileActivity;
 import com.ziqqi.adapters.CartAdapter;
 import com.ziqqi.adapters.WishlistApdater;
 import com.ziqqi.addToCartListener;
@@ -39,6 +40,7 @@ import com.ziqqi.model.viewcartmodel.ViewCartResponse;
 import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.utils.Utils;
@@ -66,6 +68,7 @@ public class CartFragment extends Fragment {
     LinearLayoutManager manager;
     fetchCartListener fcListener;
     com.ziqqi.addToCartListener addToCartListener;
+    LoginDialog loginDialog;
 
     public CartFragment() {
         // Required empty public constructor
@@ -191,8 +194,13 @@ public class CartFragment extends Fragment {
                             binding.btSubmit.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal() + "");
-                                    startActivity(new Intent(getContext(), BillingInfoActivity.class));
+                                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                                        PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal() + "");
+                                        startActivity(new Intent(getContext(), BillingInfoActivity.class));
+                                    }else {
+                                        loginDialog = new LoginDialog();
+                                        loginDialog.showDialog(getActivity());
+                                    }
                                 }
                             });
                             adapter.notifyDataSetChanged();

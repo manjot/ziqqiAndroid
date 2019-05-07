@@ -92,12 +92,12 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         Toast.makeText(ForgetPasswordActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                     }
                 }if (strOtpMethod.equalsIgnoreCase("1")){
-                    if (etEmail.getText().toString().length() > 9 && etEmail.getText().toString().length() < 10) {
+                    if (etEmail.getText().toString().length() > 9) {
                         progressBar.setVisibility(View.VISIBLE);
                         /*rlMain.setVisibility(View.GONE);*/
                         getPassword();
                     } else {
-                        Toast.makeText(ForgetPasswordActivity.this, "Invalid Phone", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgetPasswordActivity.this, "Invalid Phone Number", Toast.LENGTH_SHORT).show();
                     }
                 }
 

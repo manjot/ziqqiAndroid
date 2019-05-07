@@ -1,5 +1,6 @@
 package com.ziqqi.retrofit;
 
+import com.ziqqi.model.uploadphotomodel.UploadPhoto;
 import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
@@ -37,12 +38,16 @@ import com.ziqqi.model.viewwishlistmodel.ViewWishlist;
 
 import java.util.HashMap;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiInterface {
     @GET("language_master")
@@ -169,6 +174,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("placeOrder")
     Call<PlaceOrderResponse> placeOrder(@Field("auth_token") String auth_token,
+                                        @Field("guest_id") String guest_id,
                                         @Field("payment_method") String payment_method,
                                         @Field("order_status") String order_status,
                                         @Field("payment_status") String payment_status,
@@ -220,4 +226,7 @@ public interface ApiInterface {
     @POST("applyCoupon")
     Call<ApplyCouponModel> applyCoupon(@Field("auth_token") String auth_token, @Field("coupon_code") String coupon_code, @Field("guest_id") String guest_id);
 
+    @Multipart
+    @POST("userFileUpload")
+    Call<UploadPhoto> addPhoto(@Part("auth_token") RequestBody auth_token, @Part MultipartBody.Part filename);
 }

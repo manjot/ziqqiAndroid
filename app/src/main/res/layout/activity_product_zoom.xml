@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProductZoomActivity">
 
+
+
     <com.ziqqi.utils.ZoomableRelativeLayout
         android:id="@+id/zoom"
         android:layout_width="match_parent"
@@ -21,6 +23,13 @@
 
     </com.ziqqi.utils.ZoomableRelativeLayout>
 
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_margin="@dimen/_8sdp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_close"/>
 
 
 </RelativeLayout>

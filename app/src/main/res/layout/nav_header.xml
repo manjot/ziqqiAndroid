@@ -49,14 +49,6 @@
             app:civ_border_width="@dimen/_1sdp"
             app:civ_border_color="@color/cardview_light_background"/>
 
-        <ImageView
-            android:id="@+id/iv_change_pic"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/camera_icon" />
-
     </RelativeLayout>
 
     <TextView
