@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/cardview_light_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="PrivateResource">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,18 +14,22 @@
         android:padding="@dimen/_8sdp">
 
         <TextView
-            android:layout_width="375dp"
+            android:id="@+id/tv_filter_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
             android:text="Category"
+            android:layout_gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14sdp" />
 
         <ImageView
+            android:id="@+id/iv_expand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:padding="@dimen/_5sdp"
             android:src="@drawable/ic_add_black"/>
 
     </LinearLayout>
@@ -31,9 +37,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/colorLightText"/>
+        android:background="@color/colorStrokeGrey"/>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp">

@@ -1,5 +1,6 @@
 package com.ziqqi.retrofit;
 
+import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
 import com.ziqqi.model.uploadphotomodel.UploadPhoto;
 import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
@@ -225,6 +226,11 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("applyCoupon")
     Call<ApplyCouponModel> applyCoupon(@Field("auth_token") String auth_token, @Field("coupon_code") String coupon_code, @Field("guest_id") String guest_id);
+
+    @FormUrlEncoded
+    @POST("categoryFilter")
+    Call<FilterCategoriesResponse> getCategoryFilter(@Field("menu_id") String menu_id);
+
 
     @Multipart
     @POST("userFileUpload")

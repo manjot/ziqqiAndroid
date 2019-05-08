@@ -38,6 +38,7 @@
         </android.support.v7.widget.Toolbar>
 
         <LinearLayout
+            android:id="@+id/main_layout"
             android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -128,20 +129,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_8sdp">
 
-                <!--<android.support.v7.widget.RecyclerView-->
-                    <!--android:id="@+id/rv_filter_category"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginLeft="@dimen/_8sdp"-->
-                    <!--android:layout_marginRight="@dimen/_8sdp"-->
-                    <!--android:layout_marginTop="@dimen/_8sdp"-->
-                    <!--android:layout_marginBottom="@dimen/_45sdp"-->
-                    <!--android:orientation="vertical">-->
-
-                <!--</android.support.v7.widget.RecyclerView>-->
-
-
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_filter_category"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_8sdp"
@@ -150,15 +139,9 @@
                     android:layout_marginBottom="@dimen/_45sdp"
                     android:orientation="vertical">
 
-                    <include layout="@layout/item_filter_category"/>
+                </android.support.v7.widget.RecyclerView>
 
-                    <include layout="@layout/item_filter_category"/>
 
-                    <include layout="@layout/item_filter_category"/>
-
-                    <include layout="@layout/item_filter_category"/>
-
-                </LinearLayout>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
@@ -201,6 +184,14 @@
                 android:text="@string/apply"/>
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:theme="@style/RadioButtonTheme"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

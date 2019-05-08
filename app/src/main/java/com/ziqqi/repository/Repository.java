@@ -15,6 +15,7 @@ import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
 import com.ziqqi.model.forgotpasswordmodel.ForgotPasswordResponse;
 import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
@@ -593,4 +594,23 @@ public class Repository {
         });
         return editCart;
     }
+
+    public MutableLiveData<FilterCategoriesResponse> getFilterCategories(String menuId) {
+        final MutableLiveData<FilterCategoriesResponse> editCart = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<FilterCategoriesResponse> call = apiInterface.getCategoryFilter(menuId);
+        call.enqueue(new Callback<FilterCategoriesResponse>() {
+            @Override
+            public void onResponse(Call<FilterCategoriesResponse> call, Response<FilterCategoriesResponse> response) {
+                editCart.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<FilterCategoriesResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return editCart;
+    }
 }
+

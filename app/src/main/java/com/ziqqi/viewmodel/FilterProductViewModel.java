@@ -6,23 +6,24 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
 import com.ziqqi.repository.Repository;
 
 public class FilterProductViewModel extends AndroidViewModel {
 
     Repository repository;
-    MutableLiveData<FeedbackMaster> feedbackMasterResponse;
+    MutableLiveData<FilterCategoriesResponse> filterCategoriesResponse;
 
     public FilterProductViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository();
     }
 
-    public void fetchData() {
-        feedbackMasterResponse = repository.getFeedbackMaster();
+    public void fetchData(String menuId) {
+        filterCategoriesResponse = repository.getFilterCategories(menuId);
     }
 
-    public MutableLiveData<FeedbackMaster> getFeedbackMasterResponse() {
-        return feedbackMasterResponse;
+    public MutableLiveData<FilterCategoriesResponse> getFilterResponse() {
+        return filterCategoriesResponse;
     }
 }

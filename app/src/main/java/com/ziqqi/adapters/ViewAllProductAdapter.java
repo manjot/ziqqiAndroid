@@ -102,7 +102,7 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
             ivWishList.setOnClickListener(this);
             ivShare.setOnClickListener(this);
             ivCart.setOnClickListener(this);
-//            ll_card.setOnClickListener(this);
+            ll_card.setOnClickListener(this);
 
         }
 
