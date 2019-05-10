@@ -55,7 +55,7 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
     public void onBindViewHolder(@NonNull ViewAllViewHolder holder,final int i) {
         holder.tvBrandName.setText(payloadList.get(i).getBrandName());
         holder.tvName.setText(payloadList.get(i).getName());
-        holder.tvDesc.setText(Html.fromHtml(payloadList.get(i).getSku()));
+//        holder.tvDesc.setText(Html.fromHtml(payloadList.get(i).getSku()));
         holder.tvMarketPrice.setText("$ " + payloadList.get(i).getMrpPrice());
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
         Glide.with(context).load(payloadList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);

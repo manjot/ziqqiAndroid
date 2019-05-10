@@ -1,5 +1,6 @@
 package com.ziqqi.retrofit;
 
+import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
 import com.ziqqi.model.uploadphotomodel.UploadPhoto;
 import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
@@ -101,7 +102,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("getcategoryProduct")
-    Call<ProductCategory> getCategoryProduct(@Field("category_id") String id, @Field("page") String page);
+    Call<ProductCategory> getCategoryProduct(@Field("category_id") String id, @Field("page") String page, @Field("sort") String sort );
 
     @FormUrlEncoded
     @POST("productDetails")
@@ -235,4 +236,8 @@ public interface ApiInterface {
     @Multipart
     @POST("userFileUpload")
     Call<UploadPhoto> addPhoto(@Part("auth_token") RequestBody auth_token, @Part MultipartBody.Part filename);
+
+    @FormUrlEncoded
+    @POST("masterFilter")
+    Call<FilterResponse> getMasterFilter(@Field("category_id") String category_id);
 }

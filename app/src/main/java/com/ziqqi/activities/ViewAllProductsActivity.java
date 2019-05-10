@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,7 +18,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.ViewAllViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,6 +65,9 @@ public class ViewAllProductsActivity extends AppCompatActivity {
     com.ziqqi.addToCartListener addToCartListener;
     BottomSheetBehavior sheetBehavior;
     RelativeLayout layoutBottomSheet;
+    RadioButton rb_popular, rb_price_low_to_high, rb_price_high_to_low, rb_name_asc, rb_name_desc;
+    BottomSheetDialog mBottomSheetDialog;
+    String sortBy = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +121,16 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             }
         });
 
+        mBottomSheetDialog = new BottomSheetDialog(ViewAllProductsActivity.this);
+        View sheetView = getLayoutInflater().inflate(R.layout.product_sort_bottom_sheet, null);
+        mBottomSheetDialog.setContentView(sheetView);
+
+
+        rb_popular = sheetView.findViewById(R.id.rb_popular);
+        rb_price_low_to_high = sheetView.findViewById(R.id.rb_price_low_to_high);
+        rb_price_high_to_low = sheetView.findViewById(R.id.rb_price_high_to_low);
+        rb_name_asc = sheetView.findViewById(R.id.rb_name_asc);
+        rb_name_desc = sheetView.findViewById(R.id.rb_name_desc);
 
         if (getIntent().getExtras() != null) {
             categoryId = getIntent().getExtras().getString("categoryId");
@@ -152,20 +169,20 @@ public class ViewAllProductsActivity extends AppCompatActivity {
 
         setUpAdapter();
 
-        checkConnection();
+        getData(sortBy);
 
         binding.recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 pageCount = 1;
-                getData();
+                getData(sortBy);
             }
 
             @Override
             public void onLoadMore() {
                 pageCount++;
                 Log.e("PageCOunt ", " " + pageCount);
-                getData();
+                getData(sortBy);
             }
         });
         binding.recyclerView.setPullRefreshEnabled(false);
@@ -182,20 +199,57 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         binding.rlSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SortSheetFragment bottomSheetFragment = new SortSheetFragment();
-                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                /*SortSheetFragment bottomSheetFragment = new SortSheetFragment();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());*/
+                mBottomSheetDialog.show();
             }
         });
-    }
 
-    public void toggleBottomSheet() {
-        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-//            btnBottomSheet.setText("Close sheet");
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//            btnBottomSheet.setText("Expand sheet");
-        }
+        rb_popular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                sortBy = "1";
+                getData(sortBy);
+
+            }
+        });
+
+        rb_price_low_to_high.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                sortBy = "2";
+                getData(sortBy);
+            }
+        });
+
+        rb_price_high_to_low.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                sortBy = "3";
+                getData(sortBy);
+            }
+        });
+
+        rb_name_asc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                sortBy = "4";
+                getData(sortBy);
+            }
+        });
+
+        rb_name_desc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                sortBy = "5";
+                getData(sortBy);
+            }
+        });
     }
 
     private void addToWishList(String authToken, String id, String guest_id) {
@@ -249,52 +303,50 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         binding.recyclerView.addItemDecoration(spacesItemDecoration);
     }
 
-    private void getData() {
-        Log.e("PageCount ", " " + pageCount);
-        viewModel.fetchData(categoryId, String.valueOf(pageCount));
-        viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
-            @Override
-            public void onChanged(@Nullable ProductCategory productCategory) {
-                binding.progressBar.setVisibility(View.GONE);
-                if (!productCategory.getError()) {
-                    if (payloadList != null) {
-                        // viewAllList.clear();
-                        payloadList = productCategory.getPayload();
-
-                        if (pageCount == 1) {
-                            viewAllList.addAll(payloadList);
-                            // adapter.setPayloadList(viewAllList);
-                        } else {
-                            viewAllList.addAll(payloadList);
-                            // adapter.setPayloadList(viewAllList);
-                            binding.recyclerView.loadMoreComplete();
-                        }
-
-                        // adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Utils.ShowToast(ViewAllProductsActivity.this, productCategory.getMessage());
-                }
-            }
-        });
-    }
-
-    private void checkConnection() {
+    private void getData(String sortBy) {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
-            binding.progressBar.setVisibility(View.VISIBLE);
-            getData();
+//            binding.progressBar.setVisibility(View.VISIBLE);
+            Log.e("PageCount ", " " + pageCount);
+            viewModel.fetchData(categoryId, String.valueOf(pageCount), sortBy);
+            viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
+                @Override
+                public void onChanged(@Nullable ProductCategory productCategory) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    if (!productCategory.getError()) {
+                        if (payloadList != null) {
+                            viewAllList.clear();
+                            adapter.notifyDataSetChanged();
+                            payloadList = productCategory.getPayload();
+
+                            if (pageCount == 1) {
+                                viewAllList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                            } else {
+                                viewAllList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                                binding.recyclerView.loadMoreComplete();
+                            }
+
+                            // adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        Utils.ShowToast(ViewAllProductsActivity.this, productCategory.getMessage());
+                    }
+                }
+            });
         } else {
             Snackbar snackbar = Snackbar
                     .make(binding.rlMain, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Try Again", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            checkConnection();
+                            getData("");
                         }
                     });
 
             snackbar.show();
         }
+
     }
 
     @Override

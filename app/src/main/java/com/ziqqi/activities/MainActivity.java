@@ -112,13 +112,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
 
         Locale locale = new Locale(PreferenceManager.getStringValue(Constants.LANG));
         Configuration config = getBaseContext().getResources().getConfiguration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        setContentView(R.layout.activity_main);
+        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

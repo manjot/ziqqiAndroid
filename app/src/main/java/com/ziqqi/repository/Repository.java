@@ -15,6 +15,7 @@ import com.ziqqi.model.countrymodel.CountryResponse;
 import com.ziqqi.model.dealsmodel.DealsResponse;
 import com.ziqqi.model.deletecartmodel.DeleteCartResponse;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
+import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
 import com.ziqqi.model.forgotpasswordmodel.ForgotPasswordResponse;
 import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
@@ -126,10 +127,10 @@ public class Repository {
         return searchResponse;
     }
 
-    public MutableLiveData<ProductCategory> getCategoryProducts(String id, String page) {
+    public MutableLiveData<ProductCategory> getCategoryProducts(String id, String page, String sortBy) {
         final MutableLiveData<ProductCategory> searchResponse = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProductCategory> call = apiInterface.getCategoryProduct(id, page);
+        Call<ProductCategory> call = apiInterface.getCategoryProduct(id, page, sortBy);
         call.enqueue(new Callback<ProductCategory>() {
             @Override
             public void onResponse(Call<ProductCategory> call, Response<ProductCategory> response) {
@@ -607,6 +608,24 @@ public class Repository {
 
             @Override
             public void onFailure(Call<FilterCategoriesResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return editCart;
+    }
+
+    public MutableLiveData<FilterResponse> getFilterMaster(String categoryId) {
+        final MutableLiveData<FilterResponse> editCart = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<FilterResponse> call = apiInterface.getMasterFilter(categoryId);
+        call.enqueue(new Callback<FilterResponse>() {
+            @Override
+            public void onResponse(Call<FilterResponse> call, Response<FilterResponse> response) {
+                editCart.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<FilterResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

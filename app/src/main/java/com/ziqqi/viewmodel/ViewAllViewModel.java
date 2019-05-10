@@ -21,8 +21,8 @@ public class ViewAllViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchData(String id, String page) {
-        productCategory = repository.getCategoryProducts(id, page);
+    public void fetchData(String id, String page, String sortBy) {
+        productCategory = repository.getCategoryProducts(id, page, sortBy);
     }
 
     public MutableLiveData<ProductCategory> getCategoryProduct() {

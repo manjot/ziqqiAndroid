@@ -129,17 +129,120 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_8sdp">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_filter_category"
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_8sdp"
-                    android:layout_marginRight="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_45sdp"
-                    android:orientation="vertical">
+                    android:scrollbars="none">
 
-                </android.support.v7.widget.RecyclerView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_8sdp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/medium"
+                                android:text="Categories"
+                                android:layout_gravity="center"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_14sdp" />
+
+                            <ImageView
+                                android:id="@+id/iv_expand_category"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:src="@drawable/ic_add_black"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/colorStrokeGrey"/>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_category"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false">
+
+                        </android.support.v7.widget.RecyclerView>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_8sdp">
+
+                            <TextView
+                                android:id="@+id/tv_filter_name"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/medium"
+                                android:text="By Brands"
+                                android:layout_gravity="center"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_14sdp" />
+
+                            <ImageView
+                                android:id="@+id/iv_expand_brand"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:src="@drawable/ic_add_black"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/colorStrokeGrey"/>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_brand"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_filter_variant"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:nestedScrollingEnabled="false">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_filter_feature"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="@dimen/_55sdp"
+                            android:orientation="vertical"
+                            android:nestedScrollingEnabled="false">
+
+                        </android.support.v7.widget.RecyclerView>
+
+                    </LinearLayout>
+                </ScrollView>
+
 
 
             </android.support.v7.widget.CardView>
@@ -158,6 +261,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2.5"
+            android:background="@color/cardview_light_background"
             android:padding="@dimen/_8sdp"
             android:layout_alignParentBottom="true">
 
