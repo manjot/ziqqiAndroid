@@ -5,7 +5,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,9 +69,15 @@ public class FilterActivity extends AppCompatActivity {
     String catId;
     boolean isCategoryExpanded = false, isBrandExpanded = false;
 
-    ArrayList<String> list = new ArrayList<String>();
+    ArrayList<String> categoryList = new ArrayList<String>();
+    ArrayList<String> brandList = new ArrayList<String>();
+    ArrayList<String> variantList = new ArrayList<String>();
+    ArrayList<String> featureList = new ArrayList<String>();
     StringBuilder stringBuilderForFilter;
-    String selectedFilters;
+    String selectedCategoryFilters;
+    String selectedBrandFilters;
+    String selectedVariantFilters;
+    String selectedFeatureFilters;
     String minRange;
     String maxRange;
 
@@ -88,27 +96,55 @@ public class FilterActivity extends AppCompatActivity {
 
         listener = new FilterItemListener() {
             @Override
-            public void onFilterCategoryClick(int position) {
-                list.add(filterCategoryList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterCategoryClick(int position, boolean isChecked) {
+                if (isChecked){
+                    categoryList.add(filterCategoryList.get(position).getId());
+                }else{
+                    for (int i=0;i<categoryList.size();i++){
+                        if (categoryList.get(i).equals(filterCategoryList.get(position).getId())){
+                            categoryList.remove(i);
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onFilterBrandClick(int position) {
-                list.add(filterBrandList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterBrandClick(int position, boolean isChecked) {
+                if (isChecked){
+                    brandList.add(filterBrandList.get(position).getId());
+                }else{
+                    for (int i=0;i<brandList.size();i++){
+                        if (brandList.get(i).equals(filterBrandList.get(position).getId())){
+                            brandList.remove(i);
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onFilterVariantClick(int position) {
-                list.add(filterVariantInsideList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterVariantClick(int position, boolean isChecked) {
+                if (isChecked){
+                    variantList.add(filterVariantInsideList.get(position).getId());
+                }else{
+                    for (int i=0;i<variantList.size();i++){
+                        if (variantList.get(i).equals(filterVariantInsideList.get(position).getId())){
+                            variantList.remove(i);
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onFilterFeatureClick(int position) {
-                list.add(filterFeatureInsideList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterFeatureClick(int position, boolean isChecked) {
+                if (isChecked){
+                    featureList.add(filterFeatureInsideList.get(position).getId());
+                }else{
+                    for (int i=0;i<featureList.size();i++){
+                        if (featureList.get(i).equals(filterFeatureInsideList.get(position).getId())){
+                            featureList.remove(i);
+                        }
+                    }
+                }
             }
         };
 
@@ -120,19 +156,6 @@ public class FilterActivity extends AppCompatActivity {
         getFiterCategories(catId);
 
         stringBuilderForFilter = new StringBuilder();
-
-        for(int  i =0;i<list.size();i++)
-        {
-            String prefix = "";
-            for (String str : list)
-            {
-                stringBuilderForFilter.append(prefix);
-                prefix = ",";
-                stringBuilderForFilter.append(str);
-            }
-        }
-
-        selectedFilters = ""+stringBuilderForFilter;
 
         binding.ivExpandCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,14 +184,63 @@ public class FilterActivity extends AppCompatActivity {
         });
 
         binding.btApply.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 
+                /*for(int  i =0;i<list.size();i++)
+                {
+                    String prefix = "";
+                    for (String str : list)
+                    {
+                        stringBuilderForFilter.append(prefix);
+                        prefix = ",";
+                        stringBuilderForFilter.append(str);
+                    }
+                }
+
+
+                selectedFilters = ""+stringBuilderForFilter;*/
+
+                selectedCategoryFilters = String.join(",", categoryList);
+                selectedBrandFilters = String.join(",", brandList);
+                selectedVariantFilters = String.join(",", variantList);
+                selectedFeatureFilters = String.join(",", featureList);
+                Log.i("Ids", selectedCategoryFilters);
+
                 Intent i = new Intent();
-             //   i.putExtra("FILTERS", selectedFilters);
+                i.putExtra("CAT_FILTERS", selectedCategoryFilters);
+                i.putExtra("BRAND_FILTERS", selectedBrandFilters);
+                i.putExtra("VARIANT_FILTERS", selectedVariantFilters);
+                i.putExtra("FEATURE_FILTERS", selectedFeatureFilters);
                 i.putExtra("MIN", minRange);
                 i.putExtra("MAX", maxRange);
                 setResult(100, i);
+                finish();
+            }
+        });
+
+        binding.btCancel.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+
+                selectedCategoryFilters = "";
+                selectedBrandFilters = "";
+                selectedVariantFilters = "";
+                selectedFeatureFilters = "";
+                maxRange = "";
+                minRange = "";
+                Log.i("Ids", selectedCategoryFilters);
+
+                Intent i = new Intent();
+                i.putExtra("CAT_FILTERS", selectedCategoryFilters);
+                i.putExtra("BRAND_FILTERS", selectedBrandFilters);
+                i.putExtra("VARIANT_FILTERS", selectedVariantFilters);
+                i.putExtra("FEATURE_FILTERS", selectedFeatureFilters);
+                i.putExtra("MIN", minRange);
+                i.putExtra("MAX", maxRange);
+                setResult(101, i);
                 finish();
             }
         });
@@ -199,11 +271,20 @@ public class FilterActivity extends AppCompatActivity {
                             filterVariantReturnedList.clear();
                             filterVariantList = filterCategoriesResponse.getPayload().getVariantFilter();
                             filterVariantReturnedList.addAll(filterVariantList);
+                            for(int i = 0; i < filterCategoriesResponse.getPayload().getVariantFilter().size(); i++){
+                                filterVariantInsideList.addAll(filterCategoriesResponse.getPayload().getVariantFilter().get(i).getFilterValue());
+                            }
+
+
                         }
                         if (filterFeatureList != null) {
                             filterFeatureReturnedList.clear();
                             filterFeatureList = filterCategoriesResponse.getPayload().getFeatureFilter();
                             filterFeatureReturnedList.addAll(filterFeatureList);
+
+                            for(int i = 0; i < filterCategoriesResponse.getPayload().getFeatureFilter().size(); i++){
+                                filterFeatureInsideList.addAll(filterCategoriesResponse.getPayload().getFeatureFilter().get(i).getFilterValue());
+                            }
                         }
 
                         binding.rangeSeekbar1.setMinValue(Float.parseFloat(filterCategoriesResponse.getMinPrice()));
@@ -287,5 +368,26 @@ public class FilterActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        selectedCategoryFilters = "";
+        selectedBrandFilters = "";
+        selectedVariantFilters = "";
+        selectedFeatureFilters = "";
+        maxRange = "";
+        minRange = "";
+        Log.i("Ids", selectedCategoryFilters);
+
+        Intent i = new Intent();
+        i.putExtra("CAT_FILTERS", selectedCategoryFilters);
+        i.putExtra("BRAND_FILTERS", selectedBrandFilters);
+        i.putExtra("VARIANT_FILTERS", selectedVariantFilters);
+        i.putExtra("FEATURE_FILTERS", selectedFeatureFilters);
+        i.putExtra("MIN", minRange);
+        i.putExtra("MAX", maxRange);
+        setResult(101, i);
+        finish();
     }
 }

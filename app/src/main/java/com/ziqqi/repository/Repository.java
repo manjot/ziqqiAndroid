@@ -127,10 +127,10 @@ public class Repository {
         return searchResponse;
     }
 
-    public MutableLiveData<ProductCategory> getCategoryProducts(String id, String page, String sortBy) {
+    public MutableLiveData<ProductCategory> getCategoryProducts(String id, String brandId, String maxPrice, String minPrice, String attribute, String featureId, String page, String sortBy) {
         final MutableLiveData<ProductCategory> searchResponse = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProductCategory> call = apiInterface.getCategoryProduct(id, page, sortBy);
+        Call<ProductCategory> call = apiInterface.getCategoryProduct(id, brandId, maxPrice, minPrice, attribute, featureId, page, sortBy);
         call.enqueue(new Callback<ProductCategory>() {
             @Override
             public void onResponse(Call<ProductCategory> call, Response<ProductCategory> response) {

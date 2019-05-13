@@ -102,7 +102,14 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("getcategoryProduct")
-    Call<ProductCategory> getCategoryProduct(@Field("category_id") String id, @Field("page") String page, @Field("sort") String sort );
+    Call<ProductCategory> getCategoryProduct(@Field("category_id") String id,
+                                             @Field("brand_id") String brand_id,
+                                             @Field("min_price") String min_price,
+                                             @Field("max_price") String max_price,
+                                             @Field("attribute_id") String attribute_id,
+                                             @Field("feature_id") String feature_id,
+                                             @Field("page") String page,
+                                             @Field("sort") String sort );
 
     @FormUrlEncoded
     @POST("productDetails")

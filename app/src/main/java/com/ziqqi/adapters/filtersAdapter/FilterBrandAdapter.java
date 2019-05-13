@@ -34,7 +34,7 @@ import com.ziqqi.utils.FontCache;
 
 import java.util.List;
 
-public class FilterBrandAdapter extends RecyclerView.Adapter<FilterBrandAdapter.FiltersCategoriesViewHolder>  {
+public class FilterBrandAdapter extends RecyclerView.Adapter<FilterBrandAdapter.FiltersCategoriesViewHolder> {
     Context context;
     List<FilterValue_> featureValues;
     int position;
@@ -77,7 +77,7 @@ public class FilterBrandAdapter extends RecyclerView.Adapter<FilterBrandAdapter.
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            listener.onFilterBrandClick(getAdapterPosition());
+            listener.onFilterBrandClick(getAdapterPosition(), isChecked);
         }
     }
 }

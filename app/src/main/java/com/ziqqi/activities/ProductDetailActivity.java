@@ -75,6 +75,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     LoginDialog loginDialog;
     int isWishlist = -1;
     String authToken;
+    List<com.ziqqi.model.productvariantmodel.Payload> variantPayload = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
