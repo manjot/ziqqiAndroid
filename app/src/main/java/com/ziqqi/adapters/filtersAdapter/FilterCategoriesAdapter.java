@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.ziqqi.FilterItemListener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.ProductDetailActivity;
@@ -34,9 +36,9 @@ public class FilterCategoriesAdapter extends RecyclerView.Adapter<FilterCategori
     Context context;
     List<FilterValue> featureValues;
     int position;
-    OnItemClickListener listener;
+    FilterItemListener listener;
 
-    public FilterCategoriesAdapter(Context context, int position, List<FilterValue> featureValues, OnItemClickListener listener) {
+    public FilterCategoriesAdapter(Context context, int position, List<FilterValue> featureValues, FilterItemListener listener) {
         this.context = context;
         this.featureValues = featureValues;
         this.position = position;
@@ -61,14 +63,19 @@ public class FilterCategoriesAdapter extends RecyclerView.Adapter<FilterCategori
         return featureValues.size();
     }
 
-    public class FiltersCategoriesViewHolder extends RecyclerView.ViewHolder{
+    public class FiltersCategoriesViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
         CheckBox cb_filter;
 
         public FiltersCategoriesViewHolder(@NonNull View itemView) {
             super(itemView);
 
             cb_filter = itemView.findViewById(R.id.cb_filter);
+            cb_filter.setOnCheckedChangeListener(this);
         }
 
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            listener.onFilterCategoryClick(getAdapterPosition());
+        }
     }
 }

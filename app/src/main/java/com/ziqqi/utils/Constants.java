@@ -59,5 +59,6 @@ public class Constants {
     public static final String REMOVE_CART = "remove_cart";
     public static final String WALLET_NUMBER = "mobile_number";
     public static final String LANG_POS = "lang pos";
+    public static final String FILTER_ID = "filter id";
 }
 

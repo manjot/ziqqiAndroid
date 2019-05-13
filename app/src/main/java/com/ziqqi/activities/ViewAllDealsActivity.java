@@ -1,5 +1,6 @@
 package com.ziqqi.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -95,16 +96,16 @@ public class ViewAllDealsActivity extends AppCompatActivity {
                         Utils.share(ViewAllDealsActivity.this, payload.getId());
                         break;
                     case Constants.WISH_LIST:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                             addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
-                        }else{
+                        } else {
                             addToWishList("", payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
-                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                             addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
-                        }else{
+                        } else {
                             addToCart(payload.getId(), "", PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
 
@@ -139,7 +140,7 @@ public class ViewAllDealsActivity extends AppCompatActivity {
     }
 
     private void getDeals() {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             viewModel.fetchData(pageCount);
             viewModel.getDealsResponse().observe(this, new Observer<DealsResponse>() {
                 @Override
@@ -149,7 +150,6 @@ public class ViewAllDealsActivity extends AppCompatActivity {
                         if (payloadList != null) {
                             searchDataList.clear();
                             payloadList = searchResponse.getPayload();
-
 
                             if (pageCount == 1) {
                                 searchDataList.addAll(payloadList);
@@ -168,8 +168,8 @@ public class ViewAllDealsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Toast.makeText(ViewAllDealsActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ViewAllDealsActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -193,7 +193,7 @@ public class ViewAllDealsActivity extends AppCompatActivity {
     }
 
     private void addToWishList(String authToken, String id, String guest_id) {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             viewModel.addProductWishlist(authToken, id, guest_id);
             viewModel.addWishlistResponse().observe(this, new Observer<AddToModel>() {
@@ -207,28 +207,28 @@ public class ViewAllDealsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Toast.makeText(ViewAllDealsActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ViewAllDealsActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void addToCart(String id, String authToken, String guest_id) {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             viewModel.addToCart(id, authToken, "1", guest_id);
             viewModel.addToCartResponse().observe(this, new Observer<AddToCart>() {
                 @Override
                 public void onChanged(@Nullable AddToCart addToCart) {
-                    if (!addToCart.getError()){
-                        Toast.makeText(getApplicationContext(),  addToCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (!addToCart.getError()) {
+                        Toast.makeText(getApplicationContext(), addToCart.getMessage(), Toast.LENGTH_SHORT).show();
 //                        addToCartListener.addToCart();
                     }
 
                 }
             });
-        }else{
-            Toast.makeText(ViewAllDealsActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ViewAllDealsActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -255,6 +255,14 @@ public class ViewAllDealsActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+       if(requestCode==100){
+           Log.e("ASDF : ", "ASDF");
+       }
     }
 }
 

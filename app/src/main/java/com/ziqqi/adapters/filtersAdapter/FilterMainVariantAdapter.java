@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ziqqi.FilterItemListener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.model.filtermodel.VariantFilter;
@@ -19,11 +20,11 @@ import java.util.List;
 public class FilterMainVariantAdapter extends RecyclerView.Adapter<FilterMainVariantAdapter.FilterViewModel> {
     Context context;
     List<VariantFilter> payloadList;
-    OnItemClickListener listener;
+    FilterItemListener listener;
     FilterVariantAdapter filterVariantAdapter;
     boolean isExpanded = false;
 
-    public FilterMainVariantAdapter(Context context, List<VariantFilter> payloadList, OnItemClickListener listener) {
+    public FilterMainVariantAdapter(Context context, List<VariantFilter> payloadList, FilterItemListener listener) {
         this.context = context;
         this.payloadList = payloadList;
         this.listener = listener;

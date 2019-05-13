@@ -1,7 +1,9 @@
 package com.ziqqi.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.ziqqi.FilterItemListener;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.filtersAdapter.FilterBrandAdapter;
@@ -26,7 +29,10 @@ import com.ziqqi.model.filtermodel.FeatureFilter;
 import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filtermodel.FilterValue;
 import com.ziqqi.model.filtermodel.FilterValue_;
+import com.ziqqi.model.filtermodel.FilterValue__;
+import com.ziqqi.model.filtermodel.FilterValue___;
 import com.ziqqi.model.filtermodel.VariantFilter;
+import com.ziqqi.model.filterproductmodel.Payload;
 import com.ziqqi.model.homecategorymodel.BestsellerProduct;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.viewmodel.FilterProductViewModel;
@@ -46,6 +52,9 @@ public class FilterActivity extends AppCompatActivity {
     List<VariantFilter> filterVariantReturnedList = new ArrayList<>();
     List<FeatureFilter> filterFeatureList = new ArrayList<>();
     List<FeatureFilter> filterFeatureReturnedList = new ArrayList<>();
+
+    List<FilterValue__> filterVariantInsideList = new ArrayList<>();
+    List<FilterValue___> filterFeatureInsideList = new ArrayList<>();
     LinearLayoutManager manager;
     LinearLayoutManager brandManager;
     LinearLayoutManager variantManager;
@@ -54,9 +63,15 @@ public class FilterActivity extends AppCompatActivity {
     FilterBrandAdapter brandAdapter;
     FilterMainVariantAdapter filterMainVariantAdapter;
     FilterMainFeatureAdapter filterMainFeatureAdapter;
-    OnItemClickListener listener;
+    FilterItemListener listener;
     String catId;
     boolean isCategoryExpanded = false, isBrandExpanded = false;
+
+    ArrayList<String> list = new ArrayList<String>();
+    StringBuilder stringBuilderForFilter;
+    String selectedFilters;
+    String minRange;
+    String maxRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +86,29 @@ public class FilterActivity extends AppCompatActivity {
             catId = getIntent().getStringExtra("catId");
         }
 
-        listener = new OnItemClickListener() {
+        listener = new FilterItemListener() {
             @Override
-            public void onItemClick(String id, String type) {
-
+            public void onFilterCategoryClick(int position) {
+                list.add(filterCategoryList.get(position).getId());
+                Log.i("click", list.toString());
             }
 
             @Override
-            public void onItemClick(BestsellerProduct bestsellerProduct, String type) {
+            public void onFilterBrandClick(int position) {
+                list.add(filterBrandList.get(position).getId());
+                Log.i("click", list.toString());
+            }
 
+            @Override
+            public void onFilterVariantClick(int position) {
+                list.add(filterVariantInsideList.get(position).getId());
+                Log.i("click", list.toString());
+            }
+
+            @Override
+            public void onFilterFeatureClick(int position) {
+                list.add(filterFeatureInsideList.get(position).getId());
+                Log.i("click", list.toString());
             }
         };
 
@@ -90,7 +119,20 @@ public class FilterActivity extends AppCompatActivity {
 
         getFiterCategories(catId);
 
+        stringBuilderForFilter = new StringBuilder();
 
+        for(int  i =0;i<list.size();i++)
+        {
+            String prefix = "";
+            for (String str : list)
+            {
+                stringBuilderForFilter.append(prefix);
+                prefix = ",";
+                stringBuilderForFilter.append(str);
+            }
+        }
+
+        selectedFilters = ""+stringBuilderForFilter;
 
         binding.ivExpandCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +157,19 @@ public class FilterActivity extends AppCompatActivity {
                     binding.rvBrand.setVisibility(View.GONE);
                     isBrandExpanded = false;
                 }
+            }
+        });
+
+        binding.btApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent();
+             //   i.putExtra("FILTERS", selectedFilters);
+                i.putExtra("MIN", minRange);
+                i.putExtra("MAX", maxRange);
+                setResult(100, i);
+                finish();
             }
         });
     }
@@ -154,11 +209,17 @@ public class FilterActivity extends AppCompatActivity {
                         binding.rangeSeekbar1.setMinValue(Float.parseFloat(filterCategoriesResponse.getMinPrice()));
                         binding.rangeSeekbar1.setMaxValue(Float.parseFloat(filterCategoriesResponse.getMaxPrice()));
 
+                        minRange = filterCategoriesResponse.getMinPrice();
+                        maxRange = filterCategoriesResponse.getMaxPrice();
+
                         binding.rangeSeekbar1.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                             @Override
                             public void valueChanged(Number minValue, Number maxValue) {
                                 binding.textMin1.setText("$ "+ minValue);
                                 binding.textMax1.setText("$ "+ maxValue);
+
+                                minRange = String.valueOf(minValue);
+                                maxRange = String.valueOf(maxValue);
                             }
                         });
 
