@@ -210,7 +210,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
                 sortBy = "1";
-                getData(sortBy);
+                sortData(sortBy);
 
             }
         });
@@ -220,7 +220,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
                 sortBy = "2";
-                getData(sortBy);
+                sortData(sortBy);
             }
         });
 
@@ -229,7 +229,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
                 sortBy = "3";
-                getData(sortBy);
+                sortData(sortBy);
             }
         });
 
@@ -238,7 +238,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
                 sortBy = "4";
-                getData(sortBy);
+                sortData(sortBy);
             }
         });
 
@@ -247,7 +247,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
                 sortBy = "5";
-                getData(sortBy);
+                sortData(sortBy);
             }
         });
     }
@@ -305,7 +305,53 @@ public class ViewAllProductsActivity extends AppCompatActivity {
 
     private void getData(String sortBy) {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
-//            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.VISIBLE);
+            Log.e("PageCount ", " " + pageCount);
+            viewModel.fetchData(categoryId, String.valueOf(pageCount), sortBy);
+            viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
+                @Override
+                public void onChanged(@Nullable ProductCategory productCategory) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    if (!productCategory.getError()) {
+                        if (payloadList != null) {
+                            /*viewAllList.clear();
+                            adapter.notifyDataSetChanged();*/
+                            payloadList = productCategory.getPayload();
+
+                            if (pageCount == 1) {
+                                viewAllList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                            } else {
+                                viewAllList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                                binding.recyclerView.loadMoreComplete();
+                            }
+
+                            // adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        Utils.ShowToast(ViewAllProductsActivity.this, productCategory.getMessage());
+                    }
+                }
+            });
+        } else {
+            Snackbar snackbar = Snackbar
+                    .make(binding.rlMain, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Try Again", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getData("");
+                        }
+                    });
+
+            snackbar.show();
+        }
+
+    }
+
+    private void sortData(String sortBy) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            binding.progressBar.setVisibility(View.VISIBLE);
             Log.e("PageCount ", " " + pageCount);
             viewModel.fetchData(categoryId, String.valueOf(pageCount), sortBy);
             viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
@@ -340,7 +386,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
                     .setAction("Try Again", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            getData("");
+                            sortData("");
                         }
                     });
 
@@ -348,6 +394,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

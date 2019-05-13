@@ -90,23 +90,7 @@ public class FilterActivity extends AppCompatActivity {
 
         getFiterCategories(catId);
 
-        binding.rangeSeekbar1.setMinValue(30f);
-        binding.rangeSeekbar1.setMaxValue(60f);
 
-        binding.rangeSeekbar1.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                binding.textMin1.setText("$ "+ minValue);
-                binding.textMax1.setText("$ "+ maxValue);
-            }
-        });
-
-        binding.rangeSeekbar1.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
-            @Override
-            public void finalValue(Number minValue, Number maxValue) {
-                Log.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
-            }
-        });
 
         binding.ivExpandCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +150,24 @@ public class FilterActivity extends AppCompatActivity {
                             filterFeatureList = filterCategoriesResponse.getPayload().getFeatureFilter();
                             filterFeatureReturnedList.addAll(filterFeatureList);
                         }
+
+                        binding.rangeSeekbar1.setMinValue(Float.parseFloat(filterCategoriesResponse.getMinPrice()));
+                        binding.rangeSeekbar1.setMaxValue(Float.parseFloat(filterCategoriesResponse.getMaxPrice()));
+
+                        binding.rangeSeekbar1.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                            @Override
+                            public void valueChanged(Number minValue, Number maxValue) {
+                                binding.textMin1.setText("$ "+ minValue);
+                                binding.textMax1.setText("$ "+ maxValue);
+                            }
+                        });
+
+                        binding.rangeSeekbar1.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+                            @Override
+                            public void finalValue(Number minValue, Number maxValue) {
+                                Log.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
+                            }
+                        });
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.mainLayout.setVisibility(View.GONE);

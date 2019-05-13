@@ -17,6 +17,12 @@ public class FilterResponse {
     @SerializedName("Message")
     @Expose
     private String message;
+    @SerializedName("Min_price")
+    @Expose
+    private String minPrice;
+    @SerializedName("Max_price")
+    @Expose
+    private String maxPrice;
     @SerializedName("Payload")
     @Expose
     private Payload payload;
@@ -61,4 +67,19 @@ public class FilterResponse {
         this.payload = payload;
     }
 
+    public String getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(String minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public String getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(String maxPrice) {
+        this.maxPrice = maxPrice;
+    }
 }
