@@ -9,22 +9,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.model.productvariantmodel.AttributeValue;
 import com.ziqqi.model.productvariantmodel.Payload;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.FontCache;
 import com.ziqqi.utils.SpacesItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VariantMainAdapter extends RecyclerView.Adapter<VariantMainAdapter.BestSellerViewMainHolder> {
     Context context;
     List<Payload> payloadList;
     OnItemClickListener listener;
-    BestSellerAdapter bestSellerAdapter;
+    VariantAdapter variantAdapter;
+    List<AttributeValue> attributeValues = new ArrayList<>();
 
     public VariantMainAdapter(Context context, List<Payload> payloadList, OnItemClickListener listener) {
         this.context = context;
@@ -42,10 +46,18 @@ public class VariantMainAdapter extends RecyclerView.Adapter<VariantMainAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull BestSellerViewMainHolder holder, int i) {
-        if (!payloadList.isEmpty()) {
+
+        attributeValues = payloadList.get(i).getAttributeValue();
+
+        if (payloadList.get(i).getAttributeValue().size() ==0){
+            holder.main_layout.setVisibility(View.GONE);
+            holder.main_layout.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+//            attributeValues.remove(i);
+
+        }else{
             holder.tv_variant_name.setText(payloadList.get(i).getAttributeName());
-//            bestSellerAdapter = new BestSellerAdapter(context, i, payloadList.get(i).getBestsellerProduct(), listener);
-//            holder.recyclerView.setAdapter(bestSellerAdapter);
+            variantAdapter = new VariantAdapter(context, i, attributeValues, listener);
+            holder.rv_variants.setAdapter(variantAdapter);
         }
     }
 
@@ -57,12 +69,14 @@ public class VariantMainAdapter extends RecyclerView.Adapter<VariantMainAdapter.
     public class BestSellerViewMainHolder extends RecyclerView.ViewHolder {
         RecyclerView rv_variants;
         LinearLayoutManager manager;
+        LinearLayout main_layout;
         TextView tv_variant_name;
 
         public BestSellerViewMainHolder(@NonNull View itemView) {
             super(itemView);
             rv_variants = itemView.findViewById(R.id.rv_variants);
             tv_variant_name = itemView.findViewById(R.id.tv_variant_name);
+            main_layout = itemView.findViewById(R.id.main_layout);
             manager = new LinearLayoutManager(context);
             manager.setOrientation(LinearLayoutManager.HORIZONTAL);
             rv_variants.setLayoutManager(manager);

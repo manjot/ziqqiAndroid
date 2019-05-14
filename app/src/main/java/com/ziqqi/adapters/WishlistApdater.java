@@ -52,6 +52,7 @@ public class WishlistApdater extends RecyclerView.Adapter<WishlistApdater.WishLi
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailActivity.class );
                 intent.putExtra("product_id", viewWishlistList.get(i).getProductId());
+                intent.putExtra("variant_id", viewWishlistList.get(i).getProductVariantId());
                 context.startActivity(intent);
             }
         });

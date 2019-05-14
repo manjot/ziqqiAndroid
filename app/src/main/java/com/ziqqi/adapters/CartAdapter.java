@@ -91,6 +91,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 case R.id.ll_card:
                     Intent intent = new Intent(context, ProductDetailActivity.class);
                     intent.putExtra("product_id", viewCartList.get(getAdapterPosition()).getId());
+                    intent.putExtra("variant_id", viewCartList.get(getAdapterPosition()).getProductVariantId());
                     context.startActivity(intent);
                     break;
                 case R.id.iv_remove_cart:

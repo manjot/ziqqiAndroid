@@ -60,12 +60,15 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
         holder.tvDiscountPrice.setText("$ " + payloadList.get(i).getSalePrice());
         Glide.with(context).load(payloadList.get(i).getImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
 
-//        holder.ll_card.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                context.startActivity(new Intent(context, ProductDetailActivity.class).putExtra("product_id", payloadList.get(i).getProductId()));
-//            }
-//        });
+        holder.ll_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("product_id", payloadList.get(i).getId());
+                intent.putExtra("variant_id", payloadList.get(i).getVariantId());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -109,11 +112,6 @@ public class ViewAllProductAdapter extends RecyclerView.Adapter<ViewAllProductAd
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.ll_card:
-                    Intent intent = new Intent(context, ProductDetailActivity.class);
-                    intent.putExtra("product_id", payloadList.get(getAdapterPosition()).getProductId());
-                    context.startActivity(intent);
-                    break;
                 case R.id.iv_share:
                     listener.onItemClick(payloadList.get(getAdapterPosition()), Constants.SHARE);
                     break;

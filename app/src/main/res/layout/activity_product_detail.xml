@@ -63,7 +63,7 @@
             android:layout_below="@id/appbar"
             android:orientation="vertical">
 
-            <ScrollView
+            <android.support.v4.widget.NestedScrollView
                 android:id="@+id/scv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,15 +153,20 @@
                             android:textSize="@dimen/_14sdp" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_main_variant"
-                        android:layout_margin="@dimen/_8sdp"
-                        android:focusableInTouchMode="true"
-                        android:visibility="gone"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    </android.support.v7.widget.RecyclerView>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_main_variant"
+                            android:layout_margin="@dimen/_8sdp"
+                            android:visibility="visible"
+                            android:nestedScrollingEnabled="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -611,7 +616,7 @@
                 </LinearLayout>
 
 
-            </ScrollView>
+            </android.support.v4.widget.NestedScrollView>
         </RelativeLayout>
 
 

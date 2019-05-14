@@ -105,6 +105,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 case R.id.ll_card:
                     Intent intent = new Intent(context, ProductDetailActivity.class);
                     intent.putExtra("product_id", payloadList.get(getAdapterPosition()).getId());
+                    intent.putExtra("variant_id", payloadList.get(getAdapterPosition()).getVariantId());
                     context.startActivity(intent);
                     break;
                 case R.id.iv_share:

@@ -36,7 +36,7 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Button bt_click, bt_method;
-    String strPaymentType;
+    String strPaymentType, strCartTotal;
     TextView tv_send;
     String strUSSD;
     List<Payload> payloadList = new ArrayList<>();
@@ -66,22 +66,26 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null){
             strPaymentType = getIntent().getStringExtra("type");
-//            payloadList = getIntent().getParcelableExtra("cartdata");
+            strCartTotal = getIntent().getStringExtra("cartTotal");
+            strCartTotal = strCartTotal.indexOf(".") < 0 ? strCartTotal : strCartTotal.replaceAll("0*$", "").replaceAll("\\.$", "");
+            strCartTotal = strCartTotal.replace(".", "*");
+
             if (strPaymentType.equalsIgnoreCase("ZAAD")){
-                if (Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
-                    strUSSD = "*883*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                if (Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) >= 100){
+                    strUSSD = "*883*504880*" + strCartTotal+Uri.encode("#");
                 } else{
-                    strUSSD = "*223*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                    strUSSD = "*223*504880*" + strCartTotal+Uri.encode("#");
                 }
 
                 bt_method.setText("ZAAD - 504880");
                 tv_send.setText("To complete the order, please send us the payment of USD "+PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+ " from your USD account with phone number " +PreferenceManager.getStringValue(Constants.WALLET_NUMBER)+ " to our "+strPaymentType+" Merchant account mentioned below.");
+
             }else if (strPaymentType.equalsIgnoreCase("DAHAB")){
 
-                if (Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
-                    strUSSD = "*113*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                if (Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) >= 100){
+                    strUSSD = "*113*74110*" + strCartTotal+Uri.encode("#");
                 } else{
-                    strUSSD = "*773*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
+                    strUSSD = "*773*74110*" + strCartTotal+Uri.encode("#");
                 }
 
                 bt_method.setText("E-Dahab - 74110");

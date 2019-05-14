@@ -106,6 +106,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
                 case R.id.ll_card:
                     Intent intent = new Intent(context, ProductDetailActivity.class);
                     intent.putExtra("product_id", bestsellerProductList.get(getAdapterPosition()).getProductId());
+                    intent.putExtra("variant_id", bestsellerProductList.get(getAdapterPosition()).getVariantId());
                     context.startActivity(intent);
                     break;
                 case R.id.iv_share:

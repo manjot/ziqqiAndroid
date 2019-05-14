@@ -50,6 +50,9 @@ public class Payload {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("variant_id")
+    @Expose
+    private String variantId;
 
     public String getId() {
         return id;
@@ -171,4 +174,11 @@ public class Payload {
         this.status = status;
     }
 
+    public String getVariantId() {
+        return variantId;
+    }
+
+    public void setVariantId(String variantId) {
+        this.variantId = variantId;
+    }
 }

@@ -14,6 +14,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
+import com.ziqqi.OnItemClickListener;
 import com.ziqqi.OnSimilarItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.ProductSliderAdapter;
@@ -73,8 +75,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     SimilarProductAdapter adapter;
     ReviewsAdapter reviewsAdapter;
     OnSimilarItemClickListener listener;
+    OnItemClickListener listener2;
     SpacesItemDecoration spacesItemDecoration;
-    String product_id;
+    String product_id, variant_id;
     String strSharingUrl;
     LoginDialog loginDialog;
     int isWishlist = -1;
@@ -107,12 +110,13 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
-        }else {
+        } else {
             authToken = " ";
         }
 
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getStringExtra("product_id");
+            variant_id = getIntent().getStringExtra("variant_id");
         }
 
         listener = new OnSimilarItemClickListener() {
@@ -149,6 +153,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         setUpAdapter();
         getSimilar(Integer.parseInt(product_id));
         getDetails(Integer.parseInt(product_id), authToken);
+        getProductVariants(product_id);
 
         loginDialog = new LoginDialog();
         handler = new Handler();
@@ -273,7 +278,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     private void getDetails(int id, String authToken) {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             viewModel.fetchData(id, authToken);
             viewModel.getProductDetailsResponse().observe(this, new Observer<ProductDetails>() {
@@ -312,8 +317,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Toast.makeText(ProductDetailActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ProductDetailActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -340,7 +345,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 startActivity(new Intent(ProductDetailActivity.this, ViewAllProductsActivity.class).putExtra("categoryId", similarProduct.getCat_id()));
                             }
                         });
-                    }else {
+                    } else {
                         binding.llSimilar.setVisibility(View.GONE);
                     }
                 } else {
@@ -356,13 +361,18 @@ public class ProductDetailActivity extends AppCompatActivity {
         viewModel.getProductVariantResponse().observe(this, new Observer<ProductVariantModel>() {
             @Override
             public void onChanged(@Nullable ProductVariantModel productVariantModel) {
-                if (!productVariantModel.getError()){
+                if (!productVariantModel.getError()) {
                     binding.rvMainVariant.setVisibility(View.VISIBLE);
-                    if (productVariantModel.getPayload().size() != 0){
+                    if (productVariantModel.getPayload().size() != 0) {
                         productVariantReturnedList.clear();
                         productVariantList = productVariantModel.getPayload();
-                        productVariantReturnedList.addAll(productVariantList);
-                    }else{
+                        for (int i = 0; i < productVariantList.size(); i++) {
+                            if (productVariantList.get(i).getAttributeValue().size() > 0) {
+                                productVariantReturnedList.add(productVariantList.get(i));
+                            }
+                        }
+                        variantMainAdapter.notifyDataSetChanged();
+                    } else {
                         binding.rvMainVariant.setVisibility(View.GONE);
                     }
                 }
@@ -450,10 +460,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         feedbackManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         variantManager = new LinearLayoutManager(ProductDetailActivity.this);
-        variantManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        variantManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         binding.rvSimilar.setLayoutManager(manager);
         binding.rvReviews.setLayoutManager(feedbackManager);
+        binding.rvMainVariant.setLayoutManager(variantManager);
 
         adapter = new SimilarProductAdapter(ProductDetailActivity.this, similarDataList, listener);
         binding.rvSimilar.setAdapter(adapter);
@@ -465,7 +476,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);
 
-//        variantMainAdapter = new VariantMainAdapter(ProductDetailActivity.this, productVariantReturnedList);
+        variantMainAdapter = new VariantMainAdapter(ProductDetailActivity.this, productVariantReturnedList, listener2);
+        binding.rvMainVariant.setAdapter(variantMainAdapter);
+        spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
+        binding.rvMainVariant.addItemDecoration(spacesItemDecoration);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.rvMainVariant.getContext(),
+                variantManager.getOrientation());
+        binding.rvMainVariant.addItemDecoration(dividerItemDecoration);
     }
 
     @Override

@@ -43,6 +43,7 @@ public class MyOrdersActivity extends AppCompatActivity {
     ActivityMyOrdersBinding binding;
     LinearLayoutManager manager;
     List<Payload> payloadList = new ArrayList<>();
+    List<Payload> filteredList = new ArrayList<>();
     List<Payload> addressDataList = new ArrayList<>();
     MyOrdersAdapter adapter;
     SpacesItemDecoration spacesItemDecoration;
@@ -67,7 +68,7 @@ public class MyOrdersActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         setUpAdapter();
-        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             getOrders(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
         }
 
@@ -79,19 +80,18 @@ public class MyOrdersActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                adapter.getFilter().filter(charSequence);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 //after the change calling the method and passing the search input
-                filter(editable.toString());
             }
         });
     }
 
     private void getOrders(String authToken) {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.rvMyOrders.setVisibility(View.GONE);
             binding.llNoData.setVisibility(View.GONE);
@@ -108,8 +108,9 @@ public class MyOrdersActivity extends AppCompatActivity {
                             addressDataList.clear();
                             payloadList = myOrdersResponse.getPayload();
                             addressDataList.addAll(payloadList);
+                            adapter.notifyDataSetChanged();
 
-                            for (int i = 0;  i <= myOrdersResponse.getPayload().size()-1; i++){
+                            for (int i = 0; i <myOrdersResponse.getPayload().size(); i++) {
                                 names.add(payloadList.get(i).getProductName());
                             }
                         }
@@ -120,8 +121,8 @@ public class MyOrdersActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Toast.makeText(MyOrdersActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MyOrdersActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -138,19 +139,18 @@ public class MyOrdersActivity extends AppCompatActivity {
 
     private void filter(String text) {
         //new array list that will hold the filtered data
-        ArrayList<String> filterdNames = new ArrayList<>();
 
         //looping through existing elements
-        for (String s : names) {
+        for (int i=0 ; i<payloadList.size();i++) {
             //if the existing elements contains the search input
-            if (s.toLowerCase().contains(text.toLowerCase())) {
+            if (payloadList.get(i).getProductName().contains(text)) {
                 //adding the element to filtered list
-                filterdNames.add(s);
+                filteredList.add(payloadList.get(i));
             }
         }
 
         //calling a method of the adapter class and passing the filtered list
-        adapter.filterList(filterdNames);
+        adapter.filterList(filteredList);
     }
 
 

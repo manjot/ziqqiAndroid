@@ -35,6 +35,9 @@ public class Payload {
     @SerializedName("is_wishlist")
     @Expose
     private Integer isWishlist;
+    @SerializedName("variant_id")
+    @Expose
+    private String variantId;
 
 
     public String getId() {
@@ -117,5 +120,11 @@ public class Payload {
         this.isWishlist = isWishlist;
     }
 
+    public String getVariantId() {
+        return variantId;
+    }
 
+    public void setVariantId(String variantId) {
+        this.variantId = variantId;
+    }
 }

@@ -145,7 +145,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         listener = new OnAllItemClickListener() {
             @Override
             public void onItemClick(String id, String type) {
-                startActivity(new Intent(ViewAllProductsActivity.this, ProductDetailActivity.class).putExtra("product_id", id));
+//                startActivity(new Intent(ViewAllProductsActivity.this, ProductDetailActivity.class).putExtra("product_id", id));
             }
 
             @Override
@@ -316,7 +316,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             Log.e("PageCount ", " " + pageCount);
-            viewModel.fetchData(categoryId,strBrands,strMax, strMin, strVariants, strFeatures, String.valueOf(pageCount), sortBy);
+            viewModel.fetchData(categoryId,strBrands, strMin, strMax,strVariants, strFeatures, String.valueOf(pageCount), sortBy);
             viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
                 @Override
                 public void onChanged(@Nullable ProductCategory productCategory) {
@@ -363,7 +363,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             binding.progressBar.setVisibility(View.VISIBLE);
             Log.e("PageCount ", " " + pageCount);
 
-            viewModel.fetchData(categoryId,strBrands,strMax, strMin, strVariants, strFeatures, String.valueOf(pageCount), sortBy);
+            viewModel.fetchData(categoryId,strBrands, strMin, strMax,strVariants, strFeatures, String.valueOf(pageCount), sortBy);
             viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
                 @Override
                 public void onChanged(@Nullable ProductCategory productCategory) {
@@ -410,7 +410,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             Log.e("PageCount ", " " + pageCount);
-            viewModel.fetchData(categoryId,strBrands,strMax, strMin, strVariants, strFeatures, String.valueOf(pageCount), sortBy);
+            viewModel.fetchData(categoryId,strBrands, strMin,strMax, strVariants, strFeatures, String.valueOf(pageCount), sortBy);
             viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
                 @Override
                 public void onChanged(@Nullable ProductCategory productCategory) {

@@ -40,262 +40,267 @@
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:fontFamily="@font/light"
-                android:text="@string/select_your_service_provider"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_14sdp" />
-
-            <TextView
-                android:id="@+id/tv_cart_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/bold"
-                android:text="$180"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_18sdp" />
-
-            <RadioGroup
-                android:id="@+id/rg_payment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/ll_zaad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_24sdp">
-
-                    <RadioButton
-                        android:id="@+id/rb_zaad"
-                        style="@style/RadioButtonTheme"
-                        android:layout_width="wrap_content"
-                        android:clickable="false"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_zaad" />
-
-                        <LinearLayout
-                            android:id="@+id/ll_zaad_number"
-                            android:layout_width="@dimen/_110sdp"
-                            android:layout_height="@dimen/_30sdp"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="@dimen/_12sdp"
-                            android:visibility="gone"
-                            android:layout_gravity="center"
-                            android:background="@drawable/black_rounded_empty">
-
-                            <LinearLayout
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:gravity="center"
-                                android:background="@drawable/black_rounded">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="63"
-                                    android:textColor="@color/colorWhite"/>
-
-                            </LinearLayout>
-
-                            <EditText
-                                android:id="@+id/et_zaad"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null"
-                                android:inputType="number"
-                                android:maxLength="7"
-                                android:hint="1234567"/>
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_dahab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_12sdp">
-
-                    <RadioButton
-                        android:id="@+id/rb_dahab"
-                        style="@style/RadioButtonTheme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:layout_gravity="center" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_edahab" />
-
-                        <LinearLayout
-                            android:id="@+id/ll_dahab_number"
-                            android:layout_width="@dimen/_110sdp"
-                            android:layout_height="@dimen/_30sdp"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="@dimen/_12sdp"
-                            android:visibility="gone"
-                            android:layout_gravity="center"
-                            android:background="@drawable/black_rounded_empty">
-
-                            <LinearLayout
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:gravity="center"
-                                android:background="@drawable/black_rounded">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="65"
-                                    android:textColor="@color/colorWhite"/>
-
-                            </LinearLayout>
-
-                            <EditText
-                                android:id="@+id/et_dahab"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null"
-                                android:hint="1234567"
-                                android:inputType="number"
-                                android:maxLength="7"
-                                android:layout_marginLeft="@dimen/_5sdp"/>
-
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:id="@+id/ll_paypal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_12sdp">
-
-                    <RadioButton
-                        android:id="@+id/rb_paypal"
-                        style="@style/RadioButtonTheme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:clickable="false" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_paypal" />
-                </LinearLayout>
-
-
-            </RadioGroup>
-
+            android:layout_below="@+id/toolbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/cardview_light_background"
-                android:layout_margin="@dimen/_16sdp">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorSeacrhBox"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center"
-                    android:visibility="visible"
-                    android:padding="@dimen/_8sdp"
-                    android:text="Discount Coupon"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:fontFamily="@font/light"
+                    android:text="@string/select_your_service_provider"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp" />
 
+                <TextView
+                    android:id="@+id/tv_cart_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/bold"
+                    android:text="$180"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_18sdp" />
+
+                <RadioGroup
+                    android:id="@+id/rg_payment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/ll_zaad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_24sdp">
+
+                        <RadioButton
+                            android:id="@+id/rb_zaad"
+                            style="@style/RadioButtonTheme"
+                            android:layout_width="wrap_content"
+                            android:clickable="false"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_zaad" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_zaad_number"
+                                android:layout_width="@dimen/_110sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="@dimen/_12sdp"
+                                android:visibility="gone"
+                                android:layout_gravity="center"
+                                android:background="@drawable/black_rounded_empty">
+
+                                <LinearLayout
+                                    android:layout_width="@dimen/_30sdp"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:gravity="center"
+                                    android:background="@drawable/black_rounded">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="63"
+                                        android:textColor="@color/colorWhite"/>
+
+                                </LinearLayout>
+
+                                <EditText
+                                    android:id="@+id/et_zaad"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:inputType="number"
+                                    android:maxLength="7"
+                                    android:hint="1234567"/>
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_dahab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_12sdp">
+
+                        <RadioButton
+                            android:id="@+id/rb_dahab"
+                            style="@style/RadioButtonTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:layout_gravity="center" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_edahab" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_dahab_number"
+                                android:layout_width="@dimen/_110sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="@dimen/_12sdp"
+                                android:visibility="gone"
+                                android:layout_gravity="center"
+                                android:background="@drawable/black_rounded_empty">
+
+                                <LinearLayout
+                                    android:layout_width="@dimen/_30sdp"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:gravity="center"
+                                    android:background="@drawable/black_rounded">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="65"
+                                        android:textColor="@color/colorWhite"/>
+
+                                </LinearLayout>
+
+                                <EditText
+                                    android:id="@+id/et_dahab"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:hint="1234567"
+                                    android:inputType="number"
+                                    android:maxLength="7"
+                                    android:layout_marginLeft="@dimen/_5sdp"/>
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_paypal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_12sdp">
+
+                        <RadioButton
+                            android:id="@+id/rb_paypal"
+                            style="@style/RadioButtonTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:clickable="false" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_paypal" />
+                    </LinearLayout>
+
+
+                </RadioGroup>
+
+
                 <LinearLayout
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:background="@color/cardview_light_background"
+                    android:layout_margin="@dimen/_16sdp">
 
-                    <EditText
-                        android:id="@+id/et_coupon"
-                        android:layout_margin="@dimen/_8sdp"
-                        android:padding="@dimen/_8sdp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edittext_bg"
-                        android:inputType="text"
-                        android:hint="@string/discount_code"/>
+                        android:background="@color/colorSeacrhBox"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center"
+                        android:visibility="visible"
+                        android:padding="@dimen/_8sdp"
+                        android:text="Discount Coupon"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14sdp" />
 
-                    <Button
-                        android:id="@+id/bt_coupon_apply"
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        android:text="@string/apply"
-                        android:textAllCaps="false"
-                        android:paddingLeft="@dimen/_8sdp"
-                        android:paddingRight="@dimen/_8sdp"
-                        android:background="@drawable/feedback_button_bg"/>
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/et_coupon"
+                            android:layout_margin="@dimen/_8sdp"
+                            android:padding="@dimen/_8sdp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edittext_bg"
+                            android:inputType="text"
+                            android:hint="@string/discount_code"/>
+
+                        <Button
+                            android:id="@+id/bt_coupon_apply"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:layout_marginRight="@dimen/_8sdp"
+                            android:text="@string/apply"
+                            android:textAllCaps="false"
+                            android:paddingLeft="@dimen/_8sdp"
+                            android:paddingRight="@dimen/_8sdp"
+                            android:background="@drawable/feedback_button_bg"/>
+                    </LinearLayout>
+
                 </LinearLayout>
 
+
+
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:background="@drawable/feedback_button_bg"
+                    android:text="@string/next"
+                    android:visibility="gone" />
             </LinearLayout>
-
-
-
-
-            <Button
-                android:id="@+id/next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_24sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:layout_marginBottom="@dimen/_12sdp"
-                android:background="@drawable/feedback_button_bg"
-                android:text="@string/next"
-                android:visibility="gone" />
-        </LinearLayout>
+        </ScrollView>
 
         <ProgressBar
             android:id="@+id/progress_bar"
