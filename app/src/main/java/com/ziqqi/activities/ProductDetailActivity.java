@@ -27,6 +27,7 @@ import com.ziqqi.R;
 import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
+import com.ziqqi.adapters.VariantMainAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
 import com.ziqqi.fragments.CheckoutDialogFragment;
 import com.ziqqi.model.addtocart.AddToCart;
@@ -34,6 +35,7 @@ import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
+import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.similarproductsmodel.Payload;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
@@ -55,10 +57,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     ActivityProductDetailBinding binding;
     ProductDetailsViewModel viewModel;
-    LinearLayoutManager manager, feedbackManager;
+    LinearLayoutManager manager, feedbackManager, variantManager;
     ProductSliderAdapter productSliderAdapter;
     List<String> bannerPayLoad = new ArrayList<>();
     List<Review> feedbackPayLoad = new ArrayList<>();
+    List<com.ziqqi.model.productvariantmodel.Payload> productVariantList = new ArrayList<>();
+    List<com.ziqqi.model.productvariantmodel.Payload> productVariantReturnedList = new ArrayList<>();
     Handler handler;
     Runnable update;
     int currentPage = 0;
@@ -75,7 +79,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     LoginDialog loginDialog;
     int isWishlist = -1;
     String authToken;
-    List<com.ziqqi.model.productvariantmodel.Payload> variantPayload = new ArrayList<>();
+    VariantMainAdapter variantMainAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,6 +318,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     }
 
+    /*Similar*/
     private void getSimilar(int id) {
         binding.rvSimilar.setVisibility(View.GONE);
         viewModel.fetchSimilarProducts(id);
@@ -340,6 +345,26 @@ public class ProductDetailActivity extends AppCompatActivity {
                     }
                 } else {
                     binding.llSimilar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    /*ProductVariants*/
+    private void getProductVariants(String productId) {
+        viewModel.getProductVariant(productId);
+        viewModel.getProductVariantResponse().observe(this, new Observer<ProductVariantModel>() {
+            @Override
+            public void onChanged(@Nullable ProductVariantModel productVariantModel) {
+                if (!productVariantModel.getError()){
+                    binding.rvMainVariant.setVisibility(View.VISIBLE);
+                    if (productVariantModel.getPayload().size() != 0){
+                        productVariantReturnedList.clear();
+                        productVariantList = productVariantModel.getPayload();
+                        productVariantReturnedList.addAll(productVariantList);
+                    }else{
+                        binding.rvMainVariant.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -401,6 +426,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    /*Buy*/
     private void addToBuy(String id, String authToken, String quantity, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
         viewModel.addProductToCart(id, authToken, quantity, guest_id);
@@ -423,6 +449,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         feedbackManager = new LinearLayoutManager(ProductDetailActivity.this);
         feedbackManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        variantManager = new LinearLayoutManager(ProductDetailActivity.this);
+        variantManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
         binding.rvSimilar.setLayoutManager(manager);
         binding.rvReviews.setLayoutManager(feedbackManager);
 
@@ -435,6 +464,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.rvReviews.setAdapter(reviewsAdapter);
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);
+
+//        variantMainAdapter = new VariantMainAdapter(ProductDetailActivity.this, productVariantReturnedList);
     }
 
     @Override

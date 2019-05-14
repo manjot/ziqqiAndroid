@@ -28,6 +28,7 @@ import com.ziqqi.model.ordertrackingmodel.OrderTrackingResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
+import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
@@ -630,6 +631,24 @@ public class Repository {
             }
         });
         return editCart;
+    }
+
+    public MutableLiveData<ProductVariantModel> getProductVariants(String productId) {
+        final MutableLiveData<ProductVariantModel> variants = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ProductVariantModel> call = apiInterface.getProductVariant(productId);
+        call.enqueue(new Callback<ProductVariantModel>() {
+            @Override
+            public void onResponse(Call<ProductVariantModel> call, Response<ProductVariantModel> response) {
+                variants.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ProductVariantModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return variants;
     }
 }
 

@@ -2,6 +2,7 @@ package com.ziqqi.retrofit;
 
 import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
+import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.uploadphotomodel.UploadPhoto;
 import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
@@ -247,4 +248,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("masterFilter")
     Call<FilterResponse> getMasterFilter(@Field("category_id") String category_id);
+
+    @FormUrlEncoded
+    @POST("productVariantNew")
+    Call<ProductVariantModel> getProductVariant(@Field("product_id") String product_id);
 }
