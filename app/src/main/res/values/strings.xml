@@ -193,6 +193,7 @@
     <string name="price_high_to_low">Price High to Low</string>
     <string name="name_asc">Name Asc</string>
     <string name="name_desc">Name Desc</string>
+    <string name="no_product">No products found</string>
 
     <string-array name="array_countries">
         <item>SOMALILAND</item>

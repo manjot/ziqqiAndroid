@@ -114,7 +114,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("productDetails")
-    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("auth_token") String auth_token);
+    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("auth_token") String auth_token, @Field("guest_id") String guest_id, @Field("variant_id") String variant_id);
 
 
     @FormUrlEncoded

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.OnItemClickListener;
+import com.ziqqi.OnVariantItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.model.homecategorymodel.BestsellerProduct;
@@ -33,9 +34,9 @@ public class VariantAdapter extends RecyclerView.Adapter<VariantAdapter.BestSell
     Context context;
     List<AttributeValue> attributeValues;
     int position;
-    OnItemClickListener listener;
+    OnVariantItemClickListener listener;
 
-    public VariantAdapter(Context context, int position, List<AttributeValue> attributeValues, OnItemClickListener listener) {
+    public VariantAdapter(Context context, int position, List<AttributeValue> attributeValues, OnVariantItemClickListener listener) {
         this.context = context;
         this.attributeValues = attributeValues;
         this.position = position;
@@ -76,16 +77,15 @@ public class VariantAdapter extends RecyclerView.Adapter<VariantAdapter.BestSell
 
             tvValueName = itemView.findViewById(R.id.tv_variant_value);
             main_layout = itemView.findViewById(R.id.main_layout);
+
+            main_layout.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.ll_card:
-                    /*Intent intent = new Intent(context, ProductDetailActivity.class);
-                    intent.putExtra("product_id", attributeValues.get(getAdapterPosition()).getAttributesValueId());
-                    intent.putExtra("variant_id", attributeValues.get(getAdapterPosition()).getVariantId());
-                    context.startActivity(intent);*/
+                case R.id.main_layout:
+                    listener.onFilterCategoryClick(attributeValues.get(getAdapterPosition()).getAttributesValueId());
                     break;
             }
 

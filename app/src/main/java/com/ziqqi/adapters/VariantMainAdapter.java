@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ziqqi.OnItemClickListener;
+import com.ziqqi.OnVariantItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.model.productvariantmodel.AttributeValue;
 import com.ziqqi.model.productvariantmodel.Payload;
@@ -26,11 +27,11 @@ import java.util.List;
 public class VariantMainAdapter extends RecyclerView.Adapter<VariantMainAdapter.BestSellerViewMainHolder> {
     Context context;
     List<Payload> payloadList;
-    OnItemClickListener listener;
+    OnVariantItemClickListener listener;
     VariantAdapter variantAdapter;
     List<AttributeValue> attributeValues = new ArrayList<>();
 
-    public VariantMainAdapter(Context context, List<Payload> payloadList, OnItemClickListener listener) {
+    public VariantMainAdapter(Context context, List<Payload> payloadList, OnVariantItemClickListener listener) {
         this.context = context;
         this.payloadList = payloadList;
         this.listener = listener;

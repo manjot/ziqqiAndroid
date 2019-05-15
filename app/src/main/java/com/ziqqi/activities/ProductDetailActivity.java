@@ -25,6 +25,7 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.OnSimilarItemClickListener;
+import com.ziqqi.OnVariantItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
@@ -50,6 +51,7 @@ import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.ProductDetailsViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -76,6 +78,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     ReviewsAdapter reviewsAdapter;
     OnSimilarItemClickListener listener;
     OnItemClickListener listener2;
+    OnVariantItemClickListener listener3;
     SpacesItemDecoration spacesItemDecoration;
     String product_id, variant_id;
     String strSharingUrl;
@@ -83,6 +86,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     int isWishlist = -1;
     String authToken;
     VariantMainAdapter variantMainAdapter;
+    List<String> items;
+    String strSendingVariant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,12 +116,20 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
         } else {
-            authToken = " ";
+            authToken = "";
         }
 
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getStringExtra("product_id");
-            variant_id = getIntent().getStringExtra("variant_id");
+
+            if (getIntent().getStringExtra("variant_id") != null){
+                variant_id = getIntent().getStringExtra("variant_id");
+                items = Arrays.asList(variant_id.split("\\s*,\\s*"));
+                strSendingVariant = items.get(0);
+            }else{
+                strSendingVariant = "";
+            }
+
         }
 
         listener = new OnSimilarItemClickListener() {
@@ -150,9 +163,16 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         };
 
+        listener3 = new OnVariantItemClickListener() {
+            @Override
+            public void onFilterCategoryClick(String variantId) {
+                getDetails(Integer.parseInt(product_id), authToken, PreferenceManager.getStringValue(Constants.GUEST_ID), variantId);
+            }
+        };
+
         setUpAdapter();
         getSimilar(Integer.parseInt(product_id));
-        getDetails(Integer.parseInt(product_id), authToken);
+        getDetails(Integer.parseInt(product_id), authToken, PreferenceManager.getStringValue(Constants.GUEST_ID), strSendingVariant);
         getProductVariants(product_id);
 
         loginDialog = new LoginDialog();
@@ -277,10 +297,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
 
-    private void getDetails(int id, String authToken) {
+    private void getDetails(int id, String authToken, String guestId, String variantId) {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
-            viewModel.fetchData(id, authToken);
+            viewModel.fetchData(id, authToken, guestId, variantId);
             viewModel.getProductDetailsResponse().observe(this, new Observer<ProductDetails>() {
                 @Override
                 public void onChanged(@Nullable ProductDetails productDetails) {
@@ -303,6 +323,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                             binding.tvOverview.setText(resultOverview);
                             binding.tvSpecs.setText(resultSpecification);
+                            bannerPayLoad.clear();
+                            feedbackPayLoad.clear();
                             bannerPayLoad.addAll(productDetails.getPayload().getImage());
                             feedbackPayLoad.addAll(productDetails.getPayload().getReviews());
                             if (productDetails.getPayload().getReviews().size() == 0) {
@@ -310,6 +332,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 binding.tvNoReviews.setVisibility(View.VISIBLE);
                             }
                             productSliderAdapter.notifyDataSetChanged();
+                            reviewsAdapter.notifyDataSetChanged();
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
@@ -476,7 +499,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);
 
-        variantMainAdapter = new VariantMainAdapter(ProductDetailActivity.this, productVariantReturnedList, listener2);
+        variantMainAdapter = new VariantMainAdapter(ProductDetailActivity.this, productVariantReturnedList, listener3);
         binding.rvMainVariant.setAdapter(variantMainAdapter);
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvMainVariant.addItemDecoration(spacesItemDecoration);

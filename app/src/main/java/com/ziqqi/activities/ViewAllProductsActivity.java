@@ -152,20 +152,20 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             public void onItemClick(Payload payload, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        Utils.share(ViewAllProductsActivity.this, payload.getProductId());
+                        Utils.share(ViewAllProductsActivity.this, payload.getLinkhref());
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }else{
-                            addToWishList("", payload.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToWishList("", payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToCart(payload.getProductId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }else{
-                            addToCart(payload.getProductId(), "", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToCart(payload.getId(), "", PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
 
                         break;
@@ -199,8 +199,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewAllProductsActivity.this, FilterActivity.class);
-               intent.putExtra("catId", categoryId);
-               startActivityForResult(intent, 100);
+                intent.putExtra("catId", categoryId);
+                startActivityForResult(intent, 100);
               //startActivityForResult(new Intent(ViewAllProductsActivity.this, FilterActivity.class).putExtra("catId", categoryId), 100);
             }
         });
@@ -431,6 +431,9 @@ public class ViewAllProductsActivity extends AppCompatActivity {
                             }
 
                             // adapter.notifyDataSetChanged();
+                        }else{
+                            binding.recyclerView.setVisibility(View.GONE);
+                            binding.llNoData.setVisibility(View.VISIBLE);
                         }
                     } else {
                         Utils.ShowToast(ViewAllProductsActivity.this, productCategory.getMessage());

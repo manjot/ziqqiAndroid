@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.ziqqi.R;
 import com.ziqqi.adapters.CountryCodeAdapter;
@@ -43,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
     int countryPosition = 0;
     String strCountryCode = "252";
     String strGender = "M";
+    String regexStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +67,13 @@ public class SignUpActivity extends AppCompatActivity {
         initViews();
         setUpFonts();
 
+        regexStr = "^[0-9]*$";
+
         adapter = new CountryCodeAdapter(this, flags, code);
         binding.ccp.setAdapter(adapter);
 
         final InputFilter[] FilterArray = new InputFilter[1];
+        binding.etMobileNumber.setRawInputType(Configuration.KEYBOARD_12KEY);
 
         binding.ccp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -110,12 +115,18 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (countryPosition == 0) {
-                    if (binding.etMobileNumber.getText().toString().length() == 9) {
+                    if(binding.etMobileNumber.getText().toString().trim().matches(regexStr) && binding.etMobileNumber.getText().toString().length() == 9) {
                         onClickRegister();
                     }
+                    else{
+                        Toast.makeText(SignUpActivity.this, "Invalid Phone Number", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (countryPosition == 1) {
-                    if (binding.etMobileNumber.getText().toString().length() == 10) {
+                    if(binding.etMobileNumber.getText().toString().trim().matches(regexStr) && binding.etMobileNumber.getText().toString().length() == 10) {
                         onClickRegister();
+                    }
+                    else{
+                        Toast.makeText(SignUpActivity.this, "Invalid Phone Number", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

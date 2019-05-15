@@ -29,11 +29,11 @@ public class ProductDetailsViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchData(int productId, String authToken) {
+    public void fetchData(int productId, String authToken, String guestId, String variantId) {
      /*   if (searchResponse != null) {
 
         } else {*/
-        productDetailsResponse = repository.getProductDetails(productId, authToken);
+        productDetailsResponse = repository.getProductDetails(productId, authToken, guestId, variantId);
         // }
     }
 

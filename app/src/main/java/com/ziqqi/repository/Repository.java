@@ -146,10 +146,10 @@ public class Repository {
         return searchResponse;
     }
 
-    public MutableLiveData<ProductDetails> getProductDetails(int id, String authToken) {
+    public MutableLiveData<ProductDetails> getProductDetails(int id, String authToken, String guestId, String variantId) {
         final MutableLiveData<ProductDetails> productDetailsResponse = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProductDetails> call = apiInterface.productDetails(id, authToken);
+        Call<ProductDetails> call = apiInterface.productDetails(id, authToken, guestId, variantId);
         call.enqueue(new Callback<ProductDetails>() {
             @Override
             public void onResponse(Call<ProductDetails> call, Response<ProductDetails> response) {
