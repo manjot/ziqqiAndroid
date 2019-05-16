@@ -2,6 +2,7 @@ package com.ziqqi.retrofit;
 
 import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
+import com.ziqqi.model.ordercancelmodel.OrderCancelResponse;
 import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.uploadphotomodel.UploadPhoto;
 import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
@@ -252,4 +253,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("productVariantNew")
     Call<ProductVariantModel> getProductVariant(@Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("orderCancel")
+    Call<OrderCancelResponse> cancelOrder(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("order_id") String order_id, @Field("reason") String reason);
 }

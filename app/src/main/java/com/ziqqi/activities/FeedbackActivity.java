@@ -10,11 +10,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ziqqi.OnFeedbackItemListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.FeedbackQueryAdapter;
 import com.ziqqi.adapters.SearchCategoryAdapter;
@@ -44,6 +46,8 @@ public class FeedbackActivity extends AppCompatActivity {
     List<Payload> queryList = new ArrayList<>();
     LinearLayoutManager manager;
     FeedbackQueryAdapter adapter;
+    OnFeedbackItemListener listener;
+    List<Integer> stars = new ArrayList<>();
 
 
     @Override
@@ -62,6 +66,14 @@ public class FeedbackActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getSupportActionBar().setElevation(0.0f);
+
+        listener = new OnFeedbackItemListener() {
+            @Override
+            public void onFeedbackItemClick(int position, int star) {
+                stars.add(position, star);
+                Log.i("STAR", String.valueOf(stars));
+            }
+        };
 
         setUpAdapter();
         getQueries();
@@ -109,7 +121,7 @@ public class FeedbackActivity extends AppCompatActivity {
         manager = new LinearLayoutManager(FeedbackActivity.this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.rvQueries.setLayoutManager(manager);
-        adapter = new FeedbackQueryAdapter(FeedbackActivity.this, queryList);
+        adapter = new FeedbackQueryAdapter(FeedbackActivity.this, queryList, listener);
         binding.rvQueries.setAdapter(adapter);
     }
 

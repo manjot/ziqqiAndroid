@@ -24,6 +24,7 @@ import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
+import com.ziqqi.model.ordercancelmodel.OrderCancelResponse;
 import com.ziqqi.model.ordertrackingmodel.OrderTrackingResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
@@ -645,6 +646,24 @@ public class Repository {
 
             @Override
             public void onFailure(Call<ProductVariantModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return variants;
+    }
+
+    public MutableLiveData<OrderCancelResponse> cancelOrder(String authToken, String productId, String orderId, String reason) {
+        final MutableLiveData<OrderCancelResponse> variants = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<OrderCancelResponse> call = apiInterface.cancelOrder(authToken, productId, orderId, reason);
+        call.enqueue(new Callback<OrderCancelResponse>() {
+            @Override
+            public void onResponse(Call<OrderCancelResponse> call, Response<OrderCancelResponse> response) {
+                variants.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<OrderCancelResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

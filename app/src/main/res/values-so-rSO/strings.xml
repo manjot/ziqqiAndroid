@@ -196,6 +196,15 @@
     <string name="name_asc">Name Asc</string>
     <string name="name_desc">Name Desc</string>
     <string name="no_product">No products found</string>
+    <string name="cancel_item">Cancel Item</string>
+    <string name="others">Others</string>
+    <string name="found_cheaper_price_than_ziqqi">Found cheaper price than Ziqqi</string>
+    <string name="ordered_wrong_item">Ordered wrong item</string>
+    <string name="payment_pending">Payment Pending</string>
+    <string name="order_received">Order Received</string>
+    <string name="order_shipped">Order Shipped</string>
+    <string name="out_for_delivery">Out for Delivery</string>
+    <string name="order_completed">Order Completed</string>
 
     <string-array name="array_countries">
         <item>SOMALILAND</item>

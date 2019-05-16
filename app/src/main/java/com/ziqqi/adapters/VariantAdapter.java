@@ -3,6 +3,7 @@ package com.ziqqi.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ public class VariantAdapter extends RecyclerView.Adapter<VariantAdapter.BestSell
     List<AttributeValue> attributeValues;
     int position;
     OnVariantItemClickListener listener;
+    int row_index = 0;
 
     public VariantAdapter(Context context, int position, List<AttributeValue> attributeValues, OnVariantItemClickListener listener) {
         this.context = context;
@@ -60,6 +62,16 @@ public class VariantAdapter extends RecyclerView.Adapter<VariantAdapter.BestSell
         }else{
             holder.tvValueName.setText(attributeValues.get(i).getValueName());
         }
+
+        if(row_index==i){
+            holder.tvValueName.setBackgroundResource(R.drawable.black_rounded_empty);
+            holder.tvValueName.setTextColor(Color.parseColor("#000000"));
+        }
+        else {
+            holder.tvValueName.setBackgroundResource(R.drawable.grey_rounded);
+            holder.tvValueName.setTextColor(Color.parseColor("#8E8E8E"));
+        }
+
     }
 
     @Override
@@ -86,6 +98,8 @@ public class VariantAdapter extends RecyclerView.Adapter<VariantAdapter.BestSell
             switch (view.getId()) {
                 case R.id.main_layout:
                     listener.onFilterCategoryClick(attributeValues.get(getAdapterPosition()).getAttributesValueId());
+                    row_index = getAdapterPosition();
+                    notifyDataSetChanged();
                     break;
             }
 
