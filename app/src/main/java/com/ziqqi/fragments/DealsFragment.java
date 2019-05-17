@@ -134,6 +134,7 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
+                                    binding.progressBar.setVisibility(View.GONE);
                                     if (!addToCart.getError()) {
                                         addToCartListener.addToCart();
                                         Utils.showalertResponse(getActivity(), addToCart.getMessage());
@@ -147,6 +148,7 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
                             viewModel.addToCartResponse().observe(getViewLifecycleOwner(), new Observer<AddToCart>() {
                                 @Override
                                 public void onChanged(@Nullable AddToCart addToCart) {
+                                    binding.progressBar.setVisibility(View.GONE);
                                     if (!addToCart.getError()) {
                                         addToCartListener.addToCart();
                                         Utils.showalertResponse(getActivity(), addToCart.getMessage());
