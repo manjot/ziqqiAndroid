@@ -72,9 +72,9 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
             if (strPaymentType.equalsIgnoreCase("ZAAD")){
                 if (Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) >= 100){
-                    strUSSD = "*883*504880*" + strCartTotal+Uri.encode("#");
+                    strUSSD = "*883*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
                 } else{
-                    strUSSD = "*223*504880*" + strCartTotal+Uri.encode("#");
+                    strUSSD = "*223*504880*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
                 }
 
                 bt_method.setText("ZAAD - 504880");
@@ -83,9 +83,9 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
             }else if (strPaymentType.equalsIgnoreCase("DAHAB")){
 
                 if (Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) >= 100){
-                    strUSSD = "*113*74110*" + strCartTotal+Uri.encode("#");
+                    strUSSD = "*113*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
                 } else{
-                    strUSSD = "*773*74110*" + strCartTotal+Uri.encode("#");
+                    strUSSD = "*773*74110*" + PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)+Uri.encode("#");
                 }
 
                 bt_method.setText("E-Dahab - 74110");

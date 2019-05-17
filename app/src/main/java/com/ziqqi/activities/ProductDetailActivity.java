@@ -27,6 +27,7 @@ import com.ziqqi.OnItemClickListener;
 import com.ziqqi.OnSimilarItemClickListener;
 import com.ziqqi.OnVariantItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.adapters.FeedbackVariantAdapter;
 import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
@@ -35,6 +36,7 @@ import com.ziqqi.databinding.ActivityProductDetailBinding;
 import com.ziqqi.fragments.CheckoutDialogFragment;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
@@ -65,6 +67,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     ProductSliderAdapter productSliderAdapter;
     List<String> bannerPayLoad = new ArrayList<>();
     List<Review> feedbackPayLoad = new ArrayList<>();
+    List<com.ziqqi.model.loadvariantmodel.Review> feedbackPayLoad2 = new ArrayList<>();
     List<com.ziqqi.model.productvariantmodel.Payload> productVariantList = new ArrayList<>();
     List<com.ziqqi.model.productvariantmodel.Payload> productVariantReturnedList = new ArrayList<>();
     Handler handler;
@@ -76,6 +79,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     List<Review> reviewDataList = new ArrayList<>();
     SimilarProductAdapter adapter;
     ReviewsAdapter reviewsAdapter;
+    FeedbackVariantAdapter feedbackVariantAdapter;
     OnSimilarItemClickListener listener;
     OnItemClickListener listener2;
     OnVariantItemClickListener listener3;
@@ -166,7 +170,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         listener3 = new OnVariantItemClickListener() {
             @Override
             public void onFilterCategoryClick(String variantId) {
-                getDetails(Integer.parseInt(product_id), authToken, PreferenceManager.getStringValue(Constants.GUEST_ID), variantId);
+                loadVariant(authToken, product_id, PreferenceManager.getStringValue(Constants.GUEST_ID), variantId);
             }
         };
 
@@ -347,6 +351,58 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     }
 
+
+    private void loadVariant(String authToken, String productId, String guestId, String attributeId) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.loadVariant(authToken, productId, guestId, attributeId);
+            viewModel.loadVariantResponse().observe(this, new Observer<LoadVariantResponse>() {
+                @Override
+                public void onChanged(@Nullable LoadVariantResponse loadVariantResponse) {
+                    if (!loadVariantResponse.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        if (loadVariantResponse.getPayload() != null) {
+                            binding.tvBrandName.setText(loadVariantResponse.getPayload().getBrandName());
+                            binding.tvProductName.setText(loadVariantResponse.getPayload().getName());
+
+                            String resultOverview = Html.fromHtml(loadVariantResponse.getPayload().getOverview()).toString();
+                            String resultSpecification = Html.fromHtml(loadVariantResponse.getPayload().getSpecifications()).toString();
+
+                            strSharingUrl = "www.ziqqi.com/" + loadVariantResponse.getPayload().getLinkhref();
+                            isWishlist = loadVariantResponse.getPayload().getIsWishlist();
+
+                            if (isWishlist == 1) {
+                                binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
+                            } else if (isWishlist == 0) {
+                                binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                            }
+
+                            binding.tvOverview.setText(resultOverview);
+                            binding.tvSpecs.setText(resultSpecification);
+                            bannerPayLoad.clear();
+                            feedbackPayLoad2.clear();
+                            bannerPayLoad.addAll(loadVariantResponse.getPayload().getImage());
+                            feedbackPayLoad2.addAll(loadVariantResponse.getPayload().getReviews());
+                            if (loadVariantResponse.getPayload().getReviews().size() == 0) {
+                                binding.rvReviews.setVisibility(View.GONE);
+                                binding.tvNoReviews.setVisibility(View.VISIBLE);
+                                setUpVariantReviewAdapter();
+                            }
+                            productSliderAdapter.notifyDataSetChanged();
+                            reviewsAdapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(ProductDetailActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     /*Similar*/
     private void getSimilar(int id) {
         binding.rvSimilar.setVisibility(View.GONE);
@@ -508,6 +564,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.rvMainVariant.getContext(),
                 variantManager.getOrientation());
         binding.rvMainVariant.addItemDecoration(dividerItemDecoration);
+    }
+
+    private void setUpVariantReviewAdapter(){
+        feedbackVariantAdapter = new FeedbackVariantAdapter(ProductDetailActivity.this, feedbackPayLoad2);
+        binding.rvReviews.setAdapter(feedbackVariantAdapter);
+        spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
+        binding.rvReviews.addItemDecoration(spacesItemDecoration);
     }
 
     @Override
