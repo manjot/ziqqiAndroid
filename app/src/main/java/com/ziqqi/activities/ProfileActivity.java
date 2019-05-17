@@ -97,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
             binding.tvName.setText(PreferenceManager.getStringValue(Constants.FIRST_NAME));
             binding.tvEmail.setText(PreferenceManager.getStringValue(Constants.EMAIL));
             Glide.with(this)
-                    .load(PreferenceManager.getStringValue(Constants.USER_PHOTO)).apply(RequestOptions.placeholderOf(R.drawable.place_holder))
+                    .load(PreferenceManager.getStringValue(Constants.USER_PHOTO))
                     .into(binding.ivProfilePic);
         }
 
@@ -192,6 +192,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void addPhoto() {
         if (f != null) {
+            binding.progressBar.setVisibility(View.VISIBLE);
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
             MultipartBody.Part body = MultipartBody.Part.createFormData("filename", f.getName(), reqFile);
             authToken = createPartFromString(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
@@ -200,12 +201,16 @@ public class ProfileActivity extends AppCompatActivity {
             call.enqueue(new Callback<UploadPhoto>() {
                 @Override
                 public void onResponse(Call<UploadPhoto> call, Response<UploadPhoto> response) {
+                    binding.progressBar.setVisibility(View.VISIBLE);
                     Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                     PreferenceManager.setStringValue(Constants.USER_PHOTO, response.body().getPayload().getFileupload());
+                    finish();
                 }
 
                 @Override
                 public void onFailure(Call<UploadPhoto> call, Throwable t) {
+                    binding.progressBar.setVisibility(View.VISIBLE);
                     Toast.makeText(ProfileActivity.this, "Update Failed!", Toast.LENGTH_SHORT).show();
                 }
             });

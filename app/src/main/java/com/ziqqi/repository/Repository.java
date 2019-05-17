@@ -22,12 +22,15 @@ import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
+import com.ziqqi.model.ordercancelmodel.OrderCancelResponse;
 import com.ziqqi.model.ordertrackingmodel.OrderTrackingResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productcategorymodel.ProductCategory;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
+import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.model.searchmodel.SearchResponse;
@@ -127,10 +130,10 @@ public class Repository {
         return searchResponse;
     }
 
-    public MutableLiveData<ProductCategory> getCategoryProducts(String id, String page, String sortBy) {
+    public MutableLiveData<ProductCategory> getCategoryProducts(String id, String brandId, String maxPrice, String minPrice, String attribute, String featureId, String page, String sortBy) {
         final MutableLiveData<ProductCategory> searchResponse = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProductCategory> call = apiInterface.getCategoryProduct(id, page, sortBy);
+        Call<ProductCategory> call = apiInterface.getCategoryProduct(id, brandId, maxPrice, minPrice, attribute, featureId, page, sortBy);
         call.enqueue(new Callback<ProductCategory>() {
             @Override
             public void onResponse(Call<ProductCategory> call, Response<ProductCategory> response) {
@@ -145,10 +148,10 @@ public class Repository {
         return searchResponse;
     }
 
-    public MutableLiveData<ProductDetails> getProductDetails(int id, String authToken) {
+    public MutableLiveData<ProductDetails> getProductDetails(int id, String authToken, String guestId, String variantId) {
         final MutableLiveData<ProductDetails> productDetailsResponse = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProductDetails> call = apiInterface.productDetails(id, authToken);
+        Call<ProductDetails> call = apiInterface.productDetails(id, authToken, guestId, variantId);
         call.enqueue(new Callback<ProductDetails>() {
             @Override
             public void onResponse(Call<ProductDetails> call, Response<ProductDetails> response) {
@@ -253,10 +256,10 @@ public class Repository {
         return getCategories;
     }
 
-    public MutableLiveData<HelpCenterModel> getHelpCenter() {
+    public MutableLiveData<HelpCenterModel> getHelpCenter(String lang) {
         final MutableLiveData<HelpCenterModel> getHelps = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<HelpCenterModel> call = apiInterface.getHelps();
+        Call<HelpCenterModel> call = apiInterface.getHelps(lang);
         call.enqueue(new Callback<HelpCenterModel>() {
             @Override
             public void onResponse(Call<HelpCenterModel> call, Response<HelpCenterModel> response) {
@@ -361,10 +364,10 @@ public class Repository {
         return fetchDeals;
     }
 
-    public MutableLiveData<HelpCenterByIdResponse> getHelpById(int helpId) {
+    public MutableLiveData<HelpCenterByIdResponse> getHelpById(int helpId, String lang) {
         final MutableLiveData<HelpCenterByIdResponse> fetchHelps = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<HelpCenterByIdResponse> call = apiInterface.getHelpById(helpId);
+        Call<HelpCenterByIdResponse> call = apiInterface.getHelpById(helpId, lang);
         call.enqueue(new Callback<HelpCenterByIdResponse>() {
             @Override
             public void onResponse(Call<HelpCenterByIdResponse> call, Response<HelpCenterByIdResponse> response) {
@@ -630,6 +633,60 @@ public class Repository {
             }
         });
         return editCart;
+    }
+
+    public MutableLiveData<ProductVariantModel> getProductVariants(String productId) {
+        final MutableLiveData<ProductVariantModel> variants = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ProductVariantModel> call = apiInterface.getProductVariant(productId);
+        call.enqueue(new Callback<ProductVariantModel>() {
+            @Override
+            public void onResponse(Call<ProductVariantModel> call, Response<ProductVariantModel> response) {
+                variants.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ProductVariantModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return variants;
+    }
+
+    public MutableLiveData<OrderCancelResponse> cancelOrder(String authToken, String productId, String orderId, String reason) {
+        final MutableLiveData<OrderCancelResponse> variants = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<OrderCancelResponse> call = apiInterface.cancelOrder(authToken, productId, orderId, reason);
+        call.enqueue(new Callback<OrderCancelResponse>() {
+            @Override
+            public void onResponse(Call<OrderCancelResponse> call, Response<OrderCancelResponse> response) {
+                variants.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<OrderCancelResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return variants;
+    }
+
+    public MutableLiveData<LoadVariantResponse> loadVariant(String authToken, String productId, String guestId, String attributeId) {
+        final MutableLiveData<LoadVariantResponse> variants = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<LoadVariantResponse> call = apiInterface.loadVariant(authToken, productId, guestId, attributeId);
+        call.enqueue(new Callback<LoadVariantResponse>() {
+            @Override
+            public void onResponse(Call<LoadVariantResponse> call, Response<LoadVariantResponse> response) {
+                variants.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<LoadVariantResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return variants;
     }
 }
 

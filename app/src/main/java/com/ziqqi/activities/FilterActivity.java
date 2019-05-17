@@ -5,7 +5,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,9 +69,15 @@ public class FilterActivity extends AppCompatActivity {
     String catId;
     boolean isCategoryExpanded = false, isBrandExpanded = false;
 
-    ArrayList<String> list = new ArrayList<String>();
+    ArrayList<String> categoryList = new ArrayList<String>();
+    ArrayList<String> brandList = new ArrayList<String>();
+    ArrayList<String> variantList = new ArrayList<String>();
+    ArrayList<String> featureList = new ArrayList<String>();
     StringBuilder stringBuilderForFilter;
-    String selectedFilters;
+    String selectedCategoryFilters;
+    String selectedBrandFilters;
+    String selectedVariantFilters;
+    String selectedFeatureFilters;
     String minRange;
     String maxRange;
 
@@ -82,33 +90,61 @@ public class FilterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             catId = getIntent().getStringExtra("catId");
         }
 
         listener = new FilterItemListener() {
             @Override
-            public void onFilterCategoryClick(int position) {
-                list.add(filterCategoryList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterCategoryClick(int position, boolean isChecked) {
+                if (isChecked) {
+                    categoryList.add(filterCategoryList.get(position).getId());
+                } else {
+                    for (int i = 0; i < categoryList.size(); i++) {
+                        if (categoryList.get(i).equals(filterCategoryList.get(position).getId())) {
+                            categoryList.remove(i);
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onFilterBrandClick(int position) {
-                list.add(filterBrandList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterBrandClick(int position, boolean isChecked) {
+                if (isChecked) {
+                    brandList.add(filterBrandList.get(position).getId());
+                } else {
+                    for (int i = 0; i < brandList.size(); i++) {
+                        if (brandList.get(i).equals(filterBrandList.get(position).getId())) {
+                            brandList.remove(i);
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onFilterVariantClick(int position) {
-                list.add(filterVariantInsideList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterVariantClick(int position, boolean isChecked) {
+                if (isChecked) {
+                    variantList.add(filterVariantInsideList.get(position).getId());
+                } else {
+                    for (int i = 0; i < variantList.size(); i++) {
+                        if (variantList.get(i).equals(filterVariantInsideList.get(position).getId())) {
+                            variantList.remove(i);
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onFilterFeatureClick(int position) {
-                list.add(filterFeatureInsideList.get(position).getId());
-                Log.i("click", list.toString());
+            public void onFilterFeatureClick(int position, boolean isChecked) {
+                if (isChecked) {
+                    featureList.add(filterFeatureInsideList.get(position).getId());
+                } else {
+                    for (int i = 0; i < featureList.size(); i++) {
+                        if (featureList.get(i).equals(filterFeatureInsideList.get(position).getId())) {
+                            featureList.remove(i);
+                        }
+                    }
+                }
             }
         };
 
@@ -121,26 +157,13 @@ public class FilterActivity extends AppCompatActivity {
 
         stringBuilderForFilter = new StringBuilder();
 
-        for(int  i =0;i<list.size();i++)
-        {
-            String prefix = "";
-            for (String str : list)
-            {
-                stringBuilderForFilter.append(prefix);
-                prefix = ",";
-                stringBuilderForFilter.append(str);
-            }
-        }
-
-        selectedFilters = ""+stringBuilderForFilter;
-
         binding.ivExpandCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isCategoryExpanded){
+                if (!isCategoryExpanded) {
                     isCategoryExpanded = true;
                     binding.rvCategory.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     binding.rvCategory.setVisibility(View.GONE);
                     isCategoryExpanded = false;
                 }
@@ -150,10 +173,10 @@ public class FilterActivity extends AppCompatActivity {
         binding.ivExpandBrand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isBrandExpanded){
+                if (!isBrandExpanded) {
                     isBrandExpanded = true;
                     binding.rvBrand.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     binding.rvBrand.setVisibility(View.GONE);
                     isBrandExpanded = false;
                 }
@@ -161,21 +184,60 @@ public class FilterActivity extends AppCompatActivity {
         });
 
         binding.btApply.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 
+                selectedCategoryFilters = String.join(",", categoryList);
+                selectedBrandFilters = String.join(",", brandList);
+                selectedVariantFilters = String.join(",", variantList);
+                selectedFeatureFilters = String.join(",", featureList);
+                Log.i("Ids", selectedCategoryFilters);
+
                 Intent i = new Intent();
-             //   i.putExtra("FILTERS", selectedFilters);
+                if (selectedCategoryFilters.equalsIgnoreCase("")) {
+                    i.putExtra("CAT_FILTERS", catId);
+                } else {
+                    i.putExtra("CAT_FILTERS", selectedCategoryFilters);
+                }
+                i.putExtra("BRAND_FILTERS", selectedBrandFilters);
+                i.putExtra("VARIANT_FILTERS", selectedVariantFilters);
+                i.putExtra("FEATURE_FILTERS", selectedFeatureFilters);
                 i.putExtra("MIN", minRange);
                 i.putExtra("MAX", maxRange);
                 setResult(100, i);
                 finish();
             }
         });
+
+        binding.btCancel.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+
+                selectedCategoryFilters = catId;
+                selectedBrandFilters = "";
+                selectedVariantFilters = "";
+                selectedFeatureFilters = "";
+                maxRange = "";
+                minRange = "";
+                Log.i("Ids", selectedCategoryFilters);
+
+                Intent i = new Intent();
+                i.putExtra("CAT_FILTERS", selectedCategoryFilters);
+                i.putExtra("BRAND_FILTERS", selectedBrandFilters);
+                i.putExtra("VARIANT_FILTERS", selectedVariantFilters);
+                i.putExtra("FEATURE_FILTERS", selectedFeatureFilters);
+                i.putExtra("MIN", minRange);
+                i.putExtra("MAX", maxRange);
+                setResult(101, i);
+                finish();
+            }
+        });
     }
 
     private void getFiterCategories(String catId) {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.mainLayout.setVisibility(View.GONE);
             viewModel.fetchData(catId);
@@ -185,25 +247,38 @@ public class FilterActivity extends AppCompatActivity {
                     if (!filterCategoriesResponse.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.mainLayout.setVisibility(View.VISIBLE);
-                        if (filterCategoryList != null) {
+                        if (filterCategoriesResponse.getPayload().getCategoryFilter().getFilterValue().size() != 0) {
                             filterCategoryReturnedList.clear();
                             filterCategoryList = filterCategoriesResponse.getPayload().getCategoryFilter().getFilterValue();
                             filterCategoryReturnedList.addAll(filterCategoryList);
+                        } else {
+                            binding.llCategory.setVisibility(View.GONE);
                         }
                         if (filterBrandList != null) {
                             filterBrandReturnedList.clear();
                             filterBrandList = filterCategoriesResponse.getPayload().getBrandFilter().getFilterValue();
                             filterBrandReturnedList.addAll(filterBrandList);
+                        } else {
+                            binding.llBrands.setVisibility(View.GONE);
                         }
                         if (filterVariantList != null) {
                             filterVariantReturnedList.clear();
                             filterVariantList = filterCategoriesResponse.getPayload().getVariantFilter();
                             filterVariantReturnedList.addAll(filterVariantList);
+                            for (int i = 0; i < filterCategoriesResponse.getPayload().getVariantFilter().size(); i++) {
+                                filterVariantInsideList.addAll(filterCategoriesResponse.getPayload().getVariantFilter().get(i).getFilterValue());
+                            }
+
+
                         }
                         if (filterFeatureList != null) {
                             filterFeatureReturnedList.clear();
                             filterFeatureList = filterCategoriesResponse.getPayload().getFeatureFilter();
                             filterFeatureReturnedList.addAll(filterFeatureList);
+
+                            for (int i = 0; i < filterCategoriesResponse.getPayload().getFeatureFilter().size(); i++) {
+                                filterFeatureInsideList.addAll(filterCategoriesResponse.getPayload().getFeatureFilter().get(i).getFilterValue());
+                            }
                         }
 
                         binding.rangeSeekbar1.setMinValue(Float.parseFloat(filterCategoriesResponse.getMinPrice()));
@@ -215,8 +290,8 @@ public class FilterActivity extends AppCompatActivity {
                         binding.rangeSeekbar1.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                             @Override
                             public void valueChanged(Number minValue, Number maxValue) {
-                                binding.textMin1.setText("$ "+ minValue);
-                                binding.textMax1.setText("$ "+ maxValue);
+                                binding.textMin1.setText("$ " + minValue);
+                                binding.textMax1.setText("$ " + maxValue);
 
                                 minRange = String.valueOf(minValue);
                                 maxRange = String.valueOf(maxValue);
@@ -236,8 +311,8 @@ public class FilterActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Toast.makeText(FilterActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(FilterActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -287,5 +362,24 @@ public class FilterActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        selectedCategoryFilters = catId;
+        selectedBrandFilters = "";
+        selectedVariantFilters = "";
+        selectedFeatureFilters = "";
+        Log.i("Ids", selectedCategoryFilters);
+
+        Intent i = new Intent();
+        i.putExtra("CAT_FILTERS", selectedCategoryFilters);
+        i.putExtra("BRAND_FILTERS", selectedBrandFilters);
+        i.putExtra("VARIANT_FILTERS", selectedVariantFilters);
+        i.putExtra("FEATURE_FILTERS", selectedFeatureFilters);
+        i.putExtra("MIN", minRange);
+        i.putExtra("MAX", maxRange);
+        setResult(101, i);
+        finish();
     }
 }

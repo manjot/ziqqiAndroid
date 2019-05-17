@@ -60,6 +60,9 @@ public class BestsellerProduct {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("variant_id")
+    @Expose
+    private String variantId;
 
     public String getId() {
         return id;
@@ -205,4 +208,11 @@ public class BestsellerProduct {
         this.brandName = brandName;
     }
 
+    public String getVariantId() {
+        return variantId;
+    }
+
+    public void setVariantId(String variantId) {
+        this.variantId = variantId;
+    }
 }

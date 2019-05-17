@@ -59,6 +59,9 @@ public class Payload {
     @SerializedName("customer_name")
     @Expose
     private String customer_name;
+    @SerializedName("is_cancel_date")
+    @Expose
+    private Integer is_cancel_date;
 
     public String getId() {
         return id;
@@ -202,5 +205,13 @@ public class Payload {
 
     public void setCustomer_name(String customer_name) {
         this.customer_name = customer_name;
+    }
+
+    public Integer getIs_cancel_date() {
+        return is_cancel_date;
+    }
+
+    public void setIs_cancel_date(Integer is_cancel_date) {
+        this.is_cancel_date = is_cancel_date;
     }
 }

@@ -142,6 +142,18 @@ public class CartFragment extends Fragment {
             fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
         }
 
+        binding.btSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                    startActivity(new Intent(getContext(), BillingInfoActivity.class));
+                }else {
+                    loginDialog = new LoginDialog();
+                    loginDialog.showDialog(getActivity());
+                }
+            }
+        });
+
         return view;
     }
 
@@ -191,18 +203,7 @@ public class CartFragment extends Fragment {
                             binding.btSubmit.setVisibility(View.VISIBLE);
                             binding.llTotal.setVisibility(View.VISIBLE);
                             binding.tvTotalPrice.setText("$ " + viewCart.getTotal());
-                            binding.btSubmit.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                                        PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal() + "");
-                                        startActivity(new Intent(getContext(), BillingInfoActivity.class));
-                                    }else {
-                                        loginDialog = new LoginDialog();
-                                        loginDialog.showDialog(getActivity());
-                                    }
-                                }
-                            });
+                            PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal() + "");
                             adapter.notifyDataSetChanged();
                         } else {
                             binding.btSubmit.setVisibility(View.GONE);
@@ -235,6 +236,7 @@ public class CartFragment extends Fragment {
                 public void onChanged(@Nullable final ViewCartResponse viewCart) {
                     if (!viewCart.getError()) {
                         binding.tvTotalPrice.setText("$ " + viewCart.getTotal());
+                        PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, viewCart.getTotal() + "");
                     }
                 }
             });

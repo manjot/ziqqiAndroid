@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_16sdp"
+            android:background="@color/colorPrimary"
+            android:text="Reason For Cancel"
+            android:gravity="center"
+            android:fontFamily="@font/bold" />
+
+        <TextView
+            android:id="@+id/tv_wrong_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_16sdp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/ordered_wrong_item"
+            android:fontFamily="@font/regular" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:background="@color/colorLightText"/>
+
+        <TextView
+            android:id="@+id/tv_cheaper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_16sdp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/found_cheaper_price_than_ziqqi"
+            android:fontFamily="@font/regular" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:background="@color/colorLightText"/>
+
+        <TextView
+            android:id="@+id/tv_others"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_16sdp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/others"
+            android:fontFamily="@font/regular" />
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

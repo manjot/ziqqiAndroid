@@ -52,6 +52,9 @@ public class Payload {
     @SerializedName("image")
     @Expose
     private List<String> image = null;
+    @SerializedName("variant_image")
+    @Expose
+    private List<String> variant_image = null;
     @SerializedName("brand_name")
     @Expose
     private String brandName;
@@ -226,5 +229,13 @@ public class Payload {
 
     public void setIs_wishlist(Integer is_wishlist) {
         this.is_wishlist = is_wishlist;
+    }
+
+    public List<String> getVariant_image() {
+        return variant_image;
+    }
+
+    public void setVariant_image(List<String> variant_image) {
+        this.variant_image = variant_image;
     }
 }

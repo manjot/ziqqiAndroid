@@ -21,11 +21,11 @@
                 android:id="@+id/tv_delivered"
                 android:layout_width="358dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_margin="@dimen/_8sdp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:visibility="gone"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:lines="1"
                 android:text="Delivered"
                 android:textColor="@color/colorBlack"
@@ -162,7 +162,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="Order Pending"
+                            android:text="@string/payment_pending"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_8sdp" />
 
@@ -208,7 +208,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="Order Confirmed"
+                            android:text="@string/order_received"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_8sdp" />
 
@@ -253,7 +253,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="Order shipped to Hargeisa"
+                            android:text="@string/order_shipped"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_8sdp" />
 
@@ -299,7 +299,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="Out for Delivery"
+                            android:text="@string/out_for_delivery"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_8sdp" />
 
@@ -344,7 +344,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="Order Completed"
+                            android:text="@string/order_completed"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_8sdp" />
 
@@ -418,6 +418,22 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_cancel_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:layout_gravity="right"
+                android:layout_margin="@dimen/_8sdp"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingRight="@dimen/dp_16"
+                android:fontFamily="@font/regular"
+                android:paddingBottom="@dimen/dp_4"
+                android:text="@string/cancel_item"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_10sdp" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

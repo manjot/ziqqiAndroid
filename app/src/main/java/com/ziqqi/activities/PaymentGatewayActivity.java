@@ -67,6 +67,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
     String strCurrency = "";
     List<Payload> cartDataList = new ArrayList<>();
     List<Payload> payloadList = new ArrayList<>();
+    float cartAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,14 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
 
-        binding.tvCartTotal.setText("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT));
+        cartAmount = Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT));
+
+        if (cartAmount > 100){
+            binding.tvCartTotal.setText("$ " + cartAmount);
+        }else{
+            cartAmount = cartAmount *9500;
+            binding.tvCartTotal.setText("SLS " + cartAmount);
+        }
 
         binding.btCouponApply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,8 +158,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     if (!strZaad.isEmpty()){
                         walletNumber = "63"+binding.etZaad.getText().toString();
                         PreferenceManager.setStringValue(Constants.WALLET_NUMBER, walletNumber);
-                        if(Double.parseDouble(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
-                            showZAADDialog("SLS " + Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) * 9500, "63"+ binding.etZaad.getText().toString());
+                        if(Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
+                            showZAADDialog("SLS " + Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) * 9500, "63"+ binding.etZaad.getText().toString());
                         }else{
                             showZAADDialog("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "63"+ binding.etZaad.getText().toString());
                         }
@@ -164,8 +172,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                     if (!strDahab.isEmpty()){
                         walletNumber = "65"+binding.etDahab.getText().toString();
                         PreferenceManager.setStringValue(Constants.WALLET_NUMBER, walletNumber);
-                        if(Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
-                            showZAADDialog("SLS " + Integer.parseInt(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) * 9500 , "65"+ binding.etDahab.getText().toString());
+                        if(Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) < 100){
+                            showZAADDialog("SLS " + Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) * 9500 , "65"+ binding.etDahab.getText().toString());
                         }else{
                             showZAADDialog("$ " +PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT), "65"+ binding.etDahab.getText().toString());
                         }
@@ -293,7 +301,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                         payloadList = placeOrderResponse.getPayload();
                         cartDataList.addAll(payloadList);
 
-                        startActivity(new Intent(PaymentGatewayActivity.this, PaymentConfirmationActivity.class).putExtra("type", strPaymentType));
+                        startActivity(new Intent(PaymentGatewayActivity.this, PaymentConfirmationActivity.class).putExtra("type", strPaymentType).putExtra("cartTotal", String.valueOf(cartAmount)));
                         finishAffinity();
                     } else {
                         Toast.makeText(getApplicationContext(), placeOrderResponse.getMessage(), Toast.LENGTH_SHORT).show();

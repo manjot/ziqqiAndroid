@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tvLogin.setText(R.string.log_out);
             tvWelcome.setText("WELCOME " + PreferenceManager.getStringValue(Constants.FIRST_NAME));
             Glide.with(this)
-                    .load(PreferenceManager.getStringValue(Constants.USER_PHOTO)).apply(RequestOptions.placeholderOf(R.drawable.place_holder))
+                    .load(PreferenceManager.getStringValue(Constants.USER_PHOTO))
                     .into(ivProfilePic);
         } else tvLogin.setText(R.string.login_signup);
 

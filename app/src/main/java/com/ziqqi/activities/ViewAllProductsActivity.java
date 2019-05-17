@@ -67,7 +67,13 @@ public class ViewAllProductsActivity extends AppCompatActivity {
     RelativeLayout layoutBottomSheet;
     RadioButton rb_popular, rb_price_low_to_high, rb_price_high_to_low, rb_name_asc, rb_name_desc;
     BottomSheetDialog mBottomSheetDialog;
-    String sortBy = "1";
+    String sorted = "1";
+    String strCategories = "";
+    String strBrands = "";
+    String strVariants = "";
+    String strFeatures= "";
+    String strMax= "";
+    String strMin= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,27 +145,27 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         listener = new OnAllItemClickListener() {
             @Override
             public void onItemClick(String id, String type) {
-                startActivity(new Intent(ViewAllProductsActivity.this, ProductDetailActivity.class).putExtra("product_id", id));
+//                startActivity(new Intent(ViewAllProductsActivity.this, ProductDetailActivity.class).putExtra("product_id", id));
             }
 
             @Override
             public void onItemClick(Payload payload, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        Utils.share(ViewAllProductsActivity.this, payload.getProductId());
+                        Utils.share(ViewAllProductsActivity.this, payload.getLinkhref());
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToWishList(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }else{
-                            addToWishList("", payload.getProductId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToWishList("", payload.getId(), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
                         break;
                     case Constants.CART:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
-                            addToCart(payload.getProductId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToCart(payload.getId(), PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }else{
-                            addToCart(payload.getProductId(), "", PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            addToCart(payload.getId(), "", PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
 
                         break;
@@ -169,20 +175,20 @@ public class ViewAllProductsActivity extends AppCompatActivity {
 
         setUpAdapter();
 
-        getData(sortBy);
+        getData(sorted);
 
         binding.recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 pageCount = 1;
-                getData(sortBy);
+                getData(sorted);
             }
 
             @Override
             public void onLoadMore() {
                 pageCount++;
                 Log.e("PageCOunt ", " " + pageCount);
-                getData(sortBy);
+                getData(sorted);
             }
         });
         binding.recyclerView.setPullRefreshEnabled(false);
@@ -192,7 +198,10 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         binding.rlFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ViewAllProductsActivity.this, FilterActivity.class).putExtra("catId", categoryId), 100);
+                Intent intent = new Intent(ViewAllProductsActivity.this, FilterActivity.class);
+                intent.putExtra("catId", categoryId);
+                startActivityForResult(intent, 100);
+              //startActivityForResult(new Intent(ViewAllProductsActivity.this, FilterActivity.class).putExtra("catId", categoryId), 100);
             }
         });
 
@@ -209,8 +218,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
-                sortBy = "1";
-                sortData(sortBy);
+                sorted = "1";
+                sortData(sorted);
 
             }
         });
@@ -219,8 +228,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
-                sortBy = "2";
-                sortData(sortBy);
+                sorted = "2";
+                sortData(sorted);
             }
         });
 
@@ -228,8 +237,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
-                sortBy = "3";
-                sortData(sortBy);
+                sorted = "3";
+                sortData(sorted);
             }
         });
 
@@ -237,8 +246,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
-                sortBy = "4";
-                sortData(sortBy);
+                sorted = "4";
+                sortData(sorted);
             }
         });
 
@@ -246,8 +255,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
-                sortBy = "5";
-                sortData(sortBy);
+                sorted = "5";
+                sortData(sorted);
             }
         });
     }
@@ -307,7 +316,7 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             Log.e("PageCount ", " " + pageCount);
-            viewModel.fetchData(categoryId, String.valueOf(pageCount), sortBy);
+            viewModel.fetchData(categoryId,strBrands, strMin, strMax,strVariants, strFeatures, String.valueOf(pageCount), sortBy);
             viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
                 @Override
                 public void onChanged(@Nullable ProductCategory productCategory) {
@@ -353,7 +362,8 @@ public class ViewAllProductsActivity extends AppCompatActivity {
         if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             Log.e("PageCount ", " " + pageCount);
-            viewModel.fetchData(categoryId, String.valueOf(pageCount), sortBy);
+
+            viewModel.fetchData(categoryId,strBrands, strMin, strMax,strVariants, strFeatures, String.valueOf(pageCount), sortBy);
             viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
                 @Override
                 public void onChanged(@Nullable ProductCategory productCategory) {
@@ -396,6 +406,56 @@ public class ViewAllProductsActivity extends AppCompatActivity {
     }
 
 
+    private void filterData(final String sortBy) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            Log.e("PageCount ", " " + pageCount);
+            viewModel.fetchData(categoryId,strBrands, strMin,strMax, strVariants, strFeatures, String.valueOf(pageCount), sortBy);
+            viewModel.getCategoryProduct().observe(this, new Observer<ProductCategory>() {
+                @Override
+                public void onChanged(@Nullable ProductCategory productCategory) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    if (!productCategory.getError()) {
+                        if (payloadList != null) {
+                            viewAllList.clear();
+                            adapter.notifyDataSetChanged();
+                            payloadList = productCategory.getPayload();
+
+                            if (pageCount == 1) {
+                                viewAllList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                            } else {
+                                viewAllList.addAll(payloadList);
+                                // adapter.setPayloadList(viewAllList);
+                                binding.recyclerView.loadMoreComplete();
+                            }
+
+                            // adapter.notifyDataSetChanged();
+                        }else{
+                            binding.recyclerView.setVisibility(View.GONE);
+                            binding.llNoData.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        Utils.ShowToast(ViewAllProductsActivity.this, productCategory.getMessage());
+                    }
+                }
+            });
+        } else {
+            Snackbar snackbar = Snackbar
+                    .make(binding.rlMain, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Try Again", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            filterData("");
+                        }
+                    });
+
+            snackbar.show();
+        }
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -409,5 +469,35 @@ public class ViewAllProductsActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("ASDF", "ASDF");
+
+        if (resultCode == 100) {
+            categoryId = data.getStringExtra("CAT_FILTERS");
+            strBrands = data.getStringExtra("BRAND_FILTERS");
+            strVariants = data.getStringExtra("VARIANT_FILTERS");
+            strFeatures = data.getStringExtra("FEATURE_FILTERS");
+            strMin = data.getStringExtra("MIN");
+            strMax = data.getStringExtra("MAX");
+
+            filterData(sorted);
+        }else if (resultCode == 101){
+            categoryId = data.getStringExtra("CAT_FILTERS");
+            strBrands = data.getStringExtra("BRAND_FILTERS");
+            strVariants = data.getStringExtra("VARIANT_FILTERS");
+            strFeatures = data.getStringExtra("FEATURE_FILTERS");
+            strMin = data.getStringExtra("MIN");
+            strMax = data.getStringExtra("MAX");
+
+            filterData(sorted);
+        }else{
+            Toast.makeText(ViewAllProductsActivity.this, "No filters selected", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 }

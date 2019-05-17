@@ -2,6 +2,9 @@ package com.ziqqi.retrofit;
 
 import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
+import com.ziqqi.model.ordercancelmodel.OrderCancelResponse;
+import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.uploadphotomodel.UploadPhoto;
 import com.ziqqi.model.verifyotpmodel.VerifyOtpResponse;
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
@@ -58,9 +61,6 @@ public interface ApiInterface {
     @GET("home_banners")
     Call<BannerImageModel> getHomeBanners();
 
-    @GET("getHelpCenters")
-    Call<HelpCenterModel> getHelps();
-
     @GET("feedback_master")
     Call<FeedbackMaster> getFeedbackMaster();
 
@@ -102,11 +102,18 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("getcategoryProduct")
-    Call<ProductCategory> getCategoryProduct(@Field("category_id") String id, @Field("page") String page, @Field("sort") String sort );
+    Call<ProductCategory> getCategoryProduct(@Field("category_id") String id,
+                                             @Field("brand_id") String brand_id,
+                                             @Field("min_price") String min_price,
+                                             @Field("max_price") String max_price,
+                                             @Field("attribute_id") String attribute_id,
+                                             @Field("feature_id") String feature_id,
+                                             @Field("page") String page,
+                                             @Field("sort") String sort );
 
     @FormUrlEncoded
     @POST("productDetails")
-    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("auth_token") String auth_token);
+    Call<ProductDetails> productDetails(@Field("product_id") int id, @Field("auth_token") String auth_token, @Field("guest_id") String guest_id, @Field("variant_id") String variant_id);
 
 
     @FormUrlEncoded
@@ -151,7 +158,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("getHelpCenterById")
-    Call<HelpCenterByIdResponse> getHelpById(@Field("help_id") int help_id);
+    Call<HelpCenterByIdResponse> getHelpById(@Field("help_id") int help_id, @Field("lang") String lang);
 
     @FormUrlEncoded
     @POST("addBillingAddress")
@@ -240,4 +247,21 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("masterFilter")
     Call<FilterResponse> getMasterFilter(@Field("category_id") String category_id);
+
+    @FormUrlEncoded
+    @POST("productVariantNew")
+    Call<ProductVariantModel> getProductVariant(@Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("orderCancel")
+    Call<OrderCancelResponse> cancelOrder(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("order_id") String order_id, @Field("reason") String reason);
+
+    @FormUrlEncoded
+    @POST("getHelpCenters")
+    Call<HelpCenterModel> getHelps(@Field("lang") String lang);
+
+    @FormUrlEncoded
+    @POST("loadProductVariant")
+    Call<LoadVariantResponse> loadVariant(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("guest_id") String guest_id, @Field("attribute_value_id") String attribute_value_id);
+
 }

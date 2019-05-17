@@ -9,7 +9,9 @@ import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
+import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
 import com.ziqqi.repository.Repository;
@@ -21,17 +23,19 @@ public class ProductDetailsViewModel extends AndroidViewModel {
     MutableLiveData<AddToModel> addToModelResponse;
     MutableLiveData<DeleteWishlistModel> deleteWishlistResponse;
     MutableLiveData<AddToCart> addToCartResponse;
+    MutableLiveData<ProductVariantModel> productVariantResponse;
+    MutableLiveData<LoadVariantResponse> loadVariantResponse;
 
     public ProductDetailsViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository();
     }
 
-    public void fetchData(int productId, String authToken) {
+    public void fetchData(int productId, String authToken, String guestId, String variantId) {
      /*   if (searchResponse != null) {
 
         } else {*/
-        productDetailsResponse = repository.getProductDetails(productId, authToken);
+        productDetailsResponse = repository.getProductDetails(productId, authToken, guestId, variantId);
         // }
     }
 
@@ -71,5 +75,21 @@ public class ProductDetailsViewModel extends AndroidViewModel {
 
     public MutableLiveData<AddToCart> addCartResponse() {
         return addToCartResponse;
+    }
+
+    public void getProductVariant(String productId){
+        productVariantResponse = repository.getProductVariants(productId);
+    }
+
+    public MutableLiveData<ProductVariantModel> getProductVariantResponse() {
+        return productVariantResponse;
+    }
+
+    public void loadVariant(String authToken, String productId, String guestId, String attributeId){
+        loadVariantResponse = repository.loadVariant(authToken, productId, guestId, attributeId);
+    }
+
+    public MutableLiveData<LoadVariantResponse> loadVariantResponse() {
+        return loadVariantResponse;
     }
 }

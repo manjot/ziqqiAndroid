@@ -78,7 +78,7 @@ public class FilterFeatureAdapter extends RecyclerView.Adapter<FilterFeatureAdap
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            listener.onFilterFeatureClick(getAdapterPosition());
+            listener.onFilterFeatureClick(getAdapterPosition(), isChecked);
         }
     }
 }

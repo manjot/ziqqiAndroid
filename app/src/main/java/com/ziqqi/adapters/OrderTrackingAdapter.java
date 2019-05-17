@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ziqqi.OnItemClickListener;
+import com.ziqqi.OrderTrackingItemClickListener;
 import com.ziqqi.R;
 import com.ziqqi.model.ordertrackingmodel.Payload;
 
@@ -24,11 +25,12 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
 
     Context context;
     List<Payload> payloadList;
-    OnItemClickListener listener;
+    OrderTrackingItemClickListener listener;
 
-    public OrderTrackingAdapter(Context context, List<Payload> payloadList) {
+    public OrderTrackingAdapter(Context context, List<Payload> payloadList, OrderTrackingItemClickListener listener) {
         this.context = context;
         this.payloadList = payloadList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -67,7 +69,19 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
         }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Delivery Completed")){
             holder.status.setVisibility(View.GONE);
             holder.tv_delivered.setVisibility(View.VISIBLE);
+        }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Item Cancelled")){
+            holder.status.setVisibility(View.GONE);
+            holder.tv_delivered.setVisibility(View.VISIBLE);
+            holder.tv_delivered.setText("Order Cancelled");
         }
+
+        if (payloadList.get(i).getIs_cancel_date() ==0){
+            holder.tv_cancel_item.setVisibility(View.GONE);
+        }else{
+            holder.tv_cancel_item.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     @Override
@@ -75,8 +89,8 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
         return payloadList.size();
     }
 
-    public class MyOrdedersViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvBrandName, tvDiscountPrice, tvOrderNo, tvRcpName, tvTime, tvPayMethod, tv_delivered;
+    public class MyOrdedersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView tvName, tvBrandName, tvDiscountPrice, tvOrderNo, tvRcpName, tvTime, tvPayMethod, tv_delivered, tv_cancel_item;
         CheckBox cb_pending, cb_confirmed, cb_hargeisa, cb_out, cb_completed;
         ImageView ivImage;
         LinearLayout ll_card;
@@ -101,6 +115,17 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
             cb_completed = itemView.findViewById(R.id.cb_completed);
             status = itemView.findViewById(R.id.status);
             tv_delivered = itemView.findViewById(R.id.tv_delivered);
+            tv_cancel_item = itemView.findViewById(R.id.tv_cancel_item);
+
+            tv_cancel_item.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.tv_cancel_item:
+                    listener.onItemClick(payloadList.get(getAdapterPosition()).getProductId(), payloadList.get(getAdapterPosition()).getOrdersId());
+            }
         }
     }
 }

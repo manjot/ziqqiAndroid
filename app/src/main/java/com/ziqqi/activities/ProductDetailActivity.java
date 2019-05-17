@@ -14,6 +14,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.view.MenuItem;
@@ -22,18 +23,24 @@ import android.widget.Toast;
 
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
+import com.ziqqi.OnItemClickListener;
 import com.ziqqi.OnSimilarItemClickListener;
+import com.ziqqi.OnVariantItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.adapters.FeedbackVariantAdapter;
 import com.ziqqi.adapters.ProductSliderAdapter;
 import com.ziqqi.adapters.ReviewsAdapter;
 import com.ziqqi.adapters.SimilarProductAdapter;
+import com.ziqqi.adapters.VariantMainAdapter;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
 import com.ziqqi.fragments.CheckoutDialogFragment;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
 import com.ziqqi.model.placeordermodel.PlaceOrderResponse;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productdetailsmodel.Review;
+import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
 import com.ziqqi.model.similarproductsmodel.Payload;
 import com.ziqqi.model.similarproductsmodel.SimilarProduct;
@@ -46,6 +53,7 @@ import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.ProductDetailsViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -55,10 +63,13 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     ActivityProductDetailBinding binding;
     ProductDetailsViewModel viewModel;
-    LinearLayoutManager manager, feedbackManager;
+    LinearLayoutManager manager, feedbackManager, variantManager;
     ProductSliderAdapter productSliderAdapter;
     List<String> bannerPayLoad = new ArrayList<>();
     List<Review> feedbackPayLoad = new ArrayList<>();
+    List<com.ziqqi.model.loadvariantmodel.Review> feedbackPayLoad2 = new ArrayList<>();
+    List<com.ziqqi.model.productvariantmodel.Payload> productVariantList = new ArrayList<>();
+    List<com.ziqqi.model.productvariantmodel.Payload> productVariantReturnedList = new ArrayList<>();
     Handler handler;
     Runnable update;
     int currentPage = 0;
@@ -68,13 +79,19 @@ public class ProductDetailActivity extends AppCompatActivity {
     List<Review> reviewDataList = new ArrayList<>();
     SimilarProductAdapter adapter;
     ReviewsAdapter reviewsAdapter;
+    FeedbackVariantAdapter feedbackVariantAdapter;
     OnSimilarItemClickListener listener;
+    OnItemClickListener listener2;
+    OnVariantItemClickListener listener3;
     SpacesItemDecoration spacesItemDecoration;
-    String product_id;
+    String product_id, variant_id;
     String strSharingUrl;
     LoginDialog loginDialog;
     int isWishlist = -1;
     String authToken;
+    VariantMainAdapter variantMainAdapter;
+    List<String> items;
+    String strSendingVariant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +119,21 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
             authToken = PreferenceManager.getStringValue(Constants.AUTH_TOKEN);
-        }else {
-            authToken = " ";
+        } else {
+            authToken = "";
         }
 
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getStringExtra("product_id");
+
+            if (getIntent().getStringExtra("variant_id") != null){
+                variant_id = getIntent().getStringExtra("variant_id");
+                items = Arrays.asList(variant_id.split("\\s*,\\s*"));
+                strSendingVariant = items.get(0);
+            }else{
+                strSendingVariant = "";
+            }
+
         }
 
         listener = new OnSimilarItemClickListener() {
@@ -141,9 +167,17 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         };
 
+        listener3 = new OnVariantItemClickListener() {
+            @Override
+            public void onFilterCategoryClick(String variantId) {
+                loadVariant(authToken, product_id, PreferenceManager.getStringValue(Constants.GUEST_ID), variantId);
+            }
+        };
+
         setUpAdapter();
         getSimilar(Integer.parseInt(product_id));
-        getDetails(Integer.parseInt(product_id), authToken);
+        getDetails(Integer.parseInt(product_id), authToken, PreferenceManager.getStringValue(Constants.GUEST_ID), strSendingVariant);
+        getProductVariants(product_id);
 
         loginDialog = new LoginDialog();
         handler = new Handler();
@@ -267,10 +301,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
 
-    private void getDetails(int id, String authToken) {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+    private void getDetails(int id, String authToken, String guestId, String variantId) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
-            viewModel.fetchData(id, authToken);
+            viewModel.fetchData(id, authToken, guestId, variantId);
             viewModel.getProductDetailsResponse().observe(this, new Observer<ProductDetails>() {
                 @Override
                 public void onChanged(@Nullable ProductDetails productDetails) {
@@ -282,6 +316,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                             String resultOverview = Html.fromHtml(productDetails.getPayload().getOverview()).toString();
                             String resultSpecification = Html.fromHtml(productDetails.getPayload().getSpecifications()).toString();
+
                             strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
                             isWishlist = productDetails.getPayload().getIs_wishlist();
 
@@ -293,6 +328,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                             binding.tvOverview.setText(resultOverview);
                             binding.tvSpecs.setText(resultSpecification);
+                            bannerPayLoad.clear();
+                            feedbackPayLoad.clear();
                             bannerPayLoad.addAll(productDetails.getPayload().getImage());
                             feedbackPayLoad.addAll(productDetails.getPayload().getReviews());
                             if (productDetails.getPayload().getReviews().size() == 0) {
@@ -300,6 +337,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 binding.tvNoReviews.setVisibility(View.VISIBLE);
                             }
                             productSliderAdapter.notifyDataSetChanged();
+                            reviewsAdapter.notifyDataSetChanged();
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
@@ -307,12 +345,65 @@ public class ProductDetailActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Toast.makeText(ProductDetailActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ProductDetailActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
+
+    private void loadVariant(String authToken, String productId, String guestId, String attributeId) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.loadVariant(authToken, productId, guestId, attributeId);
+            viewModel.loadVariantResponse().observe(this, new Observer<LoadVariantResponse>() {
+                @Override
+                public void onChanged(@Nullable LoadVariantResponse loadVariantResponse) {
+                    if (!loadVariantResponse.getError()) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        if (loadVariantResponse.getPayload() != null) {
+                            binding.tvBrandName.setText(loadVariantResponse.getPayload().getBrandName());
+                            binding.tvProductName.setText(loadVariantResponse.getPayload().getName());
+
+                            String resultOverview = Html.fromHtml(loadVariantResponse.getPayload().getOverview()).toString();
+                            String resultSpecification = Html.fromHtml(loadVariantResponse.getPayload().getSpecifications()).toString();
+
+                            strSharingUrl = "www.ziqqi.com/" + loadVariantResponse.getPayload().getLinkhref();
+                            isWishlist = loadVariantResponse.getPayload().getIsWishlist();
+
+                            if (isWishlist == 1) {
+                                binding.ivWishlist.setImageResource(R.drawable.ic_favorite_black);
+                            } else if (isWishlist == 0) {
+                                binding.ivWishlist.setImageResource(R.drawable.ic_wish);
+                            }
+
+                            binding.tvOverview.setText(resultOverview);
+                            binding.tvSpecs.setText(resultSpecification);
+                            bannerPayLoad.clear();
+                            feedbackPayLoad2.clear();
+                            bannerPayLoad.addAll(loadVariantResponse.getPayload().getImage());
+                            feedbackPayLoad2.addAll(loadVariantResponse.getPayload().getReviews());
+                            if (loadVariantResponse.getPayload().getReviews().size() == 0) {
+                                binding.rvReviews.setVisibility(View.GONE);
+                                binding.tvNoReviews.setVisibility(View.VISIBLE);
+                                setUpVariantReviewAdapter();
+                            }
+                            productSliderAdapter.notifyDataSetChanged();
+                            reviewsAdapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        binding.progressBar.setVisibility(View.GONE);
+
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(ProductDetailActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /*Similar*/
     private void getSimilar(int id) {
         binding.rvSimilar.setVisibility(View.GONE);
         viewModel.fetchSimilarProducts(id);
@@ -334,11 +425,36 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 startActivity(new Intent(ProductDetailActivity.this, ViewAllProductsActivity.class).putExtra("categoryId", similarProduct.getCat_id()));
                             }
                         });
-                    }else {
+                    } else {
                         binding.llSimilar.setVisibility(View.GONE);
                     }
                 } else {
                     binding.llSimilar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    /*ProductVariants*/
+    private void getProductVariants(String productId) {
+        viewModel.getProductVariant(productId);
+        viewModel.getProductVariantResponse().observe(this, new Observer<ProductVariantModel>() {
+            @Override
+            public void onChanged(@Nullable ProductVariantModel productVariantModel) {
+                if (!productVariantModel.getError()) {
+                    binding.rvMainVariant.setVisibility(View.VISIBLE);
+                    if (productVariantModel.getPayload().size() != 0) {
+                        productVariantReturnedList.clear();
+                        productVariantList = productVariantModel.getPayload();
+                        for (int i = 0; i < productVariantList.size(); i++) {
+                            if (productVariantList.get(i).getAttributeValue().size() > 0) {
+                                productVariantReturnedList.add(productVariantList.get(i));
+                            }
+                        }
+                        variantMainAdapter.notifyDataSetChanged();
+                    } else {
+                        binding.rvMainVariant.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -400,6 +516,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    /*Buy*/
     private void addToBuy(String id, String authToken, String quantity, String guest_id) {
         binding.progressBar.setVisibility(View.VISIBLE);
         viewModel.addProductToCart(id, authToken, quantity, guest_id);
@@ -422,8 +539,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         feedbackManager = new LinearLayoutManager(ProductDetailActivity.this);
         feedbackManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        variantManager = new LinearLayoutManager(ProductDetailActivity.this);
+        variantManager.setOrientation(LinearLayoutManager.VERTICAL);
+
         binding.rvSimilar.setLayoutManager(manager);
         binding.rvReviews.setLayoutManager(feedbackManager);
+        binding.rvMainVariant.setLayoutManager(variantManager);
 
         adapter = new SimilarProductAdapter(ProductDetailActivity.this, similarDataList, listener);
         binding.rvSimilar.setAdapter(adapter);
@@ -432,6 +553,22 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         reviewsAdapter = new ReviewsAdapter(ProductDetailActivity.this, feedbackPayLoad);
         binding.rvReviews.setAdapter(reviewsAdapter);
+        spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
+        binding.rvReviews.addItemDecoration(spacesItemDecoration);
+
+        variantMainAdapter = new VariantMainAdapter(ProductDetailActivity.this, productVariantReturnedList, listener3);
+        binding.rvMainVariant.setAdapter(variantMainAdapter);
+        spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
+        binding.rvMainVariant.addItemDecoration(spacesItemDecoration);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.rvMainVariant.getContext(),
+                variantManager.getOrientation());
+        binding.rvMainVariant.addItemDecoration(dividerItemDecoration);
+    }
+
+    private void setUpVariantReviewAdapter(){
+        feedbackVariantAdapter = new FeedbackVariantAdapter(ProductDetailActivity.this, feedbackPayLoad2);
+        binding.rvReviews.setAdapter(feedbackVariantAdapter);
         spacesItemDecoration = new SpacesItemDecoration(ProductDetailActivity.this, R.dimen.dp_4);
         binding.rvReviews.addItemDecoration(spacesItemDecoration);
     }

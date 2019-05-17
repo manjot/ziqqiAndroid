@@ -18,11 +18,11 @@ public class MyAccountViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchData(int helpId) {
+    public void fetchData(int helpId, String lang) {
       /*  if (searchResponse != null) {
 
         } else {*/
-        helpCenterByIdResponse = repository.getHelpById(helpId);
+        helpCenterByIdResponse = repository.getHelpById(helpId, lang);
         //  }
     }
 

@@ -254,8 +254,13 @@ public class BillingInfoActivity extends AppCompatActivity {
                         PreferenceManager.setStringValue(Constants.BILLING_FIRST_NAME, binding.etFirstName.getText().toString());
                         PreferenceManager.setStringValue(Constants.BILLING_LAST_NAME, binding.etLastName.getText().toString());
                         PreferenceManager.setStringValue(Constants.BILLING_MOBILE, binding.etMobileNumber.getText().toString());
-                        PreferenceManager.setStringValue(Constants.BILLING_CITY, binding.etCity.getSelectedItem().toString());
-                        PreferenceManager.setStringValue(Constants.BILLING_LOCATION, binding.etLocation.getSelectedItem().toString());
+                        if (binding.etCountry.getSelectedItem().toString().equalsIgnoreCase("SOMALILAND")) {
+                            PreferenceManager.setStringValue(Constants.BILLING_CITY, binding.etCity.getSelectedItem().toString());
+                            PreferenceManager.setStringValue(Constants.BILLING_LOCATION, binding.etLocation.getSelectedItem().toString());
+                        }else{
+                            PreferenceManager.setStringValue(Constants.BILLING_CITY, "");
+                            PreferenceManager.setStringValue(Constants.BILLING_LOCATION, "");
+                        }
 
                         startActivity(new Intent(BillingInfoActivity.this, ShippingInfoActivity.class));
                     } else {
