@@ -118,7 +118,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         if (object.getInt("Status") == 1) {
                             progressBar.setVisibility(View.GONE);
                             /*rlMain.setVisibility(View.VISIBLE);*/
-                            startActivity(new Intent(ForgetPasswordActivity.this, ChangePasswordActivity.class).putExtra("email", etEmail.getText().toString()));
+                            startActivity(new Intent(ForgetPasswordActivity.this, ChangePasswordActivity.class).putExtra("email", etEmail.getText().toString()).putExtra("otp_method", strOtpMethod));
                             Toast.makeText(ForgetPasswordActivity.this, object.getString("Message"), Toast.LENGTH_SHORT).show();
                         } else {
                             progressBar.setVisibility(View.GONE);

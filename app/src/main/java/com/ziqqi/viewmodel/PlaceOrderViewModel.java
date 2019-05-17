@@ -21,8 +21,8 @@ public class PlaceOrderViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void placeOder(String authToken, String guest_id, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address, String payment_currency){
-        placeOrderResponse = repository.placeOrder(authToken, guest_id, paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location,  pickup_address, payment_currency);
+    public void placeOder(String authToken, String guest_id, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address, String payment_currency, String coupon_code, String discount_amount){
+        placeOrderResponse = repository.placeOrder(authToken, guest_id, paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location,  pickup_address, payment_currency, coupon_code, discount_amount);
     }
 
     public MutableLiveData<PlaceOrderResponse> getPlaceOrderResponse() {

@@ -14,6 +14,9 @@ public class Payload {
     @SerializedName("shipping")
     @Expose
     private Integer shipping;
+    @SerializedName("discount")
+    @Expose
+    private Double discount;
 
     public Double getTotal() {
         return total;
@@ -39,4 +42,11 @@ public class Payload {
         this.shipping = shipping;
     }
 
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 }

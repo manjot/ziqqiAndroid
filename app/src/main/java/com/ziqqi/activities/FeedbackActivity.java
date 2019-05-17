@@ -24,12 +24,14 @@ import com.ziqqi.adapters.FeedbackQueryAdapter;
 import com.ziqqi.adapters.SearchCategoryAdapter;
 import com.ziqqi.databinding.ActivityFeedbackBinding;
 import com.ziqqi.databinding.ActivityProductDetailBinding;
+import com.ziqqi.model.addfeedbackmodel.AddFeedbackModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.feedbackmastermodel.FeedbackMaster;
 import com.ziqqi.model.feedbackmastermodel.Payload;
 import com.ziqqi.model.searchcategorymodel.SearchCategory;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
+import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
 import com.ziqqi.utils.SpacesItemDecoration;
 import com.ziqqi.viewmodel.FeedbackViewModel;
@@ -51,6 +53,7 @@ public class FeedbackActivity extends AppCompatActivity {
     OnFeedbackItemListener listener;
     List<Integer> stars = new ArrayList<>();
     String strStar;
+    LoginDialog loginDialog;
 
 
     @Override
@@ -75,7 +78,7 @@ public class FeedbackActivity extends AppCompatActivity {
             @Override
             public void onFeedbackItemClick(int position, int star) {
                 stars.add(position, star);
-                strStar = String.join(",", String.valueOf(stars));
+                strStar = android.text.TextUtils.join(",", stars);;
                 Log.i("STAR", strStar);
             }
         };
@@ -89,15 +92,44 @@ public class FeedbackActivity extends AppCompatActivity {
                 if (stars.size() < queryList.size()){
                     Toast.makeText(getApplicationContext(), "Please give rating to all queries!", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(getApplicationContext(), "Feedback Added Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(FeedbackActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                        addFeedback(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), strStar);
+                    }else{
+                        loginDialog = new LoginDialog();
+                        loginDialog.showDialog(FeedbackActivity.this);
+                    }
+
                 }
 
             }
         });
     }
+
+    private void addFeedback(String authToken, String ratting) {
+        if (ConnectivityHelper.isConnectedToNetwork(this)){
+            binding.progressBar.setVisibility(View.VISIBLE);
+            viewModel.addFeedback(authToken, ratting);
+            viewModel.addFeedbackResponse().observe(this, new Observer<AddFeedbackModel>() {
+                @Override
+                public void onChanged(@Nullable AddFeedbackModel addFeedbackModel) {
+                    binding.progressBar.setVisibility(View.GONE);
+                    if (!addFeedbackModel.getError()) {
+                        Toast.makeText(FeedbackActivity.this,addFeedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(FeedbackActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(FeedbackActivity.this,addFeedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }else{
+            Toast.makeText(FeedbackActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 
     private void getQueries() {
         if (ConnectivityHelper.isConnectedToNetwork(this)){

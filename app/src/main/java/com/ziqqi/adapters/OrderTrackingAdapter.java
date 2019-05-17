@@ -51,21 +51,30 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
         holder.tvPayMethod.setText("Payment method : "+payloadList.get(i).getPaymentGateway());
         Glide.with(context).load(payloadList.get(i).getProductImage()).apply(RequestOptions.placeholderOf(R.drawable.place_holder)).into(holder.ivImage);
 
+        if (payloadList.get(i).getIs_cancel_date() ==0){
+            holder.tv_cancel_item.setVisibility(View.GONE);
+        }else{
+            holder.tv_cancel_item.setVisibility(View.VISIBLE);
+        }
 
         if (payloadList.get(i).getStatus().equalsIgnoreCase("Payment Pending")){
             holder.cb_pending.setChecked(true);
+            holder.tv_delivered.setVisibility(View.GONE);
         }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Received")){
             holder.cb_pending.setChecked(true);
             holder.cb_confirmed.setChecked(true);
+            holder.tv_delivered.setVisibility(View.GONE);
         }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Out for Delivery")){
             holder.cb_pending.setChecked(true);
             holder.cb_confirmed.setChecked(true);
             holder.cb_hargeisa.setChecked(true);
+            holder.tv_delivered.setVisibility(View.GONE);
         }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Order Shipped")){
             holder.cb_pending.setChecked(true);
             holder.cb_confirmed.setChecked(true);
             holder.cb_hargeisa.setChecked(true);
             holder.cb_out.setChecked(true);
+            holder.tv_delivered.setVisibility(View.GONE);
         }else if (payloadList.get(i).getStatus().equalsIgnoreCase("Delivery Completed")){
             holder.status.setVisibility(View.GONE);
             holder.tv_delivered.setVisibility(View.VISIBLE);
@@ -73,13 +82,10 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
             holder.status.setVisibility(View.GONE);
             holder.tv_delivered.setVisibility(View.VISIBLE);
             holder.tv_delivered.setText("Order Cancelled");
+            holder.tv_cancel_item.setVisibility(View.GONE);
         }
 
-        if (payloadList.get(i).getIs_cancel_date() ==0){
-            holder.tv_cancel_item.setVisibility(View.GONE);
-        }else{
-            holder.tv_cancel_item.setVisibility(View.VISIBLE);
-        }
+
 
 
     }
@@ -127,5 +133,15 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
                     listener.onItemClick(payloadList.get(getAdapterPosition()).getProductId(), payloadList.get(getAdapterPosition()).getOrdersId());
             }
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

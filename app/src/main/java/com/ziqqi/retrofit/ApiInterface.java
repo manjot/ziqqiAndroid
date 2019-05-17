@@ -1,5 +1,6 @@
 package com.ziqqi.retrofit;
 
+import com.ziqqi.model.addfeedbackmodel.AddFeedbackModel;
 import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
 import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
@@ -94,7 +95,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("forgot_password")
-    Call<String> changedPassword(@Field("email") String email, @Field("otp") String otp, @Field("new_password") String new_password);
+    Call<String> changedPassword(@Field("email") String email, @Field("otp") String otp, @Field("new_password") String new_password, @Field("otp_method") String otp_method);
 
     @FormUrlEncoded
     @POST("verifyotp")
@@ -198,7 +199,9 @@ public interface ApiInterface {
                                         @Field("pickup_country") String pickup_country,
                                         @Field("pickup_location") String pickup_location,
                                         @Field("pickup_address") String pickup_address,
-                                        @Field("payment_currency") String payment_currency);
+                                        @Field("payment_currency") String payment_currency,
+                                        @Field("coupon_code") String coupon_code,
+                                        @Field("discount_amount") String discount_amount);
 
     @FormUrlEncoded
     @POST("getMyOrders")
@@ -264,4 +267,7 @@ public interface ApiInterface {
     @POST("loadProductVariant")
     Call<LoadVariantResponse> loadVariant(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("guest_id") String guest_id, @Field("attribute_value_id") String attribute_value_id);
 
+    @FormUrlEncoded
+    @POST("addCustomerFeedback")
+    Call<AddFeedbackModel> addFeedback(@Field("auth_token") String auth_token, @Field("ratting") String ratting);
 }

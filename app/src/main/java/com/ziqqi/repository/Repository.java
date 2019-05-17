@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
 import com.ziqqi.model.addbillingaddressmodel.AddBillingAddressModel;
+import com.ziqqi.model.addfeedbackmodel.AddFeedbackModel;
 import com.ziqqi.model.addshippingaddressmodel.AddShippingAddressModel;
 import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
@@ -292,6 +293,24 @@ public class Repository {
         return getFeedbacks;
     }
 
+    public MutableLiveData<AddFeedbackModel> addFeedback(String authToken, String ratting) {
+        final MutableLiveData<AddFeedbackModel> addFeeback = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<AddFeedbackModel> call = apiInterface.addFeedback(authToken,ratting );
+        call.enqueue(new Callback<AddFeedbackModel>() {
+            @Override
+            public void onResponse(Call<AddFeedbackModel> call, Response<AddFeedbackModel> response) {
+                addFeeback.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AddFeedbackModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return addFeeback;
+    }
+
     public MutableLiveData<ShippingAddressModel> getShippingAddress(String authToken) {
         final MutableLiveData<ShippingAddressModel> getShipAddress = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -419,10 +438,10 @@ public class Repository {
     }
 
 
-    public MutableLiveData<PlaceOrderResponse> placeOrder(String authToken, String guest_id, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address, String payment_currency) {
+    public MutableLiveData<PlaceOrderResponse> placeOrder(String authToken, String guest_id, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address, String payment_currency, String coupon_code, String discount_amount) {
         final MutableLiveData<PlaceOrderResponse> placingOrder = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<PlaceOrderResponse> call = apiInterface.placeOrder(authToken, guest_id, paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location,  pickup_address, payment_currency);
+        Call<PlaceOrderResponse> call = apiInterface.placeOrder(authToken, guest_id, paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location,  pickup_address, payment_currency, coupon_code, discount_amount);
         call.enqueue(new Callback<PlaceOrderResponse>() {
             @Override
             public void onResponse(Call<PlaceOrderResponse> call, Response<PlaceOrderResponse> response) {

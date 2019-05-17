@@ -88,6 +88,7 @@ public class OtpVerifyActivity extends AppCompatActivity {
                         PreferenceManager.setStringValue(Constants.AUTH_TOKEN, verifyOtpResponse.getPayload().get(0).getAuthToken());
                         PreferenceManager.setStringValue(Constants.FIRST_NAME, verifyOtpResponse.getPayload().get(0).getFirstName());
                         PreferenceManager.setStringValue(Constants.EMAIL, verifyOtpResponse.getPayload().get(0).getEmail());
+                        PreferenceManager.setStringValue(Constants.USER_PHOTO, verifyOtpResponse.getPayload().get(0).getUser_image());
                         finishAffinity();
                     } else {
                         binding.progressBar.setVisibility(View.GONE);

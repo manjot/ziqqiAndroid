@@ -14,6 +14,9 @@ public class Payload {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("user_image")
+    @Expose
+    private String user_image;
 
     public String getAuthToken() {
         return authToken;
@@ -37,5 +40,13 @@ public class Payload {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
     }
 }

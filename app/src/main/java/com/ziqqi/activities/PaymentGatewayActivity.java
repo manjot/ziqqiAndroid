@@ -68,6 +68,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
     List<Payload> cartDataList = new ArrayList<>();
     List<Payload> payloadList = new ArrayList<>();
     float cartAmount;
+    String strDiscount = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
 
         cartAmount = Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT));
 
-        if (cartAmount > 100){
+        if (cartAmount >= 100){
             binding.tvCartTotal.setText("$ " + cartAmount);
         }else{
             cartAmount = cartAmount *9500;
@@ -232,7 +233,9 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                         PreferenceManager.getStringValue(Constants.SHIP_CITY),
                         PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
                         PreferenceManager.getStringValue(Constants.SHIP_ADDRESS),
-                        strCurrency);
+                        strCurrency,
+                        binding.etCoupon.getText().toString(),
+                        strDiscount);
             }
         });
 
@@ -274,7 +277,9 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                                 PreferenceManager.getStringValue(Constants.SHIP_CITY),
                                 PreferenceManager.getStringValue(Constants.SHIP_LOCATION),
                                 PreferenceManager.getStringValue(Constants.SHIP_ADDRESS),
-                                strCurrency);
+                                strCurrency,
+                                binding.etCoupon.getText().toString(),
+                                strDiscount);
 
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -288,10 +293,10 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         }
     }
 
-    private void placeOrder(String authToken, String guest_id, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address, String payment_currency) {
+    private void placeOrder(String authToken, String guest_id, String paymentMethod, String orderStatus, String paymentStatus, String transacttionId, String walletNumber, String billingFname, String billingLname, String billingMobile, String pickupName, String pickupMobile, String pickupCountry, String pickup_city, String pickup_location, String pickup_address, String payment_currency, String coupon_code, String discount_amount) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
-            placeOrderViewModel.placeOder(authToken, guest_id, paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location, pickup_address, payment_currency);
+            placeOrderViewModel.placeOder(authToken, guest_id, paymentMethod, orderStatus, paymentStatus, transacttionId, walletNumber, billingFname, billingLname, billingMobile, pickupName, pickupMobile, pickupCountry, pickup_city, pickup_location, pickup_address, payment_currency, coupon_code, discount_amount);
             placeOrderViewModel.getPlaceOrderResponse().observe(this, new Observer<PlaceOrderResponse>() {
                 @Override
                 public void onChanged(@Nullable PlaceOrderResponse placeOrderResponse) {
@@ -324,8 +329,15 @@ public class PaymentGatewayActivity extends AppCompatActivity {
                 public void onChanged(@Nullable ApplyCouponModel applyCouponModel) {
                     if (!applyCouponModel.getError()) {
                         binding.progressBar.setVisibility(View.GONE);
+                        strDiscount = String.valueOf(applyCouponModel.getPayload().getDiscount());
                         Toast.makeText(getApplicationContext(), applyCouponModel.getMessage(), Toast.LENGTH_SHORT).show();
-                        binding.tvCartTotal.setText("$ " +String.valueOf(applyCouponModel.getPayload().getTotal()));
+
+                            if (cartAmount >= 100){
+                                binding.tvCartTotal.setText("$ " + String.valueOf(applyCouponModel.getPayload().getTotal()));
+                            }else{
+                                binding.tvCartTotal.setText("SLS " + applyCouponModel.getPayload().getTotal()*9500);
+                            }
+
                         PreferenceManager.setStringValue(Constants.CART_TOTAL_AMOUNT, String.valueOf(applyCouponModel.getPayload().getTotal()));
                     } else {
                         Toast.makeText(getApplicationContext(), applyCouponModel.getMessage(), Toast.LENGTH_SHORT).show();

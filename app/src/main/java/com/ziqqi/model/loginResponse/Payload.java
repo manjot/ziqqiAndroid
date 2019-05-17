@@ -78,6 +78,9 @@ public class Payload {
     @SerializedName("otp")
     @Expose
     private String otp;
+    @SerializedName("user_image")
+    @Expose
+    private String user_image;
 
     public String getId() {
         return id;
@@ -269,5 +272,13 @@ public class Payload {
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
     }
 }

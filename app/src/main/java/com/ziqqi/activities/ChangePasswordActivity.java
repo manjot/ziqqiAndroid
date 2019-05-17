@@ -35,7 +35,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     ChangePasswordViewModel viewModel;
     ActivityChangePasswordBinding binding;
-    String strEmail;
+    String strEmail, strMethod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null){
             strEmail = getIntent().getStringExtra("email");
+            strMethod = getIntent().getStringExtra("otp_method");
         }
 
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<String> call = apiInterface.changedPassword(strEmail, binding.etCode.getText().toString(), binding.etCnfPassword.getText().toString());
+            Call<String> call = apiInterface.changedPassword(strEmail, binding.etCode.getText().toString(), binding.etCnfPassword.getText().toString(), strMethod);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {

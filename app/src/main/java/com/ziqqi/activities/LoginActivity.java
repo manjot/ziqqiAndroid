@@ -395,6 +395,7 @@ public class LoginActivity extends AppCompatActivity {
                             PreferenceManager.setStringValue(Constants.FIRST_NAME, loginResponse.getPayload().getFirstName());
                             PreferenceManager.setStringValue(Constants.EMAIL, loginResponse.getPayload().getEmail());
                             PreferenceManager.setStringValue(Constants.AUTH_TOKEN, loginResponse.getPayload().getAuth_token());
+                            PreferenceManager.setStringValue(Constants.USER_PHOTO, loginResponse.getPayload().getUser_image());
                             finishAffinity();
                         }
                     }
