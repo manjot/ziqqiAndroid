@@ -312,6 +312,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                             String resultOverview = Html.fromHtml(productDetails.getPayload().getOverview()).toString();
                             String resultSpecification = Html.fromHtml(productDetails.getPayload().getSpecifications()).toString();
+
                             strSharingUrl = "www.ziqqi.com/" + productDetails.getPayload().getLinkhref();
                             isWishlist = productDetails.getPayload().getIs_wishlist();
 

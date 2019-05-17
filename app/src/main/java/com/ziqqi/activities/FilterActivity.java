@@ -188,20 +188,6 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                /*for(int  i =0;i<list.size();i++)
-                {
-                    String prefix = "";
-                    for (String str : list)
-                    {
-                        stringBuilderForFilter.append(prefix);
-                        prefix = ",";
-                        stringBuilderForFilter.append(str);
-                    }
-                }
-
-
-                selectedFilters = ""+stringBuilderForFilter;*/
-
                 selectedCategoryFilters = String.join(",", categoryList);
                 selectedBrandFilters = String.join(",", brandList);
                 selectedVariantFilters = String.join(",", variantList);

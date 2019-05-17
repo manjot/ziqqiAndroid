@@ -9,6 +9,7 @@ import com.ziqqi.model.addtocart.AddToCart;
 import com.ziqqi.model.addtowishlistmodel.AddToModel;
 import com.ziqqi.model.bannerimagemodel.BannerImageModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
 import com.ziqqi.model.productdetailsmodel.ProductDetails;
 import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.removewislistmodel.DeleteWishlistModel;
@@ -23,6 +24,7 @@ public class ProductDetailsViewModel extends AndroidViewModel {
     MutableLiveData<DeleteWishlistModel> deleteWishlistResponse;
     MutableLiveData<AddToCart> addToCartResponse;
     MutableLiveData<ProductVariantModel> productVariantResponse;
+    MutableLiveData<LoadVariantResponse> loadVariantResponse;
 
     public ProductDetailsViewModel(@NonNull Application application) {
         super(application);
@@ -81,5 +83,13 @@ public class ProductDetailsViewModel extends AndroidViewModel {
 
     public MutableLiveData<ProductVariantModel> getProductVariantResponse() {
         return productVariantResponse;
+    }
+
+    public void loadVariant(String authToken, String productId, String guestId, String attributeId){
+        loadVariantResponse = repository.loadVariant(authToken, productId, guestId, attributeId);
+    }
+
+    public MutableLiveData<LoadVariantResponse> loadVariantResponse() {
+        return loadVariantResponse;
     }
 }

@@ -77,14 +77,17 @@ public class HelpCenterActivity extends AppCompatActivity implements View.OnClic
         ll_twitter.setOnClickListener(this);
         ll_v.setOnClickListener(this);
 
-        fetchHelps();
-
+        if (PreferenceManager.getStringValue(Constants.LANG).equalsIgnoreCase("en")){
+            fetchHelps("1");
+        }else{
+            fetchHelps("0");
+        }
     }
 
-    private void fetchHelps() {
+    private void fetchHelps(String lang) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
-            helpCenterViewModel.fetchHelpCenter();
+            helpCenterViewModel.fetchHelpCenter(lang);
             helpCenterViewModel.getHelpResponse().observe(this, new Observer<HelpCenterModel>() {
                 @Override
                 public void onChanged(@Nullable final HelpCenterModel helpCenterModel) {

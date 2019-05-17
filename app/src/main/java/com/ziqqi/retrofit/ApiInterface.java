@@ -2,6 +2,7 @@ package com.ziqqi.retrofit;
 
 import com.ziqqi.model.filtermodel.FilterResponse;
 import com.ziqqi.model.filterproductmodel.FilterCategoriesResponse;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
 import com.ziqqi.model.ordercancelmodel.OrderCancelResponse;
 import com.ziqqi.model.productvariantmodel.ProductVariantModel;
 import com.ziqqi.model.uploadphotomodel.UploadPhoto;
@@ -59,9 +60,6 @@ public interface ApiInterface {
 
     @GET("home_banners")
     Call<BannerImageModel> getHomeBanners();
-
-    @GET("getHelpCenters")
-    Call<HelpCenterModel> getHelps();
 
     @GET("feedback_master")
     Call<FeedbackMaster> getFeedbackMaster();
@@ -160,7 +158,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("getHelpCenterById")
-    Call<HelpCenterByIdResponse> getHelpById(@Field("help_id") int help_id);
+    Call<HelpCenterByIdResponse> getHelpById(@Field("help_id") int help_id, @Field("lang") String lang);
 
     @FormUrlEncoded
     @POST("addBillingAddress")
@@ -257,4 +255,13 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("orderCancel")
     Call<OrderCancelResponse> cancelOrder(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("order_id") String order_id, @Field("reason") String reason);
+
+    @FormUrlEncoded
+    @POST("getHelpCenters")
+    Call<HelpCenterModel> getHelps(@Field("lang") String lang);
+
+    @FormUrlEncoded
+    @POST("loadProductVariant")
+    Call<LoadVariantResponse> loadVariant(@Field("auth_token") String auth_token, @Field("product_id") String product_id, @Field("guest_id") String guest_id, @Field("attribute_value_id") String attribute_value_id);
+
 }

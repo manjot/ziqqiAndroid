@@ -64,14 +64,19 @@ public class MyAccountActivity extends AppCompatActivity {
             title = getIntent().getStringExtra("title");
         }
         binding.tvToolbarTitle.setText(title);
-        fetchHelps(Integer.parseInt(id));
+
+        if (PreferenceManager.getStringValue(Constants.LANG).equalsIgnoreCase("en")){
+            fetchHelps(Integer.parseInt(id),"1");
+        }else{
+            fetchHelps(Integer.parseInt(id),"0");
+        }
     }
 
-    private void fetchHelps(int helpId) {
+    private void fetchHelps(int helpId, String lang) {
         if (ConnectivityHelper.isConnectedToNetwork(this)){
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.rvHelp.setVisibility(View.GONE);
-            viewModel.fetchData(helpId);
+            viewModel.fetchData(helpId, lang);
             viewModel.getHelpByIdResponse().observe(this, new Observer<HelpCenterByIdResponse>() {
                 @Override
                 public void onChanged(@Nullable HelpCenterByIdResponse helpCenter) {

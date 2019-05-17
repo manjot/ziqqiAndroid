@@ -20,8 +20,8 @@ public class HelpCenterViewModel extends AndroidViewModel {
         repository = new Repository();
     }
 
-    public void fetchHelpCenter(){
-        helpCenterResponse = repository.getHelpCenter();
+    public void fetchHelpCenter(String lang){
+        helpCenterResponse = repository.getHelpCenter(lang);
     }
 
     public MutableLiveData<HelpCenterModel> getHelpResponse() {

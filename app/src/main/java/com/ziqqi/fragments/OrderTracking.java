@@ -163,7 +163,7 @@ public class OrderTracking extends Fragment {
                             orderDataList.addAll(payloadList);
                             binding.rvOrderTracking.setVisibility(View.VISIBLE);
                             binding.progressBar.setVisibility(View.GONE);
-                            // adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);

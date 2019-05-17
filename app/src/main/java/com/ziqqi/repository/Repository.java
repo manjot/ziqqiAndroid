@@ -22,6 +22,7 @@ import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.model.helpcenterbyidmodel.HelpCenterByIdResponse;
 import com.ziqqi.model.helpcentermodel.HelpCenterModel;
 import com.ziqqi.model.homecategorymodel.HomeCategoriesResponse;
+import com.ziqqi.model.loadvariantmodel.LoadVariantResponse;
 import com.ziqqi.model.myaddressmodel.ShippingAddressModel;
 import com.ziqqi.model.myordersmodel.MyOrdersResponse;
 import com.ziqqi.model.ordercancelmodel.OrderCancelResponse;
@@ -255,10 +256,10 @@ public class Repository {
         return getCategories;
     }
 
-    public MutableLiveData<HelpCenterModel> getHelpCenter() {
+    public MutableLiveData<HelpCenterModel> getHelpCenter(String lang) {
         final MutableLiveData<HelpCenterModel> getHelps = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<HelpCenterModel> call = apiInterface.getHelps();
+        Call<HelpCenterModel> call = apiInterface.getHelps(lang);
         call.enqueue(new Callback<HelpCenterModel>() {
             @Override
             public void onResponse(Call<HelpCenterModel> call, Response<HelpCenterModel> response) {
@@ -363,10 +364,10 @@ public class Repository {
         return fetchDeals;
     }
 
-    public MutableLiveData<HelpCenterByIdResponse> getHelpById(int helpId) {
+    public MutableLiveData<HelpCenterByIdResponse> getHelpById(int helpId, String lang) {
         final MutableLiveData<HelpCenterByIdResponse> fetchHelps = new MutableLiveData<>();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<HelpCenterByIdResponse> call = apiInterface.getHelpById(helpId);
+        Call<HelpCenterByIdResponse> call = apiInterface.getHelpById(helpId, lang);
         call.enqueue(new Callback<HelpCenterByIdResponse>() {
             @Override
             public void onResponse(Call<HelpCenterByIdResponse> call, Response<HelpCenterByIdResponse> response) {
@@ -664,6 +665,24 @@ public class Repository {
 
             @Override
             public void onFailure(Call<OrderCancelResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return variants;
+    }
+
+    public MutableLiveData<LoadVariantResponse> loadVariant(String authToken, String productId, String guestId, String attributeId) {
+        final MutableLiveData<LoadVariantResponse> variants = new MutableLiveData<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<LoadVariantResponse> call = apiInterface.loadVariant(authToken, productId, guestId, attributeId);
+        call.enqueue(new Callback<LoadVariantResponse>() {
+            @Override
+            public void onResponse(Call<LoadVariantResponse> call, Response<LoadVariantResponse> response) {
+                variants.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<LoadVariantResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });

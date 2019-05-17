@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,6 +50,7 @@ public class FeedbackActivity extends AppCompatActivity {
     FeedbackQueryAdapter adapter;
     OnFeedbackItemListener listener;
     List<Integer> stars = new ArrayList<>();
+    String strStar;
 
 
     @Override
@@ -68,22 +71,30 @@ public class FeedbackActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0.0f);
 
         listener = new OnFeedbackItemListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFeedbackItemClick(int position, int star) {
                 stars.add(position, star);
-                Log.i("STAR", String.valueOf(stars));
+                strStar = String.join(",", String.valueOf(stars));
+                Log.i("STAR", strStar);
             }
         };
 
         setUpAdapter();
         getQueries();
+
         binding.btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Feedback Added Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(FeedbackActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                if (stars.size() < queryList.size()){
+                    Toast.makeText(getApplicationContext(), "Please give rating to all queries!", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Feedback Added Successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(FeedbackActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
     }
