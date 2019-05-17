@@ -163,6 +163,8 @@ public class SignUpActivity extends AppCompatActivity {
         Utils.hideKeyboard(this);
         if (binding.etEmail.getText().toString().equalsIgnoreCase("") || binding.etPassword.getText().toString().equalsIgnoreCase("") || binding.etMobileNumber.getText().toString().equalsIgnoreCase("") || binding.etLastName.getText().toString().equalsIgnoreCase("") || binding.etFirstName.getText().toString().equalsIgnoreCase("")) {
             Utils.ShowToast(getApplication().getApplicationContext(), "Fields can not be emplty");
+        } else if (!Utils.isValidEmail(binding.etEmail.getText().toString())) {
+            Utils.ShowToast(getApplication().getApplicationContext(), "Enter a valid email");
         } else {
             if (ConnectivityHelper.isConnectedToNetwork(this)) {
 
