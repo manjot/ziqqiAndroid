@@ -300,6 +300,16 @@ public class CartFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+            fetchCart(PreferenceManager.getStringValue(Constants.AUTH_TOKEN) , PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchCart("", PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         fcListener = (com.ziqqi.fetchCartListener) context;

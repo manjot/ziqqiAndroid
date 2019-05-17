@@ -26,6 +26,7 @@ import com.ziqqi.model.getbillingaddressmodel.BillingAddressModel;
 import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.PreferenceManager;
+import com.ziqqi.utils.Utils;
 import com.ziqqi.viewmodel.BillingInfoViewModel;
 import com.ziqqi.viewmodel.HelpCenterViewModel;
 
@@ -84,7 +85,14 @@ public class BillingInfoActivity extends AppCompatActivity {
         binding.btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!binding.etFirstName.getText().toString().equals("") && !binding.etLastName.getText().toString().equals("") && !binding.etMobileNumber.getText().toString().equals("") && !binding.etAddressDetails.getText().toString().equals("")) {
+                if (binding.etFirstName.getText().toString().equals("") && binding.etLastName.getText().toString().equals("") && binding.etMobileNumber.getText().toString().equals("") && binding.etAddressDetails.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (binding.etMobileNumber.getText().toString().length()!=10 || !Utils.isValidPhone(binding.etMobileNumber.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Incorrect Number", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     if (!binding.etCountry.getSelectedItem().toString().equalsIgnoreCase("SOMALILAND")){
                         strCity = "";
                         strLocation = "";
@@ -100,8 +108,6 @@ public class BillingInfoActivity extends AppCompatActivity {
                             strCity,
                             strLocation,
                             binding.etAddressDetails.getText().toString());
-                } else {
-                    Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -121,9 +121,9 @@ public class WishlistFragment extends Fragment {
                         break;
                     case Constants.REMOVE_WISHLIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
-                            removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(payload.getId()), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            removeWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), Integer.parseInt(payload.getProductId()), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         } else {
-                            removeWishlist("", Integer.parseInt(payload.getId()), PreferenceManager.getStringValue(Constants.GUEST_ID));
+                            removeWishlist("", Integer.parseInt(payload.getProductId()), PreferenceManager.getStringValue(Constants.GUEST_ID));
                         }
 
                         break;
@@ -179,7 +179,7 @@ public class WishlistFragment extends Fragment {
                             wishlistDataList.addAll(payloadList);
                             binding.rvWishlist.setVisibility(View.VISIBLE);
                             binding.progressBar.setVisibility(View.GONE);
-                            // adapter.notifyDataSetChanged();
+                             adapter.notifyDataSetChanged();
                         }
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
@@ -202,6 +202,16 @@ public class WishlistFragment extends Fragment {
         binding.rvWishlist.setAdapter(adapter);
 //        spacesItemDecoration = new SpacesItemDecoration(getContext(), R.dimen.dp_4);
 //        binding.rvWishlist.addItemDecoration(spacesItemDecoration);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+            fetchWishlist(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }else{
+            fetchWishlist("", PreferenceManager.getStringValue(Constants.GUEST_ID));
+        }
     }
 
     @Override

@@ -294,10 +294,6 @@ public class ProfileActivity extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
                 Log.e("Activity", "Pick from Gallery::>>> ");
                 path = getRealPathFromURI(selectedImage);
-                // PrefKeep.getInstance().setUserPicString(path);
-//                if (path == null && path.equalsIgnoreCase("")) {
-//                    path = PrefKeep.getInstance().getUserPicString();
-//                }
                 f = new File(path);
                 binding.ivProfilePic.setImageBitmap(bitmap);
                 addPhoto();
