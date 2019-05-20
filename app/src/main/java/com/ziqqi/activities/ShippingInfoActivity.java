@@ -106,7 +106,7 @@ public class ShippingInfoActivity extends AppCompatActivity {
                 if (binding.etName.getText().toString().equals("") && binding.etMobileNumber.getText().toString().equals("") && binding.etAddressDetails.getText().toString().equals("") && binding.etLocation.getSelectedItem().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
 
-                } else if (binding.etMobileNumber.getText().toString().length() != 10 || !Utils.isValidPhone(binding.etMobileNumber.getText().toString())) {
+                } else if (binding.etMobileNumber.getText().toString().length() < 9 || binding.etMobileNumber.getText().toString().length() > 10 || !Utils.isValidPhone(binding.etMobileNumber.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Incorrect Number", Toast.LENGTH_SHORT).show();
                 } else {
                     addAddress(PreferenceManager.getStringValue(Constants.AUTH_TOKEN),

@@ -146,9 +146,11 @@ public class SearchActivity extends AppCompatActivity {
                         binding.llNoData.setVisibility(View.GONE);
                         if (payloadList != null) {
                             searchDataList.clear();
+                            payloadList.clear();
                             payloadList = searchCategory.getPayload();
                             searchDataList.addAll(payloadList);
                         }
+                        adapter.notifyDataSetChanged();
                     } else {
                         binding.progressBar.setVisibility(View.GONE);
                         binding.recyclerView.setVisibility(View.GONE);

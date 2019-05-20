@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -326,6 +327,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 binding.ivWishlist.setImageResource(R.drawable.ic_wish);
                             }
 
+                            binding.tvPrice.setText("$ "+productDetails.getPayload().getMrpPrice());
+                            binding.tvPrice.setPaintFlags(binding.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            binding.tvDiscountPrice.setText("$ "+productDetails.getPayload().getSalePrice());
                             binding.tvOverview.setText(resultOverview);
                             binding.tvSpecs.setText(resultSpecification);
                             bannerPayLoad.clear();
@@ -377,6 +381,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 binding.ivWishlist.setImageResource(R.drawable.ic_wish);
                             }
 
+                            binding.tvPrice.setText("$ "+loadVariantResponse.getPayload().getMrpPrice());
+                            binding.tvPrice.setPaintFlags(binding.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            binding.tvDiscountPrice.setText("$ "+loadVariantResponse.getPayload().getSalePrice());
                             binding.tvOverview.setText(resultOverview);
                             binding.tvSpecs.setText(resultSpecification);
                             bannerPayLoad.clear();

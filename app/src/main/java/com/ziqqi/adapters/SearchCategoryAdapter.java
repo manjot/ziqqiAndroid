@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.ziqqi.OnItemClickListener;
 import com.ziqqi.R;
+import com.ziqqi.activities.ProductDetailActivity;
 import com.ziqqi.activities.SearchResultActivity;
 import com.ziqqi.activities.ViewAllProductsActivity;
 import com.ziqqi.utils.FontCache;
@@ -46,10 +47,17 @@ public class SearchCategoryAdapter extends RecyclerView.Adapter<SearchCategoryAd
         holder.ll_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ViewAllProductsActivity.class);
-                intent.putExtra("categoryId" , payloadList.get(i).getCategoryId());
-                intent.putExtra("title" , payloadList.get(i).getCategoryName());
-                context.startActivity(intent);
+                if(payloadList.get(i).getType() == 1){
+                    Intent intent = new Intent(context, ViewAllProductsActivity.class);
+                    intent.putExtra("categoryId" , payloadList.get(i).getCategoryId());
+                    intent.putExtra("title" , payloadList.get(i).getCategoryName());
+                    context.startActivity(intent);
+                }else if(payloadList.get(i).getType() == 0){
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("product_id", payloadList.get(i).getProductId());
+                    intent.putExtra("variant_id", payloadList.get(i).getVariantId());
+                    context.startActivity(intent);
+                }
 
             }
         });

@@ -41,6 +41,7 @@ import com.ziqqi.databinding.ActivityProfileBinding;
 import com.ziqqi.model.uploadphotomodel.UploadPhoto;
 import com.ziqqi.retrofit.ApiClient;
 import com.ziqqi.retrofit.ApiInterface;
+import com.ziqqi.utils.ConnectivityHelper;
 import com.ziqqi.utils.Constants;
 import com.ziqqi.utils.LoginDialog;
 import com.ziqqi.utils.PreferenceManager;
@@ -48,7 +49,10 @@ import com.ziqqi.viewmodel.ProfileViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
     Bitmap bitmap = null;
     private String path;
     RequestBody authToken;
+    Uri selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +107,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
 
-
         binding.ivChangePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
                     requestStoragePermission();
-                }else {
+                } else {
                     loginDialog = new LoginDialog();
                     loginDialog.showDialog(ProfileActivity.this);
                 }
@@ -191,29 +195,33 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void addPhoto() {
-        if (f != null) {
-            binding.progressBar.setVisibility(View.VISIBLE);
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("filename", f.getName(), reqFile);
-            authToken = createPartFromString(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
-            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<UploadPhoto> call = apiInterface.addPhoto(authToken, body);
-            call.enqueue(new Callback<UploadPhoto>() {
-                @Override
-                public void onResponse(Call<UploadPhoto> call, Response<UploadPhoto> response) {
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-                    PreferenceManager.setStringValue(Constants.USER_PHOTO, response.body().getPayload().getFileupload());
-                    finish();
-                }
+        if (ConnectivityHelper.isConnectedToNetwork(ProfileActivity.this)){
+            if (f != null) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("filename", f.getName(), reqFile);
+                authToken = createPartFromString(PreferenceManager.getStringValue(Constants.AUTH_TOKEN));
+                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                Call<UploadPhoto> call = apiInterface.addPhoto(authToken, body);
+                call.enqueue(new Callback<UploadPhoto>() {
+                    @Override
+                    public void onResponse(Call<UploadPhoto> call, Response<UploadPhoto> response) {
+                        binding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                        PreferenceManager.setStringValue(Constants.USER_PHOTO, response.body().getPayload().getFileupload());
+                        finish();
+                    }
 
-                @Override
-                public void onFailure(Call<UploadPhoto> call, Throwable t) {
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    Toast.makeText(ProfileActivity.this, "Update Failed!", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<UploadPhoto> call, Throwable t) {
+                        binding.progressBar.setVisibility(View.VISIBLE);
+                        Toast.makeText(ProfileActivity.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }else{
+            Toast.makeText(ProfileActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -221,13 +229,6 @@ public class ProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == CAPTURE_IMAGE_TO_CAMERA_ACTIVITY_REQUEST_CODE) {
             if (Environment.getExternalStorageDirectory().toString() != null && !Environment.getExternalStorageDirectory().toString().isEmpty()) {
-//                String enveronmentName = Environment.getExternalStorageDirectory().toString();
-//                if (Environment.getExternalStorageDirectory().toString() != null && !Environment.getExternalStorageDirectory().toString().isEmpty()) {
-//                    PrefKeep.getInstance().setUserPicString(Environment.getExternalStorageDirectory().toString());
-//                }
-//                if (enveronmentName == null && enveronmentName.equalsIgnoreCase("")) {
-//                    enveronmentName = PrefKeep.getInstance().getUserPicString();
-//                }
                 f = new File(Environment.getExternalStorageDirectory().toString());
             }
             for (File temp : f.listFiles()) {
@@ -278,7 +279,6 @@ public class ProfileActivity extends AppCompatActivity {
                         bitmap.getHeight(), matrix, true);
                 binding.ivProfilePic.setImageBitmap(bitmap);
                 addPhoto();
-                // uploadImageAvtar();
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -286,7 +286,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         } else if (requestCode == CAPTURE_IMAGE_TO_GALLERY_ACTIVITY_REQUEST_CODE) {
 
-            Uri selectedImage = data.getData();
+            if (data != null){
+                selectedImage = data.getData();
+            }
 
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
@@ -317,7 +319,7 @@ public class ProfileActivity extends AppCompatActivity {
             PackageManager pm = getPackageManager();
             int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, getPackageName());
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
-                final CharSequence[] options = {"Take Photo", "Choose From Gallery", "Cancel"};
+                final CharSequence[] options = {/*"Take Photo",*/ "Choose From Gallery", "Cancel"};
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
                 builder.setTitle("Select Option");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -345,9 +347,9 @@ public class ProfileActivity extends AppCompatActivity {
                 });
                 builder.show();
             } else
-                Toast.makeText(ProfileActivity.this, "Camera Permission error" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Camera Permission error", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(ProfileActivity.this, "Camera Permission error" ,Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, "Camera Permission error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -364,16 +366,6 @@ public class ProfileActivity extends AppCompatActivity {
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
                         selectImage();
-//                        if (report.areAllPermissionsGranted()) {
-//                            selectImage();
-//                            // do you work now
-//                        }
-//
-//                        // check for permanent denial of any permission
-//                        if (report.isAnyPermissionPermanentlyDenied()) {
-//                            showSettingsDialog();
-//                            // permission is denied permenantly, navigate user to app settings
-//                        }
                     }
 
                     @Override

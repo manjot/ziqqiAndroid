@@ -89,7 +89,7 @@ public class BillingInfoActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (binding.etMobileNumber.getText().toString().length()!=10 || !Utils.isValidPhone(binding.etMobileNumber.getText().toString())){
+                else if (binding.etMobileNumber.getText().toString().length() < 9 || binding.etMobileNumber.getText().toString().length() > 10 || !Utils.isValidPhone(binding.etMobileNumber.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Incorrect Number", Toast.LENGTH_SHORT).show();
                 }
                 else {
