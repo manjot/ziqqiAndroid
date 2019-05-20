@@ -77,7 +77,10 @@ public class FeedbackActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFeedbackItemClick(int position, int star) {
-                stars.add(position, star);
+                if (position <= 0){
+                    stars.add(position, star);
+                }
+
                 strStar = android.text.TextUtils.join(",", stars);;
                 Log.i("STAR", strStar);
             }

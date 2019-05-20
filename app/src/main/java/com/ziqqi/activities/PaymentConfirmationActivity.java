@@ -72,9 +72,9 @@ public class PaymentConfirmationActivity extends AppCompatActivity {
 
             if (strPaymentType.equalsIgnoreCase("ZAAD")){
                 if (Float.parseFloat(PreferenceManager.getStringValue(Constants.CART_TOTAL_AMOUNT)) >= 100){
-                    strUSSD = "*883*504880*" + strCartTotal+Uri.encode("#");
+                    strUSSD = "*883*504880*" + strCartTotal+ Uri.encode("#");
                 } else{
-                    strUSSD = "*223*504880*" + strCartTotal+Uri.encode("#");
+                    strUSSD = "*223*504880*" + strCartTotal+ Uri.encode("#");
                 }
 
                 bt_method.setText("ZAAD - 504880");
