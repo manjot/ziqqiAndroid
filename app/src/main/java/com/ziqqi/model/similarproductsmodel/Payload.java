@@ -38,6 +38,9 @@ public class Payload {
     @SerializedName("variant_id")
     @Expose
     private String variantId;
+    @SerializedName("linkhref")
+    @Expose
+    private String linkhref;
 
 
     public String getId() {
@@ -126,5 +129,13 @@ public class Payload {
 
     public void setVariantId(String variantId) {
         this.variantId = variantId;
+    }
+
+    public String getLinkhref() {
+        return linkhref;
+    }
+
+    public void setLinkhref(String linkhref) {
+        this.linkhref = linkhref;
     }
 }

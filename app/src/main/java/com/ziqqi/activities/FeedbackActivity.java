@@ -12,12 +12,15 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.zxing.common.StringUtils;
 import com.ziqqi.OnFeedbackItemListener;
 import com.ziqqi.R;
 import com.ziqqi.adapters.FeedbackQueryAdapter;
@@ -39,6 +42,7 @@ import com.ziqqi.viewmodel.ProductDetailsViewModel;
 import com.ziqqi.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,6 +56,7 @@ public class FeedbackActivity extends AppCompatActivity {
     FeedbackQueryAdapter adapter;
     OnFeedbackItemListener listener;
     List<Integer> stars = new ArrayList<>();
+    HashMap<Integer, Integer> starMap;
     String strStar;
     LoginDialog loginDialog;
 
@@ -73,42 +78,58 @@ public class FeedbackActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getSupportActionBar().setElevation(0.0f);
 
+        starMap = new HashMap<>();
+
         listener = new OnFeedbackItemListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFeedbackItemClick(int position, int star) {
-                if (position>=0 ){
-                    stars.add(position, star);
-                    strStar = android.text.TextUtils.join(",", stars);
-                    Log.i("STAR", strStar);
-                }
+                    starMap.put(position, star);
+                   /* stars.add(position, star);
+                    strStar = android.text.TextUtils.join(",", stars);*/
+                    Log.i("STAR", new Gson().toJson(starMap));
+
             }
         };
 
         setUpAdapter();
         getQueries();
 
+        for (int i = 0; i < queryList.size(); i++){
+            starMap.put(i, 1);
+            Log.i("STAR", new Gson().toJson(starMap));
+        }
+
         binding.btSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stars.size() < queryList.size()){
+                strStar = String.join(",",String.valueOf(starMap.values()));
+                if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+
+                    addFeedback(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), strStar);
+                } else {
+                    loginDialog = new LoginDialog();
+                    loginDialog.showDialog(FeedbackActivity.this);
+                }
+                /*if (stars.size() < queryList.size()) {
                     Toast.makeText(getApplicationContext(), "Please give rating to all queries!", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)){
+                } else {
+                    if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {
+
                         addFeedback(PreferenceManager.getStringValue(Constants.AUTH_TOKEN), strStar);
-                    }else{
+                    } else {
                         loginDialog = new LoginDialog();
                         loginDialog.showDialog(FeedbackActivity.this);
                     }
 
-                }
+                }*/
 
             }
         });
     }
 
     private void addFeedback(String authToken, String ratting) {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             viewModel.addFeedback(authToken, ratting);
             viewModel.addFeedbackResponse().observe(this, new Observer<AddFeedbackModel>() {
@@ -116,25 +137,25 @@ public class FeedbackActivity extends AppCompatActivity {
                 public void onChanged(@Nullable AddFeedbackModel addFeedbackModel) {
                     binding.progressBar.setVisibility(View.GONE);
                     if (!addFeedbackModel.getError()) {
-                        Toast.makeText(FeedbackActivity.this,addFeedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FeedbackActivity.this, addFeedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(FeedbackActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
 
                     } else {
-                        Toast.makeText(FeedbackActivity.this,addFeedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FeedbackActivity.this, addFeedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-        }else{
-            Toast.makeText(FeedbackActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(FeedbackActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
     private void getQueries() {
-        if (ConnectivityHelper.isConnectedToNetwork(this)){
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.rvQueries.setVisibility(View.GONE);
             viewModel.fetchData();
@@ -156,8 +177,8 @@ public class FeedbackActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else{
-            Toast.makeText(FeedbackActivity.this,"You're not connected!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(FeedbackActivity.this, "You're not connected!", Toast.LENGTH_SHORT).show();
         }
 
     }

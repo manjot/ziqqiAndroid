@@ -29,12 +29,14 @@
         android:testOnly="false"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,HardcodedDebugMode,UnusedAttribute">
-        <activity android:name=".activities.FilterActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".activities.ProductZoomActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".activities.ZiqqiWebView"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.FilterActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.ProductZoomActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.OtpVerifyActivity"
             android:theme="@style/AppTheme.NoActionBar" />

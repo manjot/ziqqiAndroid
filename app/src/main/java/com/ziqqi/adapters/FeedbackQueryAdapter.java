@@ -71,6 +71,9 @@ public class FeedbackQueryAdapter extends RecyclerView.Adapter<FeedbackQueryAdap
 
         @Override
         public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            if(rating<1.0f){
+                ratingBar.setRating(1.0f);
+            }
             listener.onFeedbackItemClick(getAdapterPosition(), (int) ratingBar.getRating());
         }
     }

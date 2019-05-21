@@ -147,7 +147,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onItemClick(Payload payload, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        share(ProductDetailActivity.this, payload.getId());
+                        share(ProductDetailActivity.this, payload.getLinkhref());
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {

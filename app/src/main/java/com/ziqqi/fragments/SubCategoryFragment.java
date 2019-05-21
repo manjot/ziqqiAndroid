@@ -125,7 +125,7 @@ public class SubCategoryFragment extends Fragment {
             public void onItemClick(BestsellerProduct bestsellerProduct, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        Utils.share(getActivity(), bestsellerProduct.getId());
+                        Utils.share(getActivity(), bestsellerProduct.getLinkhref());
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {

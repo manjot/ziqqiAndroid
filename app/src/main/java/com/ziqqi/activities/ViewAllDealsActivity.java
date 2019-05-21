@@ -93,7 +93,7 @@ public class ViewAllDealsActivity extends AppCompatActivity {
             public void onItemClick(Payload payload, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        Utils.share(ViewAllDealsActivity.this, payload.getId());
+                        Utils.share(ViewAllDealsActivity.this, payload.getLinkhref());
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {

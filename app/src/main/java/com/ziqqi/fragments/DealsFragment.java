@@ -119,7 +119,7 @@ public class DealsFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(Payload payload, String type) {
                 switch (type) {
                     case Constants.SHARE:
-                        Utils.share(getActivity(), payload.getId());
+                        Utils.share(getActivity(), payload.getLinkhref());
                         break;
                     case Constants.WISH_LIST:
                         if (PreferenceManager.getBoolValue(Constants.LOGGED_IN)) {

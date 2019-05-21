@@ -157,27 +157,31 @@ public class FilterActivity extends AppCompatActivity {
 
         stringBuilderForFilter = new StringBuilder();
 
-        binding.ivExpandCategory.setOnClickListener(new View.OnClickListener() {
+        binding.llCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isCategoryExpanded) {
                     isCategoryExpanded = true;
                     binding.rvCategory.setVisibility(View.VISIBLE);
+                    binding.ivExpandCategory.setImageResource(R.drawable.ic_minus);
                 } else {
                     binding.rvCategory.setVisibility(View.GONE);
+                    binding.ivExpandCategory.setImageResource(R.drawable.ic_add_black);
                     isCategoryExpanded = false;
                 }
             }
         });
 
-        binding.ivExpandBrand.setOnClickListener(new View.OnClickListener() {
+        binding.llBrands.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isBrandExpanded) {
                     isBrandExpanded = true;
                     binding.rvBrand.setVisibility(View.VISIBLE);
+                    binding.ivExpandBrand.setImageResource(R.drawable.ic_minus);
                 } else {
                     binding.rvBrand.setVisibility(View.GONE);
+                    binding.ivExpandBrand.setImageResource(R.drawable.ic_add_black);
                     isBrandExpanded = false;
                 }
             }

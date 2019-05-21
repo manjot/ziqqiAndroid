@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ziqqi.FilterItemListener;
@@ -46,7 +47,7 @@ public class FilterMainFeatureAdapter extends RecyclerView.Adapter<FilterMainFea
             holder.recyclerView.setAdapter(filterFeatureAdapter);
         }
 
-        holder.iv_expand.setOnClickListener(new View.OnClickListener() {
+        holder.ll_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isExpanded){
@@ -72,12 +73,14 @@ public class FilterMainFeatureAdapter extends RecyclerView.Adapter<FilterMainFea
         LinearLayoutManager manager;
         TextView tv_filter_name;
         ImageView iv_expand;
+        LinearLayout ll_category;
 
         public FilterViewModel(@NonNull View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.recycler_view);
             tv_filter_name = itemView.findViewById(R.id.tv_filter_name);
             iv_expand = itemView.findViewById(R.id.iv_expand);
+            ll_category = itemView.findViewById(R.id.ll_category);
             manager = new LinearLayoutManager(context);
             manager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(manager);

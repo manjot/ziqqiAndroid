@@ -192,6 +192,26 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+        binding.tvPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, ZiqqiWebView.class);
+                intent.putExtra("type", "1");
+                startActivity(intent);
+            }
+        });
+
+        binding.tvTnc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, ZiqqiWebView.class);
+                intent.putExtra("type", "2");
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void addPhoto() {
@@ -250,7 +270,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 bitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
 
-                bitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 50, 50, true);
 
                 int rotate = 0;
                 try {
@@ -293,7 +313,7 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
                 Log.e("Activity", "Pick from Gallery::>>> ");
                 path = getRealPathFromURI(selectedImage);
                 f = new File(path);

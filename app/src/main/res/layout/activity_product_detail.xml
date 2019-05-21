@@ -520,6 +520,7 @@
                         android:layout_marginLeft="@dimen/_16sdp"
                         android:layout_marginRight="@dimen/_16sdp"
                         android:focusableInTouchMode="true"
+                        app:tabMode="scrollable"
                         app:tabIndicatorColor="@color/colorPrimary"
                         app:tabSelectedTextColor="@color/colorBlack"
                         app:tabTextColor="#c3c3c3">
